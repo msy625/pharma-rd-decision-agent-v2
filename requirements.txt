@@ -1,0 +1,13 @@
+streamlit
+pandas
+openpyxl
+openai
+requests
+chromadb
+streamlit-echarts
+pdfplumber
+langchain-text-splitters
+faker
+sentence-transformers
+fastapi
+uvicorn
