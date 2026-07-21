@@ -1,0 +1,467 @@
+{
+  "schema_version": "1.0",
+  "project": "药研制策",
+  "scope": {
+    "disease": "非小细胞肺癌（NSCLC）",
+    "companies": [
+      "恒瑞医药",
+      "百济神州（BeOne Medicines，原BeiGene）"
+    ],
+    "verified_source_count": 31
+  },
+  "scoring_policy": {
+    "use_numeric_score": false,
+    "allowed_strength_levels": [
+      "STRONG",
+      "MODERATE",
+      "WEAK",
+      "INSUFFICIENT"
+    ],
+    "prohibited_methods": [
+      "random",
+      "fixed_random_score",
+      "mock_data",
+      "unsupported_numeric_weight",
+      "source_count_only_strength"
+    ]
+  },
+  "source_types": {
+    "REGULATORY_PRIMARY": {
+      "name_zh": "监管机构原始资料",
+      "description": "监管机构原始页面、正式产品信息、正式批准文件，例如EMA、NMPA、CDE、FDA。",
+      "examples": [
+        "EMA EPAR",
+        "NMPA",
+        "CDE",
+        "FDA"
+      ],
+      "first_version_source_ids": [
+        "B015",
+        "B016"
+      ]
+    },
+    "TRIAL_REGISTRY": {
+      "name_zh": "临床试验登记",
+      "description": "ClinicalTrials.gov或其他正式临床试验登记。",
+      "examples": [
+        "ClinicalTrials.gov"
+      ],
+      "first_version_source_ids": [
+        "H003",
+        "H004",
+        "H005",
+        "H006",
+        "H007",
+        "B003",
+        "B004",
+        "B005",
+        "B012"
+      ]
+    },
+    "PEER_REVIEWED_PUBLICATION": {
+      "name_zh": "同行评议论文",
+      "description": "PubMed收录的同行评议论文。",
+      "examples": [
+        "PubMed"
+      ],
+      "first_version_source_ids": [
+        "H008",
+        "H009",
+        "H010",
+        "H011",
+        "H012",
+        "B006",
+        "B007",
+        "B008",
+        "B009",
+        "B010",
+        "B011"
+      ]
+    },
+    "COMPANY_FORMAL_DISCLOSURE": {
+      "name_zh": "公司正式披露",
+      "description": "公司正式公告、年度报告、投资者材料。",
+      "examples": [
+        "公司年报",
+        "公司正式公告",
+        "投资者材料"
+      ],
+      "first_version_source_ids": [
+        "H002",
+        "H013",
+        "H014",
+        "H015",
+        "B002"
+      ]
+    },
+    "COMPANY_PIPELINE": {
+      "name_zh": "公司管线资料",
+      "description": "公司当前研发管线图或管线页面。",
+      "examples": [
+        "Global clinical development pipeline"
+      ],
+      "first_version_source_ids": [
+        "B014"
+      ]
+    },
+    "COMPANY_TRIAL_PAGE": {
+      "name_zh": "公司试验页面",
+      "description": "公司临床试验页面。",
+      "examples": [
+        "Find a Clinical Trial",
+        "公司官方试验页面"
+      ],
+      "first_version_source_ids": [
+        "B001",
+        "B013"
+      ]
+    },
+    "SECONDARY_SOURCE": {
+      "name_zh": "二手来源",
+      "description": "新闻、媒体、行业数据库或二手整理资料。",
+      "examples": [
+        "新闻",
+        "媒体",
+        "行业数据库"
+      ],
+      "first_version_source_ids": [],
+      "allowed_for_main_claim": false
+    }
+  },
+  "claim_type_priorities": {
+    "regulatory_status": {
+      "name_zh": "监管状态",
+      "preferred_sources": [
+        "REGULATORY_PRIMARY"
+      ],
+      "supporting_sources": [
+        "COMPANY_FORMAL_DISCLOSURE"
+      ],
+      "rules": [
+        "公司公告只能辅助支持，不能替代监管原始来源。",
+        "监管批准结论必须有监管机构当前正式页面支持。"
+      ]
+    },
+    "current_trial_status": {
+      "name_zh": "临床试验当前状态",
+      "preferred_sources": [
+        "TRIAL_REGISTRY"
+      ],
+      "supporting_sources": [
+        "COMPANY_TRIAL_PAGE",
+        "PEER_REVIEWED_PUBLICATION"
+      ],
+      "rules": [
+        "论文中的试验状态只能表示论文发表时状态。",
+        "ClinicalTrials.gov研究状态与来源核验状态必须分开。"
+      ]
+    },
+    "trial_design_phase_eligibility": {
+      "name_zh": "试验设计、阶段、入排标准",
+      "preferred_sources": [
+        "TRIAL_REGISTRY"
+      ],
+      "supporting_sources": [
+        "PEER_REVIEWED_PUBLICATION",
+        "COMPANY_TRIAL_PAGE"
+      ],
+      "rules": [
+        "优先保留NCT编号、正式Study ID、入排标准和登记状态。",
+        "论文和公司试验页面用于交叉验证。"
+      ]
+    },
+    "study_results_endpoints": {
+      "name_zh": "研究结果和主要终点",
+      "preferred_sources": [
+        "PEER_REVIEWED_PUBLICATION",
+        "REGULATORY_PRIMARY"
+      ],
+      "version_preference": [
+        "FINAL",
+        "REGULATORY_CURRENT",
+        "INTERIM",
+        "LONG_TERM_FOLLOWUP"
+      ],
+      "rules": [
+        "最终同行评议论文优先于中期论文。",
+        "公司新闻稿不得替代完整论文结果。",
+        "不比较未经统一口径处理的PFS、OS、MPR或EFS数值。"
+      ]
+    },
+    "current_company_pipeline": {
+      "name_zh": "公司当前研发管线",
+      "preferred_sources": [
+        "COMPANY_PIPELINE"
+      ],
+      "supporting_sources": [
+        "COMPANY_FORMAL_DISCLOSURE"
+      ],
+      "rules": [
+        "管线图未列出某项目不能直接证明项目终止。",
+        "管线图是特定日期快照。"
+      ]
+    },
+    "company_strategy_r_and_d": {
+      "name_zh": "公司研发投入和整体战略",
+      "preferred_sources": [
+        "COMPANY_FORMAL_DISCLOSURE"
+      ],
+      "supporting_sources": [
+        "COMPANY_PIPELINE"
+      ],
+      "rules": [
+        "年度报告和公司正式披露优先。",
+        "战略表述不得写成临床结论。"
+      ]
+    },
+    "alias_and_development_code": {
+      "name_zh": "名称、别名和研发代号",
+      "preferred_sources": [
+        "TRIAL_REGISTRY",
+        "PEER_REVIEWED_PUBLICATION",
+        "REGULATORY_PRIMARY",
+        "COMPANY_FORMAL_DISCLOSURE"
+      ],
+      "rules": [
+        "优先使用多个独立来源交叉确认。",
+        "必须保留原始名称和标准化名称。",
+        "EGFR和ALK不作为药物名称记录。"
+      ]
+    }
+  },
+  "evidence_strength_levels": {
+    "STRONG": {
+      "description": "结论得到对应类型的权威原始来源直接支持，或同时获得权威来源与独立来源一致支持。",
+      "requirements": [
+        "对应结论类型的优先来源直接支持",
+        "无未解决实质冲突",
+        "监管批准结论必须有监管机构当前正式页面支持"
+      ],
+      "not_allowed_by": [
+        "仅来源数量多",
+        "同一试验多篇论文重复计数",
+        "公司单一来源"
+      ]
+    },
+    "MODERATE": {
+      "description": "有一个对应类型的可靠原始来源，或两个来源相互支持但尚缺更高优先级来源。",
+      "requirements": [
+        "可靠来源支持",
+        "不存在实质冲突"
+      ]
+    },
+    "WEAK": {
+      "description": "只有公司单一来源、只有中期结果且无最终分析、缺少独立来源、来源时间较旧或范围受限。",
+      "requirements": [
+        "可作为观察或线索",
+        "不得写成确定性结论"
+      ]
+    },
+    "INSUFFICIENT": {
+      "description": "缺少必要来源、存在未解决冲突、关键字段缺失、只能依赖推断或无法可靠回答。",
+      "requirements": [
+        "返回证据不足",
+        "列出缺口和最小补充办法"
+      ]
+    }
+  },
+  "evidence_version_rules": {
+    "versions": {
+      "FINAL": {
+        "description": "最终分析或最终主要结果",
+        "priority_over": [
+          "INTERIM"
+        ]
+      },
+      "INTERIM": {
+        "description": "中期分析",
+        "cannot_override": [
+          "FINAL",
+          "REGULATORY_CURRENT"
+        ]
+      },
+      "LONG_TERM_FOLLOWUP": {
+        "description": "长期随访或长期结果",
+        "rule": "用于补充长期信息，不自动覆盖所有最终分析字段。"
+      },
+      "REGULATORY_CURRENT": {
+        "description": "当前监管正式状态",
+        "rule": "用于回答当前授权或批准状态。"
+      },
+      "REGULATORY_OPINION": {
+        "description": "监管积极意见或评审意见",
+        "rule": "不等于最终批准。"
+      },
+      "CURRENT_REGISTRY": {
+        "description": "当前试验登记状态",
+        "rule": "用于回答当前ClinicalTrials.gov状态。"
+      },
+      "COMPANY_PIPELINE_SNAPSHOT": {
+        "description": "特定日期的公司管线快照",
+        "rule": "仅说明该日期管线图展示范围。"
+      }
+    },
+    "required_fields": [
+      "evidence_version",
+      "analysis_stage",
+      "supersedes_source_id",
+      "is_latest_evidence",
+      "effective_date",
+      "data_cutoff_date"
+    ],
+    "preserve_history": true
+  },
+  "conflict_types": {
+    "ALIAS_MISMATCH": "中文名、英文名或研发代号没有正确归一化。",
+    "STATUS_TIME_DIFFERENCE": "不同日期来源反映不同试验状态。",
+    "PHASE_MISMATCH": "临床阶段描述不一致。",
+    "POPULATION_MISMATCH": "研究人群、组织学类型或治疗线次不一致。",
+    "INDICATION_MISMATCH": "适应症范围不一致。",
+    "REGULATORY_STATUS_MISMATCH": "积极意见、提交申请、受理、批准等状态被混用。",
+    "EVIDENCE_VERSION_DIFFERENCE": "中期、最终、长期随访版本被混用。",
+    "SOURCE_SCOPE_DIFFERENCE": "来源展示范围不同，例如当前管线图未展示已完成项目。",
+    "UNRESOLVED_CONFLICT": "经过名称、日期、范围和版本检查后仍无法解释的冲突。"
+  },
+  "conflict_resolution_steps": [
+    "检查企业、药物和研究名称是否正确归一化。",
+    "检查来源日期和数据截止日期。",
+    "检查是否为中期、最终、长期随访或监管事件链。",
+    "检查来源展示范围是否不同。",
+    "根据结论类型选择对应的优先来源。",
+    "保留低优先级来源及历史记录。",
+    "无法解决时标记UNRESOLVED_CONFLICT。",
+    "不得静默覆盖冲突字段。",
+    "系统输出必须说明冲突及采用某个来源的理由。"
+  ],
+  "risk_codes": [
+    {
+      "code": "R01_MISSING_REGULATORY_PRIMARY",
+      "name_zh": "缺少独立监管原始记录",
+      "description": "缺少监管机构原始页面、正式产品信息或批准文件。",
+      "trigger_condition": "监管状态结论没有REGULATORY_PRIMARY支持。",
+      "user_message": "当前缺少独立监管原始记录，该监管状态只能作为待补充信息。",
+      "severity": "HIGH"
+    },
+    {
+      "code": "R02_COMPANY_ONLY",
+      "name_zh": "仅公司来源支持",
+      "description": "结论只由公司公告、年报、投资者材料或公司页面支持。",
+      "trigger_condition": "支持来源全部为公司来源，缺少登记、论文或监管来源。",
+      "user_message": "当前结论只有公司来源支持，需要独立来源交叉验证。",
+      "severity": "CAUTION"
+    },
+    {
+      "code": "R03_INTERIM_ONLY",
+      "name_zh": "仅中期分析",
+      "description": "目前只有中期结果或中期论文。",
+      "trigger_condition": "analysis_stage包含中期，且无最终版本或监管结果支持。",
+      "user_message": "当前只有中期分析，不能视为最终结果。",
+      "severity": "CAUTION"
+    },
+    {
+      "code": "R04_OUTDATED_SOURCE",
+      "name_zh": "来源可能过时",
+      "description": "来源日期较旧或已有更新版本。",
+      "trigger_condition": "存在更新的source_last_updated、online_publication_date或supersedes_source_id。",
+      "user_message": "当前来源可能不是最新版本，请优先查看更新来源。",
+      "severity": "CAUTION"
+    },
+    {
+      "code": "R05_STATUS_TIME_DIFFERENCE",
+      "name_zh": "不同日期状态不同",
+      "description": "不同来源日期对应不同状态。",
+      "trigger_condition": "同一项目状态字段不一致且可由日期解释。",
+      "user_message": "不同日期来源显示的状态不同，回答采用当前优先来源并保留历史记录。",
+      "severity": "INFO"
+    },
+    {
+      "code": "R06_POPULATION_NOT_ALIGNED",
+      "name_zh": "研究人群不一致",
+      "description": "比较对象的人群、组织学类型或治疗线次不同。",
+      "trigger_condition": "比较中population、histology或treatment_line不一致。",
+      "user_message": "比较对象研究人群不一致，不能直接外推为同一人群结论。",
+      "severity": "CAUTION"
+    },
+    {
+      "code": "R07_CROSS_TRIAL_COMPARISON",
+      "name_zh": "跨试验比较",
+      "description": "正在比较不同试验的结果。",
+      "trigger_condition": "回答涉及不同parent_trial_id或不同研究设计的结果比较。",
+      "user_message": "当前是跨试验比较，不能直接进行疗效排名。",
+      "severity": "HIGH"
+    },
+    {
+      "code": "R08_DUPLICATE_EVIDENCE",
+      "name_zh": "重复计数风险",
+      "description": "同一试验多篇论文或多来源可能被重复计数。",
+      "trigger_condition": "多个来源共享同一parent_trial_id或证据关系。",
+      "user_message": "多个来源对应同一试验，不能重复计为多个独立试验。",
+      "severity": "CAUTION"
+    },
+    {
+      "code": "R09_MISSING_CRITICAL_FIELD",
+      "name_zh": "关键字段缺失",
+      "description": "靶点、阶段、人群、状态或来源日期等关键字段缺失。",
+      "trigger_condition": "必要字段为空、来源未明确或文件未明确。",
+      "user_message": "当前关键字段缺失，不能可靠回答该部分。",
+      "severity": "HIGH"
+    },
+    {
+      "code": "R10_UNRESOLVED_CONFLICT",
+      "name_zh": "未解决冲突",
+      "description": "存在无法解释的实质冲突。",
+      "trigger_condition": "冲突类型为UNRESOLVED_CONFLICT。",
+      "user_message": "当前来源存在未解决冲突，不能生成确定结论。",
+      "severity": "HIGH"
+    },
+    {
+      "code": "R11_SOURCE_SCOPE_LIMITATION",
+      "name_zh": "来源范围受限",
+      "description": "来源只展示部分项目或特定时间点。",
+      "trigger_condition": "来源为管线快照、单页材料或备注含范围限制。",
+      "user_message": "当前来源展示范围有限，不能证明未展示项目不存在或已终止。",
+      "severity": "CAUTION"
+    },
+    {
+      "code": "R12_NO_DIRECT_COMPARATIVE_TRIAL",
+      "name_zh": "缺少头对头试验",
+      "description": "两家公司项目之间没有直接比较试验。",
+      "trigger_condition": "企业比较问题没有同一试验或头对头设计支持。",
+      "user_message": "当前没有直接头对头临床试验，不能做直接疗效优劣判断。",
+      "severity": "HIGH"
+    }
+  ],
+  "required_answer_sections": [
+    "结论",
+    "研究范围",
+    "当前状态",
+    "证据强度",
+    "主要证据",
+    "证据版本",
+    "风险提示",
+    "数据截至",
+    "数据缺失",
+    "限制说明"
+  ],
+  "source_traceability_fields": [
+    "source_id",
+    "pmid",
+    "registry_id",
+    "url",
+    "regulatory_authority"
+  ],
+  "prohibited_outputs": [
+    "个体治疗选择",
+    "疾病诊断",
+    "药物疗效保证",
+    "跨试验直接疗效排名",
+    "公司投资价值判断",
+    "无来源支持的未来成功概率预测",
+    "random评分",
+    "MOCK数据结论",
+    "无依据的0-100分",
+    "将监管积极意见写成最终批准",
+    "将来源核验状态写成临床研究状态",
+    "将公司新闻稿替代完整论文结果"
+  ]
+}
