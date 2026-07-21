@@ -123,6 +123,16 @@ python -m pytest -q
 
 基础工程最近一次验收结果为 `37 passed`（2026-07-21）。真实业务数据导入后还需重新执行数据质量、检索效果和完整演示测试。
 
+校验与查询第一版来源登记表：
+
+```bash
+python3 scripts/validate_source_registry.py
+python3 scripts/query_source_registry.py --summary
+python3 scripts/query_source_registry.py --trial-id NCT04379635 --format table
+python3 scripts/query_source_registry.py --drug SHR-1210 --format table
+python3 -m unittest tests/test_source_registry_query.py
+```
+
 ## 初版评价指标
 
 - **事实准确率**：回答中的事实是否与原始资料一致。

@@ -1,0 +1,48 @@
+{
+  "entities": [
+    {
+      "canonical_name": "卡瑞利珠单抗",
+      "aliases": ["卡瑞利珠单抗", "Camrelizumab", "SHR-1210"]
+    },
+    {
+      "canonical_name": "阿帕替尼",
+      "aliases": ["阿帕替尼", "Apatinib"]
+    },
+    {
+      "canonical_name": "法米替尼",
+      "aliases": ["法米替尼", "Famitinib"]
+    },
+    {
+      "canonical_name": "瑞康曲妥珠单抗",
+      "aliases": ["瑞康曲妥珠单抗", "Trastuzumab rezetecan", "SHR-A1811"]
+    },
+    {
+      "canonical_name": "替雷利珠单抗",
+      "aliases": ["替雷利珠单抗", "Tislelizumab", "TEVIMBRA", "BGB-A317"]
+    },
+    {
+      "canonical_name": "多西他赛",
+      "aliases": ["多西他赛", "Docetaxel"]
+    },
+    {
+      "canonical_name": "培美曲塞",
+      "aliases": ["培美曲塞", "Pemetrexed"]
+    },
+    {
+      "canonical_name": "卡铂",
+      "aliases": ["卡铂", "Carboplatin"]
+    },
+    {
+      "canonical_name": "顺铂",
+      "aliases": ["顺铂", "Cisplatin"]
+    },
+    {
+      "canonical_name": "紫杉醇",
+      "aliases": ["紫杉醇", "Paclitaxel"]
+    },
+    {
+      "canonical_name": "白蛋白结合型紫杉醇",
+      "aliases": ["白蛋白结合型紫杉醇", "Nab-paclitaxel"]
+    }
+  ]
+}
