@@ -28,8 +28,10 @@
   "source_types": {
     "REGULATORY_PRIMARY": {
       "name_zh": "监管机构原始资料",
-      "description": "监管机构原始页面、正式产品信息、正式批准文件，例如EMA、NMPA、CDE、FDA。",
+      "description": "监管机构一手来源，包括监管机构原始页面、正式产品信息、正式批准文件或正式意见文件；不代表其中所有文件都是正式批准文件，具体授权状态必须依据文件性质和status字段判断。",
       "examples": [
+        "EMA EPAR Tevimbra（B015，当前正式授权信息）",
+        "EMA/CHMP积极意见文件（B016，仅为积极意见，不等于欧盟委员会最终批准）",
         "EMA EPAR",
         "NMPA",
         "CDE",

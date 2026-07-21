@@ -8,7 +8,7 @@
 
 | 类型 | 定义 | 第一版示例 |
 |---|---|---|
-| `REGULATORY_PRIMARY` | 监管机构原始页面、正式产品信息、正式批准文件。 | EMA EPAR Tevimbra（B015）；EMA/CHMP 文件（B016）。 |
+| `REGULATORY_PRIMARY` | 监管机构一手来源，包括监管机构原始页面、正式产品信息、正式批准文件或正式意见文件；不代表其中所有文件都是正式批准文件，具体授权状态必须依据文件性质和 `status` 字段判断。 | EMA EPAR Tevimbra（B015，当前正式授权信息）；EMA/CHMP 积极意见文件（B016，仅为积极意见，不等于欧盟委员会最终批准）。 |
 | `TRIAL_REGISTRY` | ClinicalTrials.gov 或其他正式临床试验登记。 | H003-H007、B003-B005、B012。 |
 | `PEER_REVIEWED_PUBLICATION` | PubMed 收录的同行评议论文。 | H008-H012、B006-B011。 |
 | `COMPANY_FORMAL_DISCLOSURE` | 公司正式公告、年度报告、投资者材料。 | H002、H013、H014、H015、B002。 |
