@@ -7,6 +7,7 @@ __pycache__/
 Final_md/
 audit_md/*.csv
 data/*
+!data/source_registry.csv
 !data/raw_macro/
 !data/raw_macro/*.xlsx
 !data/archives/
