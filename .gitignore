@@ -31,3 +31,5 @@ deploy/env/webapp.env
 
 # archived pre-redesign frontend (kept locally, recoverable from git history)
 webapp/static/_legacy_native/
+
+.venv/

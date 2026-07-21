@@ -1,8 +1,8 @@
 from collections import defaultdict
 from pathlib import Path
-from typing import Any
+from typing import Annotated, Any
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -11,6 +11,7 @@ from deepinsight.core.agent_tools import run_advanced_analysis, tool_get_equity_
 from deepinsight.apps.app_whitebox import WHITEBOX_DEMO_ANSWER, WHITEBOX_DEMO_CHUNKS, WHITEBOX_DEMO_REASONING, WHITEBOX_DEMO_SQL
 from deepinsight.core.industry_taxonomy import infer_industry_name
 from deepinsight.core.retriever import DEFAULT_DB_PATH, answer_query, create_optional_client, get_connection
+from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
 from deepinsight.apps.workflow_report import run_workflow
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -1385,6 +1386,39 @@ def _require_company_for_api(company_name: str | None) -> None:
         conn.close()
 
 
+def _evidence_service() -> SourceRegistryService:
+    return SourceRegistryService()
+
+
+def _evidence_metadata() -> dict[str, Any]:
+    return {
+        "data_scope": "first_version_nsclc_hengrui_beone",
+        "data_source": "source_registry.csv",
+    }
+
+
+def _evidence_list_response(query: dict[str, Any], items: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "query": query,
+        "count": len(items),
+        "items": items,
+        "metadata": _evidence_metadata(),
+    }
+
+
+def _validate_evidence_limit(limit: int) -> None:
+    if limit < 1 or limit > 100:
+        raise HTTPException(status_code=400, detail="limit 必须在 1 到 100 之间。")
+
+
+def _handle_source_registry_error(exc: Exception) -> HTTPException:
+    if isinstance(exc, SourceRegistryFileNotFound):
+        return HTTPException(status_code=503, detail="证据资料文件不可用，请检查数据文件是否已部署。")
+    if isinstance(exc, SourceRegistryStructureError):
+        return HTTPException(status_code=503, detail="证据资料结构异常，请检查CSV或配置文件。")
+    return HTTPException(status_code=500, detail="证据查询服务暂时不可用。")
+
+
 @app.get("/", response_class=HTMLResponse)
 def index() -> str:
     return HTMLResponse(
@@ -1465,6 +1499,109 @@ def data_room_preview(name: str, limit: int = 20) -> dict[str, Any]:
         return fetch_data_room_preview(name, limit)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.get("/api/evidence/summary")
+def evidence_summary() -> dict[str, Any]:
+    try:
+        service = _evidence_service()
+        summary = service.summary()
+        rows = service.load_rows()
+        verified_dates = sorted({row.get("verified_at", "") for row in rows if row.get("verified_at", "")})
+        return {
+            **summary,
+            "company_source_counts": summary.get("company_counts", {}),
+            "data_scope": "NSCLC；恒瑞医药；百济神州（BeOne Medicines，原BeiGene）；第一版31条人工核验来源",
+            "verified_dates": verified_dates,
+            "metadata": _evidence_metadata(),
+        }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/search")
+def evidence_search(
+    q: Annotated[str | None, Query()] = None,
+    latest_only: Annotated[bool, Query()] = False,
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+) -> dict[str, Any]:
+    if not (q or "").strip():
+        raise HTTPException(status_code=400, detail="查询参数 q 不能为空。")
+    _validate_evidence_limit(limit)
+    try:
+        items = _evidence_service().query(text=q.strip(), latest_only=latest_only)[:limit]
+        return _evidence_list_response({"q": q, "latest_only": latest_only, "limit": limit}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/company/{name}")
+def evidence_by_company(
+    name: str,
+    latest_only: Annotated[bool, Query()] = False,
+    limit: Annotated[int, Query(ge=1, le=100)] = 100,
+) -> dict[str, Any]:
+    _validate_evidence_limit(limit)
+    try:
+        items = _evidence_service().query(company=name, latest_only=latest_only)[:limit]
+        return _evidence_list_response({"company": name, "latest_only": latest_only, "limit": limit}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/drug/{name}")
+def evidence_by_drug(
+    name: str,
+    latest_only: Annotated[bool, Query()] = False,
+    limit: Annotated[int, Query(ge=1, le=100)] = 100,
+) -> dict[str, Any]:
+    _validate_evidence_limit(limit)
+    try:
+        items = _evidence_service().query(drug=name, latest_only=latest_only)[:limit]
+        return _evidence_list_response({"drug": name, "latest_only": latest_only, "limit": limit}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/trial/{trial_id}")
+def evidence_by_trial(
+    trial_id: str,
+    latest_only: Annotated[bool, Query()] = False,
+    limit: Annotated[int, Query(ge=1, le=100)] = 100,
+) -> dict[str, Any]:
+    _validate_evidence_limit(limit)
+    try:
+        items = _evidence_service().related_evidence(trial_id, latest_only=latest_only)[:limit]
+        return _evidence_list_response({"trial_id": trial_id, "latest_only": latest_only, "limit": limit}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/study/{name}")
+def evidence_by_study(
+    name: str,
+    latest_only: Annotated[bool, Query()] = False,
+    limit: Annotated[int, Query(ge=1, le=100)] = 100,
+) -> dict[str, Any]:
+    _validate_evidence_limit(limit)
+    try:
+        items = _evidence_service().query(study_name=name, latest_only=latest_only)[:limit]
+        return _evidence_list_response({"study_name": name, "latest_only": latest_only, "limit": limit}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/source/{source_id}")
+def evidence_source(source_id: str) -> dict[str, Any]:
+    try:
+        item = _evidence_service().get_by_source_id(source_id)
+        if item is None:
+            raise HTTPException(status_code=404, detail=f"未找到资料来源：{source_id}")
+        return {"item": item}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
 
 
 @app.post("/api/chat")

@@ -46,6 +46,8 @@ class SourceRegistryServiceTest(unittest.TestCase):
     def test_07_nct04379635_returns_three_related_sources(self):
         rows = self.service.query(trial_id="NCT04379635")
         self.assertEqual(self.ids(rows), {"B011", "B012", "B013"})
+        for row in rows:
+            self.assertEqual(row["parent_trial_id"], "NCT04379635")
 
     def test_08_nct04619433_is_h006_terminated(self):
         rows = self.service.query(trial_id="NCT04619433")
@@ -94,6 +96,17 @@ print(','.join(name for name in blocked if name in sys.modules))
 """
         result = subprocess.run([sys.executable, "-c", code], check=True, text=True, capture_output=True)
         self.assertEqual(result.stdout.strip(), "")
+
+    def test_16_b011_notes_reference_current_rationale_315_links(self):
+        row = self.service.get_by_source_id("B011")
+        self.assertIsNotNone(row)
+        risk_notes = row.get("risk_notes", "")
+        self.assertNotIn("后续批次补充", risk_notes)
+        self.assertIn("中期分析", risk_notes)
+        self.assertIn("B012", risk_notes)
+        self.assertIn("B013", risk_notes)
+        self.assertIn("NCT04379635", risk_notes)
+        self.assertIn("不重复计数", risk_notes)
 
 
 if __name__ == "__main__":
