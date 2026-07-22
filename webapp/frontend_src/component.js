@@ -15,6 +15,9 @@ class Component extends DCLogic {
     chainSummary:null, chainCompany:'', chainType:'', chainItems:[], chainSelected:null, chainUnresolved:[],
     chainLoading:false, chainSummaryLoading:false, chainDetailLoading:false, chainUnresolvedLoading:false,
     chainError:'', chainLoaded:false, chainUnresolvedOpen:false,
+    comparisonCompanyA:'恒瑞医药', comparisonCompanyB:'BeOne Medicines',
+    companyComparison:null, metricRules:[], companyComparisonLoading:false, metricRulesLoading:false,
+    companyComparisonError:'', companyComparisonLoaded:false, metricRulesOpen:false,
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -246,11 +249,12 @@ class Component extends DCLogic {
   // ---- evidence registry page ----
   loadEvidencePage(){
     if(this.state.evidenceTab==='chains'){ this.loadEvidenceChainPage(); return; }
+    if(this.state.evidenceTab==='companyCompare'){ this.loadCompanyComparisonPage(); return; }
     this.loadEvidenceSummary();
     if(!this.state.evidenceHasSearched && !this.state.evidenceLoading) this.loadEvidence();
   }
   switchEvidenceTab(tab){
-    this.setState({evidenceTab:tab,evidenceError:'',chainError:''}, ()=>this.loadEvidencePage());
+    this.setState({evidenceTab:tab,evidenceError:'',chainError:'',companyComparisonError:''}, ()=>this.loadEvidencePage());
   }
   loadEvidenceSummary(){
     if(this.state.evidenceSummaryLoading) return;
@@ -363,6 +367,66 @@ class Component extends DCLogic {
     if(this.state.chainUnresolvedLoading) return;
     this.setState({chainUnresolvedLoading:true});
     this._api('/api/evidence/unresolved-links').then(d=>this.setState({chainUnresolvedLoading:false,chainUnresolved:Array.isArray(d&&d.items)?d.items:[]})).catch(()=>this.setState({chainUnresolvedLoading:false,chainError:'待确认关系加载失败，请稍后重试'}));
+  }
+  loadCompanyComparisonPage(){
+    this.loadCompanyComparison();
+    this.loadCompanyMetricRules();
+  }
+  _companyKey(name){
+    const v=String(name||'').trim().toLowerCase();
+    if(['百济神州','beone medicines','beigene','百济神州 / beone medicines','百济神州/beone medicines'].includes(v)) return 'beone';
+    if(v==='恒瑞医药') return 'hengrui';
+    return v;
+  }
+  _companyLabel(name){
+    const key=this._companyKey(name);
+    if(key==='beone') return '百济神州 / BeOne Medicines';
+    if(key==='hengrui') return '恒瑞医药';
+    return this._evidenceText(name);
+  }
+  _companyOptions(){
+    const comparison=this.state.companyComparison||{};
+    const companies=Array.isArray(comparison.companies)?comparison.companies:[];
+    const names=companies.map(c=>c&&c.display_name?c.display_name:c&&c.company_name).filter(Boolean);
+    const base=names.length?names:['恒瑞医药','BeOne Medicines'];
+    const seen={}, out=[];
+    base.forEach(name=>{
+      const key=this._companyKey(name);
+      if(!seen[key]){ seen[key]=1; out.push({value:key==='beone'?'BeOne Medicines':'恒瑞医药', label:this._companyLabel(name)}); }
+    });
+    return out;
+  }
+  loadCompanyComparison(){
+    const a=this.state.comparisonCompanyA, b=this.state.comparisonCompanyB;
+    if(this._companyKey(a)===this._companyKey(b)){
+      this.setState({companyComparison:null,companyComparisonError:'请选择两个不同企业后再比较',companyComparisonLoading:false,companyComparisonLoaded:true});
+      return;
+    }
+    if(this.state.companyComparisonLoading) return;
+    this.setState({companyComparisonLoading:true,companyComparisonError:'',companyComparisonLoaded:true});
+    this._api('/api/evidence/company-comparison',{company_a:a,company_b:b}).then(d=>this.setState({companyComparisonLoading:false,companyComparison:(d&&d.comparison)||null})).catch(()=>this.setState({companyComparisonLoading:false,companyComparisonError:'企业证据对比加载失败，请稍后重试'}));
+  }
+  loadCompanyMetricRules(){
+    if(this.state.metricRulesLoading || (this.state.metricRules&&this.state.metricRules.length)) return;
+    this.setState({metricRulesLoading:true});
+    this._api('/api/evidence/company-comparison/metric-rules').then(d=>this.setState({metricRulesLoading:false,metricRules:Array.isArray(d&&d.items)?d.items:[]})).catch(()=>this.setState({metricRulesLoading:false,companyComparisonError:'指标解释规则加载失败，请稍后重试'}));
+  }
+  _setCompareCompany(side, value){
+    const patch=side==='a'?{comparisonCompanyA:value}:{comparisonCompanyB:value};
+    this.setState(patch, ()=>this.loadCompanyComparison());
+  }
+  swapCompareCompanies(){
+    const a=this.state.comparisonCompanyA, b=this.state.comparisonCompanyB;
+    this.setState({comparisonCompanyA:b,comparisonCompanyB:a}, ()=>this.loadCompanyComparison());
+  }
+  openComparisonChain(chainId){
+    const cid=String(chainId||'').trim();
+    if(!cid) return;
+    this.setState({evidenceTab:'chains',chainError:''}, ()=>{
+      this.loadChainSummary();
+      this.loadUnresolvedLinks();
+      this.loadChainDetail(cid);
+    });
   }
   _chainTypeLabel(t){ return t==='trial'?'试验级':'药物级监管'; }
   _roleLabel(role){
@@ -496,6 +560,68 @@ class Component extends DCLogic {
       title:this._sourceTitle(source)
     };
   }
+  _distVm(obj){
+    obj=obj||{};
+    return Object.keys(obj).filter(k=>k&&k!=='undefined'&&k!=='null').sort().map(k=>({label:k,value:this._evidenceText(obj[k])}));
+  }
+  _gapVm(gaps){
+    gaps=Array.isArray(gaps)?gaps:[];
+    return gaps.map(g=>({
+      source_id:this._evidenceText(g&&g.source_id),
+      description:this._evidenceText(g&&g.description),
+      gapText:Array.isArray(g&&g.evidence_gaps)?g.evidence_gaps.join('；'):this._evidenceText(g&&g.evidence_gaps)
+    }));
+  }
+  _compareChainVm(chain){
+    chain=chain||{};
+    return {
+      chain_id:this._evidenceText(chain.chain_id),
+      chain_name:this._evidenceText(chain.chain_name),
+      chain_type:this._chainTypeLabel(chain.chain_type),
+      trialText:(Array.isArray(chain.trial_ids)&&chain.trial_ids.length)?chain.trial_ids.join('；'):'暂无',
+      source_count:this._evidenceText(chain.source_count),
+      onClick:()=>this.openComparisonChain(chain.chain_id)
+    };
+  }
+  _companyProfileVm(profile){
+    profile=profile||{};
+    const version=profile.version_distribution||{};
+    const sourceTypes=this._distVm(profile.source_type_distribution);
+    const trialChains=(Array.isArray(profile.trial_chains)?profile.trial_chains:[]).map(x=>this._compareChainVm(x));
+    const regulatoryChains=(Array.isArray(profile.regulatory_chains)?profile.regulatory_chains:[]).map(x=>this._compareChainVm(x));
+    const gaps=this._gapVm(profile.evidence_gaps);
+    return {
+      has:!!profile.company_name,
+      company_name:this._companyLabel(profile.display_name||profile.company_name),
+      source_count:this._evidenceText(profile.source_count),
+      verified_source_count:this._evidenceText(profile.verified_source_count),
+      trial_chain_count:this._evidenceText(profile.trial_chain_count),
+      regulatory_chain_count:this._evidenceText(profile.regulatory_chain_count),
+      single_source_trial_chain_count:this._evidenceText(profile.single_source_trial_chain_count),
+      multi_source_trial_chain_count:this._evidenceText(profile.multi_source_trial_chain_count),
+      unresolved_link_count:this._evidenceText(profile.unresolved_link_count),
+      latest:this._evidenceText(version.latest),
+      historical:this._evidenceText(version.historical),
+      independent:this._evidenceText(version.independent),
+      sourceTypes,
+      hasSourceTypes:sourceTypes.length>0,
+      trialChains,
+      regulatoryChains,
+      hasTrialChains:trialChains.length>0,
+      hasRegulatoryChains:regulatoryChains.length>0,
+      gaps,
+      hasGaps:gaps.length>0
+    };
+  }
+  _metricRuleVm(rule){
+    rule=rule||{};
+    return {
+      name:this._evidenceText(rule.name),
+      calculation:this._evidenceText(rule.calculation),
+      correct:this._evidenceText(rule.correct_interpretation),
+      prohibited:this._evidenceText(rule.prohibited_interpretation)
+    };
+  }
   evidenceVals(){
     const s=this.state, sum=s.evidenceSummary||{};
     const modes=[
@@ -534,13 +660,30 @@ class Component extends DCLogic {
     const chainDetail=this._chainDetailVm(s.chainSelected||{});
     const chainUnresolved=(s.chainUnresolved||[]).map(x=>this._unresolvedVm(x));
     const tabStyle=(active)=>'height:34px;border-radius:9px;border:1px solid '+(active?'var(--brand-600)':'var(--border)')+';background:'+(active?'var(--brand-600)':'var(--bg-elev)')+';color:'+(active?'#fff':'var(--text-2)')+';font-size:13px;font-weight:600;padding:0 14px;cursor:pointer';
+    const comparison=s.companyComparison||{};
+    const companyProfiles=(Array.isArray(comparison.companies)?comparison.companies:[]).map(x=>this._companyProfileVm(x));
+    const companyOptions=this._companyOptions();
+    const sameCompany=this._companyKey(s.comparisonCompanyA)===this._companyKey(s.comparisonCompanyB);
+    const metricRules=(s.metricRules||[]).map(x=>this._metricRuleVm(x));
+    const dataInsufficient=[
+      {name:'临床阶段', reason:'当前仅能展示原始 study_phase 分布，字段存在空值、不适用和不同来源口径。'},
+      {name:'研究人群', reason:'缺少统一结构化人群字段，不能从标题自动补全。'},
+      {name:'治疗场景', reason:'treatment_line、regimen_detail、comparator 不完整，不能输出强结论。'},
+      {name:'靶点', reason:'当前没有统一 target 字段。'},
+      {name:'机制', reason:'当前没有统一 mechanism 字段。'},
+      {name:'药物类型', reason:'当前没有统一 drug_type 字段。'},
+      {name:'疗效与安全性', reason:'不支持跨试验疗效、安全性或成功率比较。'}
+    ];
     return {
       ev_tabSourceStyle:tabStyle(s.evidenceTab==='sources'),
       ev_tabChainStyle:tabStyle(s.evidenceTab==='chains'),
+      ev_tabCompanyStyle:tabStyle(s.evidenceTab==='companyCompare'),
       ev_tabSource:()=>this.switchEvidenceTab('sources'),
       ev_tabChain:()=>this.switchEvidenceTab('chains'),
+      ev_tabCompany:()=>this.switchEvidenceTab('companyCompare'),
       ev_isSourceTab:s.evidenceTab==='sources',
       ev_isChainTab:s.evidenceTab==='chains',
+      ev_isCompanyCompareTab:s.evidenceTab==='companyCompare',
       ev_modes:modes.map(m=>Object.assign({}, m, {style:'height:30px;border-radius:7px;border:0;padding:0 10px;font-size:12px;font-weight:600;cursor:pointer;'+(m.key===s.evidenceKind?'background:var(--brand-600);color:#fff':'background:transparent;color:var(--text-2)'), onClick:()=>this.setState({evidenceKind:m.key,evidenceError:''})})),
       ev_kind:s.evidenceKind, ev_kindLabel:activeMode.label, ev_query:s.evidenceQuery, ev_placeholder:activeMode.placeholder,
       ev_onQuery:(e)=>this.setState({evidenceQuery:e.target.value}),
@@ -595,7 +738,30 @@ class Component extends DCLogic {
       chain_unresolvedOpen:s.chainUnresolvedOpen,
       chain_toggleUnresolved:()=>this.setState({chainUnresolvedOpen:!this.state.chainUnresolvedOpen}),
       chain_unresolved:chainUnresolved,
-      chain_unresolvedCountList:chainUnresolved.length
+      chain_unresolvedCountList:chainUnresolved.length,
+      cmp_companyA:s.comparisonCompanyA,
+      cmp_companyB:s.comparisonCompanyB,
+      cmp_companyOptions:companyOptions,
+      cmp_onCompanyA:(e)=>this._setCompareCompany('a', e.target.value),
+      cmp_onCompanyB:(e)=>this._setCompareCompany('b', e.target.value),
+      cmp_swap:()=>this.swapCompareCompanies(),
+      cmp_refresh:()=>this.loadCompanyComparisonPage(),
+      cmp_loading:s.companyComparisonLoading,
+      cmp_rulesLoading:s.metricRulesLoading,
+      cmp_hasError:!!s.companyComparisonError,
+      cmp_error:s.companyComparisonError,
+      cmp_loaded:s.companyComparisonLoaded,
+      cmp_sameCompany:sameCompany,
+      cmp_hasProfiles:companyProfiles.length>0,
+      cmp_profiles:companyProfiles,
+      cmp_empty:s.companyComparisonLoaded&&!s.companyComparisonLoading&&!s.companyComparisonError&&!companyProfiles.length,
+      cmp_metricRules:metricRules,
+      cmp_hasMetricRules:metricRules.length>0,
+      cmp_rulesOpen:s.metricRulesOpen,
+      cmp_toggleRules:()=>this.setState({metricRulesOpen:!this.state.metricRulesOpen}),
+      cmp_dataInsufficient:dataInsufficient,
+      cmp_scopeText:'以下结果仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力。',
+      cmp_objects:'恒瑞医药、百济神州/BeOne Medicines'
     };
   }
 

@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from deepinsight.core.agent_tools import run_advanced_analysis, tool_get_equity_penetration, tool_get_innovation_index, tool_get_risk_radar
 from deepinsight.apps.app_whitebox import WHITEBOX_DEMO_ANSWER, WHITEBOX_DEMO_CHUNKS, WHITEBOX_DEMO_REASONING, WHITEBOX_DEMO_SQL
+from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.industry_taxonomy import infer_industry_name
 from deepinsight.core.retriever import DEFAULT_DB_PATH, answer_query, create_optional_client, get_connection
@@ -1395,6 +1396,14 @@ def _evidence_chain_service() -> EvidenceChainService:
     return EvidenceChainService(source_registry_service=_evidence_service())
 
 
+def _company_evidence_comparison_service() -> CompanyEvidenceComparisonService:
+    source_service = _evidence_service()
+    return CompanyEvidenceComparisonService(
+        source_registry_service=source_service,
+        evidence_chain_service=EvidenceChainService(source_registry_service=source_service),
+    )
+
+
 def _evidence_metadata() -> dict[str, Any]:
     return {
         "data_scope": "first_version_nsclc_hengrui_beone",
@@ -1406,6 +1415,13 @@ def _evidence_chain_metadata() -> dict[str, Any]:
     return {
         "data_scope": "first_version_nsclc_hengrui_beone",
         "relationship_source": "evidence_chains.json",
+    }
+
+
+def _company_evidence_comparison_metadata() -> dict[str, Any]:
+    return {
+        "data_scope": "first_version_nsclc_hengrui_beone",
+        "interpretation_scope": "current_verified_sample_only",
     }
 
 
@@ -1616,6 +1632,34 @@ def evidence_unresolved_links() -> dict[str, Any]:
     try:
         items = _evidence_chain_service().get_unresolved_links()
         return _evidence_chain_list_response({"relation_level": "unresolved"}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/company-comparison/metric-rules")
+def evidence_company_comparison_metric_rules() -> dict[str, Any]:
+    try:
+        items = _company_evidence_comparison_service().metric_rules()
+        return {"items": items, "count": len(items)}
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/company-comparison")
+def evidence_company_comparison(
+    company_a: Annotated[str, Query()] = "恒瑞医药",
+    company_b: Annotated[str, Query()] = "BeOne Medicines",
+) -> dict[str, Any]:
+    if not str(company_a or "").strip() or not str(company_b or "").strip():
+        raise HTTPException(status_code=400, detail="企业名称不能为空。")
+    try:
+        comparison = _company_evidence_comparison_service().compare(company_a, company_b)
+        return {
+            "comparison": comparison,
+            "metadata": _company_evidence_comparison_metadata(),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
