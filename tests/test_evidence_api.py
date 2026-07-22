@@ -1,8 +1,12 @@
 import asyncio
 import inspect
+import json
 import sys
 import unittest
 from pathlib import Path
+from urllib.parse import quote, unquote, urlsplit
+
+import anyio.to_thread
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -17,46 +21,71 @@ try:
 except Exception as exc:  # pragma: no cover - exercised only when optional deps are absent
     WEBAPP_IMPORT_ERROR = exc
 
-TESTCLIENT_IMPORT_ERROR = None
-TestClient = None
-try:
-    from fastapi.testclient import TestClient
-except Exception as exc:  # pragma: no cover - fallback depends on installed deps
-    TESTCLIENT_IMPORT_ERROR = exc
+class _ASGIResponse:
+    def __init__(self, status_code: int, body: bytes):
+        self.status_code = status_code
+        self.content = body
+        self.text = body.decode("utf-8")
 
-HTTPX_IMPORT_ERROR = None
-httpx = None
-try:
-    import httpx
-except Exception as exc:  # pragma: no cover - fallback depends on installed deps
-    HTTPX_IMPORT_ERROR = exc
+    def json(self):
+        return json.loads(self.text)
 
 
-class _AsyncASGIClient:
+class _ASGIClient:
     def __init__(self, app):
         self.app = app
 
     def get(self, path: str):
         async def _request():
-            transport = httpx.ASGITransport(app=self.app)
-            async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
-                return await client.get(path)
+            parsed = urlsplit(path)
+            messages = []
+            request_sent = False
+
+            scope = {
+                "type": "http",
+                "asgi": {"version": "3.0", "spec_version": "2.3"},
+                "http_version": "1.1",
+                "method": "GET",
+                "scheme": "http",
+                "path": unquote(parsed.path),
+                "raw_path": quote(parsed.path, safe="/%").encode("ascii"),
+                "query_string": quote(parsed.query, safe="=&%").encode("ascii"),
+                "headers": [(b"host", b"testserver"), (b"accept", b"application/json")],
+                "client": ("testclient", 50000),
+                "server": ("testserver", 80),
+                "root_path": "",
+            }
+
+            async def receive():
+                nonlocal request_sent
+                if not request_sent:
+                    request_sent = True
+                    return {"type": "http.request", "body": b"", "more_body": False}
+                await asyncio.sleep(0)
+                return {"type": "http.disconnect"}
+
+            async def send(message):
+                messages.append(message)
+
+            original_run_sync = anyio.to_thread.run_sync
+
+            async def inline_run_sync(func, *args, abandon_on_cancel=False, cancellable=None, limiter=None):
+                return func(*args)
+
+            anyio.to_thread.run_sync = inline_run_sync
+            try:
+                await self.app(scope, receive, send)
+            finally:
+                anyio.to_thread.run_sync = original_run_sync
+            start = next(message for message in messages if message["type"] == "http.response.start")
+            body = b"".join(message.get("body", b"") for message in messages if message["type"] == "http.response.body")
+            return _ASGIResponse(start["status"], body)
 
         return asyncio.run(_request())
 
 
 def _build_client(app):
-    if TestClient is not None:
-        try:
-            return TestClient(app), "TestClient"
-        except Exception as exc:  # pragma: no cover - depends on local Starlette/httpx pairing
-            if httpx is None or not hasattr(httpx, "ASGITransport"):
-                raise unittest.SkipTest(f"FastAPI TestClient unavailable: {exc!r}") from exc
-    if httpx is not None and hasattr(httpx, "ASGITransport"):
-        return _AsyncASGIClient(app), "httpx.ASGITransport"
-    raise unittest.SkipTest(
-        f"No ASGI test client available: TestClient={TESTCLIENT_IMPORT_ERROR!r}, httpx={HTTPX_IMPORT_ERROR!r}"
-    )
+    return _ASGIClient(app), "direct ASGI HTTP"
 
 
 def _ids(payload):

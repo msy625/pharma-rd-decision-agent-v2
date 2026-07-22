@@ -3664,7 +3664,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-sidebar][data-open="1"]{transform:none;box-shadow:0 24px 60px rgba(10,12,20,.4)}
   [data-hamburger]{display:inline-flex !important}
   [data-scrim][data-open="1"]{display:block}
-  [data-cols],[data-chat],[data-research]{grid-template-columns:1fr !important}
+  [data-cols],[data-chat],[data-research],[data-evidence]{grid-template-columns:1fr !important}
 }
 @media(max-width:640px){
   [data-grid4]{grid-template-columns:repeat(2,1fr) !important}
@@ -4329,6 +4329,103 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="display:flex;flex-direction:column;gap:10px">
                 <sc-for list="{{ res_blocks }}" as="b"><div style="{{ b.style }}"><sc-if value="{{ b.bullet }}"><span style="width:6px;height:6px;border-radius:50%;background:var(--brand-400);margin-top:10px;flex:none"></span></sc-if><span>{{ b.text }}</span></div></sc-for>
               </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isEvidence }}">
+        <div style="animation:fadeUp .5s var(--ease-out) both;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+            <div>
+              <div style="font-size:21px;font-weight:600;letter-spacing:-.01em">研发证据查询</div>
+              <div style="font-size:12.5px;color:var(--text-3);margin-top:4px">NSCLC · 恒瑞医药 · 百济神州/BeOne Medicines · 人工核验资料</div>
+            </div>
+            <button onclick="{{ ev_reloadSummary }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text-2);font-size:12.5px;font-weight:500;padding:0 12px;display:inline-flex;align-items:center;gap:7px" style-hover="border-color:var(--brand-300);color:var(--brand-600)">
+              <sc-if value="{{ ev_summaryLoading }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--brand-500)" stroke-width="2.4" style="animation:spin .9s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"></path></svg></sc-if>
+              统计加载中 / 刷新统计
+            </button>
+          </div>
+
+          <div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+            <sc-for list="{{ ev_scope }}" as="s" hint-placeholder-count="4">
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px">
+                <div style="font-size:11px;color:var(--text-3);margin-bottom:5px">{{ s.label }}</div>
+                <div style="font-size:16px;font-weight:600;color:var(--text)">{{ s.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-size:12px;color:var(--text-3);background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px 12px">核验日期：{{ ev_verified }}</div>
+
+          <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:13px">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <span style="font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--text-3);margin-right:2px">查询类型</span>
+              <div style="display:flex;background:var(--bg-sunken);border:1px solid var(--border);border-radius:9px;padding:3px;gap:3px;flex-wrap:wrap">
+                <sc-for list="{{ ev_modes }}" as="m"><button onclick="{{ m.onClick }}" style="{{ m.style }}">{{ m.label }}</button></sc-for>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <input value="{{ ev_query }}" oninput="{{ ev_onQuery }}" onkeydown="{{ ev_onKey }}" placeholder="{{ ev_placeholder }}" style="flex:1;min-width:260px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;padding:0 12px;outline:none">
+              <label style="height:38px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:9px;padding:0 11px;background:var(--bg-sunken);font-size:12.5px;color:var(--text-2);white-space:nowrap">
+                <input type="checkbox" checked="{{ ev_latest }}" onchange="{{ ev_onLatest }}" style="accent-color:var(--brand-600)">排除历史版本
+              </label>
+              <span style="font-size:11.5px;color:var(--text-3)">保留最新版本和没有版本关系的独立资料。</span>
+              <select value="{{ ev_limit }}" onchange="{{ ev_onLimit }}" style="height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
+                <option value="20">20 条</option><option value="50">50 条</option><option value="100">100 条</option>
+              </select>
+              <button onclick="{{ ev_search }}" style="height:38px;border-radius:9px;background:var(--brand-600);color:#fff;border:0;font-size:13.5px;font-weight:600;padding:0 17px;display:inline-flex;align-items:center;gap:8px" style-hover="background:var(--brand-700)">
+                <sc-if value="{{ ev_loading }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin .9s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"></path></svg></sc-if>
+                查询
+              </button>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--text-3)">
+              <sc-if value="{{ ev_loading }}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--brand-600)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin .9s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"></path></svg>查询加载中</span></sc-if>
+              <sc-if value="{{ ev_hasSearched }}"><span>返回数量：{{ ev_count }}</span></sc-if>
+              <sc-if value="{{ ev_empty }}"><span style="color:var(--text-2)">空结果：未找到符合条件的证据</span></sc-if>
+              <sc-if value="{{ ev_hasError }}"><span style="color:var(--neg);background:var(--neg-bg);border-radius:999px;padding:3px 10px">{{ ev_error }}</span></sc-if>
+            </div>
+          </div>
+
+          <div data-evidence="" style="display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start">
+            <div data-evidence-results="" style="display:flex;flex-direction:column;gap:10px;min-width:0">
+              <div style="font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--text-3)">结果列表</div>
+              <sc-for list="{{ ev_items }}" as="it" hint-placeholder-count="6">
+                <button onclick="{{ it.onClick }}" style="{{ it.style }}" style-hover="border-color:var(--brand-300)">
+                  <div style="display:flex;align-items:center;gap:8px;justify-content:space-between">
+                    <span style="font-size:12px;font-family:var(--font-mono);font-weight:700;color:var(--brand-600)">{{ it.source_id }}</span>
+                    <span style="font-size:10.5px;font-weight:600;color:{{ it.latestColor }};background:var(--bg-sunken);border-radius:999px;padding:2px 8px">{{ it.latestLabel }}</span>
+                  </div>
+                  <div style="font-size:13.5px;font-weight:600;color:var(--text);line-height:1.45">{{ it.title_original }}</div>
+                  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;font-size:11.5px;color:var(--text-3)">
+                    <span>企业：{{ it.company_name }}</span><span>药物：{{ it.drug_name }}</span>
+                    <span>试验：{{ it.trial_id }}</span><span>研究：{{ it.study_name }}</span>
+                    <span>来源：{{ it.source_type }}</span><span>状态：{{ it.study_status }}</span>
+                    <span>核验：{{ it.verified_at }}</span>
+                  </div>
+                </button>
+              </sc-for>
+            </div>
+
+            <div data-evidence-detail="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:13px;min-width:0">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <div style="font-size:14px;font-weight:600">详情面板</div>
+                <sc-if value="{{ ev_detailLoading }}"><span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--brand-600)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="animation:spin .9s linear infinite"><path d="M21 12a9 9 0 1 1-6.2-8.6"></path></svg>详情加载中</span></sc-if>
+              </div>
+              <sc-if value="{{ ev_detailEmpty }}"><div style="font-size:12.5px;color:var(--text-3);background:var(--bg-sunken);border:1px dashed var(--border);border-radius:10px;padding:16px;text-align:center">请选择一条证据查看详情</div></sc-if>
+              <sc-if value="{{ ev_detailHas }}">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div><span style="display:inline-flex;align-items:center;border-radius:999px;background:var(--bg-sunken);color:{{ ev_detailVersionColor }};font-size:11px;font-weight:700;padding:2px 9px">{{ ev_detailVersionLabel }}</span></div>
+                  <div style="font-size:14.5px;font-weight:600;line-height:1.5">{{ ev_detailTitle }}</div>
+                  <div style="font-size:12.5px;line-height:1.65;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:11px 12px">{{ ev_detailDesc }}</div>
+                </div>
+                <div style="display:grid;grid-template-columns:118px 1fr;gap:7px 10px;font-size:12px">
+                  <sc-for list="{{ ev_detailFields }}" as="f">
+                    <span style="color:var(--text-3)">{{ f.label }}</span><span style="color:var(--text);min-width:0;overflow-wrap:anywhere">{{ f.value }}</span>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ ev_detailHasRisk }}"><div style="border:1px solid var(--warn);background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.6"><strong style="font-weight:700">风险提示：</strong>{{ ev_detailRisk }}</div></sc-if>
+                <sc-if value="{{ ev_hasUrl }}"><a href="{{ ev_detailUrl }}" target="_blank" rel="noopener noreferrer" style="height:34px;border-radius:9px;background:var(--brand-600);color:#fff;text-decoration:none;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:7px">打开原始来源</a></sc-if>
+              </sc-if>
             </div>
           </div>
         </div>
