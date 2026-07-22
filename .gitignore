@@ -33,3 +33,8 @@ deploy/env/webapp.env
 webapp/static/_legacy_native/
 
 .venv/
+
+# Local secrets
+.env
+.env.*
+!.env.example

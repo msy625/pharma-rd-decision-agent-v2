@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "question_types": [
+    "source_search",
+    "trial_status",
+    "evidence_chain",
+    "regulatory_status",
+    "company_comparison",
+    "evidence_gap",
+    "prohibited_or_unsupported"
+  ],
+  "prohibited_patterns": {
+    "individual_diagnosis": [
+      "我是不是",
+      "是否患有",
+      "帮我诊断",
+      "诊断为",
+      "病理诊断"
+    ],
+    "individual_medication_or_treatment": [
+      "我该吃",
+      "我该用",
+      "用什么药",
+      "怎么治疗",
+      "治疗方案",
+      "个体用药",
+      "处方"
+    ],
+    "efficacy_guarantee": [
+      "保证有效",
+      "一定有效",
+      "治愈",
+      "必然缓解",
+      "疗效保证"
+    ],
+    "cross_trial_efficacy_ranking": [
+      "跨试验疗效排名",
+      "哪个试验疗效最好",
+      "疗效优劣排名",
+      "ORR排名",
+      "PFS排名",
+      "OS排名"
+    ],
+    "success_probability_prediction": [
+      "成功率",
+      "获批概率",
+      "上市概率",
+      "预测成功",
+      "成药概率"
+    ],
+    "investment_advice": [
+      "投资建议",
+      "能买吗",
+      "买入",
+      "卖出",
+      "目标价",
+      "股价",
+      "值得投资"
+    ],
+    "company_overall_ranking": [
+      "企业综合排名",
+      "公司综合排名",
+      "谁最强",
+      "哪家公司最好",
+      "企业实力排名"
+    ]
+  },
+  "confirmed_terms": {
+    "studies": [
+      "RATIONALE-304",
+      "RATIONALE-307",
+      "RATIONALE-303",
+      "RATIONALE-315"
+    ],
+    "trial_id_patterns": [
+      "NCT\\d{8}"
+    ],
+    "source_ids": [
+      "B015",
+      "B016"
+    ],
+    "drugs": {
+      "camrelizumab": [
+        "卡瑞利珠单抗",
+        "SHR-1210",
+        "Camrelizumab"
+      ],
+      "tislelizumab": [
+        "替雷利珠单抗",
+        "tislelizumab",
+        "Tislelizumab",
+        "Tevimbra",
+        "TEVIMBRA"
+      ]
+    },
+    "companies": {
+      "hengrui": [
+        "恒瑞",
+        "恒瑞医药",
+        "江苏恒瑞医药股份有限公司",
+        "Jiangsu Hengrui Medicine",
+        "Jiangsu HengRui Medicine"
+      ],
+      "beone": [
+        "百济",
+        "百济神州",
+        "BeOne Medicines",
+        "BeiGene",
+        "百济神州/BeOne Medicines",
+        "百济神州（BeOne Medicines，原BeiGene）"
+      ]
+    }
+  },
+  "classification_keywords": {
+    "trial_status": [
+      "状态",
+      "研究状态",
+      "当前是什么状态",
+      "terminated",
+      "Terminated"
+    ],
+    "regulatory_status": [
+      "B015",
+      "B016",
+      "监管",
+      "授权",
+      "正式授权",
+      "积极意见",
+      "CHMP",
+      "EMA",
+      "EPAR",
+      "批准"
+    ],
+    "evidence_chain": [
+      "证据链",
+      "怎样的证据链",
+      "关联",
+      "形成了怎样",
+      "版本"
+    ],
+    "company_comparison": [
+      "比较",
+      "差异",
+      "对比",
+      "相比"
+    ],
+    "evidence_gap": [
+      "缺什么",
+      "缺口",
+      "证据不足",
+      "风险",
+      "待确认",
+      "还存在"
+    ],
+    "source_search": [
+      "资料",
+      "来源",
+      "source",
+      "有哪些",
+      "查询"
+    ]
+  }
+}

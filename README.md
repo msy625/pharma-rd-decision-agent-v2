@@ -157,6 +157,14 @@ python -m uvicorn webapp.main:app --host 127.0.0.1 --port 8000
 .venv/bin/python -m uvicorn webapp.main:app --host 127.0.0.1 --port 8000
 ```
 
+如需启用 DeepSeek 循证问答 `auto` 模式，可使用本地 `.env` 启动：
+
+```bash
+.venv/bin/python -m uvicorn webapp.main:app --host 127.0.0.1 --port 8000 --env-file .env
+```
+
+`--env-file .env` 用于加载 DeepSeek 配置；不加该参数时，本地循证模式仍然可用。`.env` 不能提交，配置项参考 `.env.example`。
+
 启动后在浏览器打开 `http://127.0.0.1:8000`。
 
 启动 Streamlit：

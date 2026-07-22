@@ -11,6 +11,8 @@ from deepinsight.core.agent_tools import run_advanced_analysis, tool_get_equity_
 from deepinsight.apps.app_whitebox import WHITEBOX_DEMO_ANSWER, WHITEBOX_DEMO_CHUNKS, WHITEBOX_DEMO_REASONING, WHITEBOX_DEMO_SQL
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
+from deepinsight.core.grounded_qa_llm import grounded_llm_settings
+from deepinsight.core.grounded_qa_service import GroundedQAService
 from deepinsight.core.industry_taxonomy import infer_industry_name
 from deepinsight.core.retriever import DEFAULT_DB_PATH, answer_query, create_optional_client, get_connection
 from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
@@ -49,6 +51,11 @@ class BatchWorkflowRequest(BaseModel):
     industry_name: str | None = None
     report_year: int | None = None
     top_k: int = Field(default=5, ge=1, le=10)
+
+
+class GroundedQARequest(BaseModel):
+    question: str | None = None
+    generation_mode: str = "auto"
 
 
 class CompanyNotFoundError(ValueError):
@@ -1404,6 +1411,19 @@ def _company_evidence_comparison_service() -> CompanyEvidenceComparisonService:
     )
 
 
+def _grounded_qa_service() -> GroundedQAService:
+    source_service = _evidence_service()
+    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+    return GroundedQAService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=CompanyEvidenceComparisonService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+        ),
+    )
+
+
 def _evidence_metadata() -> dict[str, Any]:
     return {
         "data_scope": "first_version_nsclc_hengrui_beone",
@@ -1459,6 +1479,14 @@ def _handle_source_registry_error(exc: Exception) -> HTTPException:
     if isinstance(exc, SourceRegistryStructureError):
         return HTTPException(status_code=503, detail="证据资料结构异常，请检查CSV或配置文件。")
     return HTTPException(status_code=500, detail="证据查询服务暂时不可用。")
+
+
+def _handle_grounded_qa_error(exc: Exception) -> HTTPException:
+    if isinstance(exc, (SourceRegistryFileNotFound, FileNotFoundError)):
+        return HTTPException(status_code=503, detail="循证问答资料文件不可用，请检查数据文件是否已部署。")
+    if isinstance(exc, (SourceRegistryStructureError, ValueError)):
+        return HTTPException(status_code=503, detail="循证问答资料结构异常，请检查CSV或配置文件。")
+    return HTTPException(status_code=500, detail="循证问答服务暂时不可用。")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -1662,6 +1690,59 @@ def evidence_company_comparison(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/grounded-qa/capabilities")
+def evidence_grounded_qa_capabilities() -> dict[str, Any]:
+    try:
+        service = _grounded_qa_service()
+        rules = service.rules
+        llm_settings = grounded_llm_settings()
+        return {
+            "local_mode_available": True,
+            "llm_mode_available": bool(llm_settings["configured"]),
+            "supported_question_types": rules.get("question_types", []),
+            "prohibited_categories": list((rules.get("prohibited_patterns") or {}).keys()),
+            "data_version": service.data_version(),
+            "requires_api_key_for_llm": True,
+            "model_name": llm_settings["model"],
+            "description": "本地循证模式可用；DeepSeek可通过auto模式在密钥配置后启用。" if llm_settings["configured"] else "本地循证模式可用，DeepSeek尚未启用。",
+        }
+    except Exception as exc:
+        raise _handle_grounded_qa_error(exc) from exc
+
+
+@app.post("/api/evidence/grounded-qa")
+def evidence_grounded_qa(payload: GroundedQARequest) -> dict[str, Any]:
+    question = (payload.question or "").strip()
+    if not question:
+        raise HTTPException(status_code=400, detail="question 不能为空。")
+    if len(question) > 1000:
+        raise HTTPException(status_code=400, detail="question 不能超过 1000 个字符。")
+    generation_mode = (payload.generation_mode or "auto").strip().lower()
+    if generation_mode not in {"auto", "local"}:
+        raise HTTPException(status_code=400, detail="generation_mode 只允许 auto 或 local。")
+    try:
+        llm_settings = grounded_llm_settings()
+        result = _grounded_qa_service().answer_question(
+            question,
+            model_name=llm_settings["model"] if generation_mode == "auto" else None,
+            use_configured_llm=generation_mode == "auto",
+        )
+        llm_used = bool(result.get("trace", {}).get("used_llm"))
+        return {
+            "result": result,
+            "metadata": {
+                "data_scope": "first_version_nsclc_hengrui_beone",
+                "generation_mode_requested": generation_mode,
+                "generation_mode_used": "llm" if llm_used else "local",
+                "llm_used": llm_used,
+                "fallback_used": bool(result.get("trace", {}).get("fallback_used")),
+                "model_name": llm_settings["model"] if generation_mode == "auto" else "local-structured-summary",
+            },
+        }
+    except Exception as exc:
+        raise _handle_grounded_qa_error(exc) from exc
 
 
 @app.get("/api/evidence/search")
