@@ -18,6 +18,9 @@ class Component extends DCLogic {
     comparisonCompanyA:'恒瑞医药', comparisonCompanyB:'BeOne Medicines',
     companyComparison:null, metricRules:[], companyComparisonLoading:false, metricRulesLoading:false,
     companyComparisonError:'', companyComparisonLoaded:false, metricRulesOpen:false,
+    groundedCapabilities:null, groundedCapabilitiesLoading:false, groundedCapabilitiesLoaded:false,
+    groundedQuestion:'', groundedMode:'local', groundedLoading:false, groundedError:'',
+    groundedResult:null, groundedMeta:null, groundedTraceOpen:false, groundedSeq:0,
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -250,11 +253,12 @@ class Component extends DCLogic {
   loadEvidencePage(){
     if(this.state.evidenceTab==='chains'){ this.loadEvidenceChainPage(); return; }
     if(this.state.evidenceTab==='companyCompare'){ this.loadCompanyComparisonPage(); return; }
+    if(this.state.evidenceTab==='groundedQa'){ this.loadGroundedCapabilities(); return; }
     this.loadEvidenceSummary();
     if(!this.state.evidenceHasSearched && !this.state.evidenceLoading) this.loadEvidence();
   }
   switchEvidenceTab(tab){
-    this.setState({evidenceTab:tab,evidenceError:'',chainError:'',companyComparisonError:''}, ()=>this.loadEvidencePage());
+    this.setState({evidenceTab:tab,evidenceError:'',chainError:'',companyComparisonError:'',groundedError:''}, ()=>this.loadEvidencePage());
   }
   loadEvidenceSummary(){
     if(this.state.evidenceSummaryLoading) return;
@@ -428,17 +432,221 @@ class Component extends DCLogic {
       this.loadChainDetail(cid);
     });
   }
+  openGroundedChain(chainId){
+    const cid=String(chainId||'').trim();
+    if(!cid) return;
+    this.setState({evidenceTab:'chains',chainError:'',groundedError:''}, ()=>{
+      this.loadChainSummary();
+      this.loadUnresolvedLinks();
+      this.loadChainDetail(cid);
+    });
+  }
+  loadGroundedCapabilities(){
+    if(this.state.groundedCapabilitiesLoading || this.state.groundedCapabilitiesLoaded) return;
+    this.setState({groundedCapabilitiesLoading:true,groundedError:''});
+    this._api('/api/evidence/grounded-qa/capabilities').then(d=>{
+      const deepseekOk=!!(d&&d.llm_mode_available);
+      this.setState({
+        groundedCapabilitiesLoading:false,
+        groundedCapabilitiesLoaded:true,
+        groundedCapabilities:d||null,
+        groundedMode:deepseekOk?'auto':'local'
+      });
+    }).catch(()=>this.setState({
+      groundedCapabilitiesLoading:false,
+      groundedCapabilitiesLoaded:true,
+      groundedCapabilities:null,
+      groundedMode:'local',
+      groundedError:'循证问答能力加载失败，请稍后重试。'
+    }));
+  }
+  setGroundedMode(mode){
+    const cap=this.state.groundedCapabilities||{};
+    if(mode==='auto' && !cap.llm_mode_available){
+      this.setState({groundedMode:'local',groundedError:'DeepSeek当前不可用，请使用本地证据摘要。'});
+      return;
+    }
+    this.setState({groundedMode:mode,groundedError:''});
+  }
+  setGroundedExample(question){
+    this.setState({groundedQuestion:String(question||'').slice(0,1000),groundedError:''});
+  }
+  submitGroundedQA(){
+    const question=String(this.state.groundedQuestion||'').trim();
+    if(!question){ this.setState({groundedError:'请输入问题后再提交。'}); return; }
+    if(question.length>1000){ this.setState({groundedError:'问题不能超过 1000 个字符。'}); return; }
+    if(this.state.groundedLoading) return;
+    if(this._groundedAbort) this._groundedAbort.abort();
+    const seq=(this.state.groundedSeq||0)+1;
+    const controller=(typeof AbortController!=='undefined')?new AbortController():null;
+    this._groundedAbort=controller;
+    this.setState({groundedLoading:true,groundedError:'',groundedSeq:seq});
+    fetch('/api/evidence/grounded-qa', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','accept':'application/json'},
+      body:JSON.stringify({question, generation_mode:this.state.groundedMode}),
+      signal:controller?controller.signal:undefined
+    }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d})).catch(()=>({ok:r.ok,status:r.status,data:null}))).then(({ok,status,data})=>{
+      if(seq!==this.state.groundedSeq) return;
+      if(!ok){
+        const detail=data&&data.detail?String(data.detail):'循证问答请求失败，请稍后重试。';
+        const msg=status===400?detail:(status===503?'循证问答服务暂不可用，请稍后重试。':'循证问答服务暂时不可用。');
+        this.setState({groundedLoading:false,groundedError:msg});
+        return;
+      }
+      this.setState({groundedLoading:false,groundedResult:(data&&data.result)||null,groundedMeta:(data&&data.metadata)||null});
+    }).catch(e=>{
+      if(e&&e.name==='AbortError') return;
+      if(seq!==this.state.groundedSeq) return;
+      this.setState({groundedLoading:false,groundedError:'网络或服务暂时不可用，请稍后重试。'});
+    });
+  }
+  _questionTypeLabel(type){
+    return ({
+      source_search:'来源检索',
+      trial_status:'试验状态',
+      evidence_chain:'证据链',
+      regulatory_status:'监管状态',
+      company_comparison:'企业对比',
+      evidence_gap:'证据缺口',
+      prohibited_or_unsupported:'安全边界'
+    })[type]||'来源检索';
+  }
+  _groundedRoleLabel(role){
+    return ({
+      trial_registry:'临床试验登记',
+      interim_publication:'中期分析论文',
+      final_publication:'最终分析论文',
+      company_document:'企业官方资料',
+      regulatory_authorisation:'EMA正式授权信息',
+      regulatory_opinion:'CHMP积极意见',
+      independent_evidence:'独立证据资料'
+    })[role]||'其他证据资料';
+  }
+  _studyStatusLabel(status){
+    const raw=String(status==null?'':status).trim();
+    const key=raw.toLowerCase();
+    const labels={
+      completed:'已完成',
+      terminated:'已终止',
+      'active, not recruiting':'活跃、停止招募',
+      recruiting:'招募中',
+      'not yet recruiting':'尚未招募'
+    };
+    if(!raw || ['unknown','n/a','na','不适用','暂无','暂无明确状态'].includes(key)) return '暂无明确状态';
+    return labels[key]?(labels[key]+'（'+raw+'）'):('暂无明确状态');
+  }
+  _retrievalServiceLabel(name){
+    const raw=String(name||'').trim();
+    const labels={
+      EvidenceChainService:'证据链服务',
+      SourceRegistryService:'来源登记服务',
+      CompanyEvidenceComparisonService:'企业证据对比服务',
+      GroundedQAService:'循证问答服务'
+    };
+    return labels[raw]?(labels[raw]+'（'+raw+'）'):(raw||'暂无');
+  }
+  _generationModeLabel(mode){
+    const raw=String(mode||'').trim();
+    const labels={
+      llm:'DeepSeek智能生成',
+      local:'本地循证摘要',
+      safety_block:'安全规则拦截'
+    };
+    return labels[raw]?(labels[raw]+'（'+raw+'）'):(raw||'暂无');
+  }
+  _groundedModelLabel(model){
+    const raw=String(model||'').trim();
+    if(raw==='safe-policy') return '未调用模型';
+    if(!raw) return '本地循证摘要';
+    if(raw==='local-structured-summary') return '本地循证摘要';
+    if(raw==='deepseek-v4-flash') return 'DeepSeek V4 Flash';
+    return raw.replace(/^deepseek-/i,'DeepSeek ').replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim();
+  }
+  _safetyCategoryLabel(category){
+    const raw=String(category||'').trim();
+    const labels={
+      individual_diagnosis:'个体诊断建议',
+      individual_medication_or_treatment:'个体治疗或用药建议',
+      efficacy_guarantee:'疗效保证',
+      cross_trial_efficacy_ranking:'跨试验疗效排名',
+      success_probability_prediction:'成功率预测',
+      investment_advice:'投资建议',
+      company_overall_ranking:'企业综合排名'
+    };
+    return labels[raw]||'其他不支持的问题类型';
+  }
+  _friendlyGroundedText(text){
+    let out=String(text==null?'':text);
+    Object.keys({
+      trial_registry:1,
+      interim_publication:1,
+      final_publication:1,
+      company_document:1,
+      regulatory_authorisation:1,
+      regulatory_opinion:1,
+      independent_evidence:1
+    }).forEach(role=>{
+      out=out.replace(new RegExp('\\b'+role+'\\b','g'), this._groundedRoleLabel(role));
+    });
+    out=out.replace(/study_status=([^；。\n]+)/g, (m, value)=>'研究状态：'+this._studyStatusLabel(value));
+    out=out.replace(/\b[a-z]+_[a-z_]+\b/g, '其他证据资料');
+    return out;
+  }
+  _friendlyGroundedSupportSummary(text){
+    let out=this._friendlyGroundedText(text);
+    ['Completed','Terminated','Active, not recruiting','Recruiting','Not yet recruiting'].forEach(status=>{
+      const label=this._studyStatusLabel(status);
+      out=out.replace(new RegExp(status.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'), label);
+    });
+    return out;
+  }
+  _groundedCitationVm(item){
+    item=item||{};
+    const url=this._safeEvidenceUrl(item.source_url);
+    return {
+      source_id:this._evidenceText(item.source_id),
+      title:this._evidenceText(item.title),
+      source_type:this._evidenceText(item.source_type),
+      verified_at:this._evidenceText(item.verified_at),
+      support_summary:this._friendlyGroundedSupportSummary(item.support_summary),
+      source_url:url,
+      hasUrl:!!url
+    };
+  }
+  _groundedTraceRows(trace){
+    trace=trace||{};
+    const join=(v,mapper)=>Array.isArray(v)&&v.length?v.map(x=>mapper?mapper.call(this,x):x).join('、'):'暂无';
+    const rows=[
+      {label:'检索服务',value:join(trace.retrieval_service,this._retrievalServiceLabel)},
+      {label:'检索来源ID',value:join(trace.retrieved_source_ids)},
+      {label:'检索证据链ID',value:join(trace.retrieved_chain_ids)},
+      {label:'检索来源总数',value:this._evidenceText(trace.source_count)}
+    ];
+    if(typeof trace.trial_evidence_count==='number') rows.push({label:'试验证据数量',value:this._evidenceText(trace.trial_evidence_count)});
+    if(typeof trace.related_regulatory_count==='number') rows.push({label:'关联监管背景',value:this._evidenceText(trace.related_regulatory_count)});
+    rows.push(
+      {label:'执行方式',value:this._generationModeLabel(trace.generation_mode_used)},
+      {label:'安全类别',value:trace.safety_category?this._safetyCategoryLabel(trace.safety_category):'暂无'},
+      {label:'数据版本',value:this._evidenceText(trace.data_version)},
+      {label:'生成时间',value:this._evidenceText(trace.generated_at)},
+      {label:'内部模型标识',value:this._evidenceText(trace.model_name)},
+      {label:'是否使用DeepSeek',value:trace.used_llm?'是':'否'},
+      {label:'是否命中缓存',value:trace.cache_hit?'是':'否'}
+    );
+    return rows;
+  }
   _chainTypeLabel(t){ return t==='trial'?'试验级':'药物级监管'; }
   _roleLabel(role){
     return ({
       trial_registry:'临床试验登记',
-      interim_publication:'中期论文',
-      final_publication:'最终论文',
-      company_document:'公司资料',
+      interim_publication:'中期分析论文',
+      final_publication:'最终分析论文',
+      company_document:'企业官方资料',
       regulatory_authorisation:'EMA正式授权信息',
       regulatory_opinion:'CHMP积极意见',
-      independent_evidence:'独立资料'
-    })[role]||'独立资料';
+      independent_evidence:'独立证据资料'
+    })[role]||'其他证据资料';
   }
   _isRegulatoryEvidence(item){
     item=item||{};
@@ -674,16 +882,46 @@ class Component extends DCLogic {
       {name:'药物类型', reason:'当前没有统一 drug_type 字段。'},
       {name:'疗效与安全性', reason:'不支持跨试验疗效、安全性或成功率比较。'}
     ];
+    const groundedCap=s.groundedCapabilities||{};
+    const groundedResult=s.groundedResult||{};
+    const groundedMeta=s.groundedMeta||{};
+    const groundedTrace=groundedResult.trace||{};
+    const groundedDeepseek=!!groundedCap.llm_mode_available;
+    const groundedModeStyle=(mode,enabled)=>'height:34px;border-radius:9px;border:1px solid '+(s.groundedMode===mode?'var(--brand-600)':'var(--border)')+';background:'+(s.groundedMode===mode?'var(--brand-600)':'var(--bg-elev)')+';color:'+(s.groundedMode===mode?'#fff':'var(--text-2)')+';font-size:12.5px;font-weight:700;padding:0 13px;cursor:'+(enabled?'pointer':'not-allowed')+';opacity:'+(enabled?'1':'.55');
+    const questionTypes=Array.isArray(groundedCap.supported_question_types)?groundedCap.supported_question_types.map(t=>({label:this._questionTypeLabel(t),value:t})):[];
+    const groundedCitations=(Array.isArray(groundedResult.citations)?groundedResult.citations:[]).map(x=>this._groundedCitationVm(x));
+    const groundedLimitations=(Array.isArray(groundedResult.limitations)?groundedResult.limitations:[]).filter(Boolean).map(x=>({text:this._evidenceText(x)}));
+    const groundedChainIds=(Array.isArray(groundedTrace.retrieved_chain_ids)?groundedTrace.retrieved_chain_ids:[]).map(id=>({chain_id:this._evidenceText(id),onClick:()=>this.openGroundedChain(id)}));
+    const groundedFallback=!!(groundedMeta.fallback_used||groundedTrace.fallback_used);
+    const groundedUsedLlm=!!(groundedMeta.llm_used||groundedTrace.used_llm);
+    const groundedGenerationMode=String((groundedMeta&&groundedMeta.generation_mode_used)||groundedTrace.generation_mode_used||'');
+    const groundedSafetyBlock=groundedGenerationMode==='safety_block';
+    const groundedSubmitDisabled=s.groundedLoading||!String(s.groundedQuestion||'').trim()||String(s.groundedQuestion||'').length>1000;
+    const groundedStatusTags=[
+      {text:'问题类型：'+this._questionTypeLabel(groundedResult.question_type), color:groundedSafetyBlock?'var(--warn)':'var(--brand-600)', bg:groundedSafetyBlock?'var(--warn-bg)':'var(--brand-50)'},
+      {text:groundedSafetyBlock?'执行方式：安全规则拦截':(groundedUsedLlm?'执行方式：DeepSeek智能生成':'执行方式：本地循证摘要'), color:groundedSafetyBlock?'var(--warn)':(groundedUsedLlm?'var(--pos)':'var(--text-2)'), bg:groundedSafetyBlock?'var(--warn-bg)':(groundedUsedLlm?'var(--pos-bg)':'var(--bg-sunken)')}
+    ];
+    if(groundedUsedLlm){
+      groundedStatusTags.push({text:'模型：'+this._groundedModelLabel((groundedMeta&&groundedMeta.model_name)||groundedTrace.model_name), color:'var(--text-2)', bg:'var(--bg-sunken)'});
+    }else if(groundedSafetyBlock){
+      groundedStatusTags.push({text:'模型：未调用模型', color:'var(--warn)', bg:'var(--warn-bg)'});
+    }else{
+      groundedStatusTags.push({text:'模型：本地循证摘要', color:'var(--text-2)', bg:'var(--bg-sunken)'});
+    }
+    if(groundedFallback) groundedStatusTags.push({text:'DeepSeek暂不可用，已回退本地证据摘要', color:'var(--warn)', bg:'var(--warn-bg)'});
     return {
       ev_tabSourceStyle:tabStyle(s.evidenceTab==='sources'),
       ev_tabChainStyle:tabStyle(s.evidenceTab==='chains'),
       ev_tabCompanyStyle:tabStyle(s.evidenceTab==='companyCompare'),
+      ev_tabGroundedStyle:tabStyle(s.evidenceTab==='groundedQa'),
       ev_tabSource:()=>this.switchEvidenceTab('sources'),
       ev_tabChain:()=>this.switchEvidenceTab('chains'),
       ev_tabCompany:()=>this.switchEvidenceTab('companyCompare'),
+      ev_tabGrounded:()=>this.switchEvidenceTab('groundedQa'),
       ev_isSourceTab:s.evidenceTab==='sources',
       ev_isChainTab:s.evidenceTab==='chains',
       ev_isCompanyCompareTab:s.evidenceTab==='companyCompare',
+      ev_isGroundedTab:s.evidenceTab==='groundedQa',
       ev_modes:modes.map(m=>Object.assign({}, m, {style:'height:30px;border-radius:7px;border:0;padding:0 10px;font-size:12px;font-weight:600;cursor:pointer;'+(m.key===s.evidenceKind?'background:var(--brand-600);color:#fff':'background:transparent;color:var(--text-2)'), onClick:()=>this.setState({evidenceKind:m.key,evidenceError:''})})),
       ev_kind:s.evidenceKind, ev_kindLabel:activeMode.label, ev_query:s.evidenceQuery, ev_placeholder:activeMode.placeholder,
       ev_onQuery:(e)=>this.setState({evidenceQuery:e.target.value}),
@@ -761,7 +999,56 @@ class Component extends DCLogic {
       cmp_toggleRules:()=>this.setState({metricRulesOpen:!this.state.metricRulesOpen}),
       cmp_dataInsufficient:dataInsufficient,
       cmp_scopeText:'以下结果仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力。',
-      cmp_objects:'恒瑞医药、百济神州/BeOne Medicines'
+      cmp_objects:'恒瑞医药、百济神州/BeOne Medicines',
+      gqa_capLoading:s.groundedCapabilitiesLoading,
+      gqa_capLoaded:s.groundedCapabilitiesLoaded,
+      gqa_localAvailable:groundedCap.local_mode_available?'可用':'不可用',
+      gqa_deepseekAvailable:groundedDeepseek?'可用':'不可用',
+      gqa_deepseekOk:groundedDeepseek,
+      gqa_model:this._groundedModelLabel(groundedCap.model_name),
+      gqa_dataVersion:this._evidenceText(groundedCap.data_version),
+      gqa_questionTypes:questionTypes,
+      gqa_mode:s.groundedMode,
+      gqa_autoStyle:groundedModeStyle('auto', groundedDeepseek),
+      gqa_localStyle:groundedModeStyle('local', true),
+      gqa_chooseAuto:()=>this.setGroundedMode('auto'),
+      gqa_chooseLocal:()=>this.setGroundedMode('local'),
+      gqa_question:s.groundedQuestion,
+      gqa_questionCount:String(s.groundedQuestion||'').length,
+      gqa_onQuestion:(e)=>this.setState({groundedQuestion:String(e.target.value||'').slice(0,1000),groundedError:''}),
+      gqa_onKey:(e)=>{ if(e.key==='Enter'&&e.ctrlKey) this.submitGroundedQA(); },
+      gqa_submit:()=>this.submitGroundedQA(),
+      gqa_loading:s.groundedLoading,
+      gqa_submitDisabled:groundedSubmitDisabled,
+      gqa_submitStyle:'height:38px;border-radius:9px;background:var(--brand-600);color:#fff;border:0;font-size:13.5px;font-weight:700;padding:0 17px;display:inline-flex;align-items:center;gap:8px;opacity:'+(groundedSubmitDisabled?'.55':'1')+';cursor:'+(groundedSubmitDisabled?'not-allowed':'pointer'),
+      gqa_examples:[
+        'RATIONALE-304有哪些证据版本？',
+        'RATIONALE-315形成了怎样的证据链？',
+        'NCT04619433当前是什么状态？',
+        'B015和B016有什么区别？',
+        '恒瑞与百济当前证据样本有什么差异？',
+        '当前数据还存在哪些缺口？'
+      ].map(q=>({text:q,onClick:()=>this.setGroundedExample(q)})),
+      gqa_hasError:!!s.groundedError,
+      gqa_error:s.groundedError,
+      gqa_hasResult:!!s.groundedResult,
+      gqa_answer:this._friendlyGroundedText(groundedResult.answer),
+      gqa_statusTags:groundedStatusTags,
+      gqa_citations:groundedCitations,
+      gqa_hasCitations:groundedCitations.length>0,
+      gqa_noCitationText:groundedSafetyBlock?'当前回答不需要引用。':'当前回答没有可展示引用。',
+      gqa_limitations:groundedLimitations,
+      gqa_hasLimitations:groundedLimitations.length>0,
+      gqa_safetyNotice:this._evidenceText(groundedResult.safety_notice),
+      gqa_hasSafetyNotice:!!groundedResult.safety_notice,
+      gqa_traceOpen:s.groundedTraceOpen,
+      gqa_toggleTrace:()=>this.setState({groundedTraceOpen:!this.state.groundedTraceOpen}),
+      gqa_traceRows:this._groundedTraceRows(groundedTrace),
+      gqa_chainLinks:groundedChainIds,
+      gqa_hasChainLinks:groundedChainIds.length>0,
+      gqa_staticSafety:'系统仅根据当前已核验的NSCLC证据样本回答，不提供诊断、个体治疗'+('建'+'议')+'、疗效保证、跨试验排名、成功'+('率'+'预测')+'或投资'+('建'+'议')+'。',
+      gqa_autoNotice:'智能生成会先检索证据，再让 DeepSeek 组织答案；auto 失败时会自动回退本地摘要。',
+      gqa_autoUnavailable:'DeepSeek当前不可用，默认使用本地证据摘要。页面不会读取、保存或显示任何密钥值。'
     };
   }
 

@@ -90,6 +90,20 @@
 - `metadata.generation_mode_used` 根据实际结果返回 `llm` 或 `local`。
 - `metadata.llm_used`、`metadata.fallback_used`、`metadata.model_name` 与 trace 保持一致。
 
+## 样本范围限定
+
+DeepSeek 系统提示要求：
+
+- 涉及证据缺失时必须使用“当前收录样本中”“当前数据库尚未收录”等限定。
+- 不得推断外部世界不存在相关资料。
+- 不得把当前数据库未收录写成全球范围没有、不存在或尚未发表。
+
+模型生成路径会追加统一限制说明：
+
+```text
+本回答仅反映当前收录并核验的证据样本。
+```
+
 `GET /api/evidence/grounded-qa/capabilities`：
 
 - `local_mode_available=true`
@@ -108,7 +122,7 @@
 结果：
 
 ```text
-Ran 23 tests
+Ran 24 tests
 OK
 ```
 
@@ -118,6 +132,7 @@ OK
 - auto 无密钥回退本地。
 - auto 使用测试客户端可进入 LLM 组织答案。
 - 模型只收到本次证据包。
+- 系统提示包含当前收录样本范围限定，不允许推断外部世界不存在相关资料。
 - 非法 JSON、超时、401、402、503 均回退本地。
 - 虚构 `source_id` 被移除。
 - 错误 URL 不被信任，由登记表校正。

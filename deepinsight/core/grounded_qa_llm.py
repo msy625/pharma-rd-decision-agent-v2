@@ -126,6 +126,8 @@ def generate_grounded_answer(question: str, evidence_packet: dict[str, Any], cli
                 "只能依据 evidence_packet 中已检索证据回答，不能增加外部知识，不能新增未检索到的 source_id。"
                 "关键事实必须引用 source_id；无法支持的结论必须写入 limitations。"
                 "必须遵守证据字段中的研究状态和监管状态，尤其 B015/B016 的监管口径。"
+                "涉及证据缺失时必须使用“当前收录样本中”“当前数据库尚未收录”等限定，"
+                "不得推断外部世界不存在相关资料，不得写成全球范围没有、不存在或尚未发表。"
                 "禁止个体治疗建议、疗效排名、成功率、综合评分或投资建议。"
                 "只输出严格 JSON，对象字段只能包含 answer、citations、limitations。"
             ),

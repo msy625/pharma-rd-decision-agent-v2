@@ -38,6 +38,7 @@ QUESTION_TYPES = {
 }
 NCT_RE = re.compile(r"(?<![A-Za-z0-9])NCT\d{8}(?![A-Za-z0-9])", re.IGNORECASE)
 SOURCE_ID_RE = re.compile(r"\b[HB]\d{3}\b", re.IGNORECASE)
+UNKNOWN_SAFETY_CATEGORY_LABEL = "其他不支持的问题类型"
 
 
 def _load_rules(path: str | Path | None = None) -> dict[str, Any]:
@@ -59,6 +60,11 @@ def _unique_values(values: list[str]) -> list[str]:
 def _contains_any(text: str, terms: list[str]) -> bool:
     text_key = norm(text)
     return any(norm(term) in text_key for term in terms if term)
+
+
+def _matching_terms(text: str, terms: list[str]) -> list[str]:
+    text_key = norm(text)
+    return [term for term in terms if term and norm(term) in text_key]
 
 
 def _version_label(item: dict[str, Any]) -> str:
@@ -122,11 +128,22 @@ class GroundedQAService:
             matched = [pattern for pattern in patterns if pattern and pattern in text]
             if matched:
                 matches.append({"category": category, "patterns": matched})
+        for category, rule in (self.rules.get("safety_semantic_rules") or {}).items():
+            subject_terms = _matching_terms(text, rule.get("subject_terms") or [])
+            intent_terms = _matching_terms(text, rule.get("intent_terms") or [])
+            if subject_terms and intent_terms:
+                existing = next((item for item in matches if item["category"] == category), None)
+                patterns = [f"个体对象:{subject_terms[0]}", f"建议意图:{intent_terms[0]}"]
+                if existing:
+                    existing["patterns"] = _unique_values([*existing["patterns"], *patterns])
+                else:
+                    matches.append({"category": category, "patterns": patterns})
         return {
             "allowed": not matches,
             "question_type": "prohibited_or_unsupported" if matches else None,
+            "safety_category": matches[0]["category"] if matches else "",
             "matches": matches,
-            "notice": "该问题超出当前循证问答安全边界，不能基于本系统资料回答。",
+            "notice": "本系统仅提供已核验研发证据的查询、关联和状态说明，不能替代医生判断。",
         }
 
     def classify_question(self, question: str) -> str:
@@ -329,19 +346,24 @@ class GroundedQAService:
 
         safety = self.check_safety(text)
         if not safety["allowed"]:
-            packet = self.build_evidence_packet(text, "prohibited_or_unsupported")
-            categories = "、".join(item["category"] for item in safety["matches"])
+            packet = self._safety_packet(text)
+            category = safety.get("safety_category") or ""
+            category_label = self.safety_category_label(category)
             return self._response(
                 text,
                 "prohibited_or_unsupported",
-                "该问题超出当前循证问答安全边界，不能基于本系统资料回答。",
+                f"该问题涉及{category_label}，本系统不能提供此类建议。本系统可以提供已核验研发证据的查询、关联和状态说明。",
                 [],
                 [],
-                [f"命中安全边界：{categories}。", "禁止问题不会执行检索，也不会调用语言模型。"],
+                [
+                    f"该请求属于“{category_label}”，已在证据检索前被安全规则拦截。",
+                    "本次未检索证据、未调用语言模型、未生成引用。",
+                ],
                 packet,
                 used_llm=False,
-                model_name=model_name or "",
+                model_name="safe-policy",
                 safety_notice=safety["notice"],
+                safety_category=category,
             )
 
         qtype = self.classify_question(text)
@@ -370,6 +392,7 @@ class GroundedQAService:
             citations, citation_limitations = self.validate_citations(llm_payload.get("citations") or [], packet)
             limitations = list(llm_payload.get("limitations") or [])
             limitations.extend(citation_limitations)
+            limitations.append("本回答仅反映当前收录并核验的证据样本。")
             answer = str(llm_payload.get("answer") or "").strip()
             if not answer:
                 return self._local_fallback(text, packet, "模型未返回可用答案，已回退本地证据摘要。")
@@ -416,6 +439,27 @@ class GroundedQAService:
             "comparison": None,
             "evidence_gaps": [],
             "retrieval_service": [],
+        }
+
+    def safety_category_label(self, category: str) -> str:
+        labels = self.rules.get("safety_category_labels") or {}
+        return labels.get(str(category or "").strip(), UNKNOWN_SAFETY_CATEGORY_LABEL)
+
+    def _safety_packet(self, question: str) -> dict[str, Any]:
+        return {
+            "question": question,
+            "question_type": "prohibited_or_unsupported",
+            "sources": [],
+            "related_regulatory_items": [],
+            "all_sources": [],
+            "chains": [],
+            "comparison": None,
+            "evidence_gaps": [],
+            "retrieval_service": [],
+            "allowed_source_ids": [],
+            "primary_source_ids": [],
+            "chain_ids": [],
+            "data_version": self.data_version(),
         }
 
     def _mentions_company(self, question: str, company_key: str) -> bool:
@@ -616,7 +660,7 @@ class GroundedQAService:
                     for item in chain["related_regulatory_items"]:
                         citations.append(self._citation_for_source(item, "关联监管背景，不计入试验证据数量"))
                 for gap in chain.get("evidence_gaps") or []:
-                    lines.append(f"  - 证据缺口：{gap}")
+                    lines.append(f"  - 证据缺口：{self._sample_scoped_gap(gap)}")
             return "\n".join(lines), citations, evidence_used, limitations
 
         if qtype == "company_comparison":
@@ -736,6 +780,17 @@ class GroundedQAService:
         return response
 
     @staticmethod
+    def _sample_scoped_gap(text: Any) -> str:
+        raw = str(text or "").strip()
+        if not raw:
+            return "当前收录样本中存在待补充证据。"
+        if "最终分析" in raw and "尚未收录" in raw:
+            return "当前收录样本中包含中期分析论文，尚未收录最终分析论文。"
+        if raw.startswith("当前收录样本中") or raw.startswith("当前数据库"):
+            return raw
+        return f"当前收录样本中{raw}"
+
+    @staticmethod
     def _llm_fallback_reason(exc: Exception) -> str:
         text = str(exc or "").lower()
         if "timeout" in text or "timed out" in text:
@@ -761,27 +816,35 @@ class GroundedQAService:
         used_llm: bool,
         model_name: str,
         safety_notice: str = "",
+        safety_category: str = "",
     ) -> dict[str, Any]:
+        trace = {
+            "retrieval_service": packet.get("retrieval_service") or [],
+            "retrieved_source_ids": packet.get("allowed_source_ids") or [],
+            "retrieved_chain_ids": packet.get("chain_ids") or [],
+            "source_count": len(packet.get("allowed_source_ids") or []),
+            "data_version": packet.get("data_version") or self.data_version(),
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "model_name": model_name,
+            "safety_category": safety_category,
+            "used_llm": used_llm,
+            "cache_hit": False,
+            "fallback_used": False,
+            "generation_mode_used": "safety_block" if qtype == "prohibited_or_unsupported" and safety_category else ("llm" if used_llm else "local"),
+        }
+        if qtype == "evidence_chain":
+            trace["trial_evidence_count"] = len(packet.get("primary_source_ids") or [])
+            trace["related_regulatory_count"] = len(packet.get("related_regulatory_items") or [])
         return {
             "question": question,
             "question_type": qtype,
+            "safety_category": safety_category,
             "answer": answer,
             "citations": citations,
             "evidence_used": evidence_used,
             "limitations": _unique_values([item for item in limitations if item]),
             "safety_notice": safety_notice or "仅基于当前本地已核验证据回答，不提供医疗、疗效、商业或资本市场决策意见。",
-            "trace": {
-                "retrieval_service": packet.get("retrieval_service") or [],
-                "retrieved_source_ids": packet.get("allowed_source_ids") or [],
-                "retrieved_chain_ids": packet.get("chain_ids") or [],
-                "source_count": len(packet.get("allowed_source_ids") or []),
-                "data_version": packet.get("data_version") or self.data_version(),
-                "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                "model_name": model_name,
-                "used_llm": used_llm,
-                "cache_hit": False,
-                "fallback_used": False,
-            },
+            "trace": trace,
         }
 
 

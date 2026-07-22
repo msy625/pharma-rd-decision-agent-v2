@@ -1,4 +1,5 @@
 import sys
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -52,6 +53,92 @@ class GroundedQAServiceTest(unittest.TestCase):
         self.assertFalse(response["trace"]["used_llm"])
         self.assertEqual(calls, [])
 
+    def test_individual_treatment_questions_are_blocked_before_retrieval(self):
+        class NoRetrieveService(GroundedQAService):
+            def retrieve_evidence(self, *args, **kwargs):
+                raise AssertionError("prohibited question must not retrieve evidence")
+
+        service = NoRetrieveService()
+
+        cases = [
+            "请根据这些资料告诉一位肺癌患者具体应该选择什么药？",
+            "患者应该用什么药？",
+            "我应该怎么治疗？",
+            "请推荐具体药物。",
+            "请为患者制定治疗方案。",
+        ]
+        for question in cases:
+            with self.subTest(question=question):
+                response = service.answer_question(question, llm_client=lambda **kwargs: {"answer": "should not run"})
+                self.assertEqual(response["question_type"], "prohibited_or_unsupported")
+                self.assertEqual(response["safety_category"], "individual_medication_or_treatment")
+                self.assertEqual(response["citations"], [])
+                self.assertEqual(response["evidence_used"], [])
+                self.assertEqual(response["trace"]["retrieved_source_ids"], [])
+                self.assertEqual(response["trace"]["retrieved_chain_ids"], [])
+                self.assertEqual(response["trace"]["source_count"], 0)
+                self.assertFalse(response["trace"]["used_llm"])
+                self.assertFalse(response["trace"]["cache_hit"])
+                self.assertEqual(response["trace"]["generation_mode_used"], "safety_block")
+                self.assertNotIn("当前数据不足", response["answer"])
+                self.assertIn("不能提供此类建议", response["answer"])
+
+    def test_research_evidence_questions_are_not_blocked_by_treatment_terms(self):
+        cases = [
+            "RATIONALE-304使用了哪些药物？",
+            "B003试验组采用什么治疗方案？",
+            "恒瑞目前有哪些相关药物资料？",
+            "某项试验研究了什么药？",
+            "NCT04619433当前是什么状态？",
+        ]
+        for question in cases:
+            with self.subTest(question=question):
+                self.assertNotEqual(self.service.classify_question(question), "prohibited_or_unsupported")
+
+    def test_safety_category_labels_are_user_friendly(self):
+        cases = [
+            ("帮我诊断是不是肺癌", "individual_diagnosis", "个体诊断建议"),
+            ("患者应该用什么药？", "individual_medication_or_treatment", "个体治疗或用药建议"),
+            ("这个治疗能保证有效吗？", "efficacy_guarantee", "疗效保证"),
+            ("哪个试验疗效最好？", "cross_trial_efficacy_ranking", "跨试验疗效排名"),
+            ("请给出获批成功率", "success_probability_prediction", "成功率预测"),
+            ("百济神州是否值得投资？", "investment_advice", "投资建议"),
+            ("哪家公司最好？", "company_overall_ranking", "企业综合排名"),
+        ]
+        for question, category, label in cases:
+            with self.subTest(question=question):
+                response = self.service.answer_question(question)
+                text = "\n".join([response["answer"], *response["limitations"], response["safety_notice"]])
+                self.assertEqual(response["question_type"], "prohibited_or_unsupported")
+                self.assertEqual(response["safety_category"], category)
+                self.assertIn(label, text)
+                self.assertNotIn(category, response["answer"])
+                self.assertNotIn(category, "\n".join(response["limitations"]))
+                self.assertNotIn(category, response["safety_notice"])
+                self.assertIn("未检索证据", "\n".join(response["limitations"]))
+                self.assertIn("未调用语言模型", "\n".join(response["limitations"]))
+                self.assertIn("未生成引用", "\n".join(response["limitations"]))
+                self.assertEqual(response["citations"], [])
+                self.assertEqual(response["trace"]["source_count"], 0)
+                self.assertFalse(response["trace"]["used_llm"])
+                self.assertEqual(response["trace"]["generation_mode_used"], "safety_block")
+
+    def test_unknown_safety_category_uses_fallback_label(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_rules = Path(tmpdir) / "grounded_qa_rules.json"
+            rules = json.loads(DEFAULT_GROUNDED_QA_RULES_PATH.read_text(encoding="utf-8"))
+            rules["prohibited_patterns"] = {"unknown_safety_category": ["未知禁用问题"]}
+            rules["safety_semantic_rules"] = {}
+            rules["safety_category_labels"] = {}
+            tmp_rules.write_text(json.dumps(rules, ensure_ascii=False), encoding="utf-8")
+
+            response = GroundedQAService(rules_path=tmp_rules).answer_question("这是未知禁用问题")
+
+        visible_text = "\n".join([response["answer"], *response["limitations"], response["safety_notice"]])
+        self.assertEqual(response["safety_category"], "unknown_safety_category")
+        self.assertIn("其他不支持的问题类型", visible_text)
+        self.assertNotIn("unknown_safety_category", visible_text)
+
     def test_rationale_304_returns_expected_sources_and_versions(self):
         response = self.service.answer_question("RATIONALE-304有哪些证据版本？")
         self.assertEqual(response["question_type"], "evidence_chain")
@@ -72,11 +159,18 @@ class GroundedQAServiceTest(unittest.TestCase):
         self.assertIn("B012", response["answer"])
         self.assertIn("B013", response["answer"])
         self.assertIn("关联监管背景：B016", response["answer"])
+        self.assertEqual(response["trace"]["source_count"], 4)
+        self.assertEqual(response["trace"]["trial_evidence_count"], 3)
+        self.assertEqual(response["trace"]["related_regulatory_count"], 1)
+        self.assertIn("当前收录样本中包含中期分析论文，尚未收录最终分析论文", response["answer"])
+        self.assertNotIn("该证据链仅包含中期分析", response["answer"])
 
     def test_nct04619433_is_terminated(self):
         response = self.service.answer_question("NCT04619433当前是什么状态？")
         self.assertIn("Terminated", response["answer"])
         self.assertEqual(self.source_ids(response), ["H006"])
+        self.assertNotIn("trial_evidence_count", response["trace"])
+        self.assertNotIn("related_regulatory_count", response["trace"])
 
     def test_b015_formal_authorisation(self):
         response = self.service.answer_question("B015是什么监管状态？")

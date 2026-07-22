@@ -1729,16 +1729,19 @@ def evidence_grounded_qa(payload: GroundedQARequest) -> dict[str, Any]:
             model_name=llm_settings["model"] if generation_mode == "auto" else None,
             use_configured_llm=generation_mode == "auto",
         )
-        llm_used = bool(result.get("trace", {}).get("used_llm"))
+        trace = result.get("trace", {})
+        llm_used = bool(trace.get("used_llm"))
+        generation_mode_used = trace.get("generation_mode_used") or ("llm" if llm_used else "local")
+        model_name = trace.get("model_name") or ("local-structured-summary" if generation_mode_used == "local" else "")
         return {
             "result": result,
             "metadata": {
                 "data_scope": "first_version_nsclc_hengrui_beone",
                 "generation_mode_requested": generation_mode,
-                "generation_mode_used": "llm" if llm_used else "local",
+                "generation_mode_used": generation_mode_used,
                 "llm_used": llm_used,
-                "fallback_used": bool(result.get("trace", {}).get("fallback_used")),
-                "model_name": llm_settings["model"] if generation_mode == "auto" else "local-structured-summary",
+                "fallback_used": bool(trace.get("fallback_used")),
+                "model_name": model_name,
             },
         }
     except Exception as exc:

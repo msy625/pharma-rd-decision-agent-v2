@@ -20,11 +20,19 @@
     "individual_medication_or_treatment": [
       "我该吃",
       "我该用",
-      "用什么药",
-      "怎么治疗",
-      "治疗方案",
+      "我应该吃什么药",
+      "我应该怎么治疗",
       "个体用药",
-      "处方"
+      "处方",
+      "推荐一种治疗药物",
+      "推荐具体药物",
+      "推荐治疗方案",
+      "用药建议",
+      "给患者用药建议",
+      "是否应该使用某药",
+      "制定治疗方案",
+      "为患者制定治疗方案",
+      "请为患者制定治疗方案"
     ],
     "efficacy_guarantee": [
       "保证有效",
@@ -64,6 +72,42 @@
       "哪家公司最好",
       "企业实力排名"
     ]
+  },
+  "safety_semantic_rules": {
+    "individual_medication_or_treatment": {
+      "subject_terms": [
+        "患者",
+        "病人",
+        "本人",
+        "我",
+        "家人",
+        "具体病例"
+      ],
+      "intent_terms": [
+        "应该选择",
+        "应该使用",
+        "应该用",
+        "用什么药",
+        "吃什么药",
+        "选择什么药",
+        "推荐",
+        "用药建议",
+        "治疗方案",
+        "怎么治疗",
+        "适合什么药",
+        "适合",
+        "制定治疗方案"
+      ]
+    }
+  },
+  "safety_category_labels": {
+    "individual_diagnosis": "个体诊断建议",
+    "individual_medication_or_treatment": "个体治疗或用药建议",
+    "efficacy_guarantee": "疗效保证",
+    "cross_trial_efficacy_ranking": "跨试验疗效排名",
+    "success_probability_prediction": "成功率预测",
+    "investment_advice": "投资建议",
+    "company_overall_ranking": "企业综合排名"
   },
   "confirmed_terms": {
     "studies": [

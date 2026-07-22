@@ -37,6 +37,7 @@
     "answer": "",
     "citations": [],
     "evidence_used": [],
+    "safety_category": "",
     "limitations": [],
     "safety_notice": "",
     "trace": {}
@@ -45,7 +46,9 @@
     "data_scope": "first_version_nsclc_hengrui_beone",
     "generation_mode_requested": "",
     "generation_mode_used": "local",
-    "llm_used": false
+    "llm_used": false,
+    "fallback_used": false,
+    "model_name": "local-structured-summary"
   }
 }
 ```
@@ -74,6 +77,8 @@ API 层不做：
 - `question` 超过 1000 字符：400。
 - `generation_mode` 非法：400。
 - 禁止问题：200，返回 `prohibited_or_unsupported` 和安全说明，不检索、不调用 LLM。
+- 安全拦截问题：`metadata.generation_mode_used=safety_block`、`llm_used=false`、`fallback_used=false`，本次实际 `model_name` 为空或 `safe-policy`，不使用 capabilities 中的配置模型冒充实际调用模型。
+- API 用户可见文案使用中文安全类别；内部 `safety_category` 字段保留机器代码，但 `answer`、`limitations` 和 `safety_notice` 不直接显示 snake_case。
 - 没有证据：200，回答“当前数据不足”。
 - 没有 API 密钥：本地模式正常返回，不返回 500。
 - 数据或配置文件缺失：503。
@@ -98,6 +103,7 @@ API 层不做：
 
 - RATIONALE-304 返回 B003/B006/B007，B006 为历史版本，B007 为最新版本。
 - RATIONALE-315 返回 B011/B012/B013，B016 只作为关联监管背景。
+- RATIONALE-315 trace 返回 `source_count=4`、`trial_evidence_count=3`、`related_regulatory_count=1`，B016 不进入试验证据数量。
 - NCT04619433 返回 `Terminated`。
 - B015 为 EMA/欧盟正式授权。
 - B016 为 CHMP 积极意见，非最终批准。
@@ -105,6 +111,12 @@ API 层不做：
 - 证据缺口返回 H008、H009、H010、H011、H012、H014 等待确认关系。
 - SHR-1210 别名查询有效。
 - 不存在试验返回“当前数据不足”。
+- 个体治疗建议问题返回 `safety_category=individual_medication_or_treatment`。
+- 禁止问题不返回引用、证据、检索来源或证据链，`source_count=0`。
+- 禁止问题的 API metadata 返回 `generation_mode_used=safety_block`，不显示 `deepseek-v4-flash` 为本次实际模型。
+- 禁止问题的用户可见文案显示中文类别，例如“个体治疗或用药建议”，并说明未检索证据、未调用语言模型、未生成引用。
+- 主回答、限制说明和安全提示分区去重，不重复完整相同句子。
+- 证据链缺口表述包含“当前收录样本中”，不把未收录写成全球不存在。
 
 ## 测试结果
 
@@ -117,14 +129,14 @@ API 层不做：
 结果：
 
 ```text
-Ran 25 tests
+Ran 29 tests
 OK
 ```
 
 完整收尾验证已执行：
 
 - `tests/test_grounded_qa_service.py`：23 tests OK。
-- `tests/test_grounded_qa_api.py`：25 tests OK。
+- `tests/test_grounded_qa_api.py`：29 tests OK。
 - `tests/test_evidence_api.py`：18 tests OK。
 - `tests/test_evidence_chain_api.py`：21 tests OK。
 - `tests/test_company_evidence_comparison_api.py`：18 tests OK。

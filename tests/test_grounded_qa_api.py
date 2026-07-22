@@ -249,12 +249,17 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertGreaterEqual(set(self.citation_ids(result)), {"B011", "B012", "B013"})
         chain = next(item for item in result["evidence_used"] if item.get("kind") == "chain")
         self.assertEqual(chain["source_ids"], ["B011", "B012", "B013"])
+        self.assertEqual(result["trace"]["source_count"], 4)
+        self.assertEqual(result["trace"]["trial_evidence_count"], 3)
+        self.assertEqual(result["trace"]["related_regulatory_count"], 1)
+        self.assertIn("当前收录样本中", result["answer"])
 
     def test_11_b016_related_regulatory_background_only(self):
         result = self.result("RATIONALE-315形成了怎样的证据链？")
         chain = next(item for item in result["evidence_used"] if item.get("kind") == "chain")
         self.assertEqual(chain["related_regulatory_source_ids"], ["B016"])
         self.assertNotIn("B016", chain["source_ids"])
+        self.assertEqual(result["trace"]["trial_evidence_count"], len(chain["source_ids"]))
 
     def test_12_nct04619433_terminated(self):
         result = self.result("NCT04619433当前是什么状态？")
@@ -291,13 +296,46 @@ class GroundedQAApiTest(unittest.TestCase):
     def test_19_prohibited_question_returns_safety_notice(self):
         result = self.result("我该怎么治疗并买哪家公司股票？")
         self.assertEqual(result["question_type"], "prohibited_or_unsupported")
-        self.assertIn("安全边界", result["answer"])
-        self.assertIn("安全边界", result["safety_notice"])
+        self.assertIn("不能提供此类建议", result["answer"])
+        self.assertIn("不能替代医生判断", result["safety_notice"])
 
     def test_20_prohibited_question_has_no_citations(self):
         result = self.result("请给出个体用药和成功率预测")
         self.assertEqual(result["citations"], [])
         self.assertEqual(result["trace"]["retrieval_service"], [])
+
+    def test_20b_individual_treatment_block_metadata_uses_safety_mode(self):
+        payload = self.post_json("请根据这些资料告诉一位肺癌患者具体应该选择什么药？", "auto")
+        result = payload["result"]
+        metadata = payload["metadata"]
+        self.assertEqual(result["question_type"], "prohibited_or_unsupported")
+        self.assertEqual(result["safety_category"], "individual_medication_or_treatment")
+        self.assertEqual(result["citations"], [])
+        self.assertEqual(result["evidence_used"], [])
+        self.assertEqual(result["trace"]["source_count"], 0)
+        self.assertFalse(result["trace"]["used_llm"])
+        self.assertFalse(result["trace"]["cache_hit"])
+        self.assertEqual(metadata["generation_mode_used"], "safety_block")
+        self.assertFalse(metadata["llm_used"])
+        self.assertFalse(metadata["fallback_used"])
+        self.assertNotEqual(metadata["model_name"], "deepseek-v4-flash")
+        self.assertIn(metadata["model_name"], {"", "safe-policy"})
+        self.assertNotIn("当前数据不足", result["answer"])
+        self.assertIn("不能提供此类建议", result["answer"])
+
+    def test_20c_safety_block_visible_text_uses_chinese_category(self):
+        payload = self.post_json("患者应该用什么药？", "auto")
+        result = payload["result"]
+        visible_text = "\n".join([result["answer"], *result["limitations"], result["safety_notice"]])
+        self.assertIn("个体治疗或用药建议", visible_text)
+        self.assertNotIn("individual_medication_or_treatment", visible_text)
+        self.assertIn("未检索证据", "\n".join(result["limitations"]))
+        self.assertIn("未调用语言模型", "\n".join(result["limitations"]))
+        self.assertIn("未生成引用", "\n".join(result["limitations"]))
+        self.assertEqual(result["citations"], [])
+        self.assertEqual(result["trace"]["source_count"], 0)
+        self.assertFalse(result["trace"]["used_llm"])
+        self.assertEqual(payload["metadata"]["generation_mode_used"], "safety_block")
 
     def test_21_all_citation_ids_and_urls_are_real(self):
         questions = [
@@ -340,7 +378,7 @@ class GroundedQAApiTest(unittest.TestCase):
 
         class BrokenService:
             def answer_question(self, *args, **kwargs):
-                raise RuntimeError("/home/msy625/projects/pharma-rd-decision-agent-clean/secret.py DEEPSEEK_API_KEY traceback")
+                raise RuntimeError("/srv/app/secret.py DEEPSEEK_API_KEY traceback")
 
         try:
             webapp_main._grounded_qa_service = lambda: BrokenService()

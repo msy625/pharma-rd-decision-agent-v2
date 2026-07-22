@@ -116,11 +116,21 @@ class GroundedQALLMTest(unittest.TestCase):
         self.assertIn("B015", content)
         self.assertNotIn("H008", content)
 
+    def test_07b_system_prompt_limits_missing_evidence_to_current_sample(self):
+        packet = self.service.build_evidence_packet("RATIONALE-315形成了怎样的证据链？")
+        client = FakeClient()
+        generate_grounded_answer("RATIONALE-315形成了怎样的证据链？", packet, client=client)
+        system_prompt = client.calls[0]["messages"][0]["content"]
+        self.assertIn("当前收录样本中", system_prompt)
+        self.assertIn("当前数据库尚未收录", system_prompt)
+        self.assertIn("不得推断外部世界不存在相关资料", system_prompt)
+
     def test_08_service_calls_llm_with_valid_json(self):
         response = self.service.answer_question("B015是什么监管状态？", llm_client=FakeClient(), model_name="deepseek-v4-flash")
         self.assertTrue(response["trace"]["used_llm"])
         self.assertEqual(response["trace"]["model_name"], "deepseek-v4-flash")
         self.assertEqual([item["source_id"] for item in response["citations"]], ["B015"])
+        self.assertIn("本回答仅反映当前收录并核验的证据样本。", response["limitations"])
 
     def test_09_invalid_json_falls_back_local(self):
         response = self.service.answer_question("B015是什么监管状态？", llm_client=FakeClient(content="not-json"), model_name="deepseek-v4-flash")
