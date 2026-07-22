@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field
 
 from deepinsight.core.agent_tools import run_advanced_analysis, tool_get_equity_penetration, tool_get_innovation_index, tool_get_risk_radar
 from deepinsight.apps.app_whitebox import WHITEBOX_DEMO_ANSWER, WHITEBOX_DEMO_CHUNKS, WHITEBOX_DEMO_REASONING, WHITEBOX_DEMO_SQL
+from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.industry_taxonomy import infer_industry_name
 from deepinsight.core.retriever import DEFAULT_DB_PATH, answer_query, create_optional_client, get_connection
 from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
@@ -1390,10 +1391,21 @@ def _evidence_service() -> SourceRegistryService:
     return SourceRegistryService()
 
 
+def _evidence_chain_service() -> EvidenceChainService:
+    return EvidenceChainService(source_registry_service=_evidence_service())
+
+
 def _evidence_metadata() -> dict[str, Any]:
     return {
         "data_scope": "first_version_nsclc_hengrui_beone",
         "data_source": "source_registry.csv",
+    }
+
+
+def _evidence_chain_metadata() -> dict[str, Any]:
+    return {
+        "data_scope": "first_version_nsclc_hengrui_beone",
+        "relationship_source": "evidence_chains.json",
     }
 
 
@@ -1406,9 +1418,23 @@ def _evidence_list_response(query: dict[str, Any], items: list[dict[str, Any]]) 
     }
 
 
+def _evidence_chain_list_response(query: dict[str, Any], items: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        "query": query,
+        "count": len(items),
+        "items": items,
+        "metadata": _evidence_chain_metadata(),
+    }
+
+
 def _validate_evidence_limit(limit: int) -> None:
     if limit < 1 or limit > 100:
         raise HTTPException(status_code=400, detail="limit 必须在 1 到 100 之间。")
+
+
+def _validate_chain_type(chain_type: str | None) -> None:
+    if chain_type and chain_type not in {"trial", "regulatory"}:
+        raise HTTPException(status_code=400, detail="chain_type 只允许 trial 或 regulatory。")
 
 
 def _handle_source_registry_error(exc: Exception) -> HTTPException:
@@ -1515,6 +1541,81 @@ def evidence_summary() -> dict[str, Any]:
             "verified_dates": verified_dates,
             "metadata": _evidence_metadata(),
         }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/chain-summary")
+def evidence_chain_summary() -> dict[str, Any]:
+    try:
+        chain_summary = _evidence_chain_service().summary()
+        return {
+            "total_chain_count": chain_summary.get("total_chains", 0),
+            "trial_chain_count": chain_summary.get("trial_chains", 0),
+            "regulatory_chain_count": chain_summary.get("regulatory_chains", 0),
+            "nct_registered_trial_count": chain_summary.get("nct_registered_trial_count", 0),
+            "unresolved_count": chain_summary.get("unresolved_links", 0),
+            "company_chain_counts": chain_summary.get("company_counts", {}),
+            "metadata": _evidence_chain_metadata(),
+        }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/chains")
+def evidence_chains(
+    company: Annotated[str | None, Query()] = None,
+    chain_type: Annotated[str | None, Query()] = None,
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+) -> dict[str, Any]:
+    _validate_chain_type(chain_type)
+    _validate_evidence_limit(limit)
+    try:
+        items = _evidence_chain_service().list_chains(company=company, chain_type=chain_type)[:limit]
+        return _evidence_chain_list_response({"company": company, "chain_type": chain_type, "limit": limit}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/chains/{chain_id}")
+def evidence_chain_detail(chain_id: str) -> dict[str, Any]:
+    try:
+        item = _evidence_chain_service().get_chain(chain_id)
+        if not item:
+            raise HTTPException(status_code=404, detail=f"未找到证据链：{chain_id}")
+        return {"item": item}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/trial-chain/{trial_id}")
+def evidence_trial_chain(trial_id: str) -> dict[str, Any]:
+    try:
+        item = _evidence_chain_service().get_trial_chain(trial_id)
+        if not item:
+            raise HTTPException(status_code=404, detail=f"未找到试验证据链：{trial_id}")
+        return {"item": item}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/drug/{name}/regulatory-chain")
+def evidence_drug_regulatory_chain(name: str) -> dict[str, Any]:
+    try:
+        return {"item": _evidence_chain_service().get_drug_regulatory_chain(name)}
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/unresolved-links")
+def evidence_unresolved_links() -> dict[str, Any]:
+    try:
+        items = _evidence_chain_service().get_unresolved_links()
+        return _evidence_chain_list_response({"relation_level": "unresolved"}, items)
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 

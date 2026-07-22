@@ -11,6 +11,10 @@ class Component extends DCLogic {
     evidenceSummary:null, evidenceItems:[], evidenceCount:0, evidenceSelected:null,
     evidenceLoading:false, evidenceSummaryLoading:false, evidenceDetailLoading:false,
     evidenceError:'', evidenceHasSearched:false,
+    evidenceTab:'sources',
+    chainSummary:null, chainCompany:'', chainType:'', chainItems:[], chainSelected:null, chainUnresolved:[],
+    chainLoading:false, chainSummaryLoading:false, chainDetailLoading:false, chainUnresolvedLoading:false,
+    chainError:'', chainLoaded:false, chainUnresolvedOpen:false,
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -241,8 +245,12 @@ class Component extends DCLogic {
 
   // ---- evidence registry page ----
   loadEvidencePage(){
+    if(this.state.evidenceTab==='chains'){ this.loadEvidenceChainPage(); return; }
     this.loadEvidenceSummary();
     if(!this.state.evidenceHasSearched && !this.state.evidenceLoading) this.loadEvidence();
+  }
+  switchEvidenceTab(tab){
+    this.setState({evidenceTab:tab,evidenceError:'',chainError:''}, ()=>this.loadEvidencePage());
   }
   loadEvidenceSummary(){
     if(this.state.evidenceSummaryLoading) return;
@@ -322,6 +330,172 @@ class Component extends DCLogic {
     this.setState({evidenceDetailLoading:true,evidenceError:''});
     this._api(this._evidencePath('source', sid)).then(d=>this.setState({evidenceDetailLoading:false,evidenceSelected:(d&&d.item)||null})).catch(()=>this.setState({evidenceDetailLoading:false,evidenceError:'来源详情加载失败，请稍后重试'}));
   }
+  loadEvidenceChainPage(){
+    this.loadChainSummary();
+    this.loadChains();
+    this.loadUnresolvedLinks();
+  }
+  loadChainSummary(){
+    if(this.state.chainSummaryLoading) return;
+    this.setState({chainSummaryLoading:true});
+    this._api('/api/evidence/chain-summary').then(d=>this.setState({chainSummaryLoading:false,chainSummary:d||null})).catch(()=>this.setState({chainSummaryLoading:false,chainError:'证据链统计加载失败，请稍后重试'}));
+  }
+  loadChains(){
+    if(this.state.chainLoading) return;
+    const s=this.state;
+    const params={limit:50};
+    if(s.chainCompany) params.company=s.chainCompany;
+    if(s.chainType) params.chain_type=s.chainType;
+    this.setState({chainLoading:true,chainError:'',chainLoaded:true});
+    this._api('/api/evidence/chains', params).then(d=>{
+      const items=Array.isArray(d&&d.items)?d.items:[];
+      this.setState({chainLoading:false,chainItems:items,chainSelected:items[0]||null});
+      if(items[0]) this.loadChainDetail(items[0].chain_id);
+    }).catch(()=>this.setState({chainLoading:false,chainItems:[],chainSelected:null,chainError:'证据链列表加载失败，请稍后重试'}));
+  }
+  loadChainDetail(chainId){
+    const cid=String(chainId||'').trim();
+    if(!cid) return;
+    this.setState({chainDetailLoading:true,chainError:''});
+    this._api('/api/evidence/chains/'+encodeURIComponent(cid)).then(d=>this.setState({chainDetailLoading:false,chainSelected:(d&&d.item)||null})).catch(()=>this.setState({chainDetailLoading:false,chainError:'证据链详情加载失败，请稍后重试'}));
+  }
+  loadUnresolvedLinks(){
+    if(this.state.chainUnresolvedLoading) return;
+    this.setState({chainUnresolvedLoading:true});
+    this._api('/api/evidence/unresolved-links').then(d=>this.setState({chainUnresolvedLoading:false,chainUnresolved:Array.isArray(d&&d.items)?d.items:[]})).catch(()=>this.setState({chainUnresolvedLoading:false,chainError:'待确认关系加载失败，请稍后重试'}));
+  }
+  _chainTypeLabel(t){ return t==='trial'?'试验级':'药物级监管'; }
+  _roleLabel(role){
+    return ({
+      trial_registry:'临床试验登记',
+      interim_publication:'中期论文',
+      final_publication:'最终论文',
+      company_document:'公司资料',
+      regulatory_authorisation:'EMA正式授权信息',
+      regulatory_opinion:'CHMP积极意见',
+      independent_evidence:'独立资料'
+    })[role]||'独立资料';
+  }
+  _isRegulatoryEvidence(item){
+    item=item||{};
+    const role=String(item.role||item.evidence_role||'');
+    if(role==='regulatory_authorisation'||role==='regulatory_opinion') return true;
+    const blob=[item.regulatory_event_type,item.authorisation_status,item.source_type].map(x=>String(x||'')).join(' ');
+    return /监管|授权|authorisation|authorization|CHMP|EMA|EPAR/i.test(blob);
+  }
+  _chainVersionLabel(item){
+    if(this._isRegulatoryEvidence(item)) return {kind:'regulatory', label:'监管资料', color:'var(--brand-600)'};
+    const s=String((item&&item.version_status)||'');
+    if(s==='latest') return this._evidenceVersion(true);
+    if(s==='historical') return this._evidenceVersion(false);
+    return this._evidenceVersion('');
+  }
+  _hasStudyStatus(value){
+    const v=String(value==null?'':value).trim().toLowerCase();
+    return !!v && !['n/a','na','not applicable','不适用','暂无'].includes(v);
+  }
+  _authorisationDisplay(item){
+    item=item||{};
+    if(item.role==='regulatory_opinion') return '积极意见，非最终批准';
+    const value=String(item.authorisation_status||'').trim();
+    if(value && !['N/A','n/a','not applicable','不适用'].includes(value)) return value;
+    return '';
+  }
+  _versionRelationText(item){
+    return this._isRegulatoryEvidence(item)&&String((item&&item.version_status)||'')==='independent'?'无版本关系':'';
+  }
+  _sourceTitle(item){ item=item||{}; return this._evidenceText(item.title_original||item.description_zh||item.study_name||item.source_id); }
+  _chainEvidenceVm(item){
+    item=item||{};
+    const ver=this._chainVersionLabel(item);
+    const url=this._safeEvidenceUrl(item.source_url);
+    const auth=this._authorisationDisplay(item);
+    const hasStatus=this._hasStudyStatus(item.study_status);
+    const versionRelation=this._versionRelationText(item);
+    return Object.assign({}, item, {
+      source_id:this._evidenceText(item.source_id),
+      roleLabel:this._roleLabel(item.role),
+      title:this._sourceTitle(item),
+      study_status:this._evidenceText(item.study_status),
+      hasStudyStatus:hasStatus,
+      verified_at:this._evidenceText(item.verified_at),
+      versionLabel:ver.label,
+      versionColor:ver.color,
+      authorisationDisplay:auth,
+      hasAuthorisation:!!auth,
+      versionRelation,
+      hasVersionRelation:!!versionRelation,
+      source_url:url,
+      hasUrl:!!url
+    });
+  }
+  _chainSection(title, items){
+    items=(Array.isArray(items)?items:[]).map(x=>this._chainEvidenceVm(x));
+    return {title, items, hasItems:items.length>0};
+  }
+  _chainCardVm(chain){
+    chain=chain||{};
+    const selected=this.state.chainSelected&&this.state.chainSelected.chain_id===chain.chain_id;
+    const latest=(chain.latest_items||[]).length, hist=(chain.historical_items||[]).length, indep=(chain.independent_items||[]).length;
+    const gaps=Array.isArray(chain.evidence_gaps)?chain.evidence_gaps:[];
+    return Object.assign({}, chain, {
+      typeLabel:this._chainTypeLabel(chain.chain_type),
+      drugText:(Array.isArray(chain.drug_names)&&chain.drug_names.length)?chain.drug_names.join('；'):'暂无',
+      trialText:(Array.isArray(chain.trial_ids)&&chain.trial_ids.length)?chain.trial_ids.join('；'):'暂无',
+      study_status:this._evidenceText(chain.study_status),
+      hasStudyStatus:this._hasStudyStatus(chain.study_status),
+      source_count:this._evidenceText(chain.source_count),
+      versionCounts:'最新版本 '+latest+' · 历史版本 '+hist+' · 独立资料 '+indep,
+      gapText:gaps.length?gaps[0]:'暂无证据缺口',
+      style:'width:100%;text-align:left;border:1px solid '+(selected?'var(--brand-300)':'var(--border)')+';background:'+(selected?'var(--brand-50)':'var(--bg-elev)')+';border-radius:12px;padding:14px 15px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:border-color .12s,background .12s',
+      onClick:()=>this.loadChainDetail(chain.chain_id)
+    });
+  }
+  _chainDetailVm(chain){
+    chain=chain||{};
+    const evidence=Array.isArray(chain.evidence_items)?chain.evidence_items:[];
+    const regs=Array.isArray(chain.regulatory_items)?chain.regulatory_items:[];
+    const relatedRegs=Array.isArray(chain.related_regulatory_items)?chain.related_regulatory_items:[];
+    const roleItems=(role)=>evidence.filter(x=>x&&x.role===role);
+    const independent=evidence.filter(x=>!['trial_registry','interim_publication','final_publication'].includes(x&&x.role) && !['regulatory_authorisation','regulatory_opinion'].includes(x&&x.role));
+    return {
+      has:!!chain.chain_id,
+      chain_id:this._evidenceText(chain.chain_id),
+      chain_name:this._evidenceText(chain.chain_name),
+      chain_type:this._chainTypeLabel(chain.chain_type),
+      company_name:this._evidenceText(chain.company_name),
+      drugText:(Array.isArray(chain.drug_names)&&chain.drug_names.length)?chain.drug_names.join('；'):'暂无',
+      trialText:(Array.isArray(chain.trial_ids)&&chain.trial_ids.length)?chain.trial_ids.join('；'):'暂无',
+      studyNames:(Array.isArray(chain.study_names)&&chain.study_names.length)?chain.study_names.join('；'):'暂无',
+      study_status:this._evidenceText(chain.study_status),
+      source_count:this._evidenceText(chain.source_count),
+      trialSections:[
+        this._chainSection('临床试验登记', roleItems('trial_registry')),
+        this._chainSection('中期论文', roleItems('interim_publication')),
+        this._chainSection('最终论文', roleItems('final_publication')),
+        this._chainSection('独立资料', independent)
+      ],
+      regulatorySection:this._chainSection('药物级监管资料', regs),
+      relatedRegulatorySection:this._chainSection('关联监管背景', relatedRegs),
+      hasRelatedRegulatory:relatedRegs.length>0,
+      gaps:(Array.isArray(chain.evidence_gaps)?chain.evidence_gaps:[]).map(x=>({text:x})),
+      risks:(Array.isArray(chain.risk_notes)?chain.risk_notes:[]).map(x=>({text:x})),
+      hasGaps:Array.isArray(chain.evidence_gaps)&&chain.evidence_gaps.length>0,
+      hasRisks:Array.isArray(chain.risk_notes)&&chain.risk_notes.length>0
+    };
+  }
+  _unresolvedVm(item){
+    item=item||{};
+    const source=item.source||{};
+    const gaps=Array.isArray(item.evidence_gaps)?item.evidence_gaps:[];
+    return {
+      source_id:this._evidenceText(item.source_id),
+      source_type:this._evidenceText(source.source_type),
+      description:this._evidenceText(item.description),
+      gapText:gaps.length?gaps.join('；'):'暂无',
+      title:this._sourceTitle(source)
+    };
+  }
   evidenceVals(){
     const s=this.state, sum=s.evidenceSummary||{};
     const modes=[
@@ -355,7 +529,18 @@ class Component extends DCLogic {
       field('核验日期', detail.verified_at),
       field('证据版本', detailVersion.label)
     ];
+    const chainSum=s.chainSummary||{};
+    const chainItems=(s.chainItems||[]).map(x=>this._chainCardVm(x));
+    const chainDetail=this._chainDetailVm(s.chainSelected||{});
+    const chainUnresolved=(s.chainUnresolved||[]).map(x=>this._unresolvedVm(x));
+    const tabStyle=(active)=>'height:34px;border-radius:9px;border:1px solid '+(active?'var(--brand-600)':'var(--border)')+';background:'+(active?'var(--brand-600)':'var(--bg-elev)')+';color:'+(active?'#fff':'var(--text-2)')+';font-size:13px;font-weight:600;padding:0 14px;cursor:pointer';
     return {
+      ev_tabSourceStyle:tabStyle(s.evidenceTab==='sources'),
+      ev_tabChainStyle:tabStyle(s.evidenceTab==='chains'),
+      ev_tabSource:()=>this.switchEvidenceTab('sources'),
+      ev_tabChain:()=>this.switchEvidenceTab('chains'),
+      ev_isSourceTab:s.evidenceTab==='sources',
+      ev_isChainTab:s.evidenceTab==='chains',
       ev_modes:modes.map(m=>Object.assign({}, m, {style:'height:30px;border-radius:7px;border:0;padding:0 10px;font-size:12px;font-weight:600;cursor:pointer;'+(m.key===s.evidenceKind?'background:var(--brand-600);color:#fff':'background:transparent;color:var(--text-2)'), onClick:()=>this.setState({evidenceKind:m.key,evidenceError:''})})),
       ev_kind:s.evidenceKind, ev_kindLabel:activeMode.label, ev_query:s.evidenceQuery, ev_placeholder:activeMode.placeholder,
       ev_onQuery:(e)=>this.setState({evidenceQuery:e.target.value}),
@@ -385,7 +570,32 @@ class Component extends DCLogic {
       ev_detailHasRisk:!!detail.risk_notes,
       ev_detailFields:ev_detailFields,
       ev_detailUrl:detailUrl,
-      ev_hasUrl:!!detailUrl
+      ev_hasUrl:!!detailUrl,
+      chain_summaryLoading:s.chainSummaryLoading,
+      chain_loading:s.chainLoading,
+      chain_detailLoading:s.chainDetailLoading,
+      chain_unresolvedLoading:s.chainUnresolvedLoading,
+      chain_hasError:!!s.chainError,
+      chain_error:s.chainError,
+      chain_loaded:s.chainLoaded,
+      chain_company:s.chainCompany,
+      chain_type:s.chainType,
+      chain_onCompany:(e)=>this.setState({chainCompany:e.target.value}, ()=>this.loadChains()),
+      chain_onType:(e)=>this.setState({chainType:e.target.value}, ()=>this.loadChains()),
+      chain_refresh:()=>this.loadEvidenceChainPage(),
+      chain_total:this._evidenceText(chainSum.total_chain_count),
+      chain_trial:this._evidenceText(chainSum.trial_chain_count),
+      chain_regulatory:this._evidenceText(chainSum.regulatory_chain_count),
+      chain_unresolvedCount:this._evidenceText(chainSum.unresolved_count),
+      chain_count:chainItems.length,
+      chain_items:chainItems,
+      chain_hasResults:chainItems.length>0,
+      chain_empty:s.chainLoaded&&!s.chainLoading&&!s.chainError&&chainItems.length===0,
+      chain_detail:chainDetail,
+      chain_unresolvedOpen:s.chainUnresolvedOpen,
+      chain_toggleUnresolved:()=>this.setState({chainUnresolvedOpen:!this.state.chainUnresolvedOpen}),
+      chain_unresolved:chainUnresolved,
+      chain_unresolvedCountList:chainUnresolved.length
     };
   }
 

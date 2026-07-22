@@ -1,0 +1,297 @@
+{
+  "schema_version": "1.0",
+  "scope": {
+    "disease": "非小细胞肺癌（NSCLC）",
+    "verified_source_count": 31,
+    "trial_chain_count": 10,
+    "regulatory_chain_count": 1,
+    "total_chain_count": 11,
+    "rules": [
+      "药物级监管链不能计入临床试验数量。",
+      "同一trial_id只计为一项临床试验。",
+      "论文、登记和监管资料不能分别算作多项试验。",
+      "不生成评分、成功率、疗效排名或投资判断。"
+    ]
+  },
+  "chains": [
+    {
+      "chain_id": "trial:NCT03663205",
+      "chain_name": "RATIONALE-304 / NCT03663205",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "百济神州",
+      "drug_names": ["替雷利珠单抗", "Tislelizumab", "TEVIMBRA", "BGB-A317"],
+      "trial_ids": ["NCT03663205"],
+      "study_names": ["RATIONALE-304"],
+      "source_ids": [
+        {"source_id": "B003", "role": "trial_registry"},
+        {"source_id": "B006", "role": "interim_publication"},
+        {"source_id": "B007", "role": "final_publication"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [],
+      "risk_notes": [
+        "B006和B007为同一试验的不同证据版本，不能重复计为两项临床试验。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT03594747",
+      "chain_name": "RATIONALE-307 / NCT03594747",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "百济神州",
+      "drug_names": ["替雷利珠单抗", "Tislelizumab", "TEVIMBRA", "BGB-A317"],
+      "trial_ids": ["NCT03594747"],
+      "study_names": ["RATIONALE-307"],
+      "source_ids": [
+        {"source_id": "B004", "role": "trial_registry"},
+        {"source_id": "B008", "role": "interim_publication"},
+        {"source_id": "B009", "role": "final_publication"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [],
+      "risk_notes": [
+        "B008和B009为同一试验的不同证据版本，不能重复计为两项临床试验。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT03358875",
+      "chain_name": "RATIONALE-303 / NCT03358875",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "百济神州",
+      "drug_names": ["替雷利珠单抗", "Tislelizumab", "TEVIMBRA", "BGB-A317"],
+      "trial_ids": ["NCT03358875"],
+      "study_names": ["RATIONALE-303"],
+      "source_ids": [
+        {"source_id": "B005", "role": "trial_registry"},
+        {"source_id": "B010", "role": "final_publication"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [],
+      "risk_notes": [
+        "B010为预设中期分析与最终分析合并报告，不能简单拆成两条论文证据。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT04379635",
+      "chain_name": "RATIONALE-315 / NCT04379635",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "百济神州",
+      "drug_names": ["替雷利珠单抗", "Tislelizumab", "TEVIMBRA", "BGB-A317"],
+      "trial_ids": ["NCT04379635", "BGB-A317-315", "CTR20200821"],
+      "study_names": ["RATIONALE-315"],
+      "source_ids": [
+        {"source_id": "B011", "role": "interim_publication"},
+        {"source_id": "B012", "role": "trial_registry"},
+        {"source_id": "B013", "role": "company_document"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": ["B016"],
+      "evidence_gaps": [
+        "当前链内只有中期分析论文，尚未收录最终分析论文。"
+      ],
+      "risk_notes": [
+        "B011、B012、B013对应同一项NCT04379635/RATIONALE-315试验，只计为一项唯一试验。",
+        "B016可作为相关监管背景，但不计入NCT04379635试验证据数量。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT04818333",
+      "chain_name": "SHR-A1811 / NCT04818333",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "恒瑞医药",
+      "drug_names": ["瑞康曲妥珠单抗", "Trastuzumab rezetecan", "SHR-A1811"],
+      "trial_ids": ["NCT04818333"],
+      "study_names": [],
+      "source_ids": [
+        {"source_id": "H003", "role": "trial_registry"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [
+        "暂无可确认配对论文或独立监管来源。"
+      ],
+      "risk_notes": [
+        "H014属于公司/药物级资料，当前无法确认其与H003的一对一试验关系。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT03083041",
+      "chain_name": "SHR-1210 + apatinib / NCT03083041",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "恒瑞医药",
+      "drug_names": ["卡瑞利珠单抗", "Camrelizumab", "SHR-1210", "阿帕替尼", "Apatinib"],
+      "trial_ids": ["NCT03083041"],
+      "study_names": [],
+      "source_ids": [
+        {"source_id": "H004", "role": "trial_registry"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [
+        "暂无可确认配对论文。"
+      ],
+      "risk_notes": [
+        "不得仅因H011同含卡瑞利珠单抗和阿帕替尼而合并。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT03668496",
+      "chain_name": "CameL-Sq / NCT03668496",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "恒瑞医药",
+      "drug_names": ["卡瑞利珠单抗", "Camrelizumab", "SHR-1210", "卡铂", "Carboplatin", "紫杉醇", "Paclitaxel"],
+      "trial_ids": ["NCT03668496"],
+      "study_names": ["CameL-Sq"],
+      "source_ids": [
+        {"source_id": "H005", "role": "trial_registry"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [
+        "暂无可确认配对论文。"
+      ],
+      "risk_notes": [
+        "H005为CameL-Sq；不得与H008的CameL长期随访合并。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT04619433",
+      "chain_name": "SHR-1210 + famitinib + chemotherapy / NCT04619433",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "恒瑞医药",
+      "drug_names": ["卡瑞利珠单抗", "Camrelizumab", "SHR-1210", "法米替尼", "Famitinib"],
+      "trial_ids": ["NCT04619433"],
+      "study_names": [],
+      "source_ids": [
+        {"source_id": "H006", "role": "trial_registry"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [
+        "暂无可确认配对论文。"
+      ],
+      "risk_notes": [
+        "不得仅因H012同含卡瑞利珠单抗和法米替尼而合并。"
+      ]
+    },
+    {
+      "chain_id": "trial:NCT02364362",
+      "chain_name": "famitinib + docetaxel / NCT02364362",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "恒瑞医药",
+      "drug_names": ["法米替尼", "Famitinib", "多西他赛", "Docetaxel"],
+      "trial_ids": ["NCT02364362"],
+      "study_names": [],
+      "source_ids": [
+        {"source_id": "H007", "role": "trial_registry"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [
+        "暂无可确认配对论文。"
+      ],
+      "risk_notes": [
+        "规范中文描述必须体现法米替尼联合多西他赛，不得写成单药研究。"
+      ]
+    },
+    {
+      "chain_id": "trial:SHR-A2009-301",
+      "chain_name": "SHR-A2009-301",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "恒瑞医药",
+      "drug_names": ["SHR-A2009", "HER3 ADC"],
+      "trial_ids": ["SHR-A2009-301"],
+      "study_names": ["SHR-A2009-301"],
+      "source_ids": [
+        {"source_id": "H015", "role": "company_document"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [
+        "当前未收录独立登记号、论文或监管原始记录。"
+      ],
+      "risk_notes": [
+        "达到主要终点不等于已申报上市，也不等于已获批上市。"
+      ]
+    },
+    {
+      "chain_id": "regulatory:tevimbra-eu-nsclc",
+      "chain_name": "Tevimbra / tislelizumab EMA NSCLC 监管事件链",
+      "chain_type": "regulatory",
+      "relation_level": "drug_level",
+      "company_name": "百济神州",
+      "drug_names": ["替雷利珠单抗", "Tislelizumab", "TEVIMBRA"],
+      "trial_ids": [],
+      "study_names": ["Tevimbra EPAR", "Tevimbra II-18"],
+      "source_ids": [
+        {"source_id": "B015", "role": "regulatory_authorisation"},
+        {"source_id": "B016", "role": "regulatory_opinion"}
+      ],
+      "related_trial_ids": ["NCT04379635"],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [
+        "B015覆盖多个NSCLC授权适应症，当前不拆分为具体试验一对一关系。"
+      ],
+      "risk_notes": [
+        "药物级监管链不能计入临床试验数量。",
+        "B016为CHMP积极意见，不等于欧盟委员会最终批准。"
+      ]
+    }
+  ],
+  "unresolved_links": [
+    {
+      "source_id": "H008",
+      "relation_level": "unresolved",
+      "description": "与当前H003-H007任一登记记录的父试验关系暂不能确认。",
+      "evidence_gaps": ["缺少NCT、parent_trial_id或已核验关系说明。"]
+    },
+    {
+      "source_id": "H009",
+      "relation_level": "unresolved",
+      "description": "CAP-BRAIN论文与当前登记记录的父试验关系暂不能确认。",
+      "evidence_gaps": ["缺少NCT或parent_trial_id。"]
+    },
+    {
+      "source_id": "H010",
+      "relation_level": "unresolved",
+      "description": "卡瑞利珠单抗不同PD-L1表达队列论文与具体登记试验关系暂不能确认。",
+      "evidence_gaps": ["缺少study_name、NCT或parent_trial_id。"]
+    },
+    {
+      "source_id": "H011",
+      "relation_level": "unresolved",
+      "description": "与H004或其他卡瑞利珠单抗+阿帕替尼研究的关系暂不能确认。",
+      "evidence_gaps": ["缺少共同NCT或已核验关系。"]
+    },
+    {
+      "source_id": "H012",
+      "relation_level": "unresolved",
+      "description": "与H006或其他卡瑞利珠单抗+法米替尼研究的关系暂不能确认。",
+      "evidence_gaps": ["缺少共同NCT或已核验关系。"]
+    },
+    {
+      "source_id": "H014",
+      "relation_level": "unresolved",
+      "description": "H014属于公司/药物级资料，当前无法确认其与具体临床试验的一对一关系。",
+      "evidence_gaps": ["缺少NMPA/CDE原始监管记录或公告中明确的关键临床试验编号。"]
+    },
+    {
+      "source_id": "B015",
+      "relation_level": "unresolved",
+      "description": "B015与RATIONALE-304/307/303/315中任一具体试验的一对一关系暂不确认。",
+      "evidence_gaps": ["需引入EPAR评审报告中的pivotal study编号并逐项核验。"]
+    }
+  ]
+}
