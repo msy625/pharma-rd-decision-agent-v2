@@ -2,6 +2,9 @@ services:
   - type: web
     name: pharma-rd-decision-agent
     runtime: python
+    plan: free
+    region: singapore
+    autoDeploy: false
     buildCommand: pip install -r requirements-deploy.txt
     startCommand: python -m uvicorn webapp.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
