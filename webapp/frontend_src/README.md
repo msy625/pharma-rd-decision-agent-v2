@@ -5,8 +5,11 @@ FastAPI 在根路径同源托管的静态前端，并把每个页面接到现有
 
 ## 产物（写入 `webapp/static/`）
 - `index.html` —— SPA 入口（由 `GET /` 以 `no-store` 提供）。
-- `dc-runtime.js` —— Claude design 的 DC/React 运行时（从 CDN 加载 React UMD）。
+- `dc-runtime.js` —— Claude design 的 DC/React 运行时（从 `/static/vendor/` 加载本地
+  React/ReactDOM UMD；Babel standalone 也保留为本地 `x-import` 备用资源）。
 - `fonts/<uuid>.woff2` —— 114 个字体子集，CSS 内以 `/static/fonts/...` 引用。
+- `vendor/` —— React 18.3.1、ReactDOM 18.3.1、Babel standalone 7.26.4 的本地生产文件、
+  许可证和 SHA-256 清单。
 - `LineChart.dc.html` / `BarChart.dc.html` —— 自写的图表组件（运行时按 `name` 取
   `/static/<name>.dc.html`；`dc-runtime.js` 里 `COMPONENT_DIR` 已改为 `/static`）。
 - `_legacy_native/` —— 旧版原生 JS 前端备份（index/app.js/styles.css），未删除。

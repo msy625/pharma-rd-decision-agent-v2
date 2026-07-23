@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pharma-rd-decision-agent
+    runtime: python
+    buildCommand: pip install -r requirements-deploy.txt
+    startCommand: python -m uvicorn webapp.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: DEEPSEEK_BASE_URL
+        value: https://api.deepseek.com
+      - key: DEEPSEEK_MODEL
+        value: deepseek-v4-flash

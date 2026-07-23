@@ -21,6 +21,8 @@ class Component extends DCLogic {
     groundedCapabilities:null, groundedCapabilitiesLoading:false, groundedCapabilitiesLoaded:false,
     groundedQuestion:'', groundedMode:'local', groundedLoading:false, groundedError:'',
     groundedResult:null, groundedMeta:null, groundedTraceOpen:false, groundedSeq:0,
+    runtimeCapabilities:null, runtimeCapabilitiesLoaded:false, runtimeCapabilitiesLoading:false,
+    legacyNotice:'',
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -56,7 +58,35 @@ class Component extends DCLogic {
   nf(n){ return Number(n).toLocaleString('en-US'); }
   yi(){ return this.D.trendYears.indexOf(String(this.state.year)); }
 
-  go(p){ this.setState({page:p, navOpen:false, anim:0}, ()=>{ this.runCount(); this.loadPage(); }); }
+  _legacyPages(){ return {today:1,chat:1,compare:1,research:1,whitebox:1,database:1,timeline:1,advanced:1}; }
+  _legacyAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.legacy_features_available); }
+  _legacyReason(){ const c=this.state.runtimeCapabilities||{}; return c.legacy_unavailable_reason||'旧数据未配置'; }
+  _isLegacyPage(p){ return !!this._legacyPages()[p]; }
+  _paths(paths){
+    const R=(typeof React!=='undefined')?React:null;
+    if(!R) return null;
+    return (Array.isArray(paths)?paths:[]).filter(Boolean).map((d,i)=>R.createElement('path',{key:i,d}));
+  }
+  _trendSvg(area,line){
+    const R=(typeof React!=='undefined')?React:null;
+    if(!R||!area||!line) return null;
+    return [
+      R.createElement('polyline',{key:'area',points:area,fill:'var(--brand-50)',stroke:'none'}),
+      R.createElement('polyline',{key:'line',points:line,fill:'none',stroke:'var(--brand-500)',strokeWidth:2,vectorEffect:'non-scaling-stroke',strokeLinejoin:'round',strokeLinecap:'round'})
+    ];
+  }
+  _edgeSvg(edges){
+    const R=(typeof React!=='undefined')?React:null;
+    if(!R) return null;
+    return (Array.isArray(edges)?edges:[]).filter(g=>g&&g.x1!=null&&g.y1!=null&&g.x2!=null&&g.y2!=null).map((g,i)=>R.createElement('line',{key:i,x1:g.x1,y1:g.y1,x2:g.x2,y2:g.y2,stroke:'var(--border-strong)',strokeWidth:0.4}));
+  }
+  go(p){
+    if(this._isLegacyPage(p) && !this._legacyAvailable()){
+      this.setState({page:'evidence', navOpen:false, anim:0, legacyNotice:'旧数据未配置：'+this._legacyReason()}, ()=>{ this.runCount(); this.loadEvidencePage(); });
+      return;
+    }
+    this.setState({page:p, navOpen:false, anim:0, legacyNotice:''}, ()=>{ this.runCount(); this.loadPage(); });
+  }
   runCount(){
     if(this._raf) cancelAnimationFrame(this._raf);
     if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ this.setState({anim:1}); return; }
@@ -64,7 +94,7 @@ class Component extends DCLogic {
     const tick=(t)=>{ let k=Math.min(1,(t-t0)/dur); k=1-Math.pow(1-k,3); this.setState({anim:k}); if(k<1) this._raf=requestAnimationFrame(tick); };
     this._raf=requestAnimationFrame(tick);
   }
-  componentDidMount(){ this.runCount(); this.loadBootstrap(); this.loadPage(); this._initConvs(); }
+  componentDidMount(){ this.runCount(); this.loadRuntimeCapabilities(); this._initConvs(); }
 
   // ===================== 多会话 / 历史对话 =====================
   _initConvs(){
@@ -128,7 +158,32 @@ class Component extends DCLogic {
   // 避免切公司时回退到演示预设造成闪烁；新数据到达后会覆盖该槽位自动更新。
   _matched(slot){ const m=this._get(slot); return m ? m.data : null; }
 
+  loadRuntimeCapabilities(){
+    if(this.state.runtimeCapabilitiesLoading) return;
+    this.setState({runtimeCapabilitiesLoading:true});
+    this._api('/api/runtime-capabilities').then(c=>{
+      const caps=c||{};
+      const legacy=!!caps.legacy_features_available;
+      const page=caps.default_page||(legacy?'today':'evidence');
+      const nextPage=(legacy||!this._isLegacyPage(page))?page:'evidence';
+      this.setState({
+        runtimeCapabilities:caps,
+        runtimeCapabilitiesLoaded:true,
+        runtimeCapabilitiesLoading:false,
+        page:nextPage,
+        legacyNotice:legacy?'':'旧数据未配置：'+(caps.legacy_unavailable_reason||'旧企业分析数据或可选依赖未配置')
+      }, ()=>{
+        if(legacy) this.loadBootstrap();
+        this.loadPage();
+      });
+    }).catch(()=>{
+      const caps={competition_core_available:true,legacy_features_available:false,default_page:'evidence',legacy_unavailable_reason:'运行能力识别失败，已进入研发证据查询'};
+      this.setState({runtimeCapabilities:caps,runtimeCapabilitiesLoaded:true,runtimeCapabilitiesLoading:false,page:'evidence',legacyNotice:'旧数据未配置：'+caps.legacy_unavailable_reason}, ()=>this.loadEvidencePage());
+    });
+  }
+
   loadBootstrap(){
+    if(!this._legacyAvailable()) return;
     this._api('/api/bootstrap').then(b=>{
       if(!b) return;
       const ns={}; let nav=false;
@@ -144,7 +199,9 @@ class Component extends DCLogic {
   }
 
   loadPage(){
+    if(!this.state.runtimeCapabilitiesLoaded) return;
     const p=this.state.page;
+    if(this._isLegacyPage(p) && !this._legacyAvailable()) return;
     if(p==='today') this.loadDashboard();
     else if(p==='compare'){ this.loadProfile(); this.loadCompare(); }
     else if(p==='timeline') this.loadTimeline();
@@ -155,16 +212,17 @@ class Component extends DCLogic {
     else if(p==='evidence') this.loadEvidencePage();
   }
 
-  loadDashboard(){ const key=this._curKey(), s=this.state;
+  loadDashboard(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/dashboard',{company_name:s.company, report_year:s.year, ranking_scope:s.scope}).then(d=>this._mergeApi({dashboard:{key,data:d}})).catch(()=>{}); }
-  loadProfile(){ const key=this._curKey(), s=this.state;
+  loadProfile(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/profile',{company_name:s.company, report_year:s.year}).then(d=>this._mergeApi({profile:{key,data:d}})).catch(()=>{}); }
-  loadCompare(){ const key=this._curKey(), s=this.state;
+  loadCompare(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/compare',{company_name:s.company, compare_company_name:s.compareCompany, report_year:s.year}).then(d=>this._mergeApi({compare:{key,data:d}})).catch(()=>{}); }
-  loadTimeline(){ const key=this.state.company;
+  loadTimeline(){ if(!this._legacyAvailable()) return; const key=this.state.company;
     this._api('/api/timeline',{company_name:this.state.company}).then(d=>this._mergeApi({timeline:{key,data:d}})).catch(()=>{}); }
-  loadWhitebox(){ if(this._get('whitebox')) return; this._api('/api/whitebox').then(d=>this._mergeApi({whitebox:d})).catch(()=>{}); }
+  loadWhitebox(){ if(!this._legacyAvailable()) return; if(this._get('whitebox')) return; this._api('/api/whitebox').then(d=>this._mergeApi({whitebox:d})).catch(()=>{}); }
   loadDbCatalog(){
+    if(!this._legacyAvailable()) return;
     this._api('/api/database/catalog').then(d=>{
       this._mergeApi({dbCatalog:d});
       const names=(d&&d.table_names)||[];
@@ -173,7 +231,7 @@ class Component extends DCLogic {
       this.loadDbTable(t);
     }).catch(()=>{});
   }
-  loadDbTable(name){ if(!name) return; const cur=this._get('dbTable');
+  loadDbTable(name){ if(!this._legacyAvailable()) return; if(!name) return; const cur=this._get('dbTable');
     if(cur && cur.key===name) return;
     this._api('/api/database/table',{table_name:name, limit:20}).then(d=>this._mergeApi({dbTable:{key:name,data:d}})).catch(()=>{}); }
   selectDbTable(name){ this.setState({dbTable:name}, ()=>this.loadDbTable(name)); }
@@ -242,7 +300,7 @@ class Component extends DCLogic {
   // 研报页：当前激活公司（单条=全局公司；批量=当前选中的批量公司）
   _resActive(){ const s=this.state; if(s.resMode==='batch'){ const names=(s.resList||'').split(/[，,、\n]+/).map(x=>x.trim()).filter(Boolean).slice(0,5); return names[s.resBatchActive]||names[0]||s.company; } return s.company; }
   // 按需拉取某公司的画像供研报页用（按 name|year 缓存去重，可安全在 render 中调用）
-  _ensureResProfile(name){ if(!name) return; const y=this.state.year, key=name+'|'+y;
+  _ensureResProfile(name){ if(!this._legacyAvailable()) return; if(!name) return; const y=this.state.year, key=name+'|'+y;
     const cache=(this.state.api&&this.state.api.resProfile)||{}; if(cache[key]) return;
     this._resInflight=this._resInflight||{}; if(this._resInflight[key]) return; this._resInflight[key]=1;
     this._api('/api/profile',{company_name:name, report_year:y}).then(d=>{ delete this._resInflight[key]; if(d&&d.company_name) this._lastResProf=d; this.setState(st=>({api:Object.assign({},st.api,{resProfile:Object.assign({},(st.api&&st.api.resProfile)||{},{[key]:d})})})); }).catch(()=>{ delete this._resInflight[key]; }); }
@@ -1071,8 +1129,9 @@ class Component extends DCLogic {
   }
   navItem(it){
     const active = this.state.page===it.key;
-    const style='display:flex;align-items:center;gap:11px;padding:0 11px;height:36px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;width:100%;text-align:left;border:0;transition:background .12s,color .12s;'+(active?'background:var(--brand-50);color:var(--brand-600);font-weight:600;':'background:transparent;color:var(--text-2);');
-    return Object.assign({}, it, {style, onClick:()=>this.go(it.key)});
+    const disabled=this._isLegacyPage(it.key)&&!this._legacyAvailable();
+    const style='display:flex;align-items:center;gap:11px;padding:0 11px;height:36px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;width:100%;text-align:left;border:0;transition:background .12s,color .12s;'+(disabled?'background:transparent;color:var(--gray-300);cursor:not-allowed;':(active?'background:var(--brand-50);color:var(--brand-600);font-weight:600;':'background:transparent;color:var(--text-2);'));
+    return Object.assign({}, it, {style, disabled, legacyLabel:disabled?'旧数据未配置':'', iconPaths:this._paths(it.icon), onClick:()=>this.go(it.key)});
   }
 
   shellVals(){
@@ -1084,10 +1143,11 @@ class Component extends DCLogic {
     return {
       theme:s.theme, present:s.present?'on':'off', navOpenAttr:s.navOpen?'1':'0',
       navMain:nd.main.map(it=>this.navItem(it)), navAnalysis:nd.analysis.map(it=>this.navItem(it)),
+      legacyNotice:s.legacyNotice||'', hasLegacyNotice:!!s.legacyNotice,
       crumbGroup:m[0], crumbSub:m[1],
       company:s.company, year:s.year, topK:s.topK, companies:this._liveCompanies(), years:this._liveYears(),
       isToday:s.page==='today', isChat:s.page==='chat', isCompare:s.page==='compare', isResearch:s.page==='research', isEvidence:s.page==='evidence', isWhitebox:s.page==='whitebox', isDatabase:s.page==='database', isTimeline:s.page==='timeline', isAdvanced:s.page==='advanced',
-      themeIcon: s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z'],
+      themeIconPaths: this._paths(s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']),
       toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
       togglePresent:()=>this.setState({present:!s.present}),
       toggleMode:()=>this.setState({deepseek:!s.deepseek}),
@@ -1109,11 +1169,16 @@ class Component extends DCLogic {
       presentOn:s.present, demoIdx:s.demoStep+1, demoTotal:5,
       demoPrev:()=>this.demoGo(s.demoStep-1), demoNext:()=>this.demoGo(s.demoStep+1),
       demoSteps:this.demoStepsDef().map((d,i)=>({t:d.t,idx:i+1,onClick:()=>this.demoGo(i),
+        iconPaths:this._paths(d.icon),
         style:'display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:0;cursor:pointer;border-radius:999px;padding:6px 13px;transition:all .12s;'+(i===s.demoStep?'background:#fff;color:var(--brand-800)':'background:rgba(255,255,255,.1);color:rgba(255,255,255,.82)')}))
     };
   }
 
   todayVals(){
+    if(!this._legacyAvailable()){
+      const unavailable=()=>this.go('today');
+      return {today_kpis:[],today_scenes:[{title:'旧数据未配置',desc:this._legacyReason(),cta:'查看说明',onClick:unavailable,tint:'var(--text-3)',tintBg:'var(--bg-sunken)',iconPaths:this._paths(['M12 9v4M12 17h.01','M10.3 3.9 1.8 7.2a2 2 0 0 0 1.9 2.5h14a2 2 0 0 0 1.9-2.5l-7.2-7.2a2 2 0 0 0-2.8 0z'])}],today_ranking:[],today_alerts:[],today_metrics:[],today_industry:'旧数据未配置',today_rankScope:'不可用',today_rankN:0,today_alertSummary:'旧企业分析数据或可选依赖未配置',today_trendLabels:[],today_trendSeries:[]};
+    }
     const D=this.D, s=this.state, yi=this.yi()<0?4:this.yi();
     const ic={biz:['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4'],doc:['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6'],fact:['M3 3v18h18','M7 16l4-5 3 3 4-6'],macro:['M22 12h-4l-3 9L9 3l-3 9H2']};
     const boot=this._get('bootstrap'); const stats=(boot&&boot.stats)||D.stats;
@@ -1124,6 +1189,7 @@ class Component extends DCLogic {
       {label:'财务事实',value:this.nf(this.cu(stats.financial_facts)),hint:'结构化指标条目',icon:ic.fact},
       {label:'宏观指标',value:this.nf(this.cu(stats.macro_facts)),hint:'卫生类联动数据',icon:ic.macro}
     ];
+    today_kpis.forEach(x=>x.iconPaths=this._paths(x.icon));
     const sc=(k)=>()=>this.go(k);
     const today_scenes=[
       {title:'智能问答',desc:'自然语言提问，自动路由 SQL / RAG / 宏观，回答附带可追溯证据。',cta:'去提问',onClick:sc('chat'),tint:'var(--series-1)',tintBg:'var(--brand-50)',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
@@ -1131,6 +1197,7 @@ class Component extends DCLogic {
       {title:'公司画像 · 对比',desc:'单家全景画像，或与同业对手做多指标横向对比与可视化。',cta:'看对比',onClick:sc('compare'),tint:'var(--series-4)',tintBg:'rgba(109,40,217,.1)',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
       {title:'白盒溯源',desc:'公开 SQL、RAG 原文切片与推理链路，每个结论都能回看来路。',cta:'看链路',onClick:sc('whitebox'),tint:'var(--series-3)',tintBg:'rgba(180,83,9,.1)',icon:['M3 7V5a2 2 0 0 1 2-2h2','M17 3h2a2 2 0 0 1 2 2v2','M21 17v2a2 2 0 0 1-2 2h-2','M7 21H5a2 2 0 0 1-2-2v-2','M7 12h10']}
     ];
+    today_scenes.forEach(x=>x.iconPaths=this._paths(x.icon));
     const dash=this._matched('dashboard');
     // ----- 同业排名（live: dashboard.ranking_overview.boards[0]） -----
     const ro=dash&&dash.ranking_overview;
@@ -1584,6 +1651,7 @@ class Component extends DCLogic {
     return {
       res_bars:bars,
       res_trendLine:linePts, res_trendArea:areaPts,
+      res_trendSvg:this._trendSvg(areaPts,linePts),
       res_trendYears:trendYears,
       res_trendLast:trendLast,
       res_isSingle:mode==='single', res_isBatch:mode==='batch',
@@ -1800,6 +1868,7 @@ class Component extends DCLogic {
       adv_run:()=>{ if(this.state.advLoading)return; const s2=this.state; const q=(s2.advQ!=null?s2.advQ:('请分析'+s2.company+'的股权结构与创新能力，并指出潜在风险点')); this.setState({advLoading:true,advDone:false}); this._apiPost('/api/advanced',{question:q, company_name:s2.company}).then(d=>this.setState({advLoading:false,advDone:true,advData:d})).catch(()=>{ if(this._advT)clearTimeout(this._advT); this._advT=setTimeout(()=>this.setState({advLoading:false,advDone:true}),900); }); },
       adv_loading:s.advLoading, adv_done:s.advDone,
       adv_nodes:nodes, adv_edges:edges,
+      adv_edgeSvg:this._edgeSvg(edges),
       adv_tools:adv_tools,
       adv_answer:adv_answer,
       adv_innovLabels:['发明专利','在研管线','研发人员','对外合作'],

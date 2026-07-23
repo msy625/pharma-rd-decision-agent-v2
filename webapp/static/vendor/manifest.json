@@ -1,0 +1,28 @@
+{
+  "resources": [
+    {
+      "name": "react",
+      "version": "18.3.1",
+      "source_url": "https://unpkg.com/react@18.3.1/umd/react.production.min.js",
+      "file": "/static/vendor/react/react.production.min-18.3.1.js",
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd",
+      "license_file": "/static/vendor/react/LICENSE-18.3.1"
+    },
+    {
+      "name": "react-dom",
+      "version": "18.3.1",
+      "source_url": "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js",
+      "file": "/static/vendor/react-dom/react-dom.production.min-18.3.1.js",
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d",
+      "license_file": "/static/vendor/react-dom/LICENSE-18.3.1"
+    },
+    {
+      "name": "babel-standalone",
+      "version": "7.26.4",
+      "source_url": "https://unpkg.com/@babel/standalone@7.26.4/babel.min.js",
+      "file": "/static/vendor/babel/babel.min-7.26.4.js",
+      "sha256": "a12872ea8da3d29b2a296c51bfac7c482e81419c755f2207a49ad9b77200f4ea",
+      "license_file": "/static/vendor/babel/LICENSE-7.26.4"
+    }
+  ]
+}

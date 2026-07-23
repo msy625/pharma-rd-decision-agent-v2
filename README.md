@@ -199,6 +199,66 @@ python -m uvicorn webapp.main:app --host 127.0.0.1 --port 8000
 
 启动后在浏览器打开 `http://127.0.0.1:8000`。
 
+## 比赛核心轻量部署
+
+完整开发环境继续使用：
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+比赛核心线上演示可使用轻量依赖：
+
+```bash
+python -m pip install -r requirements-deploy.txt
+```
+
+轻量依赖只保障 FastAPI 静态页面、`/health`、`/ready`、`/api/evidence/*`、本地循证问答和可选 DeepSeek `auto` 模式，不包含旧 Streamlit、SQLite、Chroma、向量模型和数据导入功能依赖。
+
+本地轻量启动：
+
+```bash
+PORT=8000 make web-deploy
+```
+
+等价命令：
+
+```bash
+python -m uvicorn webapp.main:app --host 0.0.0.0 --port ${PORT:-8000}
+```
+
+Render 使用 `render.yaml` 中的配置：
+
+```text
+buildCommand: pip install -r requirements-deploy.txt
+startCommand: python -m uvicorn webapp.main:app --host 0.0.0.0 --port $PORT
+healthCheckPath: /health
+```
+
+`/health` 是进程存活检查，不读取数据文件或密钥；`/ready` 是比赛核心链路就绪检查，会校验 CSV/JSON 证据数据并返回 `source_count` 和 `data_version`。
+
+未配置 `DEEPSEEK_API_KEY` 时，循证问答仍可使用 `local` 模式，`auto` 模式会回退到本地结构化摘要。部署平台密钥只能放在平台环境变量中，不能提交 `.env`；Render 配置中 `DEEPSEEK_API_KEY` 使用手动配置，不写真实密钥。
+
+轻量部署不保证旧 Streamlit、SQLite、Chroma、向量检索、旧报告工作流和旧公司画像接口可用；这些旧功能需要完整 `requirements.txt` 和旧数据底座。
+
+前端启动会先请求：
+
+```text
+GET /api/runtime-capabilities
+```
+
+该接口用于区分比赛核心轻量环境与完整旧环境。轻量环境返回 `default_page=evidence`，首页默认进入“研发证据查询”，不会自动请求 `/api/bootstrap`、`/api/profile`、`/api/dashboard` 等旧接口，也不会展示旧工作台固定兜底统计。完整旧环境具备旧 SQLite 数据和可选依赖时，`default_page=today`，旧工作台和旧功能仍按原逻辑保留。
+
+运行能力检查不使用 `.env` 判断旧功能是否可用，不读取或返回密钥，不创建 DeepSeek 客户端，不访问网络，也不加载 Chroma、sentence-transformers 或 Torch。
+
+前端运行时资源已本地化到 `webapp/static/vendor/`：
+
+- React 18.3.1
+- ReactDOM 18.3.1
+- Babel standalone 7.26.4
+
+页面启动不再依赖 unpkg、jsDelivr、cdnjs 或 Google Fonts。字体文件和运行时 JS 均由 FastAPI 同源静态路由提供；证据中的 ClinicalTrials.gov、PubMed、EMA 和企业官网链接仍作为“打开原始来源”的外部链接保留，不属于页面启动依赖。页面同时提供本地 SVG favicon，`/favicon.ico` 和 `/static/favicon.svg` 均由 FastAPI 返回，避免浏览器默认 favicon 请求出现 404。
+
 启动 Streamlit：
 
 ```bash

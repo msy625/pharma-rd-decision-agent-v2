@@ -2,14 +2,13 @@
 <html><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 <script src="/static/dc-runtime.js"></script>
 </head>
 <body>
 
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <style>/* cyrillic-ext */
 @font-face {
   font-family: 'Inter';
@@ -3693,9 +3692,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
       <sc-for list="{{ navMain }}" as="it" hint-placeholder-count="5">
         <button onclick="{{ it.onClick }}" style="{{ it.style }}" style-hover="background:var(--gray-100)">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
-            <sc-for list="{{ it.icon }}" as="d"><path d="{{ d }}"></path></sc-for>
+            {{ it.iconPaths }}
           </svg>
           <span style="flex:1">{{ it.label }}</span>
+          <sc-if value="{{ it.disabled }}"><span style="font-size:10.5px;color:var(--text-3);white-space:nowrap">{{ it.legacyLabel }}</span></sc-if>
           <sc-if value="{{ it.badge }}"><span style="font-size:10px;font-family:var(--font-mono);background:var(--brand-100);color:var(--brand-700);padding:1px 6px;border-radius:999px">{{ it.badge }}</span></sc-if>
         </button>
       </sc-for>
@@ -3703,23 +3703,24 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
       <sc-for list="{{ navAnalysis }}" as="it" hint-placeholder-count="3">
         <button onclick="{{ it.onClick }}" style="{{ it.style }}" style-hover="background:var(--gray-100)">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
-            <sc-for list="{{ it.icon }}" as="d"><path d="{{ d }}"></path></sc-for>
+            {{ it.iconPaths }}
           </svg>
           <span style="flex:1">{{ it.label }}</span>
+          <sc-if value="{{ it.disabled }}"><span style="font-size:10.5px;color:var(--text-3);white-space:nowrap">{{ it.legacyLabel }}</span></sc-if>
         </button>
       </sc-for>
 
       <div data-chrome="" style="margin-top:14px;padding:12px;background:var(--bg-sunken);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;gap:11px">
         <div style="font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--text-3)">全局过滤</div>
-        <label style="display:flex;flex-direction:column;gap:4px">
+        <label for="global-company-select" style="display:flex;flex-direction:column;gap:4px">
           <span style="font-size:11px;color:var(--text-2)">企业</span>
-          <select value="{{ company }}" onchange="{{ onCompany }}" style="height:30px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:12.5px;padding:0 8px">
+          <select id="global-company-select" name="global_company" value="{{ company }}" onchange="{{ onCompany }}" style="height:30px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:12.5px;padding:0 8px">
             <sc-for list="{{ companies }}" as="c"><option value="{{ c }}">{{ c }}</option></sc-for>
           </select>
         </label>
-        <label style="display:flex;flex-direction:column;gap:4px">
+        <label for="global-year-select" style="display:flex;flex-direction:column;gap:4px">
           <span style="font-size:11px;color:var(--text-2)">报告年份</span>
-          <select value="{{ year }}" onchange="{{ onYear }}" style="height:30px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:12.5px;padding:0 8px">
+          <select id="global-year-select" name="global_year" value="{{ year }}" onchange="{{ onYear }}" style="height:30px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:12.5px;padding:0 8px">
             <sc-for list="{{ years }}" as="y"><option value="{{ y }}">{{ y }}</option></sc-for>
           </select>
         </label>
@@ -3732,7 +3733,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
         </div>
         <div style="display:flex;flex-direction:column;gap:5px">
           <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-2)"><span>向量 Top K</span><span style="font-family:var(--font-mono);color:var(--brand-600);font-weight:600">{{ topK }}</span></div>
-          <input type="range" min="1" max="10" value="{{ topK }}" oninput="{{ onTopK }}" style="width:100%;accent-color:var(--brand-600);height:4px">
+          <input id="global-top-k-range" name="global_top_k" aria-label="向量 Top K" type="range" min="1" max="10" value="{{ topK }}" oninput="{{ onTopK }}" style="width:100%;accent-color:var(--brand-600);height:4px">
         </div>
       </div>
     </nav>
@@ -3765,12 +3766,15 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
       </button>
       <button onclick="{{ toggleTheme }}" title="明暗切换" style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border);color:var(--text-2);background:var(--bg-elev);display:flex;align-items:center;justify-content:center" style-hover="border-color:var(--border-strong)">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ themeIcon }}" as="d"><path d="{{ d }}"></path></sc-for></svg>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ themeIconPaths }}</svg>
       </button>
     </header>
 
     <div data-scale="" style="flex:1;overflow-y:auto;overflow-x:hidden">
       <div style="padding:24px 28px 60px;max-width:1320px;margin:0 auto">
+      <sc-if value="{{ hasLegacyNotice }}">
+        <div style="margin-bottom:16px;border:1px solid var(--warn);background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.6">{{ legacyNotice }}</div>
+      </sc-if>
 
       <sc-if value="{{ isToday }}">
         <div style="animation:fadeUp .5s var(--ease-out) both">
@@ -3795,7 +3799,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <sc-for list="{{ today_kpis }}" as="k" hint-placeholder-count="4">
                 <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:6px">
                   <div style="display:flex;align-items:center;gap:7px;color:var(--text-3)">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ k.icon }}" as="d"><path d="{{ d }}"></path></sc-for></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ k.iconPaths }}</svg>
                     <span style="font-size:11.5px">{{ k.label }}</span>
                   </div>
                   <div style="font-size:25px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ k.value }}</div>
@@ -3814,7 +3818,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             <sc-for list="{{ today_scenes }}" as="s" hint-placeholder-count="4">
               <button onclick="{{ s.onClick }}" style="text-align:left;background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,transform .15s,box-shadow .15s" style-hover="border-color:var(--brand-300);transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,22,31,.08)">
                 <div style="width:38px;height:38px;border-radius:10px;background:{{ s.tintBg }};color:{{ s.tint }};display:flex;align-items:center;justify-content:center">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><sc-for list="{{ s.icon }}" as="d"><path d="{{ d }}"></path></sc-for></svg>
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ s.iconPaths }}</svg>
                 </div>
                 <div style="font-size:14.5px;font-weight:600">{{ s.title }}</div>
                 <div style="font-size:12.5px;color:var(--text-2);line-height:1.5;flex:1">{{ s.desc }}</div>
@@ -3957,7 +3961,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 </sc-for>
               </div>
               <div style="border:1px solid var(--border);background:var(--bg-elev);border-radius:13px;padding:11px 12px;display:flex;gap:10px;align-items:flex-end">
-                <textarea value="{{ chat_input }}" oninput="{{ chat_onInput }}" onkeydown="{{ chat_onKey }}" rows="2" placeholder="用自然语言提问，例如：恒瑞医药2023年经营质量如何，值得投资吗？（Enter 发送 · Shift+Enter 换行）" style="flex:1;resize:none;border:0;outline:none;background:transparent;color:var(--text);font-size:13.5px;line-height:1.6;font-family:var(--font-sans)"></textarea>
+                <textarea id="chat-question-input" name="chat_question" aria-label="智能问答问题" value="{{ chat_input }}" oninput="{{ chat_onInput }}" onkeydown="{{ chat_onKey }}" rows="2" placeholder="用自然语言提问，例如：恒瑞医药2023年经营质量如何，值得投资吗？（Enter 发送 · Shift+Enter 换行）" style="flex:1;resize:none;border:0;outline:none;background:transparent;color:var(--text);font-size:13.5px;line-height:1.6;font-family:var(--font-sans)"></textarea>
                 <button onclick="{{ chat_send }}" style="width:36px;height:36px;border-radius:9px;background:var(--brand-600);color:#fff;display:flex;align-items:center;justify-content:center;flex:none" style-hover="background:var(--brand-700)">
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg>
                 </button>
@@ -4024,7 +4028,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="width:42px;height:42px;border-radius:11px;background:var(--brand-600);color:#fff;font-size:18px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none">{{ cmp_initialA }}</div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:10.5px;color:var(--text-3);margin-bottom:3px">主公司</div>
-                <select value="{{ cmp_company }}" onchange="{{ cmp_onCompany }}" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;font-weight:500;padding:0 8px">
+                <select id="profile-company-select" name="profile_company" aria-label="公司画像企业" value="{{ cmp_company }}" onchange="{{ cmp_onCompany }}" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;font-weight:500;padding:0 8px">
                   <sc-for list="{{ cmp_companies }}" as="c"><option value="{{ c }}">{{ c }}</option></sc-for>
                 </select>
               </div>
@@ -4034,7 +4038,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="width:42px;height:42px;border-radius:11px;background:var(--series-2);color:#fff;font-size:18px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none">{{ cmp_initialB }}</div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:10.5px;color:var(--text-3);margin-bottom:3px">对比公司</div>
-                <select value="{{ cmp_other }}" onchange="{{ cmp_onOther }}" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;font-weight:500;padding:0 8px">
+                <select id="profile-compare-company-select" name="profile_compare_company" aria-label="公司画像对比企业" value="{{ cmp_other }}" onchange="{{ cmp_onOther }}" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;font-weight:500;padding:0 8px">
                   <sc-for list="{{ cmp_otherOptions }}" as="o"><option value="{{ o.v }}">{{ o.t }}</option></sc-for>
                 </select>
               </div>
@@ -4210,13 +4214,13 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             <sc-if value="{{ res_isSingle }}">
               <div style="display:flex;flex-direction:column;gap:6px">
                 <span style="font-size:11px;font-weight:500;color:var(--text-2)">研究主题</span>
-                <textarea value="{{ res_topic }}" oninput="{{ res_onTopic }}" rows="4" placeholder="{{ res_topicPh }}" style="border:1px solid var(--border);background:var(--bg-elev);color:var(--text);border-radius:9px;padding:10px;font-size:13px;line-height:1.6;resize:vertical;font-family:var(--font-sans);outline:none"></textarea>
+                <textarea id="research-topic-input" name="research_topic" aria-label="研究报告主题" value="{{ res_topic }}" oninput="{{ res_onTopic }}" rows="4" placeholder="{{ res_topicPh }}" style="border:1px solid var(--border);background:var(--bg-elev);color:var(--text);border-radius:9px;padding:10px;font-size:13px;line-height:1.6;resize:vertical;font-family:var(--font-sans);outline:none"></textarea>
               </div>
             </sc-if>
             <sc-if value="{{ res_isBatch }}">
               <div style="display:flex;flex-direction:column;gap:6px">
                 <div style="display:flex;justify-content:space-between"><span style="font-size:11px;font-weight:500;color:var(--text-2)">企业名单</span><span style="font-size:11px;color:var(--text-3)">{{ res_listCount }} / 5 家</span></div>
-                <textarea value="{{ res_list }}" oninput="{{ res_onList }}" rows="4" placeholder="逗号、顿号或换行分隔，最多 5 家" style="border:1px solid var(--border);background:var(--bg-elev);color:var(--text);border-radius:9px;padding:10px;font-size:13px;line-height:1.6;resize:vertical;font-family:var(--font-sans);outline:none"></textarea>
+                <textarea id="research-company-list-input" name="research_company_list" aria-label="批量报告企业列表" value="{{ res_list }}" oninput="{{ res_onList }}" rows="4" placeholder="逗号、顿号或换行分隔，最多 5 家" style="border:1px solid var(--border);background:var(--bg-elev);color:var(--text);border-radius:9px;padding:10px;font-size:13px;line-height:1.6;resize:vertical;font-family:var(--font-sans);outline:none"></textarea>
               </div>
             </sc-if>
             <button onclick="{{ res_gen }}" style="height:38px;border-radius:9px;background:var(--brand-600);color:#fff;font-size:13.5px;font-weight:600;border:0;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="background:var(--brand-700)">
@@ -4317,8 +4321,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 </div>
                 <div style="font-size:11px;color:var(--text-3);margin-bottom:14px">单位：亿元 · 近 5 年</div>
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:96px;display:block;overflow:visible">
-                  <polyline points="{{ res_trendArea }}" fill="var(--brand-50)" stroke="none"></polyline>
-                  <polyline points="{{ res_trendLine }}" fill="none" stroke="var(--brand-500)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"></polyline>
+                  {{ res_trendSvg }}
                 </svg>
                 <div style="display:flex;justify-content:space-between;margin-top:9px;padding-top:11px;border-top:1px solid var(--border)">
                   <sc-for list="{{ res_trendYears }}" as="t"><span style="font-size:10.5px;color:var(--text-3)">{{ t.y }}</span></sc-for>
@@ -4375,12 +4378,12 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 </div>
               </div>
               <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-                <input value="{{ ev_query }}" oninput="{{ ev_onQuery }}" onkeydown="{{ ev_onKey }}" placeholder="{{ ev_placeholder }}" style="flex:1;min-width:260px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;padding:0 12px;outline:none">
-                <label style="height:38px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:9px;padding:0 11px;background:var(--bg-sunken);font-size:12.5px;color:var(--text-2);white-space:nowrap">
-                  <input type="checkbox" checked="{{ ev_latest }}" onchange="{{ ev_onLatest }}" style="accent-color:var(--brand-600)">排除历史版本
+                <input id="evidence-query-input" name="evidence_query" aria-label="证据查询内容" value="{{ ev_query }}" oninput="{{ ev_onQuery }}" onkeydown="{{ ev_onKey }}" placeholder="{{ ev_placeholder }}" style="flex:1;min-width:260px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;padding:0 12px;outline:none">
+                <label for="evidence-latest-checkbox" style="height:38px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:9px;padding:0 11px;background:var(--bg-sunken);font-size:12.5px;color:var(--text-2);white-space:nowrap">
+                  <input id="evidence-latest-checkbox" name="evidence_latest_only" type="checkbox" checked="{{ ev_latest }}" onchange="{{ ev_onLatest }}" style="accent-color:var(--brand-600)">排除历史版本
                 </label>
                 <span style="font-size:11.5px;color:var(--text-3)">保留最新版本和没有版本关系的独立资料。</span>
-                <select value="{{ ev_limit }}" onchange="{{ ev_onLimit }}" style="height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
+                <select id="evidence-limit-select" name="evidence_limit" aria-label="证据查询返回数量" value="{{ ev_limit }}" onchange="{{ ev_onLimit }}" style="height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                   <option value="20">20 条</option><option value="50">50 条</option><option value="100">100 条</option>
                 </select>
                 <button onclick="{{ ev_search }}" style="height:38px;border-radius:9px;background:var(--brand-600);color:#fff;border:0;font-size:13.5px;font-weight:600;padding:0 17px;display:inline-flex;align-items:center;gap:8px" style-hover="background:var(--brand-700)">
@@ -4449,13 +4452,13 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             </div>
 
             <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-              <label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">企业
-                <select value="{{ chain_company }}" onchange="{{ chain_onCompany }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
+              <label for="chain-company-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">企业
+                <select id="chain-company-select" name="chain_company" value="{{ chain_company }}" onchange="{{ chain_onCompany }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                   <option value="">全部</option><option value="恒瑞医药">恒瑞医药</option><option value="百济神州">百济神州/BeOne Medicines</option>
                 </select>
               </label>
-              <label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">类型
-                <select value="{{ chain_type }}" onchange="{{ chain_onType }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
+              <label for="chain-type-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">类型
+                <select id="chain-type-select" name="chain_type" value="{{ chain_type }}" onchange="{{ chain_onType }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                   <option value="">全部</option><option value="trial">试验级</option><option value="regulatory">药物级监管</option>
                 </select>
               </label>
@@ -4583,14 +4586,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               </div>
 
               <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-                <label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">左侧企业
-                  <select value="{{ cmp_companyA }}" onchange="{{ cmp_onCompanyA }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
+                <label for="evidence-compare-company-a-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">左侧企业
+                  <select id="evidence-compare-company-a-select" name="evidence_compare_company_a" value="{{ cmp_companyA }}" onchange="{{ cmp_onCompanyA }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                     <sc-for list="{{ cmp_companyOptions }}" as="co"><option value="{{ co.value }}">{{ co.label }}</option></sc-for>
                   </select>
                 </label>
                 <button onclick="{{ cmp_swap }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:12.5px;font-weight:600;padding:0 13px">交换企业</button>
-                <label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">右侧企业
-                  <select value="{{ cmp_companyB }}" onchange="{{ cmp_onCompanyB }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
+                <label for="evidence-compare-company-b-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">右侧企业
+                  <select id="evidence-compare-company-b-select" name="evidence_compare_company_b" value="{{ cmp_companyB }}" onchange="{{ cmp_onCompanyB }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                     <sc-for list="{{ cmp_companyOptions }}" as="co"><option value="{{ co.value }}">{{ co.label }}</option></sc-for>
                   </select>
                 </label>
@@ -4754,7 +4757,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                   <sc-if value="{{ !gqa_deepseekOk }}"><span style="font-size:12px;color:var(--warn);background:var(--warn-bg);border-radius:999px;padding:3px 10px">{{ gqa_autoUnavailable }}</span></sc-if>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:8px">
-                  <textarea value="{{ gqa_question }}" oninput="{{ gqa_onQuestion }}" onkeydown="{{ gqa_onKey }}" maxlength="1000" rows="4" placeholder="请输入循证问题，Ctrl+Enter 提交" style="width:100%;resize:vertical;min-height:104px;border-radius:10px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;line-height:1.65;font-family:var(--font-sans);padding:11px 12px;outline:none"></textarea>
+                  <textarea id="grounded-qa-question-input" name="grounded_qa_question" aria-label="循证问答问题" value="{{ gqa_question }}" oninput="{{ gqa_onQuestion }}" onkeydown="{{ gqa_onKey }}" maxlength="1000" rows="4" placeholder="请输入循证问题，Ctrl+Enter 提交" style="width:100%;resize:vertical;min-height:104px;border-radius:10px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;line-height:1.65;font-family:var(--font-sans);padding:11px 12px;outline:none"></textarea>
                   <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
                     <span style="font-size:12px;color:var(--text-3)">字符数：{{ gqa_questionCount }} / 1000</span>
                     <button onclick="{{ gqa_submit }}" disabled="{{ gqa_submitDisabled }}" style="{{ gqa_submitStyle }}">
@@ -4845,7 +4848,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
           <div style="display:flex;flex-direction:column;gap:12px">
             <div style="position:relative">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--text-3)" stroke-width="1.9" stroke-linecap="round" style="position:absolute;left:11px;top:9px"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4-4"></path></svg>
-              <input value="{{ db_search }}" oninput="{{ db_onSearch }}" placeholder="搜索表名 / 中文名" style="width:100%;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13px;padding:0 11px 0 32px;outline:none">
+              <input id="database-table-search-input" name="database_table_search" aria-label="搜索表名或中文名" value="{{ db_search }}" oninput="{{ db_onSearch }}" placeholder="搜索表名 / 中文名" style="width:100%;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13px;padding:0 11px 0 32px;outline:none">
             </div>
             <div style="display:flex;flex-direction:column;gap:3px">
               <sc-for list="{{ db_list }}" as="t" hint-placeholder-count="6">
@@ -4918,7 +4921,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
           <div style="display:flex;gap:11px;align-items:flex-end;flex-wrap:wrap;margin-bottom:18px">
             <div style="flex:1;min-width:260px;display:flex;flex-direction:column;gap:6px">
               <span style="font-size:11px;font-weight:500;color:var(--text-2)">分析问题</span>
-              <input value="{{ adv_question }}" oninput="{{ adv_onQuestion }}" style="height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;padding:0 12px;outline:none">
+              <input id="advanced-analysis-question-input" name="advanced_analysis_question" aria-label="高级分析问题" value="{{ adv_question }}" oninput="{{ adv_onQuestion }}" style="height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;padding:0 12px;outline:none">
             </div>
             <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:9px;height:38px;padding:0 13px"><span style="font-size:11px;color:var(--text-3)">目标企业</span><span style="font-weight:600;color:var(--text)">{{ adv_company }}</span></div>
             <button onclick="{{ adv_run }}" style="height:38px;border-radius:9px;background:var(--brand-600);color:#fff;font-size:13.5px;font-weight:600;border:0;padding:0 20px;display:flex;align-items:center;gap:8px" style-hover="background:var(--brand-700)">
@@ -4933,7 +4936,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="font-size:11.5px;color:var(--text-3);margin-bottom:6px">viz_block · graph · 节点与一级关系</div>
               <div style="position:relative;width:100%;height:340px">
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%">
-                  <sc-for list="{{ adv_edges }}" as="g"><line x1="{{ g.x1 }}" y1="{{ g.y1 }}" x2="{{ g.x2 }}" y2="{{ g.y2 }}" stroke="var(--border-strong)" stroke-width="0.4"></line></sc-for>
+                  {{ adv_edgeSvg }}
                 </svg>
                 <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--brand-600);color:#fff;border-radius:11px;padding:10px 14px;text-align:center;box-shadow:0 4px 14px rgba(45,50,107,.35);z-index:2">
                   <div style="font-size:9.5px;opacity:.78;margin-bottom:1px">核心企业</div>
@@ -5008,6 +5011,8 @@ class Component extends DCLogic {
     groundedCapabilities:null, groundedCapabilitiesLoading:false, groundedCapabilitiesLoaded:false,
     groundedQuestion:'', groundedMode:'local', groundedLoading:false, groundedError:'',
     groundedResult:null, groundedMeta:null, groundedTraceOpen:false, groundedSeq:0,
+    runtimeCapabilities:null, runtimeCapabilitiesLoaded:false, runtimeCapabilitiesLoading:false,
+    legacyNotice:'',
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -5043,7 +5048,35 @@ class Component extends DCLogic {
   nf(n){ return Number(n).toLocaleString('en-US'); }
   yi(){ return this.D.trendYears.indexOf(String(this.state.year)); }
 
-  go(p){ this.setState({page:p, navOpen:false, anim:0}, ()=>{ this.runCount(); this.loadPage(); }); }
+  _legacyPages(){ return {today:1,chat:1,compare:1,research:1,whitebox:1,database:1,timeline:1,advanced:1}; }
+  _legacyAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.legacy_features_available); }
+  _legacyReason(){ const c=this.state.runtimeCapabilities||{}; return c.legacy_unavailable_reason||'旧数据未配置'; }
+  _isLegacyPage(p){ return !!this._legacyPages()[p]; }
+  _paths(paths){
+    const R=(typeof React!=='undefined')?React:null;
+    if(!R) return null;
+    return (Array.isArray(paths)?paths:[]).filter(Boolean).map((d,i)=>R.createElement('path',{key:i,d}));
+  }
+  _trendSvg(area,line){
+    const R=(typeof React!=='undefined')?React:null;
+    if(!R||!area||!line) return null;
+    return [
+      R.createElement('polyline',{key:'area',points:area,fill:'var(--brand-50)',stroke:'none'}),
+      R.createElement('polyline',{key:'line',points:line,fill:'none',stroke:'var(--brand-500)',strokeWidth:2,vectorEffect:'non-scaling-stroke',strokeLinejoin:'round',strokeLinecap:'round'})
+    ];
+  }
+  _edgeSvg(edges){
+    const R=(typeof React!=='undefined')?React:null;
+    if(!R) return null;
+    return (Array.isArray(edges)?edges:[]).filter(g=>g&&g.x1!=null&&g.y1!=null&&g.x2!=null&&g.y2!=null).map((g,i)=>R.createElement('line',{key:i,x1:g.x1,y1:g.y1,x2:g.x2,y2:g.y2,stroke:'var(--border-strong)',strokeWidth:0.4}));
+  }
+  go(p){
+    if(this._isLegacyPage(p) && !this._legacyAvailable()){
+      this.setState({page:'evidence', navOpen:false, anim:0, legacyNotice:'旧数据未配置：'+this._legacyReason()}, ()=>{ this.runCount(); this.loadEvidencePage(); });
+      return;
+    }
+    this.setState({page:p, navOpen:false, anim:0, legacyNotice:''}, ()=>{ this.runCount(); this.loadPage(); });
+  }
   runCount(){
     if(this._raf) cancelAnimationFrame(this._raf);
     if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ this.setState({anim:1}); return; }
@@ -5051,7 +5084,7 @@ class Component extends DCLogic {
     const tick=(t)=>{ let k=Math.min(1,(t-t0)/dur); k=1-Math.pow(1-k,3); this.setState({anim:k}); if(k<1) this._raf=requestAnimationFrame(tick); };
     this._raf=requestAnimationFrame(tick);
   }
-  componentDidMount(){ this.runCount(); this.loadBootstrap(); this.loadPage(); this._initConvs(); }
+  componentDidMount(){ this.runCount(); this.loadRuntimeCapabilities(); this._initConvs(); }
 
   // ===================== 多会话 / 历史对话 =====================
   _initConvs(){
@@ -5115,7 +5148,32 @@ class Component extends DCLogic {
   // 避免切公司时回退到演示预设造成闪烁；新数据到达后会覆盖该槽位自动更新。
   _matched(slot){ const m=this._get(slot); return m ? m.data : null; }
 
+  loadRuntimeCapabilities(){
+    if(this.state.runtimeCapabilitiesLoading) return;
+    this.setState({runtimeCapabilitiesLoading:true});
+    this._api('/api/runtime-capabilities').then(c=>{
+      const caps=c||{};
+      const legacy=!!caps.legacy_features_available;
+      const page=caps.default_page||(legacy?'today':'evidence');
+      const nextPage=(legacy||!this._isLegacyPage(page))?page:'evidence';
+      this.setState({
+        runtimeCapabilities:caps,
+        runtimeCapabilitiesLoaded:true,
+        runtimeCapabilitiesLoading:false,
+        page:nextPage,
+        legacyNotice:legacy?'':'旧数据未配置：'+(caps.legacy_unavailable_reason||'旧企业分析数据或可选依赖未配置')
+      }, ()=>{
+        if(legacy) this.loadBootstrap();
+        this.loadPage();
+      });
+    }).catch(()=>{
+      const caps={competition_core_available:true,legacy_features_available:false,default_page:'evidence',legacy_unavailable_reason:'运行能力识别失败，已进入研发证据查询'};
+      this.setState({runtimeCapabilities:caps,runtimeCapabilitiesLoaded:true,runtimeCapabilitiesLoading:false,page:'evidence',legacyNotice:'旧数据未配置：'+caps.legacy_unavailable_reason}, ()=>this.loadEvidencePage());
+    });
+  }
+
   loadBootstrap(){
+    if(!this._legacyAvailable()) return;
     this._api('/api/bootstrap').then(b=>{
       if(!b) return;
       const ns={}; let nav=false;
@@ -5131,7 +5189,9 @@ class Component extends DCLogic {
   }
 
   loadPage(){
+    if(!this.state.runtimeCapabilitiesLoaded) return;
     const p=this.state.page;
+    if(this._isLegacyPage(p) && !this._legacyAvailable()) return;
     if(p==='today') this.loadDashboard();
     else if(p==='compare'){ this.loadProfile(); this.loadCompare(); }
     else if(p==='timeline') this.loadTimeline();
@@ -5142,16 +5202,17 @@ class Component extends DCLogic {
     else if(p==='evidence') this.loadEvidencePage();
   }
 
-  loadDashboard(){ const key=this._curKey(), s=this.state;
+  loadDashboard(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/dashboard',{company_name:s.company, report_year:s.year, ranking_scope:s.scope}).then(d=>this._mergeApi({dashboard:{key,data:d}})).catch(()=>{}); }
-  loadProfile(){ const key=this._curKey(), s=this.state;
+  loadProfile(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/profile',{company_name:s.company, report_year:s.year}).then(d=>this._mergeApi({profile:{key,data:d}})).catch(()=>{}); }
-  loadCompare(){ const key=this._curKey(), s=this.state;
+  loadCompare(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/compare',{company_name:s.company, compare_company_name:s.compareCompany, report_year:s.year}).then(d=>this._mergeApi({compare:{key,data:d}})).catch(()=>{}); }
-  loadTimeline(){ const key=this.state.company;
+  loadTimeline(){ if(!this._legacyAvailable()) return; const key=this.state.company;
     this._api('/api/timeline',{company_name:this.state.company}).then(d=>this._mergeApi({timeline:{key,data:d}})).catch(()=>{}); }
-  loadWhitebox(){ if(this._get('whitebox')) return; this._api('/api/whitebox').then(d=>this._mergeApi({whitebox:d})).catch(()=>{}); }
+  loadWhitebox(){ if(!this._legacyAvailable()) return; if(this._get('whitebox')) return; this._api('/api/whitebox').then(d=>this._mergeApi({whitebox:d})).catch(()=>{}); }
   loadDbCatalog(){
+    if(!this._legacyAvailable()) return;
     this._api('/api/database/catalog').then(d=>{
       this._mergeApi({dbCatalog:d});
       const names=(d&&d.table_names)||[];
@@ -5160,7 +5221,7 @@ class Component extends DCLogic {
       this.loadDbTable(t);
     }).catch(()=>{});
   }
-  loadDbTable(name){ if(!name) return; const cur=this._get('dbTable');
+  loadDbTable(name){ if(!this._legacyAvailable()) return; if(!name) return; const cur=this._get('dbTable');
     if(cur && cur.key===name) return;
     this._api('/api/database/table',{table_name:name, limit:20}).then(d=>this._mergeApi({dbTable:{key:name,data:d}})).catch(()=>{}); }
   selectDbTable(name){ this.setState({dbTable:name}, ()=>this.loadDbTable(name)); }
@@ -5229,7 +5290,7 @@ class Component extends DCLogic {
   // 研报页：当前激活公司（单条=全局公司；批量=当前选中的批量公司）
   _resActive(){ const s=this.state; if(s.resMode==='batch'){ const names=(s.resList||'').split(/[，,、\n]+/).map(x=>x.trim()).filter(Boolean).slice(0,5); return names[s.resBatchActive]||names[0]||s.company; } return s.company; }
   // 按需拉取某公司的画像供研报页用（按 name|year 缓存去重，可安全在 render 中调用）
-  _ensureResProfile(name){ if(!name) return; const y=this.state.year, key=name+'|'+y;
+  _ensureResProfile(name){ if(!this._legacyAvailable()) return; if(!name) return; const y=this.state.year, key=name+'|'+y;
     const cache=(this.state.api&&this.state.api.resProfile)||{}; if(cache[key]) return;
     this._resInflight=this._resInflight||{}; if(this._resInflight[key]) return; this._resInflight[key]=1;
     this._api('/api/profile',{company_name:name, report_year:y}).then(d=>{ delete this._resInflight[key]; if(d&&d.company_name) this._lastResProf=d; this.setState(st=>({api:Object.assign({},st.api,{resProfile:Object.assign({},(st.api&&st.api.resProfile)||{},{[key]:d})})})); }).catch(()=>{ delete this._resInflight[key]; }); }
@@ -6058,8 +6119,9 @@ class Component extends DCLogic {
   }
   navItem(it){
     const active = this.state.page===it.key;
-    const style='display:flex;align-items:center;gap:11px;padding:0 11px;height:36px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;width:100%;text-align:left;border:0;transition:background .12s,color .12s;'+(active?'background:var(--brand-50);color:var(--brand-600);font-weight:600;':'background:transparent;color:var(--text-2);');
-    return Object.assign({}, it, {style, onClick:()=>this.go(it.key)});
+    const disabled=this._isLegacyPage(it.key)&&!this._legacyAvailable();
+    const style='display:flex;align-items:center;gap:11px;padding:0 11px;height:36px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;width:100%;text-align:left;border:0;transition:background .12s,color .12s;'+(disabled?'background:transparent;color:var(--gray-300);cursor:not-allowed;':(active?'background:var(--brand-50);color:var(--brand-600);font-weight:600;':'background:transparent;color:var(--text-2);'));
+    return Object.assign({}, it, {style, disabled, legacyLabel:disabled?'旧数据未配置':'', iconPaths:this._paths(it.icon), onClick:()=>this.go(it.key)});
   }
 
   shellVals(){
@@ -6071,10 +6133,11 @@ class Component extends DCLogic {
     return {
       theme:s.theme, present:s.present?'on':'off', navOpenAttr:s.navOpen?'1':'0',
       navMain:nd.main.map(it=>this.navItem(it)), navAnalysis:nd.analysis.map(it=>this.navItem(it)),
+      legacyNotice:s.legacyNotice||'', hasLegacyNotice:!!s.legacyNotice,
       crumbGroup:m[0], crumbSub:m[1],
       company:s.company, year:s.year, topK:s.topK, companies:this._liveCompanies(), years:this._liveYears(),
       isToday:s.page==='today', isChat:s.page==='chat', isCompare:s.page==='compare', isResearch:s.page==='research', isEvidence:s.page==='evidence', isWhitebox:s.page==='whitebox', isDatabase:s.page==='database', isTimeline:s.page==='timeline', isAdvanced:s.page==='advanced',
-      themeIcon: s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z'],
+      themeIconPaths: this._paths(s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']),
       toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
       togglePresent:()=>this.setState({present:!s.present}),
       toggleMode:()=>this.setState({deepseek:!s.deepseek}),
@@ -6096,11 +6159,16 @@ class Component extends DCLogic {
       presentOn:s.present, demoIdx:s.demoStep+1, demoTotal:5,
       demoPrev:()=>this.demoGo(s.demoStep-1), demoNext:()=>this.demoGo(s.demoStep+1),
       demoSteps:this.demoStepsDef().map((d,i)=>({t:d.t,idx:i+1,onClick:()=>this.demoGo(i),
+        iconPaths:this._paths(d.icon),
         style:'display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:0;cursor:pointer;border-radius:999px;padding:6px 13px;transition:all .12s;'+(i===s.demoStep?'background:#fff;color:var(--brand-800)':'background:rgba(255,255,255,.1);color:rgba(255,255,255,.82)')}))
     };
   }
 
   todayVals(){
+    if(!this._legacyAvailable()){
+      const unavailable=()=>this.go('today');
+      return {today_kpis:[],today_scenes:[{title:'旧数据未配置',desc:this._legacyReason(),cta:'查看说明',onClick:unavailable,tint:'var(--text-3)',tintBg:'var(--bg-sunken)',iconPaths:this._paths(['M12 9v4M12 17h.01','M10.3 3.9 1.8 7.2a2 2 0 0 0 1.9 2.5h14a2 2 0 0 0 1.9-2.5l-7.2-7.2a2 2 0 0 0-2.8 0z'])}],today_ranking:[],today_alerts:[],today_metrics:[],today_industry:'旧数据未配置',today_rankScope:'不可用',today_rankN:0,today_alertSummary:'旧企业分析数据或可选依赖未配置',today_trendLabels:[],today_trendSeries:[]};
+    }
     const D=this.D, s=this.state, yi=this.yi()<0?4:this.yi();
     const ic={biz:['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4'],doc:['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6'],fact:['M3 3v18h18','M7 16l4-5 3 3 4-6'],macro:['M22 12h-4l-3 9L9 3l-3 9H2']};
     const boot=this._get('bootstrap'); const stats=(boot&&boot.stats)||D.stats;
@@ -6111,6 +6179,7 @@ class Component extends DCLogic {
       {label:'财务事实',value:this.nf(this.cu(stats.financial_facts)),hint:'结构化指标条目',icon:ic.fact},
       {label:'宏观指标',value:this.nf(this.cu(stats.macro_facts)),hint:'卫生类联动数据',icon:ic.macro}
     ];
+    today_kpis.forEach(x=>x.iconPaths=this._paths(x.icon));
     const sc=(k)=>()=>this.go(k);
     const today_scenes=[
       {title:'智能问答',desc:'自然语言提问，自动路由 SQL / RAG / 宏观，回答附带可追溯证据。',cta:'去提问',onClick:sc('chat'),tint:'var(--series-1)',tintBg:'var(--brand-50)',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
@@ -6118,6 +6187,7 @@ class Component extends DCLogic {
       {title:'公司画像 · 对比',desc:'单家全景画像，或与同业对手做多指标横向对比与可视化。',cta:'看对比',onClick:sc('compare'),tint:'var(--series-4)',tintBg:'rgba(109,40,217,.1)',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
       {title:'白盒溯源',desc:'公开 SQL、RAG 原文切片与推理链路，每个结论都能回看来路。',cta:'看链路',onClick:sc('whitebox'),tint:'var(--series-3)',tintBg:'rgba(180,83,9,.1)',icon:['M3 7V5a2 2 0 0 1 2-2h2','M17 3h2a2 2 0 0 1 2 2v2','M21 17v2a2 2 0 0 1-2 2h-2','M7 21H5a2 2 0 0 1-2-2v-2','M7 12h10']}
     ];
+    today_scenes.forEach(x=>x.iconPaths=this._paths(x.icon));
     const dash=this._matched('dashboard');
     // ----- 同业排名（live: dashboard.ranking_overview.boards[0]） -----
     const ro=dash&&dash.ranking_overview;
@@ -6571,6 +6641,7 @@ class Component extends DCLogic {
     return {
       res_bars:bars,
       res_trendLine:linePts, res_trendArea:areaPts,
+      res_trendSvg:this._trendSvg(areaPts,linePts),
       res_trendYears:trendYears,
       res_trendLast:trendLast,
       res_isSingle:mode==='single', res_isBatch:mode==='batch',
@@ -6787,6 +6858,7 @@ class Component extends DCLogic {
       adv_run:()=>{ if(this.state.advLoading)return; const s2=this.state; const q=(s2.advQ!=null?s2.advQ:('请分析'+s2.company+'的股权结构与创新能力，并指出潜在风险点')); this.setState({advLoading:true,advDone:false}); this._apiPost('/api/advanced',{question:q, company_name:s2.company}).then(d=>this.setState({advLoading:false,advDone:true,advData:d})).catch(()=>{ if(this._advT)clearTimeout(this._advT); this._advT=setTimeout(()=>this.setState({advLoading:false,advDone:true}),900); }); },
       adv_loading:s.advLoading, adv_done:s.advDone,
       adv_nodes:nodes, adv_edges:edges,
+      adv_edgeSvg:this._edgeSvg(edges),
       adv_tools:adv_tools,
       adv_answer:adv_answer,
       adv_innovLabels:['发明专利','在研管线','研发人员','对外合作'],

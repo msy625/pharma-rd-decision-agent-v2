@@ -2,7 +2,7 @@ PYTHON ?= python3
 STREAMLIT ?= streamlit
 UVICORN ?= uvicorn
 
-.PHONY: run run-basic run-advanced run-persona run-whitebox run-workflow web cache test
+.PHONY: run run-basic run-advanced run-persona run-whitebox run-workflow web web-deploy cache test
 
 run:
 	$(STREAMLIT) run scripts/streamlit/system_console.py --server.port 8501
@@ -24,6 +24,9 @@ run-workflow:
 
 web:
 	$(UVICORN) webapp.main:app --host 0.0.0.0 --port 8000
+
+web-deploy:
+	$(PYTHON) -m uvicorn webapp.main:app --host 0.0.0.0 --port $${PORT:-8000}
 
 cache:
 	$(PYTHON) -m deepinsight.demo.demo_cache

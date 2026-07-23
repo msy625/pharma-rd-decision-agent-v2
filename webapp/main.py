@@ -1,26 +1,150 @@
 from collections import defaultdict
+import importlib.util
 from pathlib import Path
+import sqlite3
 from typing import Annotated, Any
 
 from fastapi import FastAPI, HTTPException, Query
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from deepinsight.core.agent_tools import run_advanced_analysis, tool_get_equity_penetration, tool_get_innovation_index, tool_get_risk_radar
-from deepinsight.apps.app_whitebox import WHITEBOX_DEMO_ANSWER, WHITEBOX_DEMO_CHUNKS, WHITEBOX_DEMO_REASONING, WHITEBOX_DEMO_SQL
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
 from deepinsight.core.industry_taxonomy import infer_industry_name
-from deepinsight.core.retriever import DEFAULT_DB_PATH, answer_query, create_optional_client, get_connection
+from deepinsight.config import DB_PATH as DEFAULT_DB_PATH
 from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
-from deepinsight.apps.workflow_report import run_workflow
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
 INDEX_HTML = STATIC_DIR / "index.html"
+FAVICON_SVG = STATIC_DIR / "favicon.svg"
+SERVICE_NAME = "pharma-rd-decision-agent"
+LEGACY_UNAVAILABLE_REASON = "旧企业分析数据或可选依赖未配置"
+LEGACY_REQUIRED_TABLES = (
+    "dim_company",
+    "dim_document",
+    "fact_financial_report",
+    "fact_macro_data",
+)
+LEGACY_OPTIONAL_MODULES = (
+    "pandas",
+    "chromadb",
+)
+
+
+class LegacyFeatureUnavailable(RuntimeError):
+    """Raised when an old SQLite/Chroma-backed feature cannot run."""
+
+
+LEGACY_UNAVAILABLE_ERRORS = (LegacyFeatureUnavailable, sqlite3.Error)
+
+
+def _legacy_unavailable_response() -> HTTPException:
+    return HTTPException(
+        status_code=503,
+        detail="旧网站功能当前不可用；比赛核心循证接口仍可使用。",
+    )
+
+
+def _get_retriever_tools():
+    try:
+        from deepinsight.core.retriever import answer_query, create_optional_client, get_connection
+    except ImportError as exc:
+        raise LegacyFeatureUnavailable("旧问答依赖未安装。") from exc
+    return answer_query, create_optional_client, get_connection
+
+
+def _get_connection(db_path=DEFAULT_DB_PATH):
+    try:
+        from deepinsight.core.retriever import get_connection as retriever_get_connection
+    except ImportError as exc:
+        raise LegacyFeatureUnavailable("旧数据库依赖未安装。") from exc
+    return retriever_get_connection(db_path)
+
+
+def _create_optional_client(chat_model: str | None = None):
+    try:
+        from deepinsight.core.retriever import create_optional_client as retriever_create_optional_client
+    except ImportError as exc:
+        raise LegacyFeatureUnavailable("旧问答依赖未安装。") from exc
+    return retriever_create_optional_client(chat_model)
+
+
+def _module_available(module_name: str) -> bool:
+    return importlib.util.find_spec(module_name) is not None
+
+
+def _competition_core_available() -> bool:
+    try:
+        source_service = _evidence_service()
+        source_service.summary()
+        EvidenceChainService(source_registry_service=source_service).summary()
+        return True
+    except Exception:
+        return False
+
+
+def _legacy_sqlite_data_available(db_path=DEFAULT_DB_PATH) -> bool:
+    db = Path(db_path)
+    if not db.exists() or not db.is_file():
+        return False
+    try:
+        conn = sqlite3.connect(db)
+        try:
+            for table in LEGACY_REQUIRED_TABLES:
+                row = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()
+                if not row or int(row[0]) <= 0:
+                    return False
+        finally:
+            conn.close()
+    except sqlite3.Error:
+        return False
+    return True
+
+
+def _legacy_features_available() -> bool:
+    if not _legacy_sqlite_data_available():
+        return False
+    if not all(_module_available(name) for name in LEGACY_OPTIONAL_MODULES):
+        return False
+    return True
+
+
+def _get_agent_tools():
+    try:
+        from deepinsight.core.agent_tools import (
+            run_advanced_analysis,
+            tool_get_equity_penetration,
+            tool_get_innovation_index,
+            tool_get_risk_radar,
+        )
+    except ImportError as exc:
+        raise LegacyFeatureUnavailable("旧分析依赖未安装。") from exc
+    return run_advanced_analysis, tool_get_equity_penetration, tool_get_innovation_index, tool_get_risk_radar
+
+
+def _get_workflow_runner():
+    try:
+        from deepinsight.apps.workflow_report import run_workflow
+    except ImportError as exc:
+        raise LegacyFeatureUnavailable("旧报告工作流依赖未安装。") from exc
+    return run_workflow
+
+
+def _get_whitebox_demo():
+    try:
+        from deepinsight.apps.app_whitebox import (
+            WHITEBOX_DEMO_ANSWER,
+            WHITEBOX_DEMO_CHUNKS,
+            WHITEBOX_DEMO_REASONING,
+            WHITEBOX_DEMO_SQL,
+        )
+    except ImportError as exc:
+        raise LegacyFeatureUnavailable("旧白盒演示依赖未安装。") from exc
+    return WHITEBOX_DEMO_ANSWER, WHITEBOX_DEMO_CHUNKS, WHITEBOX_DEMO_REASONING, WHITEBOX_DEMO_SQL
 
 
 class ChatRequest(BaseModel):
@@ -140,7 +264,7 @@ def _require_existing_company(conn, company_name: str | None) -> None:
 
 
 def fetch_bootstrap_data() -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         industries = [
             row[0]
@@ -168,7 +292,7 @@ def fetch_bootstrap_data() -> dict[str, Any]:
         "companies": companies,
         "years": years,
         "stats": stats,
-        "deepseek_enabled": bool(create_optional_client()),
+        "deepseek_enabled": bool(_create_optional_client()),
     }
 
 
@@ -500,7 +624,7 @@ def _safe_growth_text(current_value: float | None, previous_value: float | None)
 
 
 def fetch_company_profile_dashboard(company_name: str | None, report_year: int | None = None) -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         meta = _resolve_company_meta(conn, company_name, report_year)
         resolved_company = meta["company_name"]
@@ -511,6 +635,7 @@ def fetch_company_profile_dashboard(company_name: str | None, report_year: int |
         grouped = _group_financial_rows(financial_rows).get(resolved_company, {})
         trend = fetch_company_trend_dashboard(resolved_company)
         ranking = fetch_industry_ranking_dashboard(resolved_company, resolved_year, ranking_scope="industry")
+        _, tool_get_equity_penetration, tool_get_innovation_index, tool_get_risk_radar = _get_agent_tools()
         risk = tool_get_risk_radar(resolved_company, include_subsidiaries=True)
         innovation = tool_get_innovation_index(resolved_company)
         equity = tool_get_equity_penetration(resolved_company)
@@ -596,7 +721,7 @@ def fetch_company_profile_dashboard(company_name: str | None, report_year: int |
 
 
 def fetch_alert_center(company_name: str | None = None, report_year: int | None = None) -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         if not _company_exists(conn, company_name):
             return {
@@ -699,7 +824,7 @@ def fetch_alert_center(company_name: str | None = None, report_year: int | None 
 
 
 def fetch_compare_matrix_dashboard(company_name: str | None, compare_company_name: str | None = None, report_year: int | None = None) -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         primary_meta = _resolve_company_meta(conn, company_name, report_year)
         primary_company = primary_meta["company_name"]
@@ -711,6 +836,7 @@ def fetch_compare_matrix_dashboard(company_name: str | None, compare_company_nam
         resolved_year = primary_meta["report_year"] or _resolve_report_year(conn, secondary_company, report_year)
         rows = _fetch_financial_rows(conn, [primary_company, secondary_company], COMPARE_INDICATORS, resolved_year, include_historical=False)
         grouped = _group_financial_rows(rows)
+        _, _, tool_get_innovation_index, tool_get_risk_radar = _get_agent_tools()
         risk_primary = tool_get_risk_radar(primary_company)
         risk_secondary = tool_get_risk_radar(secondary_company)
         innovation_primary = tool_get_innovation_index(primary_company)
@@ -783,7 +909,7 @@ def fetch_compare_matrix_dashboard(company_name: str | None, compare_company_nam
 
 
 def fetch_company_timeline_dashboard(company_name: str | None) -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         meta = _resolve_company_meta(conn, company_name)
         resolved_company = meta["company_name"]
@@ -859,7 +985,7 @@ def fetch_company_timeline_dashboard(company_name: str | None) -> dict[str, Any]
 
 
 def fetch_macro_linkage_dashboard(company_name: str | None) -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         meta = _resolve_company_meta(conn, company_name)
         resolved_company = meta["company_name"]
@@ -950,7 +1076,7 @@ def build_batch_workflow_markdown(items: list[dict[str, Any]]) -> str:
 
 
 def fetch_import_dashboard() -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         summary = conn.execute(
             """
@@ -1089,7 +1215,7 @@ def _quote_identifier(identifier: str) -> str:
 
 
 def fetch_database_catalog() -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         tables = []
         for table in _fetch_user_tables(conn):
@@ -1121,7 +1247,7 @@ def fetch_database_table_preview(table_name: str, limit: int = 20) -> dict[str, 
     if not normalized_table_name:
         raise ValueError("请先选择需要查看的数据表。")
     normalized_limit = max(1, min(int(limit), 100))
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         user_tables = {table["name"]: table for table in _fetch_user_tables(conn)}
         if normalized_table_name not in user_tables:
@@ -1177,7 +1303,7 @@ def fetch_data_room_preview(name: str, limit: int = 20) -> dict[str, Any]:
 
 
 def fetch_company_trend_dashboard(company_name: str | None) -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         resolved_company = _get_default_company(conn, company_name)
         if not resolved_company:
@@ -1265,7 +1391,7 @@ def fetch_company_trend_dashboard(company_name: str | None) -> dict[str, Any]:
 
 
 def fetch_industry_ranking_dashboard(company_name: str | None, report_year: int | None, ranking_scope: str = "industry") -> dict[str, Any]:
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         resolved_company = _get_default_company(conn, company_name)
         if not resolved_company:
@@ -1388,7 +1514,7 @@ def _not_found_response(exc: CompanyNotFoundError) -> HTTPException:
 def _require_company_for_api(company_name: str | None) -> None:
     if not _is_explicit_company(company_name):
         return
-    conn = get_connection(DEFAULT_DB_PATH)
+    conn = _get_connection(DEFAULT_DB_PATH)
     try:
         _require_existing_company(conn, company_name)
     finally:
@@ -1489,6 +1615,57 @@ def _handle_grounded_qa_error(exc: Exception) -> HTTPException:
     return HTTPException(status_code=500, detail="循证问答服务暂时不可用。")
 
 
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {
+        "status": "ok",
+        "service": SERVICE_NAME,
+    }
+
+
+@app.get("/ready")
+def ready() -> dict[str, Any]:
+    try:
+        source_service = _evidence_service()
+        summary = source_service.summary()
+        evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+        evidence_chain_service.summary()
+        grounded_service = GroundedQAService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+            company_comparison_service=CompanyEvidenceComparisonService(
+                source_registry_service=source_service,
+                evidence_chain_service=evidence_chain_service,
+            ),
+        )
+        grounded_service.rules
+        return {
+            "status": "ready",
+            "service": SERVICE_NAME,
+            "data_version": grounded_service.data_version(),
+            "source_count": summary.get("total_sources", 0),
+            "local_grounded_qa_available": True,
+        }
+    except Exception as exc:
+        handled = _handle_grounded_qa_error(exc)
+        raise HTTPException(
+            status_code=handled.status_code,
+            detail="比赛核心数据或规则文件不可用，请检查已部署的CSV和JSON配置。",
+        ) from exc
+
+
+@app.get("/api/runtime-capabilities")
+def runtime_capabilities() -> dict[str, Any]:
+    competition_available = _competition_core_available()
+    legacy_available = _legacy_features_available()
+    return {
+        "competition_core_available": competition_available,
+        "legacy_features_available": legacy_available,
+        "default_page": "today" if legacy_available else "evidence",
+        "legacy_unavailable_reason": "" if legacy_available else LEGACY_UNAVAILABLE_REASON,
+    }
+
+
 @app.get("/", response_class=HTMLResponse)
 def index() -> str:
     return HTMLResponse(
@@ -1497,9 +1674,17 @@ def index() -> str:
     )
 
 
+@app.get("/favicon.ico")
+def favicon() -> Response:
+    return Response(FAVICON_SVG.read_bytes(), media_type="image/svg+xml")
+
+
 @app.get("/api/bootstrap")
 def bootstrap() -> dict[str, Any]:
-    return fetch_bootstrap_data()
+    try:
+        return fetch_bootstrap_data()
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/dashboard")
@@ -1515,6 +1700,8 @@ def dashboard(company_name: str | None = None, report_year: int | None = None, r
         }
     except CompanyNotFoundError as exc:
         raise _not_found_response(exc) from exc
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/profile")
@@ -1524,6 +1711,8 @@ def profile(company_name: str | None = None, report_year: int | None = None) -> 
         return fetch_company_profile_dashboard(company_name, report_year)
     except CompanyNotFoundError as exc:
         raise _not_found_response(exc) from exc
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/compare")
@@ -1534,6 +1723,8 @@ def compare(company_name: str | None = None, compare_company_name: str | None = 
         return fetch_compare_matrix_dashboard(company_name, compare_company_name, report_year)
     except CompanyNotFoundError as exc:
         raise _not_found_response(exc) from exc
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/timeline")
@@ -1543,11 +1734,16 @@ def timeline(company_name: str | None = None) -> dict[str, Any]:
         return fetch_company_timeline_dashboard(company_name)
     except CompanyNotFoundError as exc:
         raise _not_found_response(exc) from exc
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/database/catalog")
 def database_catalog() -> dict[str, Any]:
-    return fetch_database_catalog()
+    try:
+        return fetch_database_catalog()
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/database/table")
@@ -1556,11 +1752,16 @@ def database_table(table_name: str, limit: int = 20) -> dict[str, Any]:
         return fetch_database_table_preview(table_name, limit)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/data-room/catalog")
 def data_room_catalog() -> dict[str, Any]:
-    return fetch_data_room_catalog()
+    try:
+        return fetch_data_room_catalog()
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/data-room/preview")
@@ -1569,6 +1770,8 @@ def data_room_preview(name: str, limit: int = 20) -> dict[str, Any]:
         return fetch_data_room_preview(name, limit)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
 
 
 @app.get("/api/evidence/summary")
@@ -1835,12 +2038,16 @@ def evidence_source(source_id: str) -> dict[str, Any]:
 
 @app.post("/api/chat")
 def chat(payload: ChatRequest) -> dict[str, Any]:
-    client = create_optional_client()
-    answer_client = client
-    if client is not None and payload.model == "pro":
-        answer_client = create_optional_client("deepseek-v4-pro")
-    filters = build_filters(payload.company_name, payload.report_year, payload.industry_name)
-    result = answer_query(payload.question, filters=filters, top_k=payload.top_k, client=client, history=payload.history, answer_client=answer_client)
+    try:
+        answer_query, create_optional_client, _ = _get_retriever_tools()
+        client = create_optional_client()
+        answer_client = client
+        if client is not None and payload.model == "pro":
+            answer_client = create_optional_client("deepseek-v4-pro")
+        filters = build_filters(payload.company_name, payload.report_year, payload.industry_name)
+        result = answer_query(payload.question, filters=filters, top_k=payload.top_k, client=client, history=payload.history, answer_client=answer_client)
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
     return {
         "question": payload.question,
         "answer_markdown": result.get("answer_markdown", ""),
@@ -1859,9 +2066,13 @@ def chat(payload: ChatRequest) -> dict[str, Any]:
 
 @app.post("/api/workflow")
 def workflow(payload: WorkflowRequest) -> dict[str, Any]:
-    client = create_optional_client()
-    filters = build_filters(payload.company_name, payload.report_year, payload.industry_name)
-    result = run_workflow(payload.topic, filters=filters, top_k=payload.top_k, client=client)
+    try:
+        run_workflow = _get_workflow_runner()
+        client = _create_optional_client()
+        filters = build_filters(payload.company_name, payload.report_year, payload.industry_name)
+        result = run_workflow(payload.topic, filters=filters, top_k=payload.top_k, client=client)
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
     return {
         "topic": payload.topic,
         "report_markdown": result.get("report_markdown", ""),
@@ -1877,35 +2088,39 @@ def workflow(payload: WorkflowRequest) -> dict[str, Any]:
 
 @app.post("/api/batch-workflow")
 def batch_workflow(payload: BatchWorkflowRequest) -> dict[str, Any]:
-    client = create_optional_client()
-    conn = get_connection(DEFAULT_DB_PATH)
     try:
-        normalized_companies = []
-        for company_name in payload.company_names:
-            name = (company_name or "").strip()
-            if name and name not in normalized_companies:
-                normalized_companies.append(name)
-        if not normalized_companies:
-            default_company = _get_default_company(conn, None)
-            if default_company:
-                normalized_companies.append(default_company)
-        normalized_companies = normalized_companies[:5]
-    finally:
-        conn.close()
-    items = []
-    for company_name in normalized_companies:
-        filters = build_filters(company_name, payload.report_year, payload.industry_name)
-        topic = f"请为 {company_name} 生成经营质量与风险诊断报告"
-        result = run_workflow(topic, filters=filters, top_k=payload.top_k, client=client)
-        items.append(
-            {
-                "company_name": company_name,
-                "topic": topic,
-                "report_markdown": result.get("report_markdown", ""),
-                "warnings": result.get("warnings") or [],
-                "data_mode": result.get("data_mode"),
-            }
-        )
+        run_workflow = _get_workflow_runner()
+        client = _create_optional_client()
+        conn = _get_connection(DEFAULT_DB_PATH)
+        try:
+            normalized_companies = []
+            for company_name in payload.company_names:
+                name = (company_name or "").strip()
+                if name and name not in normalized_companies:
+                    normalized_companies.append(name)
+            if not normalized_companies:
+                default_company = _get_default_company(conn, None)
+                if default_company:
+                    normalized_companies.append(default_company)
+            normalized_companies = normalized_companies[:5]
+        finally:
+            conn.close()
+        items = []
+        for company_name in normalized_companies:
+            filters = build_filters(company_name, payload.report_year, payload.industry_name)
+            topic = f"请为 {company_name} 生成经营质量与风险诊断报告"
+            result = run_workflow(topic, filters=filters, top_k=payload.top_k, client=client)
+            items.append(
+                {
+                    "company_name": company_name,
+                    "topic": topic,
+                    "report_markdown": result.get("report_markdown", ""),
+                    "warnings": result.get("warnings") or [],
+                    "data_mode": result.get("data_mode"),
+                }
+            )
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
     return {
         "company_names": normalized_companies,
         "combined_markdown": build_batch_workflow_markdown(items),
@@ -1916,8 +2131,12 @@ def batch_workflow(payload: BatchWorkflowRequest) -> dict[str, Any]:
 
 @app.post("/api/advanced")
 def advanced(payload: AdvancedRequest) -> dict[str, Any]:
-    client = create_optional_client()
-    result = run_advanced_analysis(payload.question, company_name=payload.company_name, client=client)
+    try:
+        run_advanced_analysis, _, _, _ = _get_agent_tools()
+        client = _create_optional_client()
+        result = run_advanced_analysis(payload.question, company_name=payload.company_name, client=client)
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
     return {
         "question": payload.question,
         "company_name": payload.company_name,
@@ -1931,6 +2150,10 @@ def advanced(payload: AdvancedRequest) -> dict[str, Any]:
 
 @app.get("/api/whitebox")
 def whitebox() -> dict[str, Any]:
+    try:
+        WHITEBOX_DEMO_ANSWER, WHITEBOX_DEMO_CHUNKS, WHITEBOX_DEMO_REASONING, WHITEBOX_DEMO_SQL = _get_whitebox_demo()
+    except LEGACY_UNAVAILABLE_ERRORS as exc:
+        raise _legacy_unavailable_response() from exc
     return {
         "answer_markdown": WHITEBOX_DEMO_ANSWER,
         "sql": WHITEBOX_DEMO_SQL,
