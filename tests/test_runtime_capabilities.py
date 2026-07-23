@@ -19,14 +19,15 @@ class RuntimeCapabilitiesTest(unittest.TestCase):
     def setUpClass(cls):
         cls.client = _ASGIClient(webapp_main.app)
 
-    def test_01_light_runtime_defaults_to_evidence(self):
+    def test_01_light_runtime_defaults_to_real_workbench(self):
         with patch.object(webapp_main, "_legacy_features_available", return_value=False):
             response = self.client.get("/api/runtime-capabilities")
         self.assertEqual(response.status_code, 200, response.text)
         payload = response.json()
         self.assertTrue(payload["competition_core_available"])
+        self.assertTrue(payload["evidence_workbench_available"])
         self.assertFalse(payload["legacy_features_available"])
-        self.assertEqual(payload["default_page"], "evidence")
+        self.assertEqual(payload["default_page"], "today")
         self.assertIn("旧企业分析数据或可选依赖未配置", payload["legacy_unavailable_reason"])
 
     def test_02_full_legacy_runtime_can_keep_old_dashboard_default(self):
@@ -35,6 +36,7 @@ class RuntimeCapabilitiesTest(unittest.TestCase):
         payload = response.json()
         self.assertEqual(response.status_code, 200, response.text)
         self.assertTrue(payload["competition_core_available"])
+        self.assertTrue(payload["evidence_workbench_available"])
         self.assertTrue(payload["legacy_features_available"])
         self.assertEqual(payload["default_page"], "today")
         self.assertEqual(payload["legacy_unavailable_reason"], "")

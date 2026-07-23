@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
+from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
 from deepinsight.core.grounded_qa_usage_guard import (
@@ -88,6 +89,14 @@ def _competition_core_available() -> bool:
         source_service = _evidence_service()
         source_service.summary()
         EvidenceChainService(source_registry_service=source_service).summary()
+        return True
+    except Exception:
+        return False
+
+
+def _evidence_workbench_available() -> bool:
+    try:
+        _evidence_workbench_service().summary()
         return True
     except Exception:
         return False
@@ -1543,6 +1552,25 @@ def _company_evidence_comparison_service() -> CompanyEvidenceComparisonService:
     )
 
 
+def _evidence_workbench_service() -> EvidenceWorkbenchService:
+    source_service = _evidence_service()
+    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+    company_comparison_service = CompanyEvidenceComparisonService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+    )
+    return EvidenceWorkbenchService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+        grounded_qa_service=GroundedQAService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+            company_comparison_service=company_comparison_service,
+        ),
+    )
+
+
 def _grounded_qa_service() -> GroundedQAService:
     source_service = _evidence_service()
     evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
@@ -1683,11 +1711,13 @@ def ready() -> dict[str, Any]:
 @app.get("/api/runtime-capabilities")
 def runtime_capabilities() -> dict[str, Any]:
     competition_available = _competition_core_available()
+    workbench_available = _evidence_workbench_available()
     legacy_available = _legacy_features_available()
     return {
         "competition_core_available": competition_available,
+        "evidence_workbench_available": workbench_available,
         "legacy_features_available": legacy_available,
-        "default_page": "today" if legacy_available else "evidence",
+        "default_page": "today" if workbench_available else "evidence",
         "legacy_unavailable_reason": "" if legacy_available else LEGACY_UNAVAILABLE_REASON,
     }
 
@@ -1830,6 +1860,20 @@ def evidence_chain_summary() -> dict[str, Any]:
             "unresolved_count": chain_summary.get("unresolved_links", 0),
             "company_chain_counts": chain_summary.get("company_counts", {}),
             "metadata": _evidence_chain_metadata(),
+        }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/workbench")
+def evidence_workbench() -> dict[str, Any]:
+    try:
+        workbench = _evidence_workbench_service().build_workbench()
+        return {
+            "workbench": workbench,
+            "metadata": {
+                "data_scope": workbench.get("metadata", {}).get("data_scope", "first_version_nsclc_hengrui_beone"),
+            },
         }
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc

@@ -23,6 +23,7 @@ class Component extends DCLogic {
     groundedResult:null, groundedMeta:null, groundedTraceOpen:false, groundedSeq:0,
     runtimeCapabilities:null, runtimeCapabilitiesLoaded:false, runtimeCapabilitiesLoading:false,
     legacyNotice:'',
+    evidenceWorkbench:null, evidenceWorkbenchLoading:false, evidenceWorkbenchLoaded:false, evidenceWorkbenchError:'',
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -58,7 +59,7 @@ class Component extends DCLogic {
   nf(n){ return Number(n).toLocaleString('en-US'); }
   yi(){ return this.D.trendYears.indexOf(String(this.state.year)); }
 
-  _legacyPages(){ return {today:1,chat:1,compare:1,research:1,whitebox:1,database:1,timeline:1,advanced:1}; }
+  _legacyPages(){ return {chat:1,compare:1,research:1,whitebox:1,database:1,timeline:1,advanced:1}; }
   _legacyAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.legacy_features_available); }
   _legacyReason(){ const c=this.state.runtimeCapabilities||{}; return c.legacy_unavailable_reason||'旧数据未配置'; }
   _isLegacyPage(p){ return !!this._legacyPages()[p]; }
@@ -165,7 +166,7 @@ class Component extends DCLogic {
       const caps=c||{};
       const legacy=!!caps.legacy_features_available;
       const page=caps.default_page||(legacy?'today':'evidence');
-      const nextPage=(legacy||!this._isLegacyPage(page))?page:'evidence';
+      const nextPage=(legacy||!this._isLegacyPage(page))?page:(caps.evidence_workbench_available?'today':'evidence');
       this.setState({
         runtimeCapabilities:caps,
         runtimeCapabilitiesLoaded:true,
@@ -177,8 +178,8 @@ class Component extends DCLogic {
         this.loadPage();
       });
     }).catch(()=>{
-      const caps={competition_core_available:true,legacy_features_available:false,default_page:'evidence',legacy_unavailable_reason:'运行能力识别失败，已进入研发证据查询'};
-      this.setState({runtimeCapabilities:caps,runtimeCapabilitiesLoaded:true,runtimeCapabilitiesLoading:false,page:'evidence',legacyNotice:'旧数据未配置：'+caps.legacy_unavailable_reason}, ()=>this.loadEvidencePage());
+      const caps={competition_core_available:true,evidence_workbench_available:true,legacy_features_available:false,default_page:'today',legacy_unavailable_reason:'运行能力识别失败，已进入研发证据工作台'};
+      this.setState({runtimeCapabilities:caps,runtimeCapabilitiesLoaded:true,runtimeCapabilitiesLoading:false,page:'today',legacyNotice:'旧数据未配置：'+caps.legacy_unavailable_reason}, ()=>this.loadDashboard());
     });
   }
 
@@ -212,8 +213,11 @@ class Component extends DCLogic {
     else if(p==='evidence') this.loadEvidencePage();
   }
 
-  loadDashboard(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
-    this._api('/api/dashboard',{company_name:s.company, report_year:s.year, ranking_scope:s.scope}).then(d=>this._mergeApi({dashboard:{key,data:d}})).catch(()=>{}); }
+  loadDashboard(){
+    if(this.state.evidenceWorkbenchLoading || this.state.evidenceWorkbenchLoaded) return;
+    this.setState({evidenceWorkbenchLoading:true,evidenceWorkbenchError:'',evidenceWorkbenchLoaded:true});
+    this._api('/api/evidence/workbench').then(d=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbench:(d&&d.workbench)||null})).catch(()=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbenchError:'证据工作台加载失败，请稍后重试'}));
+  }
   loadProfile(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/profile',{company_name:s.company, report_year:s.year}).then(d=>this._mergeApi({profile:{key,data:d}})).catch(()=>{}); }
   loadCompare(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
@@ -1114,7 +1118,7 @@ class Component extends DCLogic {
   navDef(){
     return {
       main:[
-        {key:'today',label:'工作台',icon:['M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z']},
+        {key:'today',label:'研发决策工作台',icon:['M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z']},
         {key:'chat',label:'智能问答',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
         {key:'compare',label:'公司画像 · 对比',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
         {key:'research',label:'自动化研报',icon:['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6','M9 13h6','M9 17h6']},
@@ -1138,7 +1142,7 @@ class Component extends DCLogic {
   shellVals(){
     const s=this.state;
     const nd=this.navDef();
-    const META={today:['工作台','今日总览'],chat:['智能问答','对话与证据'],compare:['公司画像','双公司对比'],research:['自动化研报','报告生成'],evidence:['研发证据查询','来源检索'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['事件时间轴','公司动态'],advanced:['高级分析','图谱与编排']};
+    const META={today:['研发决策工作台','真实证据总览'],chat:['智能问答','对话与证据'],compare:['公司画像','双公司对比'],research:['自动化研报','报告生成'],evidence:['研发证据查询','来源检索'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['事件时间轴','公司动态'],advanced:['高级分析','图谱与编排']};
     const m=META[s.page]||['',''];
     const segBase='flex:1;height:24px;border:0;border-radius:5px;font-size:11.5px;font-weight:500;cursor:pointer;transition:all .12s;';
     return {
@@ -1176,80 +1180,79 @@ class Component extends DCLogic {
   }
 
   todayVals(){
-    if(!this._legacyAvailable()){
-      const unavailable=()=>this.go('today');
-      return {today_kpis:[],today_scenes:[{title:'旧数据未配置',desc:this._legacyReason(),cta:'查看说明',onClick:unavailable,tint:'var(--text-3)',tintBg:'var(--bg-sunken)',iconPaths:this._paths(['M12 9v4M12 17h.01','M10.3 3.9 1.8 7.2a2 2 0 0 0 1.9 2.5h14a2 2 0 0 0 1.9-2.5l-7.2-7.2a2 2 0 0 0-2.8 0z'])}],today_ranking:[],today_alerts:[],today_metrics:[],today_industry:'旧数据未配置',today_rankScope:'不可用',today_rankN:0,today_alertSummary:'旧企业分析数据或可选依赖未配置',today_trendLabels:[],today_trendSeries:[]};
-    }
-    const D=this.D, s=this.state, yi=this.yi()<0?4:this.yi();
-    const ic={biz:['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4'],doc:['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6'],fact:['M3 3v18h18','M7 16l4-5 3 3 4-6'],macro:['M22 12h-4l-3 9L9 3l-3 9H2']};
-    const boot=this._get('bootstrap'); const stats=(boot&&boot.stats)||D.stats;
-    const _yrs=this._liveYears(); const yrHint=(_yrs&&_yrs.length)?(Math.min.apply(null,_yrs)+'–'+Math.max.apply(null,_yrs)+' 全量入库'):'年报全量入库';
-    const today_kpis=[
-      {label:'覆盖企业',value:this.cu(stats.companies),hint:'医药生物多细分赛道',icon:ic.biz},
-      {label:'年报文档',value:this.cu(stats.documents),hint:yrHint,icon:ic.doc},
-      {label:'财务事实',value:this.nf(this.cu(stats.financial_facts)),hint:'结构化指标条目',icon:ic.fact},
-      {label:'宏观指标',value:this.nf(this.cu(stats.macro_facts)),hint:'卫生类联动数据',icon:ic.macro}
+    const wb=this.state.evidenceWorkbench||{};
+    const summary=wb.summary||{};
+    const metadata=wb.metadata||{};
+    const metric=(label,value,hint,icon)=>({label,value:this._evidenceText(value),hint,iconPaths:this._paths(icon)});
+    const today_metrics=[
+      metric('总来源',summary.source_count,'当前来源登记表中的人工核验样本总数',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M8 13h8','M8 17h5']),
+      metric('已核验来源',summary.verified_source_count,'当前来源登记表中 verification_status=已人工核验',['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
+      metric('企业主体',summary.company_count,'按恒瑞医药与百济神州/BeOne归一主体统计',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
+      metric('试验级证据链',summary.trial_chain_count,'同一 trial_id 只计一项试验链',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5']),
+      metric('药物级监管链',summary.regulatory_chain_count,'监管链单独统计，不计入试验数量',['M9 12l2 2 4-4','M7 4h10l2 4v12H5V8z']),
+      metric('最新资料',summary.latest_count,'is_latest_evidence=true',['M12 8v4l3 2','M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z']),
+      metric('历史版本',summary.historical_count,'is_latest_evidence=false',['M3 12a9 9 0 1 0 3-6.7','M3 3v6h6']),
+      metric('独立资料',summary.independent_count,'未形成版本替代关系的核验资料',['M8 7h8M8 12h8M8 17h5','M5 3h14v18H5z']),
+      metric('待确认关系',summary.unresolved_link_count,'当前样本尚缺明确一对一关联',['M12 9v4M12 17h.01','M10.3 3.9 1.8 7.2a2 2 0 0 0 1.9 2.5h14a2 2 0 0 0 1.9-2.5l-7.2-7.2a2 2 0 0 0-2.8 0z'])
     ];
-    today_kpis.forEach(x=>x.iconPaths=this._paths(x.icon));
-    const sc=(k)=>()=>this.go(k);
-    const today_scenes=[
-      {title:'智能问答',desc:'自然语言提问，自动路由 SQL / RAG / 宏观，回答附带可追溯证据。',cta:'去提问',onClick:sc('chat'),tint:'var(--series-1)',tintBg:'var(--brand-50)',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
-      {title:'深度研究',desc:'一键编排「检索→抽取→合成→校验」，产出可下载的 Markdown 研报。',cta:'生成研报',onClick:sc('research'),tint:'var(--series-2)',tintBg:'rgba(13,148,136,.1)',icon:['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6','M9 13h6','M9 17h6']},
-      {title:'公司画像 · 对比',desc:'单家全景画像，或与同业对手做多指标横向对比与可视化。',cta:'看对比',onClick:sc('compare'),tint:'var(--series-4)',tintBg:'rgba(109,40,217,.1)',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
-      {title:'白盒溯源',desc:'公开 SQL、RAG 原文切片与推理链路，每个结论都能回看来路。',cta:'看链路',onClick:sc('whitebox'),tint:'var(--series-3)',tintBg:'rgba(180,83,9,.1)',icon:['M3 7V5a2 2 0 0 1 2-2h2','M17 3h2a2 2 0 0 1 2 2v2','M21 17v2a2 2 0 0 1-2 2h-2','M7 21H5a2 2 0 0 1-2-2v-2','M7 12h10']}
+    const quick=(label,desc,tab,icon)=>({label,desc,onClick:()=>this.setState({page:'evidence',evidenceTab:tab,navOpen:false},()=>this.loadEvidencePage()),iconPaths:this._paths(icon)});
+    const today_quickLinks=[
+      quick('查看来源检索','按企业、药物、试验或来源ID查看核验记录。','sources',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M8 13h8']),
+      quick('查看证据链','检查试验登记、论文和监管事件的人工关联。','chains',['M7 7h.01M17 7h.01M7 17h.01M17 17h.01','M7 7h10M7 17h10M7 7v10M17 7v10']),
+      quick('查看企业对比','对比恒瑞与百济/BeOne在当前样本内的证据覆盖。','companyCompare',['M4 4h6v16H4zM14 4h6v16h-6z']),
+      quick('打开循证问答','使用安全边界内的本地循证摘要或已启用的智能生成。','groundedQa',['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'])
     ];
-    today_scenes.forEach(x=>x.iconPaths=this._paths(x.icon));
-    const dash=this._matched('dashboard');
-    // ----- 同业排名（live: dashboard.ranking_overview.boards[0]） -----
-    const ro=dash&&dash.ranking_overview;
-    const board=ro&&Array.isArray(ro.boards)&&ro.boards.length?ro.boards[0]:null;
-    let today_ranking, today_rankN, today_industry, today_rankScope;
-    if(board && Array.isArray(board.rows) && board.rows.length){
-      const mx=Math.max.apply(null, board.rows.map(r=>this._num(r.value_num)||0))||1;
-      today_ranking=board.rows.map((r,i)=>{ const val=this._num(r.value_num)||0; const sel=!!r.is_selected; return {rank:r.rank||(i+1),name:r.company_name,value:this._amt(val, r.unit||board.unit||'元'),pct:(val/mx*100).toFixed(0),sel,weight:sel?'600':'500',nameColor:sel?'var(--brand-600)':'var(--text)',barColor:sel?'var(--brand-600)':'var(--gray-300)'}; });
-      today_rankN=board.sample_size||today_ranking.length;
-      today_industry=(ro&&ro.industry_name)||'化学制药';
-      today_rankScope=(ro&&ro.scope_label)||(s.scope==='industry'?'同一级行业排名':'全行业排名');
-    } else {
-      const mx=Math.max.apply(null,D.ranking.map(r=>r.value));
-      today_ranking=D.ranking.map((r,i)=>({rank:i+1,name:r.name,value:r.value.toFixed(1),pct:(r.value/mx*100).toFixed(0),sel:!!r.sel,
-        weight:r.sel?'600':'500',nameColor:r.sel?'var(--brand-600)':'var(--text)',barColor:r.sel?'var(--brand-600)':'var(--gray-300)'}));
-      today_rankN=18; today_industry='化学制药'; today_rankScope=s.scope==='industry'?'同一级行业排名':'全行业排名';
-    }
-    // ----- 预警中心（live: dashboard.alert_overview.items） -----
-    const sev={'高':{c:'var(--neg)',b:'var(--neg-bg)'},'中':{c:'var(--warn)',b:'var(--warn-bg)'},'低':{c:'var(--info)',b:'var(--info-bg)'}};
-    const ao=dash&&dash.alert_overview;
-    let today_alerts, today_alertSummary;
-    if(ao && Array.isArray(ao.items) && ao.items.length){
-      today_alerts=ao.items.slice(0,8).map(a=>{ const sv=sev[a.severity]||sev['低']; return {severity:a.severity,company:a.company_name,year:a.report_year,signal:a.signal,detail:a.detail,sevColor:sv.c,sevBg:sv.b}; });
-      const high=ao.items.filter(x=>x.severity==='高').length;
-      const cover=new Set(ao.items.map(x=>x.company_name)).size;
-      today_alertSummary='共 '+ao.items.length+' 条信号 · 高优先级 '+high+' · 覆盖 '+cover+' 家';
-    } else {
-      today_alerts=D.alerts.map(a=>({severity:a.severity,company:a.company,year:a.year,signal:a.signal,detail:a.detail,sevColor:sev[a.severity].c,sevBg:sev[a.severity].b}));
-      today_alertSummary='共 16 条信号 · 高优先级 3 · 覆盖 9 家';
-    }
-    // ----- 关键指标 + 营收趋势（live: dashboard.trend_overview） -----
-    const to=dash&&dash.trend_overview;
-    const statusColor=(lvl)=>({green:'var(--pos)',amber:'var(--neg)',red:'var(--neg)',neutral:'var(--text-3)'})[lvl]||'var(--pos)';
-    const shortLabel=(l)=>({'归属于上市公司股东的净利润':'归母净利润','经营活动产生的现金流量净额':'经营现金流'})[l]||l;
-    let today_metrics, today_trendLabels, today_trendSeries;
-    if(to && Array.isArray(to.cards) && to.cards.length){
-      today_metrics=to.cards.slice(0,4).map(c=>{ const sp=this._amtParts(c.value, c.unit); return {label:shortLabel(c.label),value:this.cu(sp.num,2),unit:sp.unit,delta:c.change_text||'—',deltaColor:statusColor(c.status&&c.status.level)}; });
-      const piv=this._pivot(to.amount_chart);
-      if(piv){ today_trendLabels=piv.labels; const rev=this._seriesValues(piv,'营业收入'); today_trendSeries=[{name:'营业收入',color:'#3b428f',values:rev||piv.series[0].values}]; }
-    }
-    if(!today_metrics){
-      const dgn=(arr)=>{ const cur=arr[yi], prev=arr[yi-1]; if(prev==null) return {t:'—',pos:true}; const d=(cur-prev)/Math.abs(prev)*100; return {t:(d>=0?'+':'')+d.toFixed(1)+'%',pos:d>=0}; };
-      const mk=(label,arr,unit,pct)=>{ const g=pct?{t:(arr[yi]-arr[yi-1]>=0?'+':'')+(arr[yi]-arr[yi-1]).toFixed(1)+'pct',pos:arr[yi]-arr[yi-1]>=0}:dgn(arr); return {label,value:this.cu(arr[yi],1),unit,delta:g.t,deltaColor:g.pos?'var(--pos)':'var(--neg)'}; };
-      today_metrics=[ mk('营业收入',D.rev,'亿元'), mk('归母净利润',D.np,'亿元'), mk('研发投入',D.rd,'亿元'), mk('销售毛利率',D.gm,'%',true) ];
-    }
-    if(!today_trendLabels){ today_trendLabels=D.trendYears; today_trendSeries=[{name:'营业收入',color:'#3b428f',values:D.rev}]; }
+    const dist=(list)=>Array.isArray(list)?list.map(x=>({label:this._evidenceText(x&&x.label),count:this._evidenceText(x&&x.count)})):[];
+    const companies=(Array.isArray(wb.companies)?wb.companies:[]).map(c=>{
+      const version=c.version_distribution||{};
+      const gaps=Array.isArray(c.evidence_gaps)?c.evidence_gaps:[];
+      const drugs=Array.isArray(c.drug_names)?c.drug_names.slice(0,6).map(x=>({name:this._evidenceText(x)})):[];
+      return {
+        name:this._companyLabel(c.display_name||c.company_name),
+        source_count:this._evidenceText(c.source_count),
+        verified_source_count:this._evidenceText(c.verified_source_count),
+        trial_chain_count:this._evidenceText(c.trial_chain_count),
+        regulatory_chain_count:this._evidenceText(c.regulatory_chain_count),
+        multi_source_trial_chain_count:this._evidenceText(c.multi_source_trial_chain_count),
+        unresolved_link_count:this._evidenceText(c.unresolved_link_count),
+        latest:this._evidenceText(version.latest),
+        historical:this._evidenceText(version.historical),
+        independent:this._evidenceText(version.independent),
+        latest_verified_at:this._evidenceText(c.latest_verified_at),
+        drugs,
+        hasDrugs:drugs.length>0,
+        gap_count:gaps.length
+      };
+    });
+    const gaps=(Array.isArray(wb.evidence_gaps)?wb.evidence_gaps:[]).slice(0,8).map(g=>({
+      source_id:this._evidenceText(g&&g.source_id),
+      company:this._companyLabel(g&&g.company_name),
+      title:this._evidenceText(g&&g.title),
+      description:this._evidenceText(g&&g.description),
+      gapText:Array.isArray(g&&g.evidence_gaps)?g.evidence_gaps.join('；'):this._evidenceText(g&&g.evidence_gaps)
+    }));
+    const limitations=(Array.isArray(wb.limitations)?wb.limitations:[]).map(x=>({text:this._evidenceText(x)}));
     return {
-      today_kpis, today_scenes, today_ranking, today_alerts, today_metrics,
-      today_industry, today_rankScope, today_rankN,
-      today_alertSummary,
-      today_trendLabels, today_trendSeries
+      today_loading:this.state.evidenceWorkbenchLoading,
+      today_hasError:!!this.state.evidenceWorkbenchError,
+      today_error:this.state.evidenceWorkbenchError,
+      today_hasData:!!(wb&&wb.summary),
+      today_empty:this.state.evidenceWorkbenchLoaded&&!this.state.evidenceWorkbenchLoading&&!this.state.evidenceWorkbenchError&&!wb.summary,
+      today_metrics,
+      today_quickLinks,
+      today_companies:companies,
+      today_hasCompanies:companies.length>0,
+      today_sourceTypes:dist(wb.source_type_distribution),
+      today_studyStatuses:dist(wb.study_status_distribution),
+      today_gaps:gaps,
+      today_hasGaps:gaps.length>0,
+      today_noGaps:!gaps.length&&!!wb.summary,
+      today_limitations:limitations,
+      today_scopeWarning:'当前结果仅反映已收录并核验的NSCLC证据样本，不代表企业整体研发实力。',
+      today_dataVersion:this._evidenceText(metadata.data_version),
+      today_latestVerifiedAt:this._evidenceText(metadata.latest_verified_at),
+      today_generatedAt:this._evidenceText(metadata.generated_at),
+      today_dataScope:this._evidenceText(metadata.data_scope_label||metadata.data_scope)
     };
   }
 

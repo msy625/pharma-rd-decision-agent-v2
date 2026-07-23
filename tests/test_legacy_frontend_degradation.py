@@ -36,15 +36,18 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         self.assertNotIn("this.loadPage()", mount)
         self.assertIn("'/api/runtime-capabilities'", self.component)
 
-    def test_02_light_runtime_defaults_to_evidence_and_skips_old_requests(self):
+    def test_02_light_runtime_defaults_to_real_workbench_and_skips_old_requests(self):
         for snippet in [
             "const legacy=!!caps.legacy_features_available",
-            "const nextPage=(legacy||!this._isLegacyPage(page))?page:'evidence'",
+            "const nextPage=(legacy||!this._isLegacyPage(page))?page:(caps.evidence_workbench_available?'today':'evidence')",
             "if(legacy) this.loadBootstrap()",
             "if(this._isLegacyPage(p) && !this._legacyAvailable()) return",
         ]:
             self.assertIn(snippet, self.component)
-        for loader in ["loadDashboard()", "loadProfile()", "loadCompare()", "loadTimeline()", "loadDbCatalog()"]:
+        dashboard = self.component[self.component.index("  loadDashboard()") : self.component.index("  loadProfile()")]
+        self.assertIn("'/api/evidence/workbench'", dashboard)
+        self.assertNotIn("'/api/dashboard'", dashboard)
+        for loader in ["loadProfile()", "loadCompare()", "loadTimeline()", "loadDbCatalog()"]:
             start = self.component.index("  " + loader)
             body = self.component[start:start + 220]
             self.assertIn("!this._legacyAvailable()", body)
@@ -53,28 +56,27 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         for text in ["旧数据未配置", "legacyNotice", "legacyLabel", "hasLegacyNotice"]:
             self.assertIn(text, self.component + self.template)
 
-    def test_04_fixed_old_business_stats_are_not_rendered_in_light_mode(self):
-        light_branch = self.component[self.component.index("if(!this._legacyAvailable()){", self.component.index("todayVals()")):]
-        light_branch = light_branch[:light_branch.index("const D=this.D")]
-        self.assertIn("today_kpis:[]", light_branch)
-        self.assertIn("today_ranking:[]", light_branch)
-        self.assertIn("today_alerts:[]", light_branch)
-        self.assertNotIn("48", light_branch)
-        self.assertNotIn("312", light_branch)
-        self.assertNotIn("18642", light_branch)
-        self.assertNotIn("1286", light_branch)
+    def test_04_fixed_old_business_stats_are_not_rendered_in_real_workbench(self):
+        today_block = self.component[self.component.index("  todayVals(){") : self.component.index("  // ---- chat ----")]
+        self.assertIn("today_metrics", today_block)
+        self.assertIn("today_scopeWarning", today_block)
+        for forbidden in ["48", "312", "18642", "1286", "today_ranking", "today_alerts", "today_trendLabels"]:
+            self.assertNotIn(forbidden, today_block)
 
     def test_05_no_infinite_retry_loop_for_failed_legacy_503(self):
-        runtime_block = self.component[self.component.index("loadRuntimeCapabilities()"):]
+        runtime_block = self.component[
+            self.component.index("loadRuntimeCapabilities()") : self.component.index("loadBootstrap()")
+        ]
         self.assertNotIn("setInterval", runtime_block)
         self.assertNotIn("retry", runtime_block.lower())
         self.assertEqual(self.component.count("this.loadBootstrap()"), 1)
 
     def test_06_full_legacy_navigation_and_api_code_is_retained(self):
-        for text in ["工作台", "智能问答", "公司画像 · 对比", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
+        for text in ["研发决策工作台", "智能问答", "公司画像 · 对比", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
             self.assertIn(text, self.component)
-        for path in ["/api/bootstrap", "/api/profile", "/api/dashboard", "/api/compare", "/api/timeline"]:
+        for path in ["/api/bootstrap", "/api/profile", "/api/compare", "/api/timeline"]:
             self.assertIn(path, self.component)
+        self.assertIn("@app.get(\"/api/dashboard\")", Path(ROOT / "webapp" / "main.py").read_text(encoding="utf-8"))
 
     def test_07_svg_templates_do_not_pass_raw_bindings_to_sensitive_attrs(self):
         combined = self.template + "\n" + self.component

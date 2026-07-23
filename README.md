@@ -113,6 +113,23 @@ DeepSeek组织答案
 
 上述证据查询、证据链、企业对比和循证问答功能均基于本地 CSV/JSON 配置和 FastAPI 只读服务；只有循证问答 `auto` 模式在本地配置 DeepSeek 后才会尝试调用模型。
 
+## 研发决策工作台
+
+默认首页已重构为“研发决策工作台”，用于展示当前核验证据样本的真实覆盖情况。该页只调用 `/api/evidence/workbench`，不再依赖旧 `/api/bootstrap`、`/api/dashboard` 或 `/api/profile` 初始化。
+
+工作台动态展示 9 项核心指标：
+
+- 总来源。
+- 已核验来源、企业主体、试验级证据链、药物级监管链。
+- 最新资料、历史版本、独立资料和待确认关系。
+- 恒瑞医药与百济神州/BeOne Medicines 的证据覆盖卡片。
+- 来源类型构成、研究状态构成、当前数据缺口。
+- 数据版本、最新核验日期和响应生成时间。
+
+旧 `data/enterprise_analysis.db` 当前为空，旧 Chroma 数据也不在轻量部署资产中，因此旧财务工作台不进入比赛主链路。新工作台仅反映已收录并核验的 NSCLC 证据样本，不代表企业整体研发实力，也不输出评分、排名、成功率、疗效优劣或投资建议。
+
+Day6 本地浏览器人工验收已通过；该验收不是 Render 线上部署验收。
+
 本地启动 FastAPI Web 服务：
 
 ```bash
@@ -267,7 +284,7 @@ GROUNDED_QA_LLM_MAX_CONCURRENCY=2
 GET /api/runtime-capabilities
 ```
 
-该接口用于区分比赛核心轻量环境与完整旧环境。轻量环境返回 `default_page=evidence`，首页默认进入“研发证据查询”，不会自动请求 `/api/bootstrap`、`/api/profile`、`/api/dashboard` 等旧接口，也不会展示旧工作台固定兜底统计。完整旧环境具备旧 SQLite 数据和可选依赖时，`default_page=today`，旧工作台和旧功能仍按原逻辑保留。
+该接口用于区分比赛核心轻量环境与旧功能能力状态。证据工作台可用时返回 `default_page=today`，首页默认进入真实“研发决策工作台”，只请求 `/api/evidence/workbench`，不会自动请求 `/api/bootstrap`、`/api/profile`、`/api/dashboard` 等旧接口，也不会展示旧工作台固定兜底统计。旧功能具备真实 SQLite 数据和可选依赖时仍可按能力保留，但不再决定默认工作台。
 
 运行能力检查不使用 `.env` 判断旧功能是否可用，不读取或返回密钥，不创建 DeepSeek 客户端，不访问网络，也不加载 Chroma、sentence-transformers 或 Torch。
 
