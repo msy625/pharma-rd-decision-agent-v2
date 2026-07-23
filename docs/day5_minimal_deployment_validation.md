@@ -167,4 +167,29 @@ citations=B003,B006,B007
 - 轻量部署保证比赛核心循证功能，不保证旧 Streamlit、SQLite、Chroma、向量检索、旧报告工作流或旧公司画像接口可用。
 - `/health` 不读数据，只代表进程存活。
 - `/ready` 只代表比赛核心 CSV/JSON 链路就绪，不代表旧数据库链路就绪。
-- 前端 React CDN 离线化仍是下一阶段任务。
+- 前端 React、ReactDOM、Babel 已在后续阶段本地化到 vendor 资源，并已完成线上加载验收。
+
+## Render 实际部署结果
+
+Render Free Web Service 已部署成功：
+
+```text
+https://pharma-rd-decision-agent.onrender.com
+```
+
+部署信息：
+
+- 部署分支：`feature/day5-release-deploy`
+- 安全补丁提交：`2ef08b1`
+
+线上验收结果：
+
+- `/health`：通过
+- `/ready`：通过，`source_count=31`
+- `/api/runtime-capabilities`：比赛核心可用，旧功能不可用，默认 `evidence`
+- `/api/evidence/summary`：31 条来源
+- 本地 vendor React、ReactDOM、Babel 在线正常加载
+- 页面默认进入“研发证据查询”
+- 四个循证页签线上正常
+
+Render Free 实例空闲后可能休眠和冷启动。未进行高频线上 429 压力测试；429 逻辑由自动测试覆盖。

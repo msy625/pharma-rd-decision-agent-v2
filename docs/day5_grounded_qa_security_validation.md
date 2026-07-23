@@ -2,7 +2,7 @@
 
 ## 背景
 
-Render 预览部署已完成核心接口验收。公开 `POST /api/evidence/grounded-qa` 如果直接开放 `auto` 模式，可能被重复调用并消耗 DeepSeek 余额。因此线上默认关闭 DeepSeek 智能生成，`local` 本地循证摘要始终可用。
+Render 预览部署已完成核心接口验收。公开 `POST /api/evidence/grounded-qa` 如果直接开放 `auto` 模式，可能被重复调用并消耗模型调用资源。因此线上默认关闭 DeepSeek 智能生成，`local` 本地循证摘要始终可用。
 
 本补丁不读取 `.env`，不把真实密钥写入 Git，不在自动测试中调用真实 DeepSeek。
 
@@ -116,7 +116,30 @@ DeepSeek智能生成当前未启用，本地循证摘要仍可使用。
 - 导入保护模块不加载 OpenAI、Chroma、sentence-transformers 或 Torch。
 - 前端 429 只提示，不自动重试。
 
-待人工复验：
+## 线上安全验收结果
+
+Render Free Web Service 已部署成功，线上地址为：
+
+```text
+https://pharma-rd-decision-agent.onrender.com
+```
+
+已确认：
+
+- 部署分支：`feature/day5-release-deploy`
+- 安全补丁提交：`2ef08b1`
+- DeepSeek 总开关和限流已生效
+- `auto` 模式正常
+- `local` 模式正常
+- 个体用药建议问题被安全规则拦截
+- B015/B016 监管口径正确
+- 引用来自本地已核验登记表
+
+未进行高频线上 429 压力测试；429 响应、`Retry-After`、限流计数和并发释放逻辑由自动测试覆盖。
+
+后续如需演示 LLM，必须在部署平台中显式启用总开关，并继续确保密钥不写入 Git。
+
+原计划人工复验项：
 
 1. Render 中保持 `GROUNDED_QA_LLM_ENABLED=false` 且不配置 `DEEPSEEK_API_KEY` 时，`auto` 回退本地摘要。
 2. 页面显示“DeepSeek智能生成当前未启用，本地循证摘要仍可使用。”

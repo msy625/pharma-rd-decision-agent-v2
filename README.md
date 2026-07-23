@@ -201,6 +201,14 @@ python -m uvicorn webapp.main:app --host 127.0.0.1 --port 8000
 
 ## 比赛核心轻量部署
 
+### 在线预览
+
+Render Free Web Service 预览地址：
+
+<https://pharma-rd-decision-agent.onrender.com>
+
+当前部署分支为 `feature/day5-release-deploy`。线上已验收 `/health`、`/ready`、`/api/runtime-capabilities`、`/api/evidence/summary`、研发证据查询四个页签、`auto`/`local` 循证问答、安全拦截和本地 vendor 资源加载。Render Free 实例空闲后可能休眠，首次访问或长时间空闲后的访问可能需要等待冷启动。
+
 完整开发环境继续使用：
 
 ```bash
