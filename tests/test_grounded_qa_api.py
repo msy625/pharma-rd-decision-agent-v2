@@ -303,10 +303,13 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertEqual(self.citation_ids(result), ["B015", "B016"])
         self.assertIn("直接结论：不代表最终批准", result["answer"])
         self.assertIn("B016是2025-07-24的CHMP积极意见，非欧盟委员会最终批准", result["answer"])
-        self.assertIn("2023-09-15为Tevimbra欧盟初始许可", result["answer"])
+        self.assertIn("2023-09-15为Tevimbra欧盟初始许可日期", result["answer"])
+        self.assertIn("当前EPAR已将围手术期NSCLC适应症列入正式授权范围", result["answer"])
 
         by_id = {item["source_id"]: item["support_summary"] for item in result["citations"]}
         self.assertIn("Tevimbra欧盟初始许可", by_id["B015"])
+        self.assertIn("当前EPAR页面更新时间为2026-05-27", by_id["B015"])
+        self.assertIn("当前EPAR已将围手术期NSCLC适应症列入正式授权范围", by_id["B015"])
         self.assertIn("CHMP积极意见，非欧盟委员会最终批准", by_id["B016"])
 
     def test_15_company_comparison_current_sample_limit(self):
@@ -404,9 +407,9 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertEqual(after - before, set())
 
     def test_24_existing_evidence_apis_still_work(self):
-        self.assertEqual(self.get_json("/api/evidence/summary")["total_sources"], 31)
-        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 11)
-        self.assertEqual(self.get_json("/api/evidence/company-comparison")["metadata"]["data_scope"], "first_version_nsclc_hengrui_beone")
+        self.assertEqual(self.get_json("/api/evidence/summary")["total_sources"], 39)
+        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 15)
+        self.assertEqual(self.get_json("/api/evidence/company-comparison")["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
 
     def test_25_error_response_does_not_leak_path_stack_or_key(self):
         original_factory = webapp_main._grounded_qa_service

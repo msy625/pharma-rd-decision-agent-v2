@@ -24,24 +24,28 @@ class RDEventTimelineServiceTest(unittest.TestCase):
         self.assertEqual(self.service.normalize_company("恒瑞医药")["canonical_name"], "恒瑞医药")
         for alias in ["百济神州", "BeOne Medicines", "BeiGene"]:
             self.assertEqual(self.service.normalize_company(alias)["canonical_name"], "百济神州")
+        self.assertEqual(self.service.normalize_company("AstraZeneca")["canonical_name"], "阿斯利康")
 
     def test_02_dynamic_dated_core_auxiliary_and_undated_baseline(self):
         timeline = self.service.build_timeline()
-        self.assertEqual(timeline["summary"]["total_source_count"], 31)
-        self.assertEqual(timeline["summary"]["dated_source_count"], 12)
-        self.assertEqual(timeline["summary"]["core_event_count"], 11)
+        self.assertEqual(timeline["summary"]["total_source_count"], 39)
+        self.assertEqual(timeline["summary"]["dated_source_count"], 16)
+        self.assertEqual(timeline["summary"]["core_event_count"], 15)
         self.assertEqual(timeline["summary"]["auxiliary_event_count"], 1)
-        self.assertEqual(timeline["summary"]["undated_source_count"], 19)
-        self.assertEqual(len(self.core_events), 11)
-        self.assertEqual(len(self.all_events), 12)
-        self.assertEqual(len(self.service.undated_sources()), 19)
+        self.assertEqual(timeline["summary"]["undated_source_count"], 23)
+        self.assertEqual(len(self.core_events), 15)
+        self.assertEqual(len(self.all_events), 16)
+        self.assertEqual(len(self.service.undated_sources()), 23)
 
     def test_03_company_core_counts_and_default_auxiliary_visibility(self):
         hengrui = self.service.build_timeline(company_name="恒瑞医药")
         beone = self.service.build_timeline(company_name="BeOne Medicines")
+        astrazeneca = self.service.build_timeline(company_name="AstraZeneca")
         self.assertEqual(hengrui["summary"]["core_event_count"], 2)
         self.assertEqual(beone["summary"]["core_event_count"], 9)
         self.assertEqual(beone["summary"]["auxiliary_event_count"], 1)
+        self.assertEqual(astrazeneca["summary"]["core_event_count"], 4)
+        self.assertEqual(astrazeneca["summary"]["undated_source_count"], 4)
         self.assertNotIn("B014", {event["source_id"] for event in beone["events"]})
         with_auxiliary = self.service.build_timeline(company_name="百济神州", include_auxiliary=True)
         self.assertIn("B014", {event["source_id"] for event in with_auxiliary["events"]})
@@ -58,6 +62,7 @@ class RDEventTimelineServiceTest(unittest.TestCase):
                 "combined_analysis_publication": 1,
                 "formal_authorisation": 1,
                 "regulatory_opinion": 1,
+                "source_publication": 4,
             },
         )
         auxiliary = self.service.event_type_distribution([self.by_id["B014"]])
@@ -148,7 +153,7 @@ class RDEventTimelineServiceTest(unittest.TestCase):
         final_events = self.service.build_timeline(event_type="final_analysis")
         self.assertEqual({event["source_id"] for event in final_events["events"]}, {"B007", "B009"})
         year_events = self.service.build_timeline(year=2024)
-        self.assertEqual({event["source_id"] for event in year_events["events"]}, {"B007", "B009", "B011"})
+        self.assertEqual({event["source_id"] for event in year_events["events"]}, {"A006", "B007", "B009", "B011"})
 
     def test_15_undated_sources_support_company_trial_and_drug_filters(self):
         self.assertEqual(len(self.service.undated_sources(company_name="恒瑞医药")), 13)

@@ -37,7 +37,7 @@ QUESTION_TYPES = {
     "prohibited_or_unsupported",
 }
 NCT_RE = re.compile(r"(?<![A-Za-z0-9])NCT\d{8}(?![A-Za-z0-9])", re.IGNORECASE)
-SOURCE_ID_RE = re.compile(r"(?<![A-Za-z0-9])[HB]\d{3}(?![A-Za-z0-9])", re.IGNORECASE)
+SOURCE_ID_RE = re.compile(r"(?<![A-Za-z0-9])[AHB]\d{3}(?![A-Za-z0-9])", re.IGNORECASE)
 UNKNOWN_SAFETY_CATEGORY_LABEL = "其他不支持的问题类型"
 
 
@@ -84,8 +84,8 @@ def _version_label(item: dict[str, Any]) -> str:
 def _item_title(item: dict[str, Any]) -> str:
     return (
         item.get("title")
-        or item.get("title_original")
         or item.get("description_zh")
+        or item.get("title_original")
         or item.get("study_name")
         or item.get("trial_id")
         or item.get("source_id")
@@ -679,13 +679,19 @@ class GroundedQAService:
             dated = f"{date}的" if date else ""
             return f"{source.get('source_type') or 'EMA/CHMP监管资料'}；{dated}CHMP积极意见，非欧盟委员会最终批准"
         if self._is_regulatory_authorisation(source):
-            dated = f"{date}的" if date else ""
             title = norm(_item_title(source))
             if "tevimbra" in title:
-                return (
-                    f"{source.get('source_type') or 'EMA授权资料'}；{dated}Tevimbra欧盟初始许可；"
-                    "不能作为围手术期NSCLC适应症变更已获欧盟委员会最终批准的证据"
-                )
+                parts = [
+                    str(source.get("source_type") or "EMA授权资料"),
+                    f"{date}为Tevimbra欧盟初始许可日期" if date else "Tevimbra欧盟初始许可",
+                ]
+                updated = str(source.get("source_last_updated") or "").strip()
+                if updated:
+                    parts.append(f"当前EPAR页面更新时间为{updated}")
+                if self._has_current_perioperative_authorisation(source):
+                    parts.append("当前EPAR已将围手术期NSCLC适应症列入正式授权范围")
+                parts.append("该当前授权记录不是B016本身的欧盟委员会最终批准文件")
+                return "；".join(_unique_values(parts))
             return "；".join(
                 _unique_values(
                     [
@@ -703,14 +709,28 @@ class GroundedQAService:
             dated = f"；日期为{date}，且非欧盟委员会最终批准" if date else "，非欧盟委员会最终批准"
             return f"CHMP积极意见，非最终批准{dated}"
         if self._is_regulatory_authorisation(source):
-            dated = f"{date}为" if date else ""
             if "tevimbra" in norm(_item_title(source)):
-                return (
-                    f"EMA/欧盟正式授权记录；{dated}Tevimbra欧盟初始许可；"
-                    "不能作为围手术期NSCLC适应症变更已获欧盟委员会最终批准的证据"
-                )
+                parts = [
+                    "EMA/欧盟正式授权记录（当前EPAR）",
+                    f"{date}为Tevimbra欧盟初始许可日期" if date else "Tevimbra欧盟初始许可",
+                ]
+                updated = str(source.get("source_last_updated") or "").strip()
+                if updated:
+                    parts.append(f"页面更新时间为{updated}")
+                if self._has_current_perioperative_authorisation(source):
+                    parts.append("当前EPAR已将围手术期NSCLC适应症列入正式授权范围")
+                parts.append("该记录说明当前授权状态，但不是B016本身的欧盟委员会最终批准文件")
+                return "；".join(_unique_values(parts))
             return str(source.get("authorisation_status") or source.get("regulatory_event_type") or "监管授权资料")
         return self._support_summary(source)
+
+    @staticmethod
+    def _has_current_perioperative_authorisation(source: dict[str, Any]) -> bool:
+        context = " ".join(
+            str(source.get(field) or "")
+            for field in ["notes", "risk_notes", "scope_limitation", "description_zh"]
+        )
+        return "围手术期" in context and "正式授权范围" in context
 
     def _local_answer_parts(
         self,

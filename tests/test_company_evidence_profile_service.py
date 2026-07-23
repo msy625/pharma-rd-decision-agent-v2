@@ -29,19 +29,24 @@ class CompanyEvidenceProfileServiceTest(unittest.TestCase):
     def test_01_source_counts_are_dynamic_registry_counts(self):
         self.assertEqual(self.service.company_summary("恒瑞医药")["source_count"], 15)
         self.assertEqual(self.service.company_summary("百济神州")["source_count"], 16)
+        self.assertEqual(self.service.company_summary("AstraZeneca")["source_count"], 8)
 
     def test_02_company_aliases_normalize_to_one_subject(self):
         for alias in ["百济神州", "BeOne Medicines", "BeiGene"]:
             company = self.service.normalize_company(alias)
             self.assertEqual(company["canonical_name"], "百济神州")
             self.assertEqual(company["display_name"], "百济神州 / BeOne Medicines")
-        self.assertEqual(len(self.service.available_companies()), 2)
+        self.assertEqual(self.service.normalize_company("AstraZeneca")["canonical_name"], "阿斯利康")
+        self.assertEqual(len(self.service.available_companies()), 3)
 
     def test_03_trial_and_regulatory_chain_counts(self):
         hengrui = self.service.company_summary("恒瑞医药")
         beone = self.service.company_summary("BeOne Medicines")
         self.assertEqual((hengrui["trial_chain_count"], hengrui["regulatory_chain_count"]), (6, 0))
         self.assertEqual((beone["trial_chain_count"], beone["regulatory_chain_count"]), (4, 1))
+        astrazeneca = self.service.company_summary("阿斯利康")
+        self.assertEqual((astrazeneca["trial_chain_count"], astrazeneca["regulatory_chain_count"]), (4, 0))
+        self.assertEqual(self.service.regulatory_chains("AstraZeneca"), [])
 
     def test_04_b016_does_not_increase_trial_chain_or_trial_source_count(self):
         profile = self.service.build_profile("百济神州")
@@ -91,7 +96,7 @@ class CompanyEvidenceProfileServiceTest(unittest.TestCase):
 
     def test_11_profile_has_metadata_and_limitations(self):
         profile = self.service.build_profile("恒瑞医药")
-        self.assertEqual(profile["metadata"]["data_scope"], "first_version_nsclc_hengrui_beone")
+        self.assertEqual(profile["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
         self.assertTrue(profile["metadata"]["data_version"].startswith("sha256:"))
         self.assertEqual(profile["metadata"]["latest_verified_at"], "2026-07-21")
         self.assertIn("响应生成时间", profile["metadata"]["generated_at_note"])

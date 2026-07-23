@@ -67,8 +67,8 @@ class EvidenceWorkbenchFrontendTest(unittest.TestCase):
             "最新核验日期",
             "响应生成时间",
             "企业证据覆盖",
-            "恒瑞医药",
-            "百济神州/BeOne",
+            "today_companies:companies",
+            "this._companyLabel(c.display_name||c.company_name)",
         ]:
             self.assertIn(text, self.today_vals + self.today_template)
 

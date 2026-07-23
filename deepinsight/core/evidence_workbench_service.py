@@ -136,9 +136,14 @@ class EvidenceWorkbenchService:
 
     def metadata(self, rows: Iterable[dict[str, str]] | None = None) -> dict[str, str]:
         selected_rows = list(rows) if rows is not None else self.source_registry_service.load_rows()
+        company_names = "；".join(
+            str(subject.get("display_name") or subject.get("company_name") or "")
+            for subject in self.company_comparison_service.available_companies()
+            if subject.get("display_name") or subject.get("company_name")
+        )
         return {
             "data_scope": DATA_SCOPE,
-            "data_scope_label": "NSCLC；恒瑞医药；百济神州/BeOne Medicines；第一版人工核验来源",
+            "data_scope_label": f"NSCLC；{company_names}；{len(selected_rows)}条人工核验来源",
             "data_version": self.grounded_qa_service.data_version(),
             "latest_verified_at": self._latest_verified_at(selected_rows),
             "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),

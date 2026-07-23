@@ -25,10 +25,11 @@ class EvidenceWorkbenchApiTest(unittest.TestCase):
         response = self.client.get("/api/evidence/workbench")
         self.assertEqual(response.status_code, 200, response.text)
         payload = response.json()
-        self.assertEqual(payload["metadata"]["data_scope"], "first_version_nsclc_hengrui_beone")
+        self.assertEqual(payload["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
         self.assertIn("workbench", payload)
         workbench = payload["workbench"]
-        self.assertEqual(workbench["summary"]["source_count"], 31)
+        self.assertEqual(workbench["summary"]["source_count"], 39)
+        self.assertEqual(workbench["summary"]["company_count"], 3)
         self.assertIn("companies", workbench)
         self.assertIn("source_type_distribution", workbench)
         self.assertIn("study_status_distribution", workbench)

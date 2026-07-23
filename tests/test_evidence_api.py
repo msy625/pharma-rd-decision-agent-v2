@@ -103,9 +103,9 @@ class EvidenceApiHttpTest(unittest.TestCase):
         self.assertEqual(response.status_code, expected_status, response.text)
         return response.json()
 
-    def test_01_summary_total_is_31(self):
+    def test_01_summary_total_is_39(self):
         payload = self.get_json("/api/evidence/summary")
-        self.assertEqual(payload["total_sources"], 31)
+        self.assertEqual(payload["total_sources"], 39)
 
     def test_02_company_hengrui_returns_15(self):
         payload = self.get_json("/api/evidence/company/恒瑞医药")
@@ -192,6 +192,26 @@ class EvidenceApiHttpTest(unittest.TestCase):
         response = self.client.get("/api/whitebox")
         self.assertEqual(response.status_code, 200, response.text)
         self.assertIn("answer_markdown", response.json())
+
+    def test_18_laura_trial_query_returns_one_trial_pair(self):
+        payload = self.get_json("/api/evidence/trial/NCT03521154")
+        self.assertEqual(_ids(payload), {"A005", "A006"})
+        self.assertEqual({item["study_name"] for item in payload["items"]}, {"LAURA"})
+
+    def test_19_study_name_exact_match_has_priority(self):
+        self.assertEqual(_ids(self.get_json("/api/evidence/study/LAURA")), {"A005", "A006"})
+        self.assertEqual(_ids(self.get_json("/api/evidence/study/FLAURA")), {"A001", "A002"})
+        self.assertEqual(_ids(self.get_json("/api/evidence/study/FLAURA2")), {"A007", "A008"})
+
+    def test_20_study_name_normalization_and_partial_fallback(self):
+        normalized = self.get_json("/api/evidence/study/%20laura%20")
+        fallback = self.get_json("/api/evidence/study/LAUR")
+        self.assertEqual(_ids(normalized), {"A005", "A006"})
+        self.assertEqual(_ids(fallback), {"A001", "A002", "A005", "A006", "A007", "A008"})
+
+    def test_21_keyword_laura_remains_broad(self):
+        payload = self.get_json("/api/evidence/search?q=LAURA")
+        self.assertEqual(_ids(payload), {"A001", "A002", "A005", "A006", "A007", "A008"})
 
 
 @unittest.skipIf(webapp_main is None, f"webapp.main import unavailable: {WEBAPP_IMPORT_ERROR!r}")

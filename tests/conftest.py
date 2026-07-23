@@ -1,4 +1,5 @@
 import json
+import gc
 import sqlite3
 import sys
 import tempfile
@@ -227,7 +228,7 @@ def _create_test_chroma(chroma_path):
             },
         ],
     )
-    return collection
+    return client, collection
 
 
 @pytest.fixture(scope="session")
@@ -237,8 +238,17 @@ def isolated_enterprise_store():
         db_path = base_dir / "enterprise_analysis_test.db"
         chroma_path = base_dir / "chroma"
         _create_test_sqlite(db_path)
-        _create_test_chroma(chroma_path)
-        yield db_path, chroma_path
+        client, collection = _create_test_chroma(chroma_path)
+        try:
+            yield db_path, chroma_path
+        finally:
+            client._system.stop()
+            del collection
+            del client
+            gc.collect()
+            from chromadb.api.client import SharedSystemClient
+
+            SharedSystemClient.clear_system_cache()
 
 
 @pytest.fixture(autouse=True)

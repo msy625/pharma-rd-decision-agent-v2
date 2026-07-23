@@ -13,7 +13,7 @@ from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.source_registry_service import SourceRegistryService, norm
 
 
-DATA_SCOPE = "first_version_nsclc_hengrui_beone"
+DATA_SCOPE = "verified_nsclc_multi_company_sample"
 INTERPRETATION_SCOPE = "current_verified_sample_only"
 SCOPE_WARNING = "以下结果仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力。"
 
@@ -27,6 +27,11 @@ COMPANY_SUBJECTS = [
         "company_name": "百济神州",
         "display_name": "百济神州/BeOne Medicines",
         "aliases": ["百济神州", "BeOne Medicines", "BeiGene", "百济神州（BeOne Medicines，原BeiGene）"],
+    },
+    {
+        "company_name": "阿斯利康",
+        "display_name": "阿斯利康/AstraZeneca",
+        "aliases": ["阿斯利康", "AstraZeneca", "阿斯利康（AstraZeneca）"],
     },
 ]
 

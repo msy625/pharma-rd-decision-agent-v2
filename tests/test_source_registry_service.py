@@ -19,8 +19,8 @@ class SourceRegistryServiceTest(unittest.TestCase):
     def ids(self, rows):
         return {row["source_id"] for row in rows}
 
-    def test_01_summary_total_is_31(self):
-        self.assertEqual(self.service.summary()["total_sources"], 31)
+    def test_01_summary_total_is_39(self):
+        self.assertEqual(self.service.summary()["total_sources"], 39)
 
     def test_02_hengrui_returns_15(self):
         self.assertEqual(len(self.service.query(company="恒瑞医药")), 15)
@@ -36,6 +36,11 @@ class SourceRegistryServiceTest(unittest.TestCase):
             self.ids(self.service.query(company="百济神州")),
             self.ids(self.service.query(company="BeiGene")),
         )
+
+    def test_astrazeneca_alias_and_osimertinib_queries(self):
+        self.assertEqual(len(self.service.query(company="AstraZeneca")), 8)
+        self.assertEqual(len(self.service.query(company="阿斯利康")), 8)
+        self.assertEqual(self.ids(self.service.query(drug="AZD9291")), self.ids(self.service.query(drug="奥希替尼")))
 
     def test_06_shr_1210_matches_camrelizumab_sources(self):
         shr_rows = self.service.query(drug="SHR-1210")
@@ -60,6 +65,26 @@ class SourceRegistryServiceTest(unittest.TestCase):
         self.assertIn("B007", ids)
         self.assertNotIn("B006", ids)
 
+    def test_study_name_exact_match_has_priority_over_substrings(self):
+        self.assertEqual(self.ids(self.service.query(study_name="LAURA")), {"A005", "A006"})
+        self.assertEqual(self.ids(self.service.query(study_name="FLAURA")), {"A001", "A002"})
+        self.assertEqual(self.ids(self.service.query(study_name="FLAURA2")), {"A007", "A008"})
+
+    def test_study_name_exact_match_normalizes_case_and_outer_whitespace(self):
+        self.assertEqual(self.ids(self.service.query(study_name="  laura  ")), {"A005", "A006"})
+
+    def test_study_name_partial_match_remains_as_fallback(self):
+        self.assertEqual(
+            self.ids(self.service.query(study_name="LAUR")),
+            {"A001", "A002", "A005", "A006", "A007", "A008"},
+        )
+
+    def test_keyword_laura_keeps_broad_substring_search(self):
+        self.assertEqual(
+            self.ids(self.service.query(text="LAURA")),
+            {"A001", "A002", "A005", "A006", "A007", "A008"},
+        )
+
     def test_10_nct03663205_related_evidence(self):
         rows = self.service.related_evidence("NCT03663205")
         self.assertEqual(self.ids(rows), {"B003", "B006", "B007"})
@@ -82,7 +107,7 @@ class SourceRegistryServiceTest(unittest.TestCase):
             os.chdir(tmpdir)
             try:
                 service = SourceRegistryService()
-                self.assertEqual(service.summary()["total_sources"], 31)
+                self.assertEqual(service.summary()["total_sources"], 39)
             finally:
                 os.chdir(original_cwd)
 

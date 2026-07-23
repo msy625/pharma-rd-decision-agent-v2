@@ -32,12 +32,12 @@ class CompanyEvidenceProfileApiTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200, response.text)
         self.assertEqual(response.json()["profile"]["company"]["canonical_name"], "百济神州")
 
-    def test_03_company_list_has_two_normalized_subjects(self):
+    def test_03_company_list_has_three_normalized_subjects(self):
         response = self.client.get("/api/evidence/company-profile-companies")
         payload = response.json()
         self.assertEqual(response.status_code, 200, response.text)
-        self.assertEqual(payload["count"], 2)
-        self.assertEqual([item["canonical_name"] for item in payload["items"]], ["恒瑞医药", "百济神州"])
+        self.assertEqual(payload["count"], 3)
+        self.assertEqual([item["canonical_name"] for item in payload["items"]], ["恒瑞医药", "百济神州", "阿斯利康"])
 
     def test_04_missing_company_is_friendly_200(self):
         response = self.client.get("/api/evidence/company-profile/%E4%B8%8D%E5%AD%98%E5%9C%A8%E4%BC%81%E4%B8%9A")
@@ -91,7 +91,7 @@ class CompanyEvidenceProfileApiTest(unittest.TestCase):
     def test_11_response_has_expected_wrapper(self):
         response = self.client.get("/api/evidence/company-profile/%E7%99%BE%E6%B5%8E%E7%A5%9E%E5%B7%9E")
         payload = response.json()
-        self.assertEqual(payload["metadata"]["data_scope"], "first_version_nsclc_hengrui_beone")
+        self.assertEqual(payload["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
         json.loads(response.text)
 
 

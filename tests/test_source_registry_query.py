@@ -31,8 +31,8 @@ class SourceRegistryQueryTest(unittest.TestCase):
     def ids(self, rows):
         return {row["source_id"] for row in rows}
 
-    def test_read_31_sources(self):
-        self.assertEqual(len(self.rows), 31)
+    def test_read_39_sources(self):
+        self.assertEqual(len(self.rows), 39)
 
     def test_source_id_unique(self):
         counts = Counter(row["source_id"] for row in self.rows)
@@ -42,6 +42,11 @@ class SourceRegistryQueryTest(unittest.TestCase):
         counts = Counter(row.get("company_cn") or row.get("company") for row in self.rows)
         self.assertEqual(counts["恒瑞医药"], 15)
         self.assertEqual(counts["百济神州"], 16)
+        self.assertEqual(counts["阿斯利康"], 8)
+
+    def test_astrazeneca_trial_and_publication_are_linked(self):
+        rows = query_tool.query_rows(self.rows, trial_id="NCT03521154")
+        self.assertEqual(self.ids(rows), {"A005", "A006"})
 
     def test_validate_registry_has_no_errors(self):
         self.assertEqual(validate_tool.validate(), [])

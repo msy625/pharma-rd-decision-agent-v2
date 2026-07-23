@@ -19,7 +19,7 @@ from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
 from deepinsight.core.source_registry_service import SourceRegistryService, norm
 
 
-DATA_SCOPE_LABEL = "当前人工核验的NSCLC证据样本：恒瑞医药与百济神州 / BeOne Medicines"
+DATA_SCOPE_LABEL = "当前人工核验的NSCLC多企业证据样本"
 SCOPE_WARNING = "本画像仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力或完整研发管线。"
 PUBLICATION_SOURCE_TYPES = {"pubmed"}
 TRIAL_REGISTRY_SOURCE_TYPES = {"clinicaltrials.gov"}

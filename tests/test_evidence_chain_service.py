@@ -19,15 +19,15 @@ class EvidenceChainServiceTest(unittest.TestCase):
     def ids(self, items):
         return {item["source_id"] for item in items}
 
-    def test_01_trial_chain_count_is_10(self):
-        self.assertEqual(len(self.service.list_chains(chain_type="trial")), 10)
-        self.assertEqual(self.service.summary()["trial_chains"], 10)
-        self.assertEqual(self.service.summary()["clinical_trial_count"], 10)
+    def test_01_trial_chain_count_is_14(self):
+        self.assertEqual(len(self.service.list_chains(chain_type="trial")), 14)
+        self.assertEqual(self.service.summary()["trial_chains"], 14)
+        self.assertEqual(self.service.summary()["clinical_trial_count"], 14)
 
     def test_02_regulatory_chain_count_is_1(self):
         self.assertEqual(len(self.service.list_chains(chain_type="regulatory")), 1)
         self.assertEqual(self.service.summary()["regulatory_chains"], 1)
-        self.assertEqual(self.service.summary()["total_chains"], 11)
+        self.assertEqual(self.service.summary()["total_chains"], 15)
 
     def test_03_rationale_304_contains_expected_sources(self):
         chain = self.service.get_trial_chain("NCT03663205")
@@ -145,6 +145,21 @@ print(','.join(name for name in blocked if name in sys.modules))
                 source_id = item["source_id"]
                 self.assertNotIn(source_id, seen, f"{source_id} also appears in {seen.get(source_id)}")
                 seen[source_id] = chain["chain_id"]
+
+    def test_19_astrazeneca_trials_pair_registry_and_publication_once(self):
+        expected = {
+            "NCT02296125": {"A001", "A002"},
+            "NCT02511106": {"A003", "A004"},
+            "NCT03521154": {"A005", "A006"},
+            "NCT04035486": {"A007", "A008"},
+        }
+        chains = self.service.list_chains(company="AstraZeneca", chain_type="trial")
+        self.assertEqual(len(chains), 4)
+        self.assertEqual(
+            {chain["trial_ids"][0]: self.ids(chain["evidence_items"]) for chain in chains},
+            expected,
+        )
+        self.assertEqual(self.service.list_chains(company="AstraZeneca", chain_type="regulatory"), [])
 
 
 if __name__ == "__main__":

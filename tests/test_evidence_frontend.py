@@ -73,6 +73,9 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
     def test_path_params_use_encode_uri_component(self):
         self.assertIn("encodeURIComponent", self.evidence_component)
 
+    def test_normalized_chinese_title_is_preferred_in_source_cards(self):
+        self.assertIn("item.description_zh||item.title_original||item.study_name", self.evidence_component)
+
     def test_uses_existing_api_get_wrapper_only(self):
         self.assertIn("this._api(", self.evidence_component)
         self.assertNotIn("_apiPost", self.evidence_component)

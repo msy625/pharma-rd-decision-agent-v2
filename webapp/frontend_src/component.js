@@ -467,7 +467,7 @@ class Component extends DCLogic {
   _evidenceItemVm(item){
     item=item||{};
     const sid=this._evidenceText(item.source_id);
-    const title=this._evidenceText(item.title_original||item.description_zh||item.study_name);
+    const title=this._evidenceText(item.description_zh||item.title_original||item.study_name);
     const selected=this.state.evidenceSelected&&this.state.evidenceSelected.source_id===item.source_id;
     const version=this._evidenceVersion(item.is_latest_evidence);
     return Object.assign({}, item, {
@@ -544,23 +544,26 @@ class Component extends DCLogic {
     const v=String(name||'').trim().toLowerCase();
     if(['百济神州','beone medicines','beigene','百济神州 / beone medicines','百济神州/beone medicines'].includes(v)) return 'beone';
     if(v==='恒瑞医药') return 'hengrui';
+    if(['阿斯利康','astrazeneca','阿斯利康 / astrazeneca','阿斯利康/astrazeneca'].includes(v)) return 'astrazeneca';
     return v;
   }
   _companyLabel(name){
     const key=this._companyKey(name);
     if(key==='beone') return '百济神州 / BeOne Medicines';
     if(key==='hengrui') return '恒瑞医药';
+    if(key==='astrazeneca'||key==='阿斯利康') return '阿斯利康 / AstraZeneca';
     return this._evidenceText(name);
   }
   _companyOptions(){
     const comparison=this.state.companyComparison||{};
     const companies=Array.isArray(comparison.companies)?comparison.companies:[];
-    const names=companies.map(c=>c&&c.display_name?c.display_name:c&&c.company_name).filter(Boolean);
+    const summaryCounts=(this.state.evidenceSummary&&this.state.evidenceSummary.company_counts)||{};
+    const names=Object.keys(summaryCounts).concat(companies.map(c=>c&&c.display_name?c.display_name:c&&c.company_name)).filter(Boolean);
     const base=names.length?names:['恒瑞医药','BeOne Medicines'];
     const seen={}, out=[];
     base.forEach(name=>{
       const key=this._companyKey(name);
-      if(!seen[key]){ seen[key]=1; out.push({value:key==='beone'?'BeOne Medicines':'恒瑞医药', label:this._companyLabel(name)}); }
+      if(!seen[key]){ seen[key]=1; out.push({value:key==='beone'?'BeOne Medicines':(key==='astrazeneca'||key==='阿斯利康'?'AstraZeneca':name), label:this._companyLabel(name)}); }
     });
     return out;
   }
@@ -657,11 +660,11 @@ class Component extends DCLogic {
       headers:{'Content-Type':'application/json','accept':'application/json'},
       body:JSON.stringify({question, generation_mode:this.state.groundedMode}),
       signal:controller?controller.signal:undefined
-    }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d,retryAfter:r.headers?r.headers.get('Retry-After'):''})).catch(()=>({ok:r.ok,status:r.status,data:null,retryAfter:r.headers?r.headers.get('Retry-After'):''}))).then(({ok,status,data,retryAfter})=>{
+    }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d,waitHeader:r.headers?r.headers.get('Retry-After'):''})).catch(()=>({ok:r.ok,status:r.status,data:null,waitHeader:r.headers?r.headers.get('Retry-After'):''}))).then(({ok,status,data,waitHeader})=>{
       if(seq!==this.state.groundedSeq) return;
       if(!ok){
         const detail=data&&data.detail?String(data.detail):'循证问答请求失败，请稍后重试。';
-        const wait=retryAfter&&/^\d+$/.test(String(retryAfter))?'请约 '+retryAfter+' 秒后再试，或切换 local 继续使用。':'请稍后重试，或切换 local 继续使用。';
+        const wait=waitHeader&&/^\d+$/.test(String(waitHeader))?'请约 '+waitHeader+' 秒后再试，或切换 local 继续使用。':'请稍后重试，或切换 local 继续使用。';
         const msg=status===429?(detail+' '+wait):(status===400?detail:(status===503?'循证问答服务暂不可用，请稍后重试。':'循证问答服务暂时不可用。'));
         this.setState({groundedLoading:false,groundedError:msg});
         return;
@@ -850,7 +853,7 @@ class Component extends DCLogic {
   _versionRelationText(item){
     return this._isRegulatoryEvidence(item)&&String((item&&item.version_status)||'')==='independent'?'无版本关系':'';
   }
-  _sourceTitle(item){ item=item||{}; return this._evidenceText(item.title_original||item.description_zh||item.study_name||item.source_id); }
+  _sourceTitle(item){ item=item||{}; return this._evidenceText(item.description_zh||item.title_original||item.study_name||item.source_id); }
   _chainEvidenceVm(item){
     item=item||{};
     const ver=this._chainVersionLabel(item);
@@ -1008,7 +1011,7 @@ class Component extends DCLogic {
     const s=this.state, sum=s.evidenceSummary||{};
     const modes=[
       {key:'search',label:'关键词',placeholder:'例如 NSCLC / 卡瑞利珠单抗 / RATIONALE'},
-      {key:'company',label:'企业',placeholder:'例如 恒瑞医药 / 百济神州 / BeOne Medicines'},
+      {key:'company',label:'企业',placeholder:'例如 恒瑞医药 / 百济神州 / AstraZeneca'},
       {key:'drug',label:'药物',placeholder:'例如 SHR-1210 / tislelizumab'},
       {key:'trial',label:'临床试验',placeholder:'例如 NCT04619433'},
       {key:'study',label:'研究名称',placeholder:'例如 RATIONALE-304'},
@@ -1107,12 +1110,9 @@ class Component extends DCLogic {
       ev_hasError:!!s.evidenceError, ev_error:s.evidenceError,
       ev_hasSearched:s.evidenceHasSearched, ev_count:s.evidenceCount, ev_items:items, ev_hasResults:items.length>0,
       ev_empty:s.evidenceHasSearched&&!s.evidenceLoading&&!s.evidenceError&&items.length===0,
-      ev_scope:[
-        {label:'疾病领域',value:'NSCLC'},
-        {label:'企业',value:'恒瑞医药 · '+this._evidenceText(countMap['恒瑞医药'])+' 条'},
-        {label:'企业',value:'百济神州/BeOne Medicines · '+this._evidenceText(countMap['百济神州']||countMap['BeOne Medicines'])+' 条'},
-        {label:'人工核验资料',value:this._evidenceText(sum.total_sources)+' 条'}
-      ],
+      ev_scope:[{label:'疾病领域',value:'NSCLC'}].concat(Object.keys(countMap).sort().map(name=>({label:'企业',value:this._companyLabel(name)+' · '+this._evidenceText(countMap[name])+' 条'}))).concat([{label:'人工核验资料',value:this._evidenceText(sum.total_sources)+' 条'}]),
+      ev_scopeSummary:Object.keys(countMap).map(name=>this._companyLabel(name)).join(' · '),
+      ev_scopeCount:this._evidenceText(sum.total_sources),
       ev_verified:verified,
       ev_detailHas:!!detail.source_id,
       ev_detailEmpty:!detail.source_id,
@@ -1133,6 +1133,7 @@ class Component extends DCLogic {
       chain_error:s.chainError,
       chain_loaded:s.chainLoaded,
       chain_company:s.chainCompany,
+      chain_companyOptions:companyOptions,
       chain_type:s.chainType,
       chain_onCompany:(e)=>this.setState({chainCompany:e.target.value}, ()=>this.loadChains()),
       chain_onType:(e)=>this.setState({chainType:e.target.value}, ()=>this.loadChains()),
@@ -1172,7 +1173,7 @@ class Component extends DCLogic {
       cmp_toggleRules:()=>this.setState({metricRulesOpen:!this.state.metricRulesOpen}),
       cmp_dataInsufficient:dataInsufficient,
       cmp_scopeText:'以下结果仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力。',
-      cmp_objects:'恒瑞医药、百济神州/BeOne Medicines',
+      cmp_objects:companyProfiles.length?companyProfiles.map(x=>x.company_name).join('、'):'暂无',
       gqa_capLoading:s.groundedCapabilitiesLoading,
       gqa_capLoaded:s.groundedCapabilitiesLoaded,
       gqa_localAvailable:groundedCap.local_mode_available?'可用':'不可用',
@@ -1264,7 +1265,7 @@ class Component extends DCLogic {
     const today_metrics=[
       metric('总来源',summary.source_count,'当前来源登记表中的人工核验样本总数',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M8 13h8','M8 17h5']),
       metric('已核验来源',summary.verified_source_count,'当前来源登记表中 verification_status=已人工核验',['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
-      metric('企业主体',summary.company_count,'按恒瑞医药与百济神州/BeOne归一主体统计',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
+      metric('企业主体',summary.company_count,'按当前已归一企业主体动态统计',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
       metric('试验级证据链',summary.trial_chain_count,'同一 trial_id 只计一项试验链',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5']),
       metric('药物级监管链',summary.regulatory_chain_count,'监管链单独统计，不计入试验数量',['M9 12l2 2 4-4','M7 4h10l2 4v12H5V8z']),
       metric('最新资料',summary.latest_count,'is_latest_evidence=true',['M12 8v4l3 2','M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z']),

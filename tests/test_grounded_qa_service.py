@@ -198,14 +198,32 @@ class GroundedQAServiceTest(unittest.TestCase):
 
         self.assertIn("直接结论：不代表最终批准", response["answer"])
         self.assertIn("B016是2025-07-24的CHMP积极意见，非欧盟委员会最终批准", response["answer"])
-        self.assertIn("B015是EMA/欧盟正式授权记录；2023-09-15为Tevimbra欧盟初始许可", response["answer"])
-        self.assertIn("不能作为围手术期NSCLC适应症变更已获欧盟委员会最终批准的证据", response["answer"])
+        self.assertIn("B015是EMA/欧盟正式授权记录（当前EPAR）", response["answer"])
+        self.assertIn("2023-09-15为Tevimbra欧盟初始许可日期", response["answer"])
+        self.assertIn("当前EPAR已将围手术期NSCLC适应症列入正式授权范围", response["answer"])
+        self.assertIn("不是B016本身的欧盟委员会最终批准文件", response["answer"])
         self.assertEqual(self.source_ids(response), ["B015", "B016"])
 
         by_id = {item["source_id"]: item["support_summary"] for item in response["citations"]}
         self.assertIn("Tevimbra欧盟初始许可", by_id["B015"])
-        self.assertIn("不能作为围手术期NSCLC适应症变更已获欧盟委员会最终批准的证据", by_id["B015"])
+        self.assertIn("当前EPAR页面更新时间为2026-05-27", by_id["B015"])
+        self.assertIn("当前EPAR已将围手术期NSCLC适应症列入正式授权范围", by_id["B015"])
+        self.assertIn("不是B016本身的欧盟委员会最终批准文件", by_id["B015"])
         self.assertIn("CHMP积极意见，非欧盟委员会最终批准", by_id["B016"])
+
+    def test_explicit_astrazeneca_source_id_anchors_new_trial_chain(self):
+        question = "A002对应哪项试验？"
+        packet = self.service.build_evidence_packet(question)
+        self.assertEqual(packet["anchor_source_ids"], ["A002"])
+        self.assertEqual(packet["allowed_source_ids"], ["A001", "A002"])
+        self.assertEqual(packet["chain_ids"], ["trial:NCT02296125"])
+        response = self.service.answer_question(question)
+        by_id = {item["source_id"]: item for item in response["citations"]}
+        self.assertTrue(by_id["A001"]["title"].startswith("FLAURA："))
+        self.assertTrue(by_id["A002"]["title"].startswith("FLAURA 主要结果论文："))
+        self.assertIn("ClinicalTrials.gov；试验登记", by_id["A001"]["support_summary"])
+        self.assertIn("PubMed；最终分析论文", by_id["A002"]["support_summary"])
+        self.assertNotIn("监管资料", " ".join(item["support_summary"] for item in by_id.values()))
 
     def test_explicit_source_chain_support_summaries_keep_real_source_types(self):
         response = self.service.answer_question("B003试验组采用什么治疗方案？")

@@ -47,8 +47,11 @@ class EvidenceChainService:
 
     def list_chains(self, company: str | None = None, chain_type: str | None = None) -> list[dict[str, object]]:
         chains = []
+        company_terms = self.source_registry_service.expand_company_terms(company) if company else []
         for chain_config in self._configured_chains():
-            if company and not contains(chain_config.get("company_name"), company):
+            if company_terms and not any(
+                contains(chain_config.get("company_name"), term) for term in company_terms
+            ):
                 continue
             if chain_type and chain_config.get("chain_type") != chain_type:
                 continue
@@ -173,6 +176,7 @@ class EvidenceChainService:
                 "role": role,
                 "registry_id": row.get("registry_id", ""),
                 "publication_date": row.get("publication_date", ""),
+                "source_last_updated": row.get("source_last_updated", ""),
                 "analysis_stage": row.get("analysis_stage", ""),
                 "evidence_version": row.get("evidence_version", ""),
                 "supersedes_source_id": row.get("supersedes_source_id", ""),

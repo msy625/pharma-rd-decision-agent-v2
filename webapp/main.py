@@ -1680,21 +1680,21 @@ def _grounded_qa_client_id(request: Request) -> str:
 
 def _evidence_metadata() -> dict[str, Any]:
     return {
-        "data_scope": "first_version_nsclc_hengrui_beone",
+        "data_scope": "verified_nsclc_multi_company_sample",
         "data_source": "source_registry.csv",
     }
 
 
 def _evidence_chain_metadata() -> dict[str, Any]:
     return {
-        "data_scope": "first_version_nsclc_hengrui_beone",
+        "data_scope": "verified_nsclc_multi_company_sample",
         "relationship_source": "evidence_chains.json",
     }
 
 
 def _company_evidence_comparison_metadata() -> dict[str, Any]:
     return {
-        "data_scope": "first_version_nsclc_hengrui_beone",
+        "data_scope": "verified_nsclc_multi_company_sample",
         "interpretation_scope": "current_verified_sample_only",
     }
 
@@ -1918,7 +1918,7 @@ def evidence_summary() -> dict[str, Any]:
         return {
             **summary,
             "company_source_counts": summary.get("company_counts", {}),
-            "data_scope": "NSCLC；恒瑞医药；百济神州（BeOne Medicines，原BeiGene）；第一版31条人工核验来源",
+            "data_scope": f"NSCLC；{len(summary.get('company_counts', {}))}家企业；{summary.get('total_sources', 0)}条人工核验来源",
             "verified_dates": verified_dates,
             "metadata": _evidence_metadata(),
         }
@@ -1950,7 +1950,7 @@ def evidence_workbench() -> dict[str, Any]:
         return {
             "workbench": workbench,
             "metadata": {
-                "data_scope": workbench.get("metadata", {}).get("data_scope", "first_version_nsclc_hengrui_beone"),
+                "data_scope": workbench.get("metadata", {}).get("data_scope", "verified_nsclc_multi_company_sample"),
             },
         }
     except Exception as exc:
@@ -2060,7 +2060,7 @@ def evidence_company_profile(name: str) -> dict[str, Any]:
             "profile": profile,
             "metadata": {
                 "data_scope": profile.get("metadata", {}).get(
-                    "data_scope", "first_version_nsclc_hengrui_beone"
+                    "data_scope", "verified_nsclc_multi_company_sample"
                 )
             },
         }
@@ -2092,7 +2092,7 @@ def evidence_timeline(
             "timeline": timeline,
             "metadata": {
                 "data_scope": timeline.get("metadata", {}).get(
-                    "data_scope", "first_version_nsclc_hengrui_beone"
+                    "data_scope", "verified_nsclc_multi_company_sample"
                 )
             },
         }
@@ -2173,7 +2173,7 @@ def _grounded_qa_payload(result: dict[str, Any], generation_mode: str) -> dict[s
     return {
         "result": result,
         "metadata": {
-            "data_scope": "first_version_nsclc_hengrui_beone",
+            "data_scope": "verified_nsclc_multi_company_sample",
             "generation_mode_requested": generation_mode,
             "generation_mode_used": generation_mode_used,
             "llm_used": llm_used,

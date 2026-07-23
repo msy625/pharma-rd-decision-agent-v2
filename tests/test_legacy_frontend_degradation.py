@@ -71,9 +71,8 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
             self.assertNotIn(forbidden, today_block)
 
     def test_05_no_infinite_retry_loop_for_failed_legacy_503(self):
-        runtime_block = self.component[
-            self.component.index("loadRuntimeCapabilities()") : self.component.index("loadBootstrap()")
-        ]
+        start = self.component.index("  loadRuntimeCapabilities(){")
+        runtime_block = self.component[start:self.component.index("  loadBootstrap(){", start)]
         self.assertNotIn("setInterval", runtime_block)
         self.assertNotIn("retry", runtime_block.lower())
         self.assertEqual(self.component.count("this.loadBootstrap()"), 1)
