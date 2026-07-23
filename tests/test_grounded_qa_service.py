@@ -182,6 +182,41 @@ class GroundedQAServiceTest(unittest.TestCase):
         self.assertIn("B016：CHMP积极意见，非最终批准", response["answer"])
         self.assertIn("B016", self.source_ids(response))
 
+    def test_explicit_b016_source_id_anchors_regulatory_chain_only(self):
+        question = "B016是否代表替雷利珠单抗围手术期NSCLC已经获得欧盟最终批准？"
+        packet = self.service.build_evidence_packet(question)
+
+        self.assertEqual(packet["anchor_source_ids"], ["B016"])
+        self.assertEqual(packet["allowed_source_ids"], ["B015", "B016"])
+        self.assertEqual(packet["chain_ids"], ["regulatory:tevimbra-eu-nsclc"])
+        self.assertNotIn("B002", packet["allowed_source_ids"])
+        self.assertNotIn("B013", packet["allowed_source_ids"])
+
+    def test_b016_final_approval_question_has_precise_local_answer_and_citations(self):
+        question = "B016是否代表替雷利珠单抗围手术期NSCLC已经获得欧盟最终批准？"
+        response = self.service.answer_question(question)
+
+        self.assertIn("直接结论：不代表最终批准", response["answer"])
+        self.assertIn("B016是2025-07-24的CHMP积极意见，非欧盟委员会最终批准", response["answer"])
+        self.assertIn("B015是EMA/欧盟正式授权记录；2023-09-15为Tevimbra欧盟初始许可", response["answer"])
+        self.assertIn("不能作为围手术期NSCLC适应症变更已获欧盟委员会最终批准的证据", response["answer"])
+        self.assertEqual(self.source_ids(response), ["B015", "B016"])
+
+        by_id = {item["source_id"]: item["support_summary"] for item in response["citations"]}
+        self.assertIn("Tevimbra欧盟初始许可", by_id["B015"])
+        self.assertIn("不能作为围手术期NSCLC适应症变更已获欧盟委员会最终批准的证据", by_id["B015"])
+        self.assertIn("CHMP积极意见，非欧盟委员会最终批准", by_id["B016"])
+
+    def test_explicit_source_chain_support_summaries_keep_real_source_types(self):
+        response = self.service.answer_question("B003试验组采用什么治疗方案？")
+        self.assertEqual(self.source_ids(response), ["B003", "B006", "B007"])
+        by_id = {item["source_id"]: item["support_summary"] for item in response["citations"]}
+        self.assertIn("ClinicalTrials.gov；试验登记", by_id["B003"])
+        self.assertIn("PubMed；中期分析论文", by_id["B006"])
+        self.assertIn("PubMed；最终分析论文", by_id["B007"])
+        for summary in by_id.values():
+            self.assertNotIn("监管资料", summary)
+
     def test_company_comparison_has_current_sample_limitation(self):
         response = self.service.answer_question("恒瑞与百济当前证据样本有什么差异？")
         self.assertEqual(response["question_type"], "company_comparison")

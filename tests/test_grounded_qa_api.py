@@ -294,6 +294,21 @@ class GroundedQAApiTest(unittest.TestCase):
         result = self.result("B016是什么监管状态？")
         self.assertIn("B016：CHMP积极意见，非最终批准", result["answer"])
 
+    def test_14b_explicit_b016_local_query_uses_only_regulatory_chain_sources(self):
+        result = self.result(
+            "B016是否代表替雷利珠单抗围手术期NSCLC已经获得欧盟最终批准？",
+            generation_mode="local",
+        )
+        self.assertEqual(result["trace"]["retrieved_source_ids"], ["B015", "B016"])
+        self.assertEqual(self.citation_ids(result), ["B015", "B016"])
+        self.assertIn("直接结论：不代表最终批准", result["answer"])
+        self.assertIn("B016是2025-07-24的CHMP积极意见，非欧盟委员会最终批准", result["answer"])
+        self.assertIn("2023-09-15为Tevimbra欧盟初始许可", result["answer"])
+
+        by_id = {item["source_id"]: item["support_summary"] for item in result["citations"]}
+        self.assertIn("Tevimbra欧盟初始许可", by_id["B015"])
+        self.assertIn("CHMP积极意见，非欧盟委员会最终批准", by_id["B016"])
+
     def test_15_company_comparison_current_sample_limit(self):
         result = self.result("恒瑞与百济当前证据样本有什么差异？")
         self.assertEqual(result["question_type"], "company_comparison")

@@ -125,11 +125,11 @@ class FrontendOfflineAssetsTest(unittest.TestCase):
     def test_09_homepage_still_contains_main_navigation(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200, response.text[:200])
-        for label in ["工作台", "智能问答", "公司画像", "研发证据查询", "白盒溯源"]:
+        for label in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "循证问答"]:
             self.assertIn(label, response.text)
 
-    def test_10_evidence_tabs_still_exist(self):
-        for label in ["来源检索", "证据链", "企业对比", "循证问答"]:
+    def test_10_evidence_center_tabs_and_top_level_grounded_qa_exist(self):
+        for label in ["来源检索", "证据链", "企业对比", "进入循证问答"]:
             self.assertIn(label, self.index)
             self.assertIn(label, self.template)
 

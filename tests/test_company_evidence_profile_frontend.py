@@ -67,8 +67,10 @@ class CompanyEvidenceProfileFrontendTest(unittest.TestCase):
     def test_08_quick_entries_reuse_existing_evidence_tabs(self):
         for label in ["查看全部来源", "打开企业对比", "进入循证问答"]:
             self.assertIn(label, self.view)
-        for tab in ["evidenceTab:'sources'", "evidenceTab:'companyCompare'", "evidenceTab:'groundedQa'"]:
+        for tab in ["evidenceTab:'sources'", "evidenceTab:'companyCompare'"]:
             self.assertIn(tab, self.loader)
+        self.assertIn("this.openGroundedQa()", self.loader)
+        self.assertIn("page:'groundedQa'", self.loader)
 
     def test_09_metadata_limitations_and_empty_states(self):
         for text in ["数据版本", "核验日期", "生成时间", "限制说明", "正在加载企业证据画像", "当前数据不足", "重新加载"]:

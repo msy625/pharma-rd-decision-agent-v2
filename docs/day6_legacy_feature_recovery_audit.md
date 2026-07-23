@@ -270,6 +270,11 @@ P2，暂不进入比赛主链路：
 - B015 使用 2023-09-15 初始许可日期，`source_last_updated=2026-05-27` 只作页面更新时间；B016 使用 2025-07-24 CHMP 积极意见日期并明确不是最终批准。
 - B006/B007、B008/B009 分别形成两个时间事件和一个唯一试验，服务提供 `supersedes_source_id` 与 `superseded_by_source_id` 双向版本关系；B010 只生成一条合并论文事件。
 - 新时间轴页面从 `_legacyPages()` 移除，只请求 `/api/evidence/timeline*`；旧 `/api/timeline`、旧 SQLite 企业状态和 7 条固定兜底事件不进入当前页面路径。
+- Day6 第五阶段已完成前半段业务闭环整合：比赛主导航只保留研发决策总览、企业证据画像、研发事件时间轴、研发证据中心和循证问答五个入口。
+- 循证问答新增独立 `page=groundedQa`，但继续复用原 Grounded QA 状态、组件和 `/api/evidence/grounded-qa*` 接口；研发证据中心内部只保留来源检索、证据链和企业对比。
+- 比赛启动不初始化旧聊天会话，不请求 `/api/bootstrap`，也不因 `legacy_features_available=true` 加载旧数据；`renderVals()` 只在明确进入旧页面时才计算对应 legacy 视图模型。
+- 旧全局企业、报告年份、排名范围、向量 Top K、DeepSeek 状态、演示大屏和“旧数据未配置”提示已从比赛模板移除。旧方法、模板和 API 继续保留，便于兼容和后续重构。
+- 工作台企业卡片可进入对应企业画像，工作台可进入时间轴；画像与时间轴可进入证据中心链路；证据中心可进入一级循证问答；问答引用和相关证据链可返回对应来源详情或链详情。
 
 - 当前旧 SQLite 是空文件，且被忽略，不在干净克隆和 Render 中。
 - 当前旧 Chroma 目录不存在，且被忽略，不在干净克隆和 Render 中。
@@ -297,6 +302,8 @@ P0-2 企业证据画像阶段已新增 `deepinsight/core/company_evidence_profil
 
 P0-3 研发事件时间轴阶段已新增 `deepinsight/core/rd_event_timeline_service.py`、`tests/test_rd_event_timeline_service.py`、`tests/test_rd_event_timeline_api.py`、`tests/test_rd_event_timeline_frontend.py` 和 `docs/day6_rd_event_timeline_validation.md`。下一步进入前半段业务闭环整合：统一工作台、企业画像、时间轴、来源检索、证据链和循证问答之间的入口与上下文传递；不开始恢复旧 SQLite/Chroma 时间轴。
 
+P0-4 前半段业务闭环整合阶段新增 `tests/test_competition_navigation_frontend.py` 和 `docs/day6_competition_navigation_validation.md`，并调整前端导航、品牌、Grounded QA 一级入口、legacy 初始化边界以及页面间最小上下文跳转。下一步只进行本地浏览器验收和比赛材料整理，不恢复自动化证据研报。
+
 ## 14. 验收标准
 
 下一阶段恢复功能必须满足：
@@ -308,4 +315,4 @@ P0-3 研发事件时间轴阶段已新增 `deepinsight/core/rd_event_timeline_se
 - 轻量 Render 环境不依赖旧 SQLite、Chroma、sentence-transformers 或 Torch。
 - `runtime-capabilities` 能按功能独立标记可用性。
 - local 循证问答继续可用，DeepSeek 开关和限流不被绕过。
-- 自动测试覆盖能力判断、旧功能隔离、来源引用、无固定结果和前端四页签不回归。
+- 自动测试覆盖能力判断、旧功能隔离、来源引用、无固定结果、五入口导航、证据中心三页签和一级循证问答不回归。

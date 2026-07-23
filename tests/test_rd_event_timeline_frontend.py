@@ -91,7 +91,8 @@ class RDEventTimelineFrontendTest(unittest.TestCase):
             self.assertIn(label, self.view)
         self.assertIn("encodeURIComponent(cid)", self.component)
         self.assertIn("page:'evidence',evidenceTab:'sources'", self.component)
-        self.assertIn("page:'evidence',evidenceTab:'groundedQa'", self.component)
+        self.assertIn("page:'groundedQa'", self.component)
+        self.assertIn("this.openGroundedQa(question)", self.component)
 
     def test_09_undated_sources_have_required_notice_and_are_separate(self):
         self.assertIn("无日期资料未进入时间轴，不代表事件不存在。", self.values)

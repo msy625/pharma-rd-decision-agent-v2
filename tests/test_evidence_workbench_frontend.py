@@ -28,7 +28,7 @@ class EvidenceWorkbenchFrontendTest(unittest.TestCase):
         ]
 
     def test_01_navigation_labels_real_evidence_workbench(self):
-        self.assertIn("研发决策工作台", self.component)
+        self.assertIn("研发决策总览", self.component)
         self.assertIn("真实证据总览", self.component)
 
     def test_02_today_loads_evidence_workbench_api(self):
@@ -39,9 +39,14 @@ class EvidenceWorkbenchFrontendTest(unittest.TestCase):
 
     def test_03_startup_default_today_does_not_auto_call_old_dashboard(self):
         runtime_block = self.component[
-            self.component.index("loadRuntimeCapabilities()") : self.component.index("loadBootstrap()")
+            self.component.index("  loadRuntimeCapabilities(){") : self.component.index("  loadBootstrap(){")
         ]
-        self.assertIn("caps.evidence_workbench_available?'today':'evidence'", runtime_block)
+        self.assertIn("const requestedPage=caps.default_page||'today'", runtime_block)
+        self.assertIn(
+            "const nextPage=this._isLegacyPage(requestedPage)?(caps.evidence_workbench_available?'today':'evidence'):requestedPage",
+            runtime_block,
+        )
+        self.assertNotIn("this.loadBootstrap()", runtime_block)
         self.assertNotIn("'/api/dashboard'", runtime_block)
         self.assertNotIn("'/api/profile'", runtime_block)
         self.assertNotIn("'/api/bootstrap'", runtime_block)
@@ -71,13 +76,20 @@ class EvidenceWorkbenchFrontendTest(unittest.TestCase):
         for text in ["来源类型构成", "研究状态构成", "当前数据缺口", "today_sourceTypes", "today_studyStatuses", "today_gaps"]:
             self.assertIn(text, self.today_vals + self.today_template)
 
-    def test_08_quick_links_switch_existing_evidence_tabs(self):
-        for label in ["查看来源检索", "查看证据链", "查看企业对比", "打开循证问答"]:
+    def test_08_quick_links_cover_evidence_timeline_and_grounded_qa(self):
+        for label in ["查看来源检索", "查看证据链", "查看研发事件时间轴", "查看企业对比", "进入循证问答"]:
             self.assertIn(label, self.today_vals + self.today_template)
         self.assertIn("evidenceTab:tab", self.today_vals)
-        for tab in ["'sources'", "'chains'", "'companyCompare'", "'groundedQa'"]:
+        for tab in ["'sources'", "'chains'", "'companyCompare'"]:
             self.assertIn(tab, self.today_vals)
+        self.assertIn("this.openGroundedQa()", self.today_vals)
+        self.assertIn("this.go(page)", self.today_vals)
         self.assertNotIn("page:'sources'", self.today_vals)
+
+    def test_08b_company_cards_open_company_evidence_profile(self):
+        self.assertIn("companyProfileCompany:companyName", self.today_vals)
+        self.assertIn("page:'compare'", self.today_vals)
+        self.assertIn("查看企业画像", self.today_template)
 
     def test_09_loading_empty_and_error_states_exist(self):
         for text in ["today_loading", "today_empty", "today_hasError", "证据工作台加载失败", "正在加载证据工作台", "当前没有可展示"]:

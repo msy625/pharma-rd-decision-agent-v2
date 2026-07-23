@@ -41,15 +41,16 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
             cls.registry_rows = list(csv.DictReader(fh))
 
     def test_evidence_nav_exists_in_required_position(self):
-        research = self.component.index("label:'自动化研报'")
-        evidence = self.component.index("label:'研发证据查询'")
-        whitebox = self.component.index("label:'白盒溯源'")
-        self.assertLess(research, evidence)
-        self.assertLess(evidence, whitebox)
+        timeline = self.component.index("label:'研发事件时间轴'")
+        evidence = self.component.index("label:'研发证据中心'")
+        grounded = self.component.index("label:'循证问答'")
+        self.assertLess(timeline, evidence)
+        self.assertLess(evidence, grounded)
 
     def test_primary_nav_labels_still_exist(self):
-        for label in ["工作台", "智能问答", "企业证据画像", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
-            self.assertIn(label, self.component)
+        nav = self.component[self.component.index("  navDef(){") : self.component.index("  navItem(it){")]
+        for label in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "循证问答"]:
+            self.assertIn(label, nav)
 
     def test_evidence_state_fields_exist(self):
         for name in [
@@ -163,7 +164,7 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
             self.assertNotIn(word, self.evidence_all)
 
     def test_static_index_contains_generated_evidence_page(self):
-        self.assertIn("研发证据查询", self.static_index)
+        self.assertIn("研发证据中心", self.static_index)
         self.assertIn("data-evidence-results", self.static_index)
         self.assertIn("/api/evidence/search", self.static_index)
 

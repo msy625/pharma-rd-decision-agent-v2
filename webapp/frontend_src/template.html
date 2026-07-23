@@ -2,6 +2,7 @@
 <html><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>药研制策｜可信医药研发证据智能分析</title>
 <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
 <script src="/static/dc-runtime.js"></script>
 </head>
@@ -3686,68 +3687,23 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
   <aside data-sidebar="" data-open="{{ navOpenAttr }}" style="background:var(--bg-elev);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh">
     <div style="padding:18px 16px 14px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--border)">
-      <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(140deg,var(--brand-600),var(--brand-800));color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;box-shadow:0 2px 8px rgba(45,50,107,.35)">医</div>
+      <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(140deg,var(--brand-600),var(--brand-800));color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;box-shadow:0 2px 8px rgba(45,50,107,.35)">药</div>
       <div style="line-height:1.2;min-width:0">
-        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em">医策智脑</div>
-        <div style="font-size:11px;color:var(--text-3);font-family:var(--font-mono);letter-spacing:.02em">DeepInsight · 决策支持</div>
+        <div style="font-size:15px;font-weight:600;letter-spacing:-.01em">药研制策</div>
+        <div style="font-size:10.5px;color:var(--text-3);letter-spacing:.01em;white-space:nowrap">可信医药研发证据智能分析</div>
       </div>
     </div>
 
-    <nav style="flex:1;overflow-y:auto;padding:14px 10px;display:flex;flex-direction:column;gap:4px">
-      <div style="font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--text-3);padding:6px 10px 4px">工作流</div>
+    <nav data-competition-nav="" style="flex:1;overflow-y:auto;padding:16px 10px;display:flex;flex-direction:column;gap:5px">
       <sc-for list="{{ navMain }}" as="it" hint-placeholder-count="5">
         <button onclick="{{ it.onClick }}" style="{{ it.style }}" style-hover="background:var(--gray-100)">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
             {{ it.iconPaths }}
           </svg>
           <span style="flex:1">{{ it.label }}</span>
-          <sc-if value="{{ it.disabled }}"><span style="font-size:10.5px;color:var(--text-3);white-space:nowrap">{{ it.legacyLabel }}</span></sc-if>
-          <sc-if value="{{ it.badge }}"><span style="font-size:10px;font-family:var(--font-mono);background:var(--brand-100);color:var(--brand-700);padding:1px 6px;border-radius:999px">{{ it.badge }}</span></sc-if>
         </button>
       </sc-for>
-      <div style="font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--text-3);padding:12px 10px 4px">数据与分析</div>
-      <sc-for list="{{ navAnalysis }}" as="it" hint-placeholder-count="3">
-        <button onclick="{{ it.onClick }}" style="{{ it.style }}" style-hover="background:var(--gray-100)">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
-            {{ it.iconPaths }}
-          </svg>
-          <span style="flex:1">{{ it.label }}</span>
-          <sc-if value="{{ it.disabled }}"><span style="font-size:10.5px;color:var(--text-3);white-space:nowrap">{{ it.legacyLabel }}</span></sc-if>
-        </button>
-      </sc-for>
-
-      <div data-chrome="" style="margin-top:14px;padding:12px;background:var(--bg-sunken);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;gap:11px">
-        <div style="font-size:10.5px;font-weight:600;letter-spacing:.06em;color:var(--text-3)">全局过滤</div>
-        <label for="global-company-select" style="display:flex;flex-direction:column;gap:4px">
-          <span style="font-size:11px;color:var(--text-2)">企业</span>
-          <select id="global-company-select" name="global_company" value="{{ company }}" onchange="{{ onCompany }}" style="height:30px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:12.5px;padding:0 8px">
-            <sc-for list="{{ companies }}" as="c"><option value="{{ c }}">{{ c }}</option></sc-for>
-          </select>
-        </label>
-        <label for="global-year-select" style="display:flex;flex-direction:column;gap:4px">
-          <span style="font-size:11px;color:var(--text-2)">报告年份</span>
-          <select id="global-year-select" name="global_year" value="{{ year }}" onchange="{{ onYear }}" style="height:30px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:12.5px;padding:0 8px">
-            <sc-for list="{{ years }}" as="y"><option value="{{ y }}">{{ y }}</option></sc-for>
-          </select>
-        </label>
-        <div style="display:flex;flex-direction:column;gap:5px">
-          <span style="font-size:11px;color:var(--text-2)">排名范围</span>
-          <div style="display:flex;background:var(--bg-elev);border:1px solid var(--border);border-radius:7px;padding:2px">
-            <button onclick="{{ onScopeInd }}" style="{{ scopeIndStyle }}">同级行业</button>
-            <button onclick="{{ onScopeAll }}" style="{{ scopeAllStyle }}">全行业</button>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:5px">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-2)"><span>向量 Top K</span><span style="font-family:var(--font-mono);color:var(--brand-600);font-weight:600">{{ topK }}</span></div>
-          <input id="global-top-k-range" name="global_top_k" aria-label="向量 Top K" type="range" min="1" max="10" value="{{ topK }}" oninput="{{ onTopK }}" style="width:100%;accent-color:var(--brand-600);height:4px">
-        </div>
-      </div>
     </nav>
-
-    <div style="padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px">
-      <span style="width:7px;height:7px;border-radius:50%;background:{{ statusColor }};color:{{ statusColor }};animation:pulseDot 1.8s var(--ease-out) infinite;flex:none"></span>
-      <span style="font-size:11.5px;color:var(--text-2);flex:1">{{ statusText }}</span>
-    </div>
   </aside>
 
   <main style="display:flex;flex-direction:column;height:100vh;min-width:0;overflow:hidden">
@@ -3761,16 +3717,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
         <span style="font-weight:600;color:var(--text)">{{ crumbSub }}</span>
       </div>
       <div style="flex:1"></div>
-      <div data-chrome="" style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:4px 11px">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"></path></svg>
-        <span style="font-weight:500;color:var(--text)">{{ company }}</span><span style="color:var(--text-3)">·</span><span style="font-family:var(--font-mono)">{{ year }}</span>
-      </div>
-      <button onclick="{{ toggleMode }}" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;border:1px solid {{ modeBorder }};color:{{ modeColor }};background:{{ modeBg }};border-radius:999px;padding:5px 11px">
-        <span style="width:6px;height:6px;border-radius:50%;background:{{ modeColor }}"></span>{{ modeLabel }}
-      </button>
-      <button onclick="{{ togglePresent }}" title="演示大屏模式" style="width:34px;height:34px;border-radius:8px;border:1px solid {{ presentBorder }};color:{{ presentColor }};background:{{ presentBg }};display:flex;align-items:center;justify-content:center" style-hover="border-color:var(--border-strong)">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
-      </button>
       <button onclick="{{ toggleTheme }}" title="明暗切换" style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border);color:var(--text-2);background:var(--bg-elev);display:flex;align-items:center;justify-content:center" style-hover="border-color:var(--border-strong)">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ themeIconPaths }}</svg>
       </button>
@@ -3778,10 +3724,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
     <div data-scale="" style="flex:1;overflow-y:auto;overflow-x:hidden">
       <div style="padding:24px 28px 60px;max-width:1320px;margin:0 auto">
-      <sc-if value="{{ hasLegacyNotice }}">
-        <div style="margin-bottom:16px;border:1px solid var(--warn);background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.6">{{ legacyNotice }}</div>
-      </sc-if>
-
       <sc-if value="{{ isToday }}">
         <div style="animation:fadeUp .5s var(--ease-out) both">
           <div data-hero="" style="display:grid;grid-template-columns:1.45fr 1fr;gap:22px;margin-bottom:22px">
@@ -3826,8 +3768,8 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             </sc-for>
           </div>
 
-          <div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
-            <sc-for list="{{ today_quickLinks }}" as="q" hint-placeholder-count="4">
+          <div data-workbench-links="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:24px">
+            <sc-for list="{{ today_quickLinks }}" as="q" hint-placeholder-count="5">
               <button onclick="{{ q.onClick }}" style="text-align:left;background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:9px;min-height:126px;transition:border-color .15s,transform .15s,box-shadow .15s" style-hover="border-color:var(--brand-300);transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,22,31,.08)">
                 <div style="width:36px;height:36px;border-radius:9px;background:var(--brand-50);color:var(--brand-600);display:flex;align-items:center;justify-content:center">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{{ q.iconPaths }}</svg>
@@ -3865,6 +3807,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                           </sc-for>
                         </div>
                       </sc-if>
+                      <button onclick="{{ c.onClick }}" style="align-self:flex-start;height:30px;border-radius:8px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11.5px;font-weight:700;padding:0 10px">查看企业画像</button>
                     </div>
                   </sc-for>
                 </div>
@@ -4464,18 +4407,29 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
       <sc-if value="{{ isEvidence }}">
         <div style="animation:fadeUp .5s var(--ease-out) both;display:flex;flex-direction:column;gap:16px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
-            <div>
-              <div style="font-size:21px;font-weight:600;letter-spacing:-.01em">研发证据查询</div>
-              <div style="font-size:12.5px;color:var(--text-3);margin-top:4px">NSCLC · 恒瑞医药 · 百济神州/BeOne Medicines · 人工核验资料</div>
+          <sc-if value="{{ isEvidenceCenter }}">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <div>
+                <div style="font-size:21px;font-weight:600;letter-spacing:-.01em">研发证据中心</div>
+                <div style="font-size:12.5px;color:var(--text-3);margin-top:4px">NSCLC · 恒瑞医药 · 百济神州/BeOne Medicines · 人工核验资料</div>
+              </div>
+              <div data-evidence-center-tabs="" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <button onclick="{{ ev_tabSource }}" style="{{ ev_tabSourceStyle }}">来源检索</button>
+                <button onclick="{{ ev_tabChain }}" style="{{ ev_tabChainStyle }}">证据链</button>
+                <button onclick="{{ ev_tabCompany }}" style="{{ ev_tabCompanyStyle }}">企业对比</button>
+                <button onclick="{{ ev_openGrounded }}" style="height:34px;border-radius:9px;border:1px solid var(--brand-600);background:var(--brand-600);color:#fff;font-size:13px;font-weight:700;padding:0 14px">进入循证问答</button>
+              </div>
             </div>
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-              <button onclick="{{ ev_tabSource }}" style="{{ ev_tabSourceStyle }}">来源检索</button>
-              <button onclick="{{ ev_tabChain }}" style="{{ ev_tabChainStyle }}">证据链</button>
-              <button onclick="{{ ev_tabCompany }}" style="{{ ev_tabCompanyStyle }}">企业对比</button>
-              <button onclick="{{ ev_tabGrounded }}" style="{{ ev_tabGroundedStyle }}">循证问答</button>
+          </sc-if>
+          <sc-if value="{{ isGroundedQaPage }}">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+              <div>
+                <div style="font-size:21px;font-weight:600;letter-spacing:-.01em">循证问答</div>
+                <div style="font-size:12.5px;color:var(--text-3);margin-top:4px">仅基于当前人工核验的NSCLC证据样本生成可追溯回答</div>
+              </div>
+              <button onclick="{{ ev_tabSource }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text-2);font-size:13px;font-weight:700;padding:0 14px">返回研发证据中心</button>
             </div>
-          </div>
+          </sc-if>
 
           <sc-if value="{{ ev_isSourceTab }}">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
@@ -4957,6 +4911,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                         <div style="font-size:12.8px;font-weight:700;line-height:1.45;color:var(--text)">{{ ct.title }}</div>
                         <div style="font-size:11.5px;color:var(--text-3)">核验日期：{{ ct.verified_at }}</div>
                         <div style="font-size:12px;line-height:1.55;color:var(--text-2)">支持摘要：{{ ct.support_summary }}</div>
+                        <button onclick="{{ ct.onClick }}" style="align-self:flex-start;height:29px;border-radius:8px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11.5px;font-weight:700;padding:0 10px">查看来源详情</button>
                         <sc-if value="{{ ct.hasUrl }}"><a href="{{ ct.source_url }}" target="_blank" rel="noopener noreferrer" style="font-size:11.5px;color:var(--brand-600);font-weight:700;text-decoration:none;overflow-wrap:anywhere">原始来源链接：{{ ct.source_url }}</a></sc-if>
                       </div>
                     </sc-for>
@@ -5165,17 +5120,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
     </div>
   </main>
 
-  <sc-if value="{{ presentOn }}">
-    <div style="position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:6px;background:var(--brand-800);border-radius:999px;padding:7px 9px 7px 16px;box-shadow:0 18px 44px rgba(10,12,20,.45)">
-      <span style="font-size:11px;font-weight:500;color:rgba(255,255,255,.6);margin-right:2px">演示动线</span>
-      <sc-for list="{{ demoSteps }}" as="d">
-        <button onclick="{{ d.onClick }}" style="{{ d.style }}"><span style="font-family:var(--font-mono);opacity:.7">{{ d.idx }}</span>{{ d.t }}</button>
-      </sc-for>
-      <div style="width:1px;height:20px;background:rgba(255,255,255,.2);margin:0 3px"></div>
-      <button onclick="{{ demoPrev }}" style="width:30px;height:30px;border-radius:50%;border:0;cursor:pointer;background:rgba(255,255,255,.12);color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(255,255,255,.22)">‹</button>
-      <button onclick="{{ demoNext }}" style="width:30px;height:30px;border-radius:50%;border:0;cursor:pointer;background:rgba(255,255,255,.12);color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(255,255,255,.22)">›</button>
-    </div>
-  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:1320,&quot;height&quot;:860}}">

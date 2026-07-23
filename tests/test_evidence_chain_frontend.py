@@ -146,8 +146,8 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
             self.assertNotIn(word, self.evidence_component)
 
     def test_24_original_source_search_and_nav_remain(self):
-        self.assertIn("label:'研发证据查询'", self.component)
-        self.assertIn("label:'白盒溯源'", self.component)
+        self.assertIn("label:'研发证据中心'", self.component)
+        self.assertIn("label:'循证问答'", self.component)
         self.assertIn("查询类型", self.evidence_template)
         self.assertIn("排除历史版本", self.evidence_template)
         self.assertIn("结果列表", self.evidence_template)
