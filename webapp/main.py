@@ -4,8 +4,8 @@ from pathlib import Path
 import sqlite3
 from typing import Annotated, Any
 
-from fastapi import FastAPI, HTTPException, Query
-from fastapi.responses import HTMLResponse, Response
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -13,6 +13,12 @@ from deepinsight.core.company_evidence_comparison_service import CompanyEvidence
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
+from deepinsight.core.grounded_qa_usage_guard import (
+    ANONYMOUS_CLIENT_ID,
+    GroundedQAUsageGuard,
+    UsageDecision,
+    grounded_qa_usage_config_from_env,
+)
 from deepinsight.core.industry_taxonomy import infer_industry_name
 from deepinsight.config import DB_PATH as DEFAULT_DB_PATH
 from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
@@ -1550,6 +1556,26 @@ def _grounded_qa_service() -> GroundedQAService:
     )
 
 
+_GROUNDED_QA_USAGE_GUARD: GroundedQAUsageGuard | None = None
+
+
+def _grounded_qa_usage_guard() -> GroundedQAUsageGuard:
+    global _GROUNDED_QA_USAGE_GUARD
+    config = grounded_qa_usage_config_from_env()
+    if _GROUNDED_QA_USAGE_GUARD is None or _GROUNDED_QA_USAGE_GUARD.config != config:
+        _GROUNDED_QA_USAGE_GUARD = GroundedQAUsageGuard(config)
+    return _GROUNDED_QA_USAGE_GUARD
+
+
+def _grounded_qa_client_id(request: Request) -> str:
+    client_host = request.client.host if request.client else ""
+    if not client_host or client_host == "testclient":
+        return ANONYMOUS_CLIENT_ID
+    # The server does not expose or log this value. Forwarded headers are not
+    # trusted here because the app is not an authentication/rate-limit gateway.
+    return client_host
+
+
 def _evidence_metadata() -> dict[str, Any]:
     return {
         "data_scope": "first_version_nsclc_hengrui_beone",
@@ -1901,22 +1927,85 @@ def evidence_grounded_qa_capabilities() -> dict[str, Any]:
         service = _grounded_qa_service()
         rules = service.rules
         llm_settings = grounded_llm_settings()
+        usage_config = grounded_qa_usage_config_from_env()
+        llm_available = bool(usage_config.llm_enabled and llm_settings["configured"])
         return {
             "local_mode_available": True,
-            "llm_mode_available": bool(llm_settings["configured"]),
+            "llm_mode_available": llm_available,
+            "llm_enabled": usage_config.llm_enabled,
+            "llm_rate_limit_enabled": True,
+            "per_client_limit": usage_config.per_client_limit,
+            "global_limit": usage_config.global_limit,
+            "window_seconds": usage_config.window_seconds,
+            "max_concurrency": usage_config.max_concurrency,
             "supported_question_types": rules.get("question_types", []),
             "prohibited_categories": list((rules.get("prohibited_patterns") or {}).keys()),
             "data_version": service.data_version(),
             "requires_api_key_for_llm": True,
             "model_name": llm_settings["model"],
-            "description": "本地循证模式可用；DeepSeek可通过auto模式在密钥配置后启用。" if llm_settings["configured"] else "本地循证模式可用，DeepSeek尚未启用。",
+            "description": (
+                "本地循证模式可用；DeepSeek智能生成已启用并受限流保护。"
+                if llm_available
+                else "DeepSeek智能生成当前未启用，本地循证摘要仍可使用。"
+            ),
         }
     except Exception as exc:
         raise _handle_grounded_qa_error(exc) from exc
 
 
-@app.post("/api/evidence/grounded-qa")
-def evidence_grounded_qa(payload: GroundedQARequest) -> dict[str, Any]:
+def _grounded_local_response(
+    service: GroundedQAService,
+    question: str,
+    packet: dict[str, Any],
+    reason: str | None = None,
+) -> dict[str, Any]:
+    result = service.build_local_response(question, packet)
+    if reason:
+        result.setdefault("limitations", []).append(reason)
+    return result
+
+
+def _grounded_qa_payload(result: dict[str, Any], generation_mode: str) -> dict[str, Any]:
+    trace = result.get("trace", {})
+    llm_used = bool(trace.get("used_llm"))
+    generation_mode_used = trace.get("generation_mode_used") or ("llm" if llm_used else "local")
+    model_name = trace.get("model_name") or ("local-structured-summary" if generation_mode_used == "local" else "")
+    return {
+        "result": result,
+        "metadata": {
+            "data_scope": "first_version_nsclc_hengrui_beone",
+            "generation_mode_requested": generation_mode,
+            "generation_mode_used": generation_mode_used,
+            "llm_used": llm_used,
+            "fallback_used": bool(trace.get("fallback_used")),
+            "model_name": model_name,
+        },
+    }
+
+
+def _grounded_qa_limit_response(decision: UsageDecision) -> JSONResponse:
+    retry_after = max(1, int(decision.retry_after or 1))
+    detail = "DeepSeek智能生成请求较多，请稍后重试；本地循证摘要仍可使用。"
+    if decision.reason == "per_client_limit":
+        detail = "当前客户端的DeepSeek智能生成次数已达到临时上限，请稍后重试；本地循证摘要仍可使用。"
+    elif decision.reason == "global_limit":
+        detail = "当前服务的DeepSeek智能生成请求已达到临时总量上限，请稍后重试；本地循证摘要仍可使用。"
+    elif decision.reason == "concurrency_limit":
+        detail = "DeepSeek智能生成并发请求较多，请稍后重试；本地循证摘要仍可使用。"
+    return JSONResponse(
+        status_code=429,
+        headers={"Retry-After": str(retry_after)},
+        content={
+            "detail": detail,
+            "error": "grounded_qa_llm_rate_limited",
+            "retry_after": retry_after,
+            "local_mode_available": True,
+        },
+    )
+
+
+@app.post("/api/evidence/grounded-qa", response_model=None)
+def evidence_grounded_qa(payload: GroundedQARequest, request: Request) -> dict[str, Any] | JSONResponse:
     question = (payload.question or "").strip()
     if not question:
         raise HTTPException(status_code=400, detail="question 不能为空。")
@@ -1926,27 +2015,51 @@ def evidence_grounded_qa(payload: GroundedQARequest) -> dict[str, Any]:
     if generation_mode not in {"auto", "local"}:
         raise HTTPException(status_code=400, detail="generation_mode 只允许 auto 或 local。")
     try:
+        service = _grounded_qa_service()
         llm_settings = grounded_llm_settings()
-        result = _grounded_qa_service().answer_question(
-            question,
-            model_name=llm_settings["model"] if generation_mode == "auto" else None,
-            use_configured_llm=generation_mode == "auto",
-        )
-        trace = result.get("trace", {})
-        llm_used = bool(trace.get("used_llm"))
-        generation_mode_used = trace.get("generation_mode_used") or ("llm" if llm_used else "local")
-        model_name = trace.get("model_name") or ("local-structured-summary" if generation_mode_used == "local" else "")
-        return {
-            "result": result,
-            "metadata": {
-                "data_scope": "first_version_nsclc_hengrui_beone",
-                "generation_mode_requested": generation_mode,
-                "generation_mode_used": generation_mode_used,
-                "llm_used": llm_used,
-                "fallback_used": bool(trace.get("fallback_used")),
-                "model_name": model_name,
-            },
-        }
+        qtype = service.classify_question(question)
+        safety = service.check_safety(question)
+        if not safety["allowed"]:
+            return _grounded_qa_payload(service.answer_question(question, model_name="safe-policy"), generation_mode)
+
+        packet = service.build_evidence_packet(question, qtype)
+        if not packet.get("allowed_source_ids"):
+            return _grounded_qa_payload(_grounded_local_response(service, question, packet), generation_mode)
+
+        if generation_mode == "local":
+            return _grounded_qa_payload(_grounded_local_response(service, question, packet), generation_mode)
+
+        usage_config = grounded_qa_usage_config_from_env()
+        if not usage_config.llm_enabled:
+            result = _grounded_local_response(
+                service,
+                question,
+                packet,
+                "DeepSeek智能生成当前未启用，本地循证摘要仍可使用。",
+            )
+            return _grounded_qa_payload(result, generation_mode)
+        if not llm_settings["configured"]:
+            result = _grounded_local_response(
+                service,
+                question,
+                packet,
+                "DeepSeek API Key 未配置，已使用本地循证摘要。",
+            )
+            return _grounded_qa_payload(result, generation_mode)
+
+        guard = _grounded_qa_usage_guard()
+        decision = guard.acquire(_grounded_qa_client_id(request))
+        if not decision.allowed:
+            return _grounded_qa_limit_response(decision)
+        try:
+            result = service.answer_question(
+                question,
+                model_name=llm_settings["model"],
+                use_configured_llm=True,
+            )
+        finally:
+            guard.release(decision)
+        return _grounded_qa_payload(result, generation_mode)
     except Exception as exc:
         raise _handle_grounded_qa_error(exc) from exc
 

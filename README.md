@@ -239,6 +239,18 @@ healthCheckPath: /health
 
 未配置 `DEEPSEEK_API_KEY` 时，循证问答仍可使用 `local` 模式，`auto` 模式会回退到本地结构化摘要。部署平台密钥只能放在平台环境变量中，不能提交 `.env`；Render 配置中 `DEEPSEEK_API_KEY` 使用手动配置，不写真实密钥。
 
+公开预览环境默认关闭 DeepSeek 智能生成：
+
+```text
+GROUNDED_QA_LLM_ENABLED=false
+GROUNDED_QA_LLM_PER_CLIENT_LIMIT=5
+GROUNDED_QA_LLM_GLOBAL_LIMIT=30
+GROUNDED_QA_LLM_WINDOW_SECONDS=600
+GROUNDED_QA_LLM_MAX_CONCURRENCY=2
+```
+
+`local` 模式始终可用，不受 LLM 限流影响。只有在 Render 控制台手动配置 `DEEPSEEK_API_KEY`，并显式设置 `GROUNDED_QA_LLM_ENABLED=true` 后，`auto` 模式才会在问题通过安全检查、已检索到证据且未超过每客户端/全局/并发限制时尝试 DeepSeek。进程内限流适合当前 Render Free 单实例预览；实例重启会重置计数，多实例会分散计数，长期公网开放应使用平台级限流或集中式存储。
+
 轻量部署不保证旧 Streamlit、SQLite、Chroma、向量检索、旧报告工作流和旧公司画像接口可用；这些旧功能需要完整 `requirements.txt` 和旧数据底座。
 
 前端启动会先请求：

@@ -79,13 +79,24 @@ class DeploymentConfigTest(unittest.TestCase):
     def test_08_render_health_check_path(self):
         self.assertIn("healthCheckPath: /health", _render_text())
 
-    def test_09_render_yaml_does_not_contain_real_secret(self):
+    def test_09_render_preview_plan_is_explicit(self):
+        text = _render_text()
+        self.assertIn("plan: free", text)
+        self.assertIn("region: singapore", text)
+        self.assertIn("autoDeploy: false", text)
+
+    def test_10_render_grounded_qa_llm_is_disabled_by_default(self):
+        text = _render_text()
+        self.assertIn("key: GROUNDED_QA_LLM_ENABLED", text)
+        self.assertIn('value: "false"', text)
+
+    def test_11_render_yaml_does_not_contain_real_secret(self):
         text = _render_text()
         self.assertIn("sync: false", text)
         self.assertNotRegex(text, r"sk-[A-Za-z0-9_-]{12,}")
         self.assertNotRegex(text, r"DEEPSEEK_API_KEY:\s*['\"]?[A-Za-z0-9_-]{12,}")
 
-    def test_10_env_is_still_git_ignored(self):
+    def test_12_env_is_still_git_ignored(self):
         result = subprocess.run(
             ["git", "check-ignore", "-v", ".env"],
             cwd=ROOT,
@@ -95,12 +106,12 @@ class DeploymentConfigTest(unittest.TestCase):
         )
         self.assertIn(".gitignore", result.stdout)
 
-    def test_11_render_yaml_does_not_reference_legacy_data_paths(self):
+    def test_13_render_yaml_does_not_reference_legacy_data_paths(self):
         text = _render_text()
         for forbidden in ["enterprise_analysis.db", "data/chroma", "CHROMA", "sqlite", "demo_cache"]:
             self.assertNotIn(forbidden, text)
 
-    def test_12_render_yaml_has_no_personal_absolute_paths(self):
+    def test_14_render_yaml_has_no_personal_absolute_paths(self):
         text = _render_text()
         forbidden_paths = ["/" + "home" + "/", "/" + "root" + "/", "C:" + "\\", "\\" + "Users" + "\\"]
         for forbidden in forbidden_paths:

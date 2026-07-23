@@ -15,3 +15,5 @@ services:
         value: https://api.deepseek.com
       - key: DEEPSEEK_MODEL
         value: deepseek-v4-flash
+      - key: GROUNDED_QA_LLM_ENABLED
+        value: "false"

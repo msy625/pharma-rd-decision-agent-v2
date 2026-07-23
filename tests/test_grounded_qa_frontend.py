@@ -49,7 +49,7 @@ class GroundedQAFrontendStaticTest(unittest.TestCase):
 
     def test_07_deepseek_unavailable_defaults_to_local(self):
         self.assertIn("groundedMode:'local'", self.evidence_component)
-        self.assertIn("DeepSeek当前不可用，默认使用本地证据摘要", self.evidence_component)
+        self.assertIn("DeepSeek智能生成当前未启用，本地循证摘要仍可使用", self.evidence_component)
 
     def test_08_auto_fallback_notice_exists(self):
         self.assertIn("auto 失败时会自动回退本地摘要", self.evidence_component)
@@ -95,6 +95,12 @@ class GroundedQAFrontendStaticTest(unittest.TestCase):
         self.assertIn("groundedSeq", self.evidence_component)
         self.assertIn("AbortController", self.evidence_component)
         self.assertIn("seq!==this.state.groundedSeq", self.evidence_component)
+
+    def test_14b_rate_limit_429_shows_friendly_message_without_retry(self):
+        self.assertIn("status===429", self.evidence_component)
+        self.assertIn("Retry-After", self.evidence_component)
+        self.assertIn("切换 local 继续使用", self.evidence_component)
+        self.assertNotIn("setTimeout(()=>this.submitGroundedQA", self.evidence_component)
 
     def test_15_answer_uses_safe_text_binding(self):
         self.assertIn("{{ gqa_answer }}", self.evidence_template)

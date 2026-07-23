@@ -133,7 +133,11 @@ class GroundedQAApiTest(unittest.TestCase):
     def setUp(self):
         self.env_patcher = patch.dict(
             os.environ,
-            {"DEEPSEEK_API_KEY": "", "DEEPSEEK_MODEL": "deepseek-v4-flash"},
+            {
+                "DEEPSEEK_API_KEY": "",
+                "DEEPSEEK_MODEL": "deepseek-v4-flash",
+                "GROUNDED_QA_LLM_ENABLED": "false",
+            },
             clear=False,
         )
         self.env_patcher.start()
@@ -166,7 +170,7 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertFalse(payload["llm_mode_available"])
         self.assertTrue(payload["requires_api_key_for_llm"])
         self.assertEqual(payload["model_name"], "deepseek-v4-flash")
-        self.assertIn("DeepSeek尚未启用", payload["description"])
+        self.assertIn("DeepSeek智能生成当前未启用", payload["description"])
 
     def test_02_capabilities_contains_seven_question_types(self):
         payload = self.get_json("/api/evidence/grounded-qa/capabilities")
@@ -217,7 +221,15 @@ class GroundedQAApiTest(unittest.TestCase):
         original_create = grounded_qa_llm.create_grounded_llm_client
         try:
             grounded_qa_llm.create_grounded_llm_client = lambda: fake_client
-            with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "test-secret", "DEEPSEEK_MODEL": "deepseek-v4-flash"}, clear=False):
+            with patch.dict(
+                os.environ,
+                {
+                    "DEEPSEEK_API_KEY": "test-secret",
+                    "DEEPSEEK_MODEL": "deepseek-v4-flash",
+                    "GROUNDED_QA_LLM_ENABLED": "true",
+                },
+                clear=False,
+            ):
                 payload = self.post_json("B015是什么？", "auto")
         finally:
             grounded_qa_llm.create_grounded_llm_client = original_create
@@ -228,7 +240,15 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertIn("LLM基于B015", payload["result"]["answer"])
 
     def test_07c_capabilities_do_not_expose_key(self):
-        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "test-secret", "DEEPSEEK_MODEL": "deepseek-v4-flash"}, clear=False):
+        with patch.dict(
+            os.environ,
+            {
+                "DEEPSEEK_API_KEY": "test-secret",
+                "DEEPSEEK_MODEL": "deepseek-v4-flash",
+                "GROUNDED_QA_LLM_ENABLED": "true",
+            },
+            clear=False,
+        ):
             payload = self.get_json("/api/evidence/grounded-qa/capabilities")
         self.assertTrue(payload["llm_mode_available"])
         self.assertNotIn("test-secret", json.dumps(payload, ensure_ascii=False))

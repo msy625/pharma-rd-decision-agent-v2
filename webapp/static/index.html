@@ -5534,11 +5534,12 @@ class Component extends DCLogic {
       headers:{'Content-Type':'application/json','accept':'application/json'},
       body:JSON.stringify({question, generation_mode:this.state.groundedMode}),
       signal:controller?controller.signal:undefined
-    }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d})).catch(()=>({ok:r.ok,status:r.status,data:null}))).then(({ok,status,data})=>{
+    }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d,retryAfter:r.headers?r.headers.get('Retry-After'):''})).catch(()=>({ok:r.ok,status:r.status,data:null,retryAfter:r.headers?r.headers.get('Retry-After'):''}))).then(({ok,status,data,retryAfter})=>{
       if(seq!==this.state.groundedSeq) return;
       if(!ok){
         const detail=data&&data.detail?String(data.detail):'循证问答请求失败，请稍后重试。';
-        const msg=status===400?detail:(status===503?'循证问答服务暂不可用，请稍后重试。':'循证问答服务暂时不可用。');
+        const wait=retryAfter&&/^\d+$/.test(String(retryAfter))?'请约 '+retryAfter+' 秒后再试，或切换 local 继续使用。':'请稍后重试，或切换 local 继续使用。';
+        const msg=status===429?(detail+' '+wait):(status===400?detail:(status===503?'循证问答服务暂不可用，请稍后重试。':'循证问答服务暂时不可用。'));
         this.setState({groundedLoading:false,groundedError:msg});
         return;
       }
@@ -6096,7 +6097,7 @@ class Component extends DCLogic {
       gqa_hasChainLinks:groundedChainIds.length>0,
       gqa_staticSafety:'系统仅根据当前已核验的NSCLC证据样本回答，不提供诊断、个体治疗'+('建'+'议')+'、疗效保证、跨试验排名、成功'+('率'+'预测')+'或投资'+('建'+'议')+'。',
       gqa_autoNotice:'智能生成会先检索证据，再让 DeepSeek 组织答案；auto 失败时会自动回退本地摘要。',
-      gqa_autoUnavailable:'DeepSeek当前不可用，默认使用本地证据摘要。页面不会读取、保存或显示任何密钥值。'
+      gqa_autoUnavailable:'DeepSeek智能生成当前未启用，本地循证摘要仍可使用。页面不会读取、保存或显示任何密钥值。'
     };
   }
 
