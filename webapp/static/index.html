@@ -3664,10 +3664,16 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-hamburger]{display:inline-flex !important}
   [data-scrim][data-open="1"]{display:block}
   [data-cols],[data-chat],[data-research],[data-evidence]{grid-template-columns:1fr !important}
+  [data-timeline-filters]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [data-timeline-grid]{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  [data-timeline-layout]{grid-template-columns:1fr !important}
 }
 @media(max-width:640px){
   [data-grid4]{grid-template-columns:repeat(2,1fr) !important}
   [data-hero]{grid-template-columns:1fr !important}
+  [data-timeline-filters]{grid-template-columns:1fr !important}
+  [data-timeline-grid]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [data-timeline-event]{grid-template-columns:70px 18px minmax(0,1fr) !important;gap:6px !important}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
@@ -5007,31 +5013,97 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
       </sc-if>
 
       <sc-if value="{{ isTimeline }}">
-        <div style="animation:fadeUp .5s var(--ease-out) both;max-width:880px">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px">
+        <div style="animation:fadeUp .5s var(--ease-out) both;display:flex;flex-direction:column;gap:16px">
+          <div style="background:linear-gradient(135deg,var(--brand-800),var(--brand-600));color:#fff;border-radius:16px;padding:20px 22px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap">
+            <div style="max-width:760px">
+              <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">研发事件时间轴</div>
+              <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,.78);margin-top:5px">按真实结构化日期展示论文分析、公司披露和监管事件。核验日期、响应生成时间与页面更新时间均不作为研发事件日期。</div>
+            </div>
+            <button onclick="{{ tl_reload }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:700;padding:0 13px">刷新时间轴</button>
+          </div>
+
+          <div data-timeline-filters="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:grid;grid-template-columns:repeat(5,minmax(132px,1fr));gap:11px;align-items:end">
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">企业
+              <select id="timeline-company-select" name="timeline_company" value="{{ tl_company }}" onchange="{{ tl_onCompany }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_companyOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">试验
+              <select id="timeline-trial-select" name="timeline_trial" value="{{ tl_trial }}" onchange="{{ tl_onTrial }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_trialOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">药物
+              <select id="timeline-drug-select" name="timeline_drug" value="{{ tl_drug }}" onchange="{{ tl_onDrug }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_drugOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">事件类型
+              <select id="timeline-event-type-select" name="timeline_event_type" value="{{ tl_eventType }}" onchange="{{ tl_onEventType }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_eventTypeOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">年份
+              <select id="timeline-year-select" name="timeline_year" value="{{ tl_year }}" onchange="{{ tl_onYear }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_yearOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-2);min-height:34px"><input id="timeline-auxiliary-checkbox" name="timeline_include_auxiliary" type="checkbox" checked="{{ tl_includeAuxiliary }}" onchange="{{ tl_onAuxiliary }}" style="accent-color:var(--brand-600)">显示辅助证据更新</label>
+            <button onclick="{{ tl_reset }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:12.5px;font-weight:700;padding:0 12px">重置筛选</button>
+          </div>
+
+          <div data-timeline-grid="" style="display:grid;grid-template-columns:repeat(6,1fr);gap:11px">
             <sc-for list="{{ tl_cards }}" as="c">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:12px">
-                <span style="width:9px;height:36px;border-radius:5px;background:{{ c.color }};flex:none"></span>
-                <div><div style="font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1">{{ c.value }}</div><div style="font-size:12px;color:var(--text-3);margin-top:3px">{{ c.label }}</div></div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:14px 15px;display:flex;align-items:flex-start;gap:10px;min-width:0">
+                <span style="width:6px;height:38px;border-radius:5px;background:{{ c.color }};flex:none"></span>
+                <div style="min-width:0"><div style="font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1">{{ c.value }}</div><div style="font-size:12px;color:var(--text);font-weight:700;margin-top:4px">{{ c.label }}</div><div style="font-size:10.5px;color:var(--text-3);line-height:1.35;margin-top:2px">{{ c.note }}</div></div>
               </div>
             </sc-for>
           </div>
-          <sc-for list="{{ tl_events }}" as="e" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:88px 28px 1fr;gap:10px">
-              <div style="font-size:12px;font-family:var(--font-mono);color:var(--text-3);text-align:right;padding-top:14px">{{ e.date }}</div>
-              <div style="display:flex;flex-direction:column;align-items:center">
-                <div style="width:13px;height:13px;border-radius:50%;background:var(--bg-elev);border:3px solid {{ e.catColor }};margin-top:15px;flex:none"></div>
-                <div style="width:2px;flex:1;background:var(--border);margin:4px 0"></div>
+
+          <div style="font-size:12px;color:var(--text-2);background:var(--brand-50);border:1px solid var(--brand-100);border-radius:10px;padding:10px 13px">{{ tl_scopeWarning }}</div>
+
+          <sc-if value="{{ tl_loading }}"><div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;color:var(--text-3)">正在加载真实研发事件与无日期资料…</div></sc-if>
+          <sc-if value="{{ tl_hasError }}"><div style="background:var(--neg-bg);border:1px solid var(--neg);border-radius:14px;padding:18px;color:var(--neg);display:flex;align-items:center;justify-content:space-between;gap:12px"><span>{{ tl_error }}</span><button onclick="{{ tl_reload }}" style="height:32px;border-radius:8px;border:1px solid var(--neg);background:var(--bg-elev);color:var(--neg);font-size:12px;font-weight:700;padding:0 12px">重试</button></div></sc-if>
+          <sc-if value="{{ tl_empty }}"><div style="background:var(--bg-elev);border:1px dashed var(--border);border-radius:14px;padding:30px;text-align:center"><div style="font-size:15px;font-weight:800">当前数据不足</div><div style="font-size:12.5px;color:var(--text-3);margin-top:5px">当前筛选条件下没有可排序的研发事件，可重置筛选或查看无日期资料。</div></div></sc-if>
+
+          <sc-if value="{{ tl_hasContent }}">
+            <div data-timeline-layout="" style="display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr);gap:16px;align-items:start">
+              <div style="display:flex;flex-direction:column;gap:0;min-width:0">
+                <sc-if value="{{ !tl_hasData }}"><div style="background:var(--bg-elev);border:1px dashed var(--border);border-radius:14px;padding:24px;text-align:center;color:var(--text-3)">当前筛选条件下没有可排序事件；右侧仍可查看未进入时间轴的无日期资料。</div></sc-if>
+                <sc-for list="{{ tl_events }}" as="e" hint-placeholder-count="6">
+                  <div data-timeline-event="" style="display:grid;grid-template-columns:96px 26px minmax(0,1fr);gap:10px">
+                    <div style="text-align:right;padding-top:15px"><div style="font-size:12.5px;font-family:var(--font-mono);font-weight:800;color:var(--text)">{{ e.date }}</div><div style="font-size:10.5px;color:var(--text-3);line-height:1.4;margin-top:3px">{{ e.date_note }}</div></div>
+                    <div style="display:flex;flex-direction:column;align-items:center"><div style="width:13px;height:13px;border-radius:50%;background:var(--bg-elev);border:3px solid {{ e.catColor }};margin-top:17px;flex:none"></div><div style="width:2px;flex:1;background:var(--border);margin:4px 0"></div></div>
+                    <article style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px 16px;margin-bottom:13px;min-width:0">
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:7px"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span style="font-size:10.5px;font-weight:800;color:{{ e.catColor }};background:{{ e.catBg }};border-radius:6px;padding:2px 8px">{{ e.event_type_label }}</span><span style="font-size:10.5px;font-weight:700;color:var(--text-3);background:var(--bg-sunken);border-radius:6px;padding:2px 8px">{{ e.auxiliary_label }}</span><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ e.source_id }}</span></div><span style="font-size:11px;color:var(--text-3)">{{ e.company }}</span></div>
+                      <div style="font-size:14.5px;font-weight:800;line-height:1.5;color:var(--text)">{{ e.title }}</div>
+                      <div style="font-size:11px;color:var(--text-3);margin-top:5px;overflow-wrap:anywhere">日期字段：{{ e.date_field }} · 原始值：{{ e.date_original }}</div>
+                      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+                        <span style="font-size:11px;color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">{{ e.source_type }}</span>
+                        <span style="font-size:11px;color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">{{ e.version_status }}</span>
+                        <sc-if value="{{ e.hasEvidenceVersion }}"><span style="font-size:11px;color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">证据版本 {{ e.evidence_version }}</span></sc-if>
+                        <sc-if value="{{ e.hasTrial }}"><span style="font-size:11px;font-family:var(--font-mono);color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">{{ e.trial_id }}</span></sc-if>
+                        <sc-if value="{{ e.hasChain }}"><span style="font-size:11px;font-family:var(--font-mono);color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px;overflow-wrap:anywhere">{{ e.chain_id }}</span></sc-if>
+                      </div>
+                      <sc-if value="{{ e.hasDrugs }}"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:9px"><span style="font-size:11px;color:var(--text-3)">药物</span><sc-for list="{{ e.drugs }}" as="d"><span style="font-size:10.5px;background:var(--brand-50);color:var(--brand-600);border-radius:999px;padding:2px 7px">{{ d.name }}</span></sc-for></div></sc-if>
+                      <sc-if value="{{ e.hasVersionRelation }}"><div data-timeline-version="" style="font-size:12px;color:var(--brand-600);background:var(--brand-50);border-radius:8px;padding:7px 9px;margin-top:9px;font-weight:700">版本演进：{{ e.version_relation }}</div></sc-if>
+                      <sc-if value="{{ e.hasSourceUpdated }}"><div style="font-size:11px;color:var(--warn);margin-top:8px">页面更新时间：{{ e.source_last_updated }}，仅作为元信息，不是事件日期。</div></sc-if>
+                      <sc-if value="{{ e.hasLimitations }}"><div style="display:flex;flex-direction:column;gap:3px;margin-top:9px"><sc-for list="{{ e.limitations }}" as="n"><div style="font-size:11.5px;line-height:1.5;color:var(--text-3)">限制：{{ n.text }}</div></sc-for></div></sc-if>
+                      <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px">
+                        <button onclick="{{ e.openSource }}" style="height:30px;border-radius:8px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">查看来源</button>
+                        <sc-if value="{{ e.hasChain }}"><button onclick="{{ e.openChain }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:11.5px;font-weight:700;padding:0 10px">查看证据链</button></sc-if>
+                        <button onclick="{{ e.openGrounded }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:11.5px;font-weight:700;padding:0 10px">进入循证问答</button>
+                        <sc-if value="{{ e.hasSourceUrl }}"><a href="{{ e.source_url }}" target="_blank" rel="noopener noreferrer" style="font-size:11.5px;color:var(--text-3);font-weight:700;text-decoration:none">打开原始链接</a></sc-if>
+                      </div>
+                    </article>
+                  </div>
+                </sc-for>
               </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:14px 16px;margin-bottom:14px">
-                <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
-                  <span style="font-size:10.5px;font-weight:600;color:{{ e.catColor }};background:{{ e.catBg }};border-radius:6px;padding:2px 8px">{{ e.category }}</span>
-                  <span style="font-size:13.5px;font-weight:600">{{ e.title }}</span>
+
+              <aside style="display:flex;flex-direction:column;gap:12px;min-width:0">
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px">
+                  <div style="font-size:13.5px;font-weight:800">无日期资料</div><div style="font-size:11.5px;color:var(--text-3);line-height:1.5;margin-top:3px">{{ tl_undatedNotice }}</div>
+                  <sc-if value="{{ tl_hasUndated }}"><div data-timeline-undated="" style="display:flex;flex-direction:column;gap:8px;margin-top:12px"><sc-for list="{{ tl_undated }}" as="u"><div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ u.source_id }}</span><span style="font-size:10.5px;color:var(--text-3)">{{ u.source_type }}</span></div><div style="font-size:12px;font-weight:700;line-height:1.45;margin-top:4px">{{ u.title }}</div><div style="font-size:10.5px;color:var(--text-3);line-height:1.45;margin-top:4px">{{ u.reason }}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px"><button onclick="{{ u.openSource }}" style="height:27px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text-2);font-size:10.5px;font-weight:700;padding:0 8px">查看来源</button><sc-if value="{{ u.hasChain }}"><button onclick="{{ u.openChain }}" style="height:27px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text-2);font-size:10.5px;font-weight:700;padding:0 8px">查看证据链</button></sc-if></div></div></sc-for></div></sc-if>
                 </div>
-                <div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ e.detail }}</div>
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px">
+                  <div style="font-size:13px;font-weight:800">数据口径</div>
+                  <div style="font-size:11px;color:var(--text-3);line-height:1.55;margin-top:7px">数据版本：{{ tl_dataVersion }}</div><div style="font-size:11px;color:var(--text-3);line-height:1.55">最近核验：{{ tl_verifiedAt }}</div><div style="font-size:11px;color:var(--text-3);line-height:1.55">响应生成：{{ tl_generatedAt }}</div>
+                  <sc-if value="{{ tl_hasLimitations }}"><div style="display:flex;flex-direction:column;gap:6px;margin-top:10px"><sc-for list="{{ tl_limitations }}" as="n"><div style="font-size:11px;line-height:1.5;color:var(--text-2)">· {{ n.text }}</div></sc-for></div></sc-if>
+                </div>
               </div>
             </div>
-          </sc-for>
+          </sc-if>
         </div>
       </sc-if>
 
@@ -5135,6 +5207,9 @@ class Component extends DCLogic {
     evidenceWorkbench:null, evidenceWorkbenchLoading:false, evidenceWorkbenchLoaded:false, evidenceWorkbenchError:'',
     companyProfileCompany:'恒瑞医药', companyProfileCompanies:[], companyProfile:null,
     companyProfileLoading:false, companyProfileCompaniesLoading:false, companyProfileError:'',
+    timelineCompany:'', timelineTrial:'', timelineDrug:'', timelineEventType:'', timelineYear:'',
+    timelineIncludeAuxiliary:false, timelineData:null, timelineLoading:false, timelineLoaded:false, timelineError:'',
+    timelineCompanyOptions:[], timelineTrialOptions:[], timelineDrugOptions:[], timelineEventTypeOptions:[], timelineYearOptions:[],
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -5170,7 +5245,7 @@ class Component extends DCLogic {
   nf(n){ return Number(n).toLocaleString('en-US'); }
   yi(){ return this.D.trendYears.indexOf(String(this.state.year)); }
 
-  _legacyPages(){ return {chat:1,research:1,whitebox:1,database:1,timeline:1,advanced:1}; }
+  _legacyPages(){ return {chat:1,research:1,whitebox:1,database:1,advanced:1}; }
   _legacyAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.legacy_features_available); }
   _legacyReason(){ const c=this.state.runtimeCapabilities||{}; return c.legacy_unavailable_reason||'旧数据未配置'; }
   _isLegacyPage(p){ return !!this._legacyPages()[p]; }
@@ -5369,12 +5444,60 @@ class Component extends DCLogic {
   openProfileGroundedQa(){
     this.setState({page:'evidence',evidenceTab:'groundedQa',navOpen:false},()=>this.loadGroundedCapabilities());
   }
+  openTimelineSource(sourceId){
+    const sid=String(sourceId||'').trim();
+    if(!sid) return;
+    this.setState({page:'evidence',evidenceTab:'sources',evidenceKind:'source',evidenceQuery:sid,evidenceLatestOnly:false,evidenceHasSearched:false,navOpen:false},()=>this.loadEvidence());
+  }
+  openTimelineChain(chainId){ this.openProfileChain(chainId); }
+  openTimelineGroundedQa(sourceId,title){
+    const sid=String(sourceId||'').trim(), topic=String(title||'').trim();
+    const question=sid?('请基于已核验证据说明 '+sid+(topic?'（'+topic+'）':'')+' 的事件口径、证据关系和限制。'):'请说明当前研发事件时间轴的证据关系和限制。';
+    this.setState({page:'evidence',evidenceTab:'groundedQa',groundedQuestion:question,navOpen:false},()=>this.loadGroundedCapabilities());
+  }
   loadProfile(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/profile',{company_name:s.company, report_year:s.year}).then(d=>this._mergeApi({profile:{key,data:d}})).catch(()=>{}); }
   loadCompare(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/compare',{company_name:s.company, compare_company_name:s.compareCompany, report_year:s.year}).then(d=>this._mergeApi({compare:{key,data:d}})).catch(()=>{}); }
-  loadTimeline(){ if(!this._legacyAvailable()) return; const key=this.state.company;
-    this._api('/api/timeline',{company_name:this.state.company}).then(d=>this._mergeApi({timeline:{key,data:d}})).catch(()=>{}); }
+  loadTimeline(){
+    const s=this.state, company=String(s.timelineCompany||'').trim();
+    const seq=(this._timelineSeq||0)+1; this._timelineSeq=seq;
+    const path=company?('/api/evidence/timeline/'+encodeURIComponent(company)):'/api/evidence/timeline';
+    const params={
+      trial_id:String(s.timelineTrial||'').trim(), drug:String(s.timelineDrug||'').trim(),
+      event_type:String(s.timelineEventType||'').trim(), year:String(s.timelineYear||'').trim(),
+      include_auxiliary:!!s.timelineIncludeAuxiliary, include_undated:true
+    };
+    this.setState({timelineLoading:true,timelineLoaded:true,timelineError:''});
+    this._api(path,params).then(d=>{
+      if(seq!==this._timelineSeq) return;
+      const timeline=(d&&d.timeline)||null, events=Array.isArray(timeline&&timeline.events)?timeline.events:[];
+      const companyOptions=Array.isArray(timeline&&timeline.available_companies)?timeline.available_companies.map(x=>({value:String(x.canonical_name||''),label:String(x.display_name||x.canonical_name||'')})).filter(x=>x.value):[];
+      const trialSet={}, drugSet={}, typeSet={}, yearSet={};
+      events.forEach(e=>{
+        if(e&&e.trial_id) trialSet[String(e.trial_id)]=1;
+        (Array.isArray(e&&e.drug_names)?e.drug_names:[]).forEach(x=>{ if(x) drugSet[String(x)]=1; });
+        if(e&&e.event_type) typeSet[String(e.event_type)]=String(e.event_type_label||e.event_type);
+        const y=String((e&&e.date&&e.date.value)||'').slice(0,4); if(/^\d{4}$/.test(y)) yearSet[y]=1;
+      });
+      const mergeOptions=(oldItems,newItems)=>{
+        const map={}; (oldItems||[]).concat(newItems||[]).forEach(x=>{ if(x&&x.value) map[x.value]=x; });
+        return Object.keys(map).sort((a,b)=>String(map[a].label).localeCompare(String(map[b].label),'zh-CN')).map(k=>map[k]);
+      };
+      this.setState(st=>({
+        timelineLoading:false,timelineData:timeline,
+        timelineCompanyOptions:companyOptions.length?companyOptions:st.timelineCompanyOptions,
+        timelineTrialOptions:mergeOptions(st.timelineTrialOptions,Object.keys(trialSet).map(x=>({value:x,label:x}))),
+        timelineDrugOptions:mergeOptions(st.timelineDrugOptions,Object.keys(drugSet).map(x=>({value:x,label:x}))),
+        timelineEventTypeOptions:mergeOptions(st.timelineEventTypeOptions,Object.keys(typeSet).map(x=>({value:x,label:typeSet[x]}))),
+        timelineYearOptions:mergeOptions(st.timelineYearOptions,Object.keys(yearSet).sort().reverse().map(x=>({value:x,label:x})))
+      }));
+    }).catch(()=>{ if(seq===this._timelineSeq) this.setState({timelineLoading:false,timelineData:null,timelineError:'研发事件时间轴加载失败，请稍后重试'}); });
+  }
+  setTimelineFilter(patch){ this.setState(Object.assign({timelineError:''},patch),()=>this.loadTimeline()); }
+  resetTimelineFilters(){
+    this.setState({timelineCompany:'',timelineTrial:'',timelineDrug:'',timelineEventType:'',timelineYear:'',timelineIncludeAuxiliary:false,timelineError:''},()=>this.loadTimeline());
+  }
   loadWhitebox(){ if(!this._legacyAvailable()) return; if(this._get('whitebox')) return; this._api('/api/whitebox').then(d=>this._mergeApi({whitebox:d})).catch(()=>{}); }
   loadDbCatalog(){
     if(!this._legacyAvailable()) return;
@@ -6278,7 +6401,7 @@ class Component extends DCLogic {
       ],
       analysis:[
         {key:'database',label:'数据库浏览',icon:['M12 3c4.97 0 9 1.34 9 3s-4.03 3-9 3-9-1.34-9-3 4.03-3 9-3','M3 6v12c0 1.66 4.03 3 9 3s9-1.34 9-3V6','M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3']},
-        {key:'timeline',label:'事件时间轴',icon:['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']},
+        {key:'timeline',label:'研发事件时间轴',icon:['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']},
         {key:'advanced',label:'高级分析',icon:['M18 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z','M8.6 13.5l6.8 4M15.4 6.5l-6.8 4']}
       ]
     };
@@ -6293,7 +6416,7 @@ class Component extends DCLogic {
   shellVals(){
     const s=this.state;
     const nd=this.navDef();
-    const META={today:['研发决策工作台','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据查询','来源检索'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['事件时间轴','公司动态'],advanced:['高级分析','图谱与编排']};
+    const META={today:['研发决策工作台','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据查询','来源检索'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
     const m=META[s.page]||['',''];
     const segBase='flex:1;height:24px;border:0;border-radius:5px;font-size:11.5px;font-weight:500;cursor:pointer;transition:all .12s;';
     return {
@@ -7002,28 +7125,76 @@ class Component extends DCLogic {
     };
   }
   timelineVals(){
-    const C={'财务':{c:'var(--series-1)',b:'var(--brand-50)'},'风险':{c:'var(--neg)',b:'var(--neg-bg)'},'创新':{c:'var(--series-2)',b:'rgba(13,148,136,.12)'}};
-    const slot=this._get('timeline');
-    const live=slot?slot.data:null;
-    if(live && Array.isArray(live.events) && live.events.length){
-      const colorFor=(label)=>{ const l=String(label||''); if(l.indexOf('风险')>=0) return 'var(--neg)'; if(l.indexOf('创新')>=0) return 'var(--series-2)'; return 'var(--series-1)'; };
-      const tl_cards=(live.cards||[]).map(c=>({label:c.label, value:String(c.value), color:colorFor(c.label)}));
-      const shortInd=(s)=>String(s||'').replace('归属于上市公司股东的净利润','归母净利润').replace('经营活动产生的现金流量净额','经营现金流');
-      const tl_events=live.events.map(e=>{ const cc=C[e.category]||C['财务']; const det=(e.category==='财务')?this._fmtAmtStr(e.detail):e.detail; return {date:e.event_date, category:e.category, title:shortInd(e.title), detail:det, catColor:cc.c, catBg:cc.b}; });
-      return {tl_cards, tl_events};
-    }
-    const ev=[
-      ['2024-12-18','创新','瑞维鲁胺新适应症获批上市','转移性激素敏感性前列腺癌适应症获 NMPA 批准，进一步打开商业化空间。'],
-      ['2024-10-30','财务','发布 2024 年三季度报告','前三季度营业收入同比增长约 18%，归母净利润延续高增长。'],
-      ['2024-08-12','风险','收到交易所年报问询函','就研发资本化口径与销售费用结构作出说明，已按期回复，无后续处罚。'],
-      ['2024-06-05','创新','GLP-1 类创新药 III 期临床达主要终点','减重与降糖双适应症推进，进入 NDA 申报准备阶段。'],
-      ['2024-03-28','财务','披露 2023 年年度报告','全年研发投入 49.5 亿元，研发费用全部费用化，毛利率 84.9%。'],
-      ['2023-11-20','创新','达成海外 License-out 合作','向跨国药企授权创新药海外权益，获首付款及里程碑付款。'],
-      ['2023-09-15','风险','应收账款周转放缓预警','应收账款周转天数同比上升，触发中优先级财务预警信号。']
-    ];
+    const s=this.state, timeline=s.timelineData||{}, summary=timeline.summary||{}, metadata=timeline.metadata||{};
+    const clean=(v)=>v==null?'':String(v).trim();
+    const optionList=(items,allLabel)=>[{value:'',label:allLabel}].concat((items||[]).map(x=>({value:clean(x.value),label:clean(x.label)})).filter(x=>x.value));
+    const palette={
+      company_disclosure:{c:'var(--series-1)',b:'var(--brand-50)'},
+      registration_authorisation:{c:'var(--series-2)',b:'rgba(13,148,136,.12)'},
+      interim_analysis:{c:'var(--series-3)',b:'var(--warn-bg)'},
+      final_analysis:{c:'var(--series-4)',b:'rgba(109,40,217,.12)'},
+      combined_analysis_publication:{c:'var(--series-5)',b:'rgba(219,39,119,.11)'},
+      formal_authorisation:{c:'var(--pos)',b:'var(--pos-bg)'},
+      regulatory_opinion:{c:'var(--warn)',b:'var(--warn-bg)'},
+      evidence_update:{c:'var(--info)',b:'var(--info-bg)'},
+      source_publication:{c:'var(--series-6)',b:'var(--brand-50)'}
+    };
+    const versionLabel=(v)=>({latest:'最新版本',historical:'历史版本',independent:'独立资料'}[clean(v)]||clean(v));
+    const events=(Array.isArray(timeline.events)?timeline.events:[]).map(event=>{
+      const date=event.date||{}, colors=palette[event.event_type]||palette.source_publication;
+      const drugs=Array.isArray(event.drug_names)?event.drug_names.map(name=>({name:clean(name)})).filter(x=>x.name):[];
+      const limitations=Array.isArray(event.limitations)?event.limitations.map(text=>({text:clean(text)})).filter(x=>x.text):[];
+      let versionRelation='';
+      if(event.supersedes_source_id) versionRelation=clean(event.supersedes_source_id)+' → '+clean(event.source_id)+' · 当前资料替代前序版本';
+      else if(event.superseded_by_source_id) versionRelation=clean(event.source_id)+' → '+clean(event.superseded_by_source_id)+' · 后续版本已替代当前资料';
+      const precision=date.precision==='month'?'月精度':'日精度';
+      return {
+        source_id:clean(event.source_id), title:clean(event.title), event_type_label:clean(event.event_type_label),
+        date:clean(date.value), date_note:clean(date.semantic)+' · '+precision, date_field:clean(date.field), date_original:clean(date.original_value),
+        company:clean(event.company&&event.company.display_name), source_type:clean(event.source_type), verification_status:clean(event.verification_status),
+        verified_at:clean(event.verified_at), source_last_updated:clean(event.source_last_updated), hasSourceUpdated:!!clean(event.source_last_updated),
+        trial_id:clean(event.trial_id), hasTrial:!!clean(event.trial_id), chain_id:clean(event.chain_id), hasChain:!!clean(event.chain_id),
+        version_status:versionLabel(event.version_status), evidence_version:clean(event.evidence_version), hasEvidenceVersion:!!clean(event.evidence_version),
+        version_relation:versionRelation, hasVersionRelation:!!versionRelation, drugs, hasDrugs:drugs.length>0,
+        is_auxiliary:!!event.is_auxiliary, auxiliary_label:event.is_auxiliary?'辅助更新':'核心事件',
+        limitations, hasLimitations:limitations.length>0, catColor:colors.c, catBg:colors.b,
+        source_url:this._safeEvidenceUrl(event.source_url), hasSourceUrl:!!this._safeEvidenceUrl(event.source_url),
+        openSource:()=>this.openTimelineSource(event.source_id), openChain:()=>this.openTimelineChain(event.chain_id),
+        openGrounded:()=>this.openTimelineGroundedQa(event.source_id,event.title)
+      };
+    });
+    const undated=(Array.isArray(timeline.undated_sources)?timeline.undated_sources:[]).map(item=>({
+      source_id:clean(item.source_id),title:clean(item.title),source_type:clean(item.source_type),
+      company:clean(item.company&&item.company.display_name),trial_id:clean(item.trial_id),hasTrial:!!clean(item.trial_id),
+      chain_id:clean(item.chain_id),hasChain:!!clean(item.chain_id),reason:clean(item.reason),
+      openSource:()=>this.openTimelineSource(item.source_id),openChain:()=>this.openTimelineChain(item.chain_id)
+    }));
+    const limitations=(Array.isArray(timeline.limitations)?timeline.limitations:[]).map(text=>({text:clean(text)})).filter(x=>x.text);
     return {
-      tl_cards:[{label:'财务事件',value:'3',color:'var(--series-1)'},{label:'风险事件',value:'2',color:'var(--neg)'},{label:'创新事件',value:'2',color:'var(--series-2)'}],
-      tl_events:ev.map(e=>({date:e[0],category:e[1],title:e[2],detail:e[3],catColor:C[e[1]].c,catBg:C[e[1]].b}))
+      tl_loading:s.timelineLoading, tl_hasError:!!s.timelineError, tl_error:s.timelineError,
+      tl_hasData:events.length>0, tl_hasContent:events.length>0||undated.length>0,
+      tl_empty:s.timelineLoaded&&!s.timelineLoading&&!s.timelineError&&!!s.timelineData&&!events.length&&!undated.length,
+      tl_company:s.timelineCompany, tl_trial:s.timelineTrial, tl_drug:s.timelineDrug, tl_eventType:s.timelineEventType, tl_year:s.timelineYear,
+      tl_companyOptions:optionList(s.timelineCompanyOptions,'全部企业'), tl_trialOptions:optionList(s.timelineTrialOptions,'全部试验'),
+      tl_drugOptions:optionList(s.timelineDrugOptions,'全部药物'), tl_eventTypeOptions:optionList(s.timelineEventTypeOptions,'全部事件类型'),
+      tl_yearOptions:optionList(s.timelineYearOptions,'全部年份'), tl_includeAuxiliary:s.timelineIncludeAuxiliary,
+      tl_onCompany:(e)=>this.setTimelineFilter({timelineCompany:e.target.value,timelineTrial:'',timelineDrug:'',timelineEventType:'',timelineYear:''}),
+      tl_onTrial:(e)=>this.setTimelineFilter({timelineTrial:e.target.value}), tl_onDrug:(e)=>this.setTimelineFilter({timelineDrug:e.target.value}),
+      tl_onEventType:(e)=>this.setTimelineFilter({timelineEventType:e.target.value}), tl_onYear:(e)=>this.setTimelineFilter({timelineYear:e.target.value}),
+      tl_onAuxiliary:(e)=>this.setTimelineFilter({timelineIncludeAuxiliary:!!e.target.checked}), tl_reset:()=>this.resetTimelineFilters(), tl_reload:()=>this.loadTimeline(),
+      tl_cards:[
+        {label:'核心事件',value:clean(summary.core_event_count||0),note:'默认时间轴事件',color:'var(--brand-600)'},
+        {label:'唯一试验',value:clean(summary.unique_trial_count||0),note:'按试验证据链去重',color:'var(--series-4)'},
+        {label:'监管相关事件',value:clean(summary.regulatory_event_count||0),note:'监管链与公司公告分别标注',color:'var(--pos)'},
+        {label:'无日期资料',value:clean(summary.undated_source_count||0),note:'未进入排序时间轴',color:'var(--warn)'},
+        {label:'辅助更新',value:clean(summary.auxiliary_event_count||0),note:'默认关闭',color:'var(--info)'},
+        {label:'有日期来源',value:clean(summary.dated_source_count||0),note:'含核心与辅助',color:'var(--series-2)'}
+      ],
+      tl_events:events, tl_undated:undated, tl_hasUndated:undated.length>0,
+      tl_limitations:limitations, tl_hasLimitations:limitations.length>0,
+      tl_dataVersion:clean(metadata.data_version), tl_verifiedAt:clean(metadata.latest_verified_at), tl_generatedAt:clean(metadata.generated_at),
+      tl_scopeWarning:'事件数量仅描述当前人工核验NSCLC样本中的可用日期记录，不能解释为企业研发实力或研发活跃度。',
+      tl_undatedNotice:'无日期资料未进入时间轴，不代表事件不存在。'
     };
   }
   advancedVals(){

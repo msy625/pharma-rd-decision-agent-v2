@@ -47,10 +47,15 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         dashboard = self.component[self.component.index("  loadDashboard()") : self.component.index("  loadProfile()")]
         self.assertIn("'/api/evidence/workbench'", dashboard)
         self.assertNotIn("'/api/dashboard'", dashboard)
-        for loader in ["loadProfile()", "loadCompare()", "loadTimeline()", "loadDbCatalog()"]:
+        for loader in ["loadProfile()", "loadCompare()", "loadDbCatalog()"]:
             start = self.component.index("  " + loader)
             body = self.component[start:start + 220]
             self.assertIn("!this._legacyAvailable()", body)
+        timeline_start = self.component.index("  loadTimeline(){")
+        timeline_body = self.component[timeline_start:self.component.index("  loadWhitebox(){", timeline_start)]
+        self.assertNotIn("!this._legacyAvailable()", timeline_body)
+        self.assertIn("'/api/evidence/timeline'", timeline_body)
+        self.assertNotIn("'/api/timeline'", timeline_body)
 
     def test_03_unavailable_old_navigation_shows_friendly_prompt(self):
         for text in ["旧数据未配置", "legacyNotice", "legacyLabel", "hasLegacyNotice"]:
@@ -71,14 +76,18 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         self.assertNotIn("retry", runtime_block.lower())
         self.assertEqual(self.component.count("this.loadBootstrap()"), 1)
 
-    def test_06_current_navigation_and_legacy_api_code_are_retained(self):
-        for text in ["研发决策工作台", "智能问答", "企业证据画像", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
+    def test_06_current_navigation_and_remaining_legacy_api_code_are_retained(self):
+        for text in ["研发决策工作台", "智能问答", "企业证据画像", "自动化研报", "白盒溯源", "数据库浏览", "研发事件时间轴", "高级分析"]:
             self.assertIn(text, self.component)
         self.assertNotIn("label:'公司画像 · 对比'", self.component)
         self.assertIn('<sc-if value="{{ isLegacyCompare }}">', self.template)
-        for path in ["/api/bootstrap", "/api/profile", "/api/compare", "/api/timeline"]:
+        for path in ["/api/bootstrap", "/api/profile", "/api/compare"]:
             self.assertIn(path, self.component)
-        self.assertIn("@app.get(\"/api/dashboard\")", Path(ROOT / "webapp" / "main.py").read_text(encoding="utf-8"))
+        self.assertNotIn("'/api/timeline'", self.component)
+        main = Path(ROOT / "webapp" / "main.py").read_text(encoding="utf-8")
+        self.assertIn("@app.get(\"/api/dashboard\")", main)
+        self.assertIn("@app.get(\"/api/timeline\")", main)
+        self.assertIn("@app.get(\"/api/evidence/timeline\")", main)
 
     def test_07_svg_templates_do_not_pass_raw_bindings_to_sensitive_attrs(self):
         combined = self.template + "\n" + self.component

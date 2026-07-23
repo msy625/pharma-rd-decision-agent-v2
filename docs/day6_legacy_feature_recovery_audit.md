@@ -156,12 +156,15 @@ P2，暂不进入比赛主链路：
    - 证据缺口。
 
 3. 研发事件时间轴
-   - 试验登记。
+   - 公司正式披露。
    - 中期论文。
    - 最终论文。
+   - 中期与最终合并论文。
    - CHMP 意见。
    - 正式授权。
-   - 明确区分事件日期、发布日期、核验日期。
+   - 可选证据版本更新。
+   - 明确区分证据事件日期、资料发布日期、核验日期、页面更新时间和响应生成时间。
+   - 当前不生成试验登记、开始、完成或终止事件；日期缺失资料单独进入无日期资料。
 
 4. 自动化研报
    - 使用当前已核验证据。
@@ -184,7 +187,7 @@ P2，暂不进入比赛主链路：
   "evidence_core_available": true,
   "enterprise_context_available": true,
   "company_profile_available": true,
-  "timeline_available": true,
+  "rd_event_timeline_available": true,
   "report_available": true,
   "legacy_database_browser_available": false,
   "legacy_chroma_available": false,
@@ -202,7 +205,7 @@ P2，暂不进入比赛主链路：
 - `evidence_core_available`：当前 31 条核验证据和证据链配置可加载。
 - `enterprise_context_available`：当前证据服务能按企业聚合来源、药物、试验、论文、监管事件。
 - `company_profile_available`：企业证据画像 API 可从当前证据服务生成，不依赖旧 SQLite。
-- `timeline_available`：source registry 或 evidence chains 具备可解释日期字段。
+- `rd_event_timeline_available`：新的本地研发事件时间轴服务可以加载来源登记表和证据链，并按真实结构化日期生成响应；不依赖旧 SQLite 或 `legacy_features_available`。
 - `report_available`：本地模板化研报能为每段输出 source_id、URL 和限制说明。
 - `legacy_database_browser_available`：旧 SQLite 存在、非空、schema 合格，且允许本地后台访问。
 - `legacy_chroma_available`：Chroma 目录存在、collection 可读、metadata 可追溯，且依赖已安装。
@@ -242,6 +245,7 @@ P2，暂不进入比赛主链路：
 3. P0-3：新增研发事件时间轴。
    - 从 source registry 和 evidence chains 派生事件。
    - 明确标注日期类型和来源。
+   - 已完成：只使用 `online_publication_date`、`publication_date` 和辅助资料的 `data_cutoff_date`，不从标题或编号猜日期。
 
 4. P0-4：新增带引用自动研报。
    - 先做本地模板，不接大模型。
@@ -261,6 +265,11 @@ P2，暂不进入比赛主链路：
 - B015/B016 只进入药物级监管链；B015 显示正式授权，B016 显示 CHMP 积极意见且非最终批准，B016 不增加 RATIONALE-315 试验证据数量。
 - `runtime-capabilities` 新增 `company_evidence_profile_available`，只检查当前本地证据服务，不依赖旧 SQLite 是否为空。
 - 旧财务画像模板和代码作为历史内容保留，但从主导航、`loadPage()` 和自动请求中隔离；当前画像页不调用旧 `/api/profile`、`/api/compare` 或 `/api/dashboard`。
+- Day6 第四阶段已完成 P0-3：新增 `RDEventTimelineService`、`GET /api/evidence/timeline`、`GET /api/evidence/timeline/{company}` 和 `runtime-capabilities.rd_event_timeline_available`。
+- 当前 31 条来源中动态识别 12 条有日期资料、11 条核心事件、1 条 B014 辅助更新和 19 条无日期资料；恒瑞医药 2 条核心事件，百济神州 / BeOne Medicines 9 条核心事件。
+- B015 使用 2023-09-15 初始许可日期，`source_last_updated=2026-05-27` 只作页面更新时间；B016 使用 2025-07-24 CHMP 积极意见日期并明确不是最终批准。
+- B006/B007、B008/B009 分别形成两个时间事件和一个唯一试验，服务提供 `supersedes_source_id` 与 `superseded_by_source_id` 双向版本关系；B010 只生成一条合并论文事件。
+- 新时间轴页面从 `_legacyPages()` 移除，只请求 `/api/evidence/timeline*`；旧 `/api/timeline`、旧 SQLite 企业状态和 7 条固定兜底事件不进入当前页面路径。
 
 - 当前旧 SQLite 是空文件，且被忽略，不在干净克隆和 Render 中。
 - 当前旧 Chroma 目录不存在，且被忽略，不在干净克隆和 Render 中。
@@ -278,13 +287,15 @@ P2，暂不进入比赛主链路：
 - `webapp/static/index.html`
 - `deepinsight/core/evidence_workbench_service.py`
 - 已新增 `deepinsight/core/company_evidence_profile_service.py`
-- 可能新增 `deepinsight/core/evidence_timeline_service.py`
+- 已新增 `deepinsight/core/rd_event_timeline_service.py`
 - 可能新增 `deepinsight/core/evidence_report_service.py`
 - 对应测试文件和 Day6 文档
 
 P0-1 工作台阶段已新增 `deepinsight/core/evidence_workbench_service.py`、`tests/test_evidence_workbench_service.py`、`tests/test_evidence_workbench_api.py`、`tests/test_evidence_workbench_frontend.py` 和 `docs/day6_evidence_workbench_validation.md`，并更新 FastAPI、前端源码和构建产物。
 
-P0-2 企业证据画像阶段已新增 `deepinsight/core/company_evidence_profile_service.py`、`tests/test_company_evidence_profile_service.py`、`tests/test_company_evidence_profile_api.py`、`tests/test_company_evidence_profile_frontend.py` 和 `docs/day6_company_evidence_profile_validation.md`。下一步 P0-3 计划新增研发事件时间轴，优先区分证据事件日期、发布日期、核验日期和响应生成时间，不从标题推断缺失事件。
+P0-2 企业证据画像阶段已新增 `deepinsight/core/company_evidence_profile_service.py`、`tests/test_company_evidence_profile_service.py`、`tests/test_company_evidence_profile_api.py`、`tests/test_company_evidence_profile_frontend.py` 和 `docs/day6_company_evidence_profile_validation.md`。
+
+P0-3 研发事件时间轴阶段已新增 `deepinsight/core/rd_event_timeline_service.py`、`tests/test_rd_event_timeline_service.py`、`tests/test_rd_event_timeline_api.py`、`tests/test_rd_event_timeline_frontend.py` 和 `docs/day6_rd_event_timeline_validation.md`。下一步进入前半段业务闭环整合：统一工作台、企业画像、时间轴、来源检索、证据链和循证问答之间的入口与上下文传递；不开始恢复旧 SQLite/Chroma 时间轴。
 
 ## 14. 验收标准
 

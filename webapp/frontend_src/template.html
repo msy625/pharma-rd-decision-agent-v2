@@ -3664,10 +3664,16 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-hamburger]{display:inline-flex !important}
   [data-scrim][data-open="1"]{display:block}
   [data-cols],[data-chat],[data-research],[data-evidence]{grid-template-columns:1fr !important}
+  [data-timeline-filters]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [data-timeline-grid]{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  [data-timeline-layout]{grid-template-columns:1fr !important}
 }
 @media(max-width:640px){
   [data-grid4]{grid-template-columns:repeat(2,1fr) !important}
   [data-hero]{grid-template-columns:1fr !important}
+  [data-timeline-filters]{grid-template-columns:1fr !important}
+  [data-timeline-grid]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [data-timeline-event]{grid-template-columns:70px 18px minmax(0,1fr) !important;gap:6px !important}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
@@ -5007,31 +5013,97 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
       </sc-if>
 
       <sc-if value="{{ isTimeline }}">
-        <div style="animation:fadeUp .5s var(--ease-out) both;max-width:880px">
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px">
+        <div style="animation:fadeUp .5s var(--ease-out) both;display:flex;flex-direction:column;gap:16px">
+          <div style="background:linear-gradient(135deg,var(--brand-800),var(--brand-600));color:#fff;border-radius:16px;padding:20px 22px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap">
+            <div style="max-width:760px">
+              <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">研发事件时间轴</div>
+              <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,.78);margin-top:5px">按真实结构化日期展示论文分析、公司披露和监管事件。核验日期、响应生成时间与页面更新时间均不作为研发事件日期。</div>
+            </div>
+            <button onclick="{{ tl_reload }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:700;padding:0 13px">刷新时间轴</button>
+          </div>
+
+          <div data-timeline-filters="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:grid;grid-template-columns:repeat(5,minmax(132px,1fr));gap:11px;align-items:end">
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">企业
+              <select id="timeline-company-select" name="timeline_company" value="{{ tl_company }}" onchange="{{ tl_onCompany }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_companyOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">试验
+              <select id="timeline-trial-select" name="timeline_trial" value="{{ tl_trial }}" onchange="{{ tl_onTrial }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_trialOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">药物
+              <select id="timeline-drug-select" name="timeline_drug" value="{{ tl_drug }}" onchange="{{ tl_onDrug }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_drugOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">事件类型
+              <select id="timeline-event-type-select" name="timeline_event_type" value="{{ tl_eventType }}" onchange="{{ tl_onEventType }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_eventTypeOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">年份
+              <select id="timeline-year-select" name="timeline_year" value="{{ tl_year }}" onchange="{{ tl_onYear }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_yearOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
+            </label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-2);min-height:34px"><input id="timeline-auxiliary-checkbox" name="timeline_include_auxiliary" type="checkbox" checked="{{ tl_includeAuxiliary }}" onchange="{{ tl_onAuxiliary }}" style="accent-color:var(--brand-600)">显示辅助证据更新</label>
+            <button onclick="{{ tl_reset }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:12.5px;font-weight:700;padding:0 12px">重置筛选</button>
+          </div>
+
+          <div data-timeline-grid="" style="display:grid;grid-template-columns:repeat(6,1fr);gap:11px">
             <sc-for list="{{ tl_cards }}" as="c">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:16px 18px;display:flex;align-items:center;gap:12px">
-                <span style="width:9px;height:36px;border-radius:5px;background:{{ c.color }};flex:none"></span>
-                <div><div style="font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1">{{ c.value }}</div><div style="font-size:12px;color:var(--text-3);margin-top:3px">{{ c.label }}</div></div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:14px 15px;display:flex;align-items:flex-start;gap:10px;min-width:0">
+                <span style="width:6px;height:38px;border-radius:5px;background:{{ c.color }};flex:none"></span>
+                <div style="min-width:0"><div style="font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1">{{ c.value }}</div><div style="font-size:12px;color:var(--text);font-weight:700;margin-top:4px">{{ c.label }}</div><div style="font-size:10.5px;color:var(--text-3);line-height:1.35;margin-top:2px">{{ c.note }}</div></div>
               </div>
             </sc-for>
           </div>
-          <sc-for list="{{ tl_events }}" as="e" hint-placeholder-count="6">
-            <div style="display:grid;grid-template-columns:88px 28px 1fr;gap:10px">
-              <div style="font-size:12px;font-family:var(--font-mono);color:var(--text-3);text-align:right;padding-top:14px">{{ e.date }}</div>
-              <div style="display:flex;flex-direction:column;align-items:center">
-                <div style="width:13px;height:13px;border-radius:50%;background:var(--bg-elev);border:3px solid {{ e.catColor }};margin-top:15px;flex:none"></div>
-                <div style="width:2px;flex:1;background:var(--border);margin:4px 0"></div>
+
+          <div style="font-size:12px;color:var(--text-2);background:var(--brand-50);border:1px solid var(--brand-100);border-radius:10px;padding:10px 13px">{{ tl_scopeWarning }}</div>
+
+          <sc-if value="{{ tl_loading }}"><div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;color:var(--text-3)">正在加载真实研发事件与无日期资料…</div></sc-if>
+          <sc-if value="{{ tl_hasError }}"><div style="background:var(--neg-bg);border:1px solid var(--neg);border-radius:14px;padding:18px;color:var(--neg);display:flex;align-items:center;justify-content:space-between;gap:12px"><span>{{ tl_error }}</span><button onclick="{{ tl_reload }}" style="height:32px;border-radius:8px;border:1px solid var(--neg);background:var(--bg-elev);color:var(--neg);font-size:12px;font-weight:700;padding:0 12px">重试</button></div></sc-if>
+          <sc-if value="{{ tl_empty }}"><div style="background:var(--bg-elev);border:1px dashed var(--border);border-radius:14px;padding:30px;text-align:center"><div style="font-size:15px;font-weight:800">当前数据不足</div><div style="font-size:12.5px;color:var(--text-3);margin-top:5px">当前筛选条件下没有可排序的研发事件，可重置筛选或查看无日期资料。</div></div></sc-if>
+
+          <sc-if value="{{ tl_hasContent }}">
+            <div data-timeline-layout="" style="display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr);gap:16px;align-items:start">
+              <div style="display:flex;flex-direction:column;gap:0;min-width:0">
+                <sc-if value="{{ !tl_hasData }}"><div style="background:var(--bg-elev);border:1px dashed var(--border);border-radius:14px;padding:24px;text-align:center;color:var(--text-3)">当前筛选条件下没有可排序事件；右侧仍可查看未进入时间轴的无日期资料。</div></sc-if>
+                <sc-for list="{{ tl_events }}" as="e" hint-placeholder-count="6">
+                  <div data-timeline-event="" style="display:grid;grid-template-columns:96px 26px minmax(0,1fr);gap:10px">
+                    <div style="text-align:right;padding-top:15px"><div style="font-size:12.5px;font-family:var(--font-mono);font-weight:800;color:var(--text)">{{ e.date }}</div><div style="font-size:10.5px;color:var(--text-3);line-height:1.4;margin-top:3px">{{ e.date_note }}</div></div>
+                    <div style="display:flex;flex-direction:column;align-items:center"><div style="width:13px;height:13px;border-radius:50%;background:var(--bg-elev);border:3px solid {{ e.catColor }};margin-top:17px;flex:none"></div><div style="width:2px;flex:1;background:var(--border);margin:4px 0"></div></div>
+                    <article style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px 16px;margin-bottom:13px;min-width:0">
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:7px"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span style="font-size:10.5px;font-weight:800;color:{{ e.catColor }};background:{{ e.catBg }};border-radius:6px;padding:2px 8px">{{ e.event_type_label }}</span><span style="font-size:10.5px;font-weight:700;color:var(--text-3);background:var(--bg-sunken);border-radius:6px;padding:2px 8px">{{ e.auxiliary_label }}</span><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ e.source_id }}</span></div><span style="font-size:11px;color:var(--text-3)">{{ e.company }}</span></div>
+                      <div style="font-size:14.5px;font-weight:800;line-height:1.5;color:var(--text)">{{ e.title }}</div>
+                      <div style="font-size:11px;color:var(--text-3);margin-top:5px;overflow-wrap:anywhere">日期字段：{{ e.date_field }} · 原始值：{{ e.date_original }}</div>
+                      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+                        <span style="font-size:11px;color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">{{ e.source_type }}</span>
+                        <span style="font-size:11px;color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">{{ e.version_status }}</span>
+                        <sc-if value="{{ e.hasEvidenceVersion }}"><span style="font-size:11px;color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">证据版本 {{ e.evidence_version }}</span></sc-if>
+                        <sc-if value="{{ e.hasTrial }}"><span style="font-size:11px;font-family:var(--font-mono);color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px">{{ e.trial_id }}</span></sc-if>
+                        <sc-if value="{{ e.hasChain }}"><span style="font-size:11px;font-family:var(--font-mono);color:var(--text-2);border:1px solid var(--border);border-radius:7px;padding:3px 8px;overflow-wrap:anywhere">{{ e.chain_id }}</span></sc-if>
+                      </div>
+                      <sc-if value="{{ e.hasDrugs }}"><div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:9px"><span style="font-size:11px;color:var(--text-3)">药物</span><sc-for list="{{ e.drugs }}" as="d"><span style="font-size:10.5px;background:var(--brand-50);color:var(--brand-600);border-radius:999px;padding:2px 7px">{{ d.name }}</span></sc-for></div></sc-if>
+                      <sc-if value="{{ e.hasVersionRelation }}"><div data-timeline-version="" style="font-size:12px;color:var(--brand-600);background:var(--brand-50);border-radius:8px;padding:7px 9px;margin-top:9px;font-weight:700">版本演进：{{ e.version_relation }}</div></sc-if>
+                      <sc-if value="{{ e.hasSourceUpdated }}"><div style="font-size:11px;color:var(--warn);margin-top:8px">页面更新时间：{{ e.source_last_updated }}，仅作为元信息，不是事件日期。</div></sc-if>
+                      <sc-if value="{{ e.hasLimitations }}"><div style="display:flex;flex-direction:column;gap:3px;margin-top:9px"><sc-for list="{{ e.limitations }}" as="n"><div style="font-size:11.5px;line-height:1.5;color:var(--text-3)">限制：{{ n.text }}</div></sc-for></div></sc-if>
+                      <div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px">
+                        <button onclick="{{ e.openSource }}" style="height:30px;border-radius:8px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">查看来源</button>
+                        <sc-if value="{{ e.hasChain }}"><button onclick="{{ e.openChain }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:11.5px;font-weight:700;padding:0 10px">查看证据链</button></sc-if>
+                        <button onclick="{{ e.openGrounded }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:11.5px;font-weight:700;padding:0 10px">进入循证问答</button>
+                        <sc-if value="{{ e.hasSourceUrl }}"><a href="{{ e.source_url }}" target="_blank" rel="noopener noreferrer" style="font-size:11.5px;color:var(--text-3);font-weight:700;text-decoration:none">打开原始链接</a></sc-if>
+                      </div>
+                    </article>
+                  </div>
+                </sc-for>
               </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:14px 16px;margin-bottom:14px">
-                <div style="display:flex;align-items:center;gap:9px;margin-bottom:6px">
-                  <span style="font-size:10.5px;font-weight:600;color:{{ e.catColor }};background:{{ e.catBg }};border-radius:6px;padding:2px 8px">{{ e.category }}</span>
-                  <span style="font-size:13.5px;font-weight:600">{{ e.title }}</span>
+
+              <aside style="display:flex;flex-direction:column;gap:12px;min-width:0">
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px">
+                  <div style="font-size:13.5px;font-weight:800">无日期资料</div><div style="font-size:11.5px;color:var(--text-3);line-height:1.5;margin-top:3px">{{ tl_undatedNotice }}</div>
+                  <sc-if value="{{ tl_hasUndated }}"><div data-timeline-undated="" style="display:flex;flex-direction:column;gap:8px;margin-top:12px"><sc-for list="{{ tl_undated }}" as="u"><div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ u.source_id }}</span><span style="font-size:10.5px;color:var(--text-3)">{{ u.source_type }}</span></div><div style="font-size:12px;font-weight:700;line-height:1.45;margin-top:4px">{{ u.title }}</div><div style="font-size:10.5px;color:var(--text-3);line-height:1.45;margin-top:4px">{{ u.reason }}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:7px"><button onclick="{{ u.openSource }}" style="height:27px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text-2);font-size:10.5px;font-weight:700;padding:0 8px">查看来源</button><sc-if value="{{ u.hasChain }}"><button onclick="{{ u.openChain }}" style="height:27px;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text-2);font-size:10.5px;font-weight:700;padding:0 8px">查看证据链</button></sc-if></div></div></sc-for></div></sc-if>
                 </div>
-                <div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ e.detail }}</div>
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px">
+                  <div style="font-size:13px;font-weight:800">数据口径</div>
+                  <div style="font-size:11px;color:var(--text-3);line-height:1.55;margin-top:7px">数据版本：{{ tl_dataVersion }}</div><div style="font-size:11px;color:var(--text-3);line-height:1.55">最近核验：{{ tl_verifiedAt }}</div><div style="font-size:11px;color:var(--text-3);line-height:1.55">响应生成：{{ tl_generatedAt }}</div>
+                  <sc-if value="{{ tl_hasLimitations }}"><div style="display:flex;flex-direction:column;gap:6px;margin-top:10px"><sc-for list="{{ tl_limitations }}" as="n"><div style="font-size:11px;line-height:1.5;color:var(--text-2)">· {{ n.text }}</div></sc-for></div></sc-if>
+                </div>
               </div>
             </div>
-          </sc-for>
+          </sc-if>
         </div>
       </sc-if>
 
