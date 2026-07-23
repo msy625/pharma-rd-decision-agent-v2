@@ -48,8 +48,10 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
         self.assertIn("'/api/evidence/chains/'+encodeURIComponent(cid)", self.evidence_component)
 
     def test_06_company_and_type_filters_exist(self):
-        for text in ["企业", "全部", "恒瑞医药", "百济神州/BeOne Medicines", "类型", "试验级", "药物级监管"]:
+        for text in ["企业", "全部", "类型", "试验级", "药物级监管"]:
             self.assertIn(text, self.evidence_template)
+        self.assertIn("chain_companyOptions", self.evidence_component)
+        self.assertIn('<sc-for list="{{ chain_companyOptions }}" as="co">', self.evidence_template)
         self.assertIn("chain_onCompany", self.evidence_component)
         self.assertIn("chain_onType", self.evidence_component)
 

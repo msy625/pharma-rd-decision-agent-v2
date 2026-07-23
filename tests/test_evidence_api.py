@@ -103,9 +103,9 @@ class EvidenceApiHttpTest(unittest.TestCase):
         self.assertEqual(response.status_code, expected_status, response.text)
         return response.json()
 
-    def test_01_summary_total_is_31(self):
+    def test_01_summary_total_is_39(self):
         payload = self.get_json("/api/evidence/summary")
-        self.assertEqual(payload["total_sources"], 31)
+        self.assertEqual(payload["total_sources"], 39)
 
     def test_02_company_hengrui_returns_15(self):
         payload = self.get_json("/api/evidence/company/恒瑞医药")

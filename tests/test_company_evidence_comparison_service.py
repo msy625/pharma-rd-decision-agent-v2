@@ -73,7 +73,8 @@ class CompanyEvidenceComparisonServiceTest(unittest.TestCase):
 
     def test_09_company_aliases_do_not_create_duplicate_subjects(self):
         companies = self.service.available_companies()
-        self.assertEqual(len(companies), 2)
+        self.assertEqual(len(companies), 3)
+        self.assertIn("阿斯利康", {item["company_name"] for item in companies})
         with self.assertRaises(ValueError):
             self.service.compare("百济神州", "BeiGene")
 
@@ -83,7 +84,13 @@ class CompanyEvidenceComparisonServiceTest(unittest.TestCase):
         self.assertIn("directly_comparable_metrics", comparison)
         self.assertIn("partially_comparable_dimensions", comparison)
         self.assertIn("prohibited_conclusions", comparison)
-        self.assertEqual(comparison["data_scope"], "first_version_nsclc_hengrui_beone")
+        self.assertEqual(comparison["data_scope"], "verified_nsclc_multi_company_sample")
+
+    def test_astrazeneca_profile_uses_verified_supplement(self):
+        profile = self.service.company_profile("AstraZeneca")
+        self.assertEqual(profile["company_name"], "阿斯利康")
+        self.assertEqual(profile["source_count"], 8)
+        self.assertEqual(profile["trial_chain_count"], 4)
 
     def test_11_payload_does_not_include_prohibited_claim_keys(self):
         comparison = self.service.compare("恒瑞医药", "BeOne Medicines")

@@ -114,18 +114,18 @@ class EvidenceChainApiHttpTest(unittest.TestCase):
         self.assertEqual(response.status_code, expected_status, response.text)
         return response.json()
 
-    def test_01_summary_total_chain_count_is_11(self):
+    def test_01_summary_total_chain_count_is_15(self):
         payload = self.get_json("/api/evidence/chain-summary")
-        self.assertEqual(payload["total_chain_count"], 11)
+        self.assertEqual(payload["total_chain_count"], 15)
 
-    def test_02_summary_trial_chain_count_is_10(self):
+    def test_02_summary_trial_chain_count_is_14(self):
         payload = self.get_json("/api/evidence/chain-summary")
-        self.assertEqual(payload["trial_chain_count"], 10)
+        self.assertEqual(payload["trial_chain_count"], 14)
 
     def test_03_summary_regulatory_chain_count_is_1(self):
         payload = self.get_json("/api/evidence/chain-summary")
         self.assertEqual(payload["regulatory_chain_count"], 1)
-        self.assertEqual(payload["nct_registered_trial_count"], 9)
+        self.assertEqual(payload["nct_registered_trial_count"], 13)
 
     def test_04_rationale_304_contains_expected_sources(self):
         payload = self.get_json("/api/evidence/chains/trial%3ANCT03663205")
@@ -211,7 +211,7 @@ class EvidenceChainApiHttpTest(unittest.TestCase):
 
     def test_21_existing_evidence_query_api_still_works(self):
         payload = self.get_json("/api/evidence/summary")
-        self.assertEqual(payload["total_sources"], 31)
+        self.assertEqual(payload["total_sources"], 39)
 
 
 if __name__ == "__main__":

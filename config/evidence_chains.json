@@ -2,10 +2,10 @@
   "schema_version": "1.0",
   "scope": {
     "disease": "非小细胞肺癌（NSCLC）",
-    "verified_source_count": 31,
-    "trial_chain_count": 10,
+    "verified_source_count": 39,
+    "trial_chain_count": 14,
     "regulatory_chain_count": 1,
-    "total_chain_count": 11,
+    "total_chain_count": 15,
     "rules": [
       "药物级监管链不能计入临床试验数量。",
       "同一trial_id只计为一项临床试验。",
@@ -225,6 +225,78 @@
       "risk_notes": [
         "达到主要终点不等于已申报上市，也不等于已获批上市。"
       ]
+    },
+    {
+      "chain_id": "trial:NCT02296125",
+      "chain_name": "FLAURA / NCT02296125",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "阿斯利康",
+      "drug_names": ["奥希替尼", "Osimertinib", "AZD9291"],
+      "trial_ids": ["NCT02296125"],
+      "study_names": ["FLAURA"],
+      "source_ids": [
+        {"source_id": "A001", "role": "trial_registry"},
+        {"source_id": "A002", "role": "final_publication"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [],
+      "risk_notes": ["登记与论文为同一项试验的不同来源，只计为一项唯一试验。"]
+    },
+    {
+      "chain_id": "trial:NCT02511106",
+      "chain_name": "ADAURA / NCT02511106",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "阿斯利康",
+      "drug_names": ["奥希替尼", "Osimertinib", "AZD9291"],
+      "trial_ids": ["NCT02511106"],
+      "study_names": ["ADAURA"],
+      "source_ids": [
+        {"source_id": "A003", "role": "trial_registry"},
+        {"source_id": "A004", "role": "final_publication"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [],
+      "risk_notes": ["登记与论文为同一项试验的不同来源，只计为一项唯一试验。"]
+    },
+    {
+      "chain_id": "trial:NCT03521154",
+      "chain_name": "LAURA / NCT03521154",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "阿斯利康",
+      "drug_names": ["奥希替尼", "Osimertinib", "AZD9291"],
+      "trial_ids": ["NCT03521154"],
+      "study_names": ["LAURA"],
+      "source_ids": [
+        {"source_id": "A005", "role": "trial_registry"},
+        {"source_id": "A006", "role": "final_publication"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [],
+      "risk_notes": ["登记与论文为同一项试验的不同来源，只计为一项唯一试验。"]
+    },
+    {
+      "chain_id": "trial:NCT04035486",
+      "chain_name": "FLAURA2 / NCT04035486",
+      "chain_type": "trial",
+      "relation_level": "confirmed",
+      "company_name": "阿斯利康",
+      "drug_names": ["奥希替尼", "Osimertinib", "AZD9291"],
+      "trial_ids": ["NCT04035486"],
+      "study_names": ["FLAURA2"],
+      "source_ids": [
+        {"source_id": "A007", "role": "trial_registry"},
+        {"source_id": "A008", "role": "final_publication"}
+      ],
+      "related_trial_ids": [],
+      "related_regulatory_source_ids": [],
+      "evidence_gaps": [],
+      "risk_notes": ["登记与论文为同一项试验的不同来源，只计为一项唯一试验。"]
     },
     {
       "chain_id": "regulatory:tevimbra-eu-nsclc",

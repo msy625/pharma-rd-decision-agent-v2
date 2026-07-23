@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the frozen first-version source registry."""
+"""Validate the source registry and its required verified data sets."""
 
 from __future__ import annotations
 
@@ -114,14 +114,17 @@ def validate(path: Path = CSV_PATH) -> list[str]:
 
     expected_h = {f"H{i:03d}" for i in range(1, 16)}
     expected_b = {f"B{i:03d}" for i in range(1, 17)}
+    expected_a = {f"A{i:03d}" for i in range(1, 9)}
     id_set = set(ids)
     require(errors, expected_h.issubset(id_set), f"missing H ids: {sorted(expected_h - id_set)}")
     require(errors, expected_b.issubset(id_set), f"missing B ids: {sorted(expected_b - id_set)}")
-    require(errors, len(rows) == 31, f"total source count must be 31, got {len(rows)}")
+    require(errors, expected_a.issubset(id_set), f"missing A ids: {sorted(expected_a - id_set)}")
+    require(errors, len(rows) >= 39, f"total source count must be at least 39, got {len(rows)}")
 
     company_counts = Counter(row.get("company_cn") or row.get("company") for row in rows)
     require(errors, company_counts["恒瑞医药"] == 15, f"恒瑞医药 count must be 15, got {company_counts['恒瑞医药']}")
     require(errors, company_counts["百济神州"] == 16, f"百济神州 count must be 16, got {company_counts['百济神州']}")
+    require(errors, company_counts["阿斯利康"] >= 8, f"阿斯利康 count must be at least 8, got {company_counts['阿斯利康']}")
 
     for sid in ["B006", "B007"]:
         row = row_by_id(rows, sid)
@@ -157,7 +160,8 @@ def main() -> int:
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         return 1
-    print("source_registry validation passed: 31 sources, H001-H015 and B001-B016 complete.")
+        _fields, rows, _errors = load_rows()
+        print(f"source_registry validation passed: {len(rows)} verified sources across required data sets.")
     return 0
 
 

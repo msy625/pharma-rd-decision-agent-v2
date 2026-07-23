@@ -19,15 +19,15 @@ class EvidenceChainServiceTest(unittest.TestCase):
     def ids(self, items):
         return {item["source_id"] for item in items}
 
-    def test_01_trial_chain_count_is_10(self):
-        self.assertEqual(len(self.service.list_chains(chain_type="trial")), 10)
-        self.assertEqual(self.service.summary()["trial_chains"], 10)
-        self.assertEqual(self.service.summary()["clinical_trial_count"], 10)
+    def test_01_trial_chain_count_is_14(self):
+        self.assertEqual(len(self.service.list_chains(chain_type="trial")), 14)
+        self.assertEqual(self.service.summary()["trial_chains"], 14)
+        self.assertEqual(self.service.summary()["clinical_trial_count"], 14)
 
     def test_02_regulatory_chain_count_is_1(self):
         self.assertEqual(len(self.service.list_chains(chain_type="regulatory")), 1)
         self.assertEqual(self.service.summary()["regulatory_chains"], 1)
-        self.assertEqual(self.service.summary()["total_chains"], 11)
+        self.assertEqual(self.service.summary()["total_chains"], 15)
 
     def test_03_rationale_304_contains_expected_sources(self):
         chain = self.service.get_trial_chain("NCT03663205")

@@ -389,9 +389,9 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertEqual(after - before, set())
 
     def test_24_existing_evidence_apis_still_work(self):
-        self.assertEqual(self.get_json("/api/evidence/summary")["total_sources"], 31)
-        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 11)
-        self.assertEqual(self.get_json("/api/evidence/company-comparison")["metadata"]["data_scope"], "first_version_nsclc_hengrui_beone")
+        self.assertEqual(self.get_json("/api/evidence/summary")["total_sources"], 39)
+        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 15)
+        self.assertEqual(self.get_json("/api/evidence/company-comparison")["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
 
     def test_25_error_response_does_not_leak_path_stack_or_key(self):
         original_factory = webapp_main._grounded_qa_service

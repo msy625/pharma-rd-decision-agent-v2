@@ -182,7 +182,7 @@ class CompanyEvidenceComparisonApiTest(unittest.TestCase):
 
     def test_14_metadata_uses_current_verified_sample_scope(self):
         payload = self.get_json("/api/evidence/company-comparison")
-        self.assertEqual(payload["metadata"]["data_scope"], "first_version_nsclc_hengrui_beone")
+        self.assertEqual(payload["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
         self.assertEqual(payload["metadata"]["interpretation_scope"], "current_verified_sample_only")
 
     def test_15_api_route_does_not_hardcode_current_counts(self):
@@ -204,11 +204,11 @@ class CompanyEvidenceComparisonApiTest(unittest.TestCase):
 
     def test_17_existing_evidence_api_still_works(self):
         payload = self.get_json("/api/evidence/summary")
-        self.assertEqual(payload["total_sources"], 31)
+        self.assertEqual(payload["total_sources"], 39)
 
     def test_18_existing_evidence_chain_api_still_works(self):
         payload = self.get_json("/api/evidence/chain-summary")
-        self.assertEqual(payload["total_chain_count"], 11)
+        self.assertEqual(payload["total_chain_count"], 15)
 
 
 if __name__ == "__main__":

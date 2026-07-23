@@ -19,8 +19,8 @@ class SourceRegistryServiceTest(unittest.TestCase):
     def ids(self, rows):
         return {row["source_id"] for row in rows}
 
-    def test_01_summary_total_is_31(self):
-        self.assertEqual(self.service.summary()["total_sources"], 31)
+    def test_01_summary_total_is_39(self):
+        self.assertEqual(self.service.summary()["total_sources"], 39)
 
     def test_02_hengrui_returns_15(self):
         self.assertEqual(len(self.service.query(company="恒瑞医药")), 15)
@@ -36,6 +36,11 @@ class SourceRegistryServiceTest(unittest.TestCase):
             self.ids(self.service.query(company="百济神州")),
             self.ids(self.service.query(company="BeiGene")),
         )
+
+    def test_astrazeneca_alias_and_osimertinib_queries(self):
+        self.assertEqual(len(self.service.query(company="AstraZeneca")), 8)
+        self.assertEqual(len(self.service.query(company="阿斯利康")), 8)
+        self.assertEqual(self.ids(self.service.query(drug="AZD9291")), self.ids(self.service.query(drug="奥希替尼")))
 
     def test_06_shr_1210_matches_camrelizumab_sources(self):
         shr_rows = self.service.query(drug="SHR-1210")
@@ -82,7 +87,7 @@ class SourceRegistryServiceTest(unittest.TestCase):
             os.chdir(tmpdir)
             try:
                 service = SourceRegistryService()
-                self.assertEqual(service.summary()["total_sources"], 31)
+                self.assertEqual(service.summary()["total_sources"], 39)
             finally:
                 os.chdir(original_cwd)
 

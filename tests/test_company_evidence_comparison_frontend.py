@@ -44,7 +44,8 @@ class CompanyEvidenceComparisonFrontendStaticTest(unittest.TestCase):
     def test_05_default_companies_are_correct(self):
         self.assertIn("comparisonCompanyA:'恒瑞医药'", self.component)
         self.assertIn("comparisonCompanyB:'BeOne Medicines'", self.component)
-        self.assertIn("恒瑞医药、百济神州/BeOne Medicines", self.evidence_component)
+        self.assertIn("cmp_objects:companyProfiles.length", self.evidence_component)
+        self.assertIn("companyProfiles.map(x=>x.company_name).join('、')", self.evidence_component)
 
     def test_06_same_company_is_blocked_on_frontend(self):
         self.assertIn("this._companyKey(a)===this._companyKey(b)", self.evidence_component)
@@ -56,7 +57,7 @@ class CompanyEvidenceComparisonFrontendStaticTest(unittest.TestCase):
 
     def test_08_top_scope_warning_mentions_current_sample(self):
         self.assertIn("以下结果仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力", self.evidence_all)
-        self.assertIn("数据范围：当前31条已核验NSCLC资料", self.evidence_template)
+        self.assertIn("数据范围：当前 {{ ev_scopeCount }} 条已核验 NSCLC 资料", self.evidence_template)
         self.assertIn("不包含疗效排名、成功率预测或投资建议", self.evidence_template)
 
     def test_09_source_and_verified_counts_are_displayed(self):

@@ -43,6 +43,18 @@
     {
       "canonical_name": "白蛋白结合型紫杉醇",
       "aliases": ["白蛋白结合型紫杉醇", "Nab-paclitaxel"]
+    },
+    {
+      "canonical_name": "奥希替尼",
+      "aliases": ["奥希替尼", "Osimertinib", "AZD9291", "TAGRISSO"]
+    },
+    {
+      "canonical_name": "吉非替尼",
+      "aliases": ["吉非替尼", "Gefitinib", "IRESSA"]
+    },
+    {
+      "canonical_name": "厄洛替尼",
+      "aliases": ["厄洛替尼", "Erlotinib", "TARCEVA"]
     }
   ]
 }

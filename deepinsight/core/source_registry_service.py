@@ -1,4 +1,4 @@
-"""Query service for the frozen NSCLC source registry.
+"""Query service for the verified NSCLC source registry.
 
 This module is intentionally limited to local CSV/JSON files. It does not
 import model, vector-store, network, or web framework dependencies.
@@ -53,6 +53,7 @@ SEARCH_FIELDS = [
 COMPANY_ALIAS_GROUPS = [
     ["百济神州", "BeOne Medicines", "BeiGene", "百济神州（BeOne Medicines，原BeiGene）"],
     ["恒瑞医药", "江苏恒瑞医药股份有限公司", "Jiangsu Hengrui Medicine", "Jiangsu HengRui Medicine"],
+    ["阿斯利康", "AstraZeneca", "阿斯利康（AstraZeneca）"],
 ]
 
 
