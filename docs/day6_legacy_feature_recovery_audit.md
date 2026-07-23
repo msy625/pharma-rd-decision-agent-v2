@@ -255,6 +255,12 @@ P2，暂不进入比赛主链路：
 - 新增 `/api/evidence/workbench` 和 `runtime-capabilities.evidence_workbench_available`。轻量与完整环境的可靠默认工作台均为真实证据工作台；旧 SQLite/Chroma 功能继续按能力隔离。
 - 当前工作台 9 项核心指标实际为：31 条来源、31 条已核验、2 个归一企业主体、10 条试验级证据链、1 条药物级监管链、4 条最新资料、2 条历史版本、25 条独立资料、7 条待确认关系。
 - 前端 `today` 页面不再请求旧 `/api/dashboard`，也不再渲染旧固定企业数、年报数、财务事实、宏观指标、排名、趋势、雷达评分或模拟预警。
+- Day6 第三阶段已完成 P0-2：主导航“公司画像 · 对比”已替换为“企业证据画像”，新增 `CompanyEvidenceProfileService` 和两个只读 FastAPI 接口。
+- 企业画像复用 `SourceRegistryService`、`EvidenceChainService`、`EvidenceWorkbenchService`、`CompanyEvidenceComparisonService` 的企业归一能力和现有 `data_version` 逻辑，没有重写 CSV 筛选、别名、版本或证据链规则。
+- 当前实际画像指标：恒瑞医药 15 条来源、6 条试验链、0 条监管链、6 条待确认关系；百济神州 / BeOne Medicines 16 条来源、4 条试验链、1 条监管链、1 条待确认关系。
+- B015/B016 只进入药物级监管链；B015 显示正式授权，B016 显示 CHMP 积极意见且非最终批准，B016 不增加 RATIONALE-315 试验证据数量。
+- `runtime-capabilities` 新增 `company_evidence_profile_available`，只检查当前本地证据服务，不依赖旧 SQLite 是否为空。
+- 旧财务画像模板和代码作为历史内容保留，但从主导航、`loadPage()` 和自动请求中隔离；当前画像页不调用旧 `/api/profile`、`/api/compare` 或 `/api/dashboard`。
 
 - 当前旧 SQLite 是空文件，且被忽略，不在干净克隆和 Render 中。
 - 当前旧 Chroma 目录不存在，且被忽略，不在干净克隆和 Render 中。
@@ -271,12 +277,14 @@ P2，暂不进入比赛主链路：
 - `webapp/frontend_src/template.html`
 - `webapp/static/index.html`
 - `deepinsight/core/evidence_workbench_service.py`
-- 可能新增 `deepinsight/core/company_evidence_profile_service.py`
+- 已新增 `deepinsight/core/company_evidence_profile_service.py`
 - 可能新增 `deepinsight/core/evidence_timeline_service.py`
 - 可能新增 `deepinsight/core/evidence_report_service.py`
 - 对应测试文件和 Day6 文档
 
 P0-1 工作台阶段已新增 `deepinsight/core/evidence_workbench_service.py`、`tests/test_evidence_workbench_service.py`、`tests/test_evidence_workbench_api.py`、`tests/test_evidence_workbench_frontend.py` 和 `docs/day6_evidence_workbench_validation.md`，并更新 FastAPI、前端源码和构建产物。
+
+P0-2 企业证据画像阶段已新增 `deepinsight/core/company_evidence_profile_service.py`、`tests/test_company_evidence_profile_service.py`、`tests/test_company_evidence_profile_api.py`、`tests/test_company_evidence_profile_frontend.py` 和 `docs/day6_company_evidence_profile_validation.md`。下一步 P0-3 计划新增研发事件时间轴，优先区分证据事件日期、发布日期、核验日期和响应生成时间，不从标题推断缺失事件。
 
 ## 14. 验收标准
 

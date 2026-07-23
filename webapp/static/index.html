@@ -4025,7 +4025,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
         </div>
       </sc-if>
 
-      <sc-if value="{{ isCompare }}">
+      <sc-if value="{{ isLegacyCompare }}">
         <div style="animation:fadeUp .5s var(--ease-out) both">
           <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
             <div>
@@ -4138,6 +4138,110 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <div style="font-size:11.5px;color:var(--text-3);margin-bottom:10px">单位 亿元</div>
                 <dc-import name="BarChart" labels="{{ cmp_barLabels }}" series="{{ cmp_barSeries }}" height="{{ 250 }}" hint-size="100%,270px"></dc-import>
               </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isCompare }}">
+        <div style="animation:fadeUp .5s var(--ease-out) both;display:flex;flex-direction:column;gap:16px">
+          <div style="background:linear-gradient(135deg,var(--brand-800),var(--brand-600));border-radius:16px;padding:20px 22px;color:#fff;display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap">
+            <div style="max-width:760px">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.72);margin-bottom:7px">COMPANY EVIDENCE PROFILE</div>
+              <h1 style="font-size:23px;font-weight:700;letter-spacing:-.025em;margin:0 0 8px">企业证据画像</h1>
+              <p style="font-size:13.5px;line-height:1.75;color:rgba(255,255,255,.88);margin:0">{{ profile_scopeWarning }}</p>
+            </div>
+            <div style="min-width:250px;display:flex;flex-direction:column;gap:7px">
+              <label for="company-evidence-profile-select" style="font-size:11px;color:rgba(255,255,255,.72)">选择企业</label>
+              <select id="company-evidence-profile-select" name="company_evidence_profile" value="{{ profile_company }}" onchange="{{ profile_onCompany }}" style="height:38px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.14);color:#fff;font-size:13.5px;font-weight:700;padding:0 11px">
+                <sc-for list="{{ profile_companies }}" as="c"><option value="{{ c.value }}" style="color:#111827">{{ c.label }}</option></sc-for>
+              </select>
+            </div>
+          </div>
+
+          <sc-if value="{{ profile_loading }}"><div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:18px;color:var(--text-3)">正在加载企业证据画像...</div></sc-if>
+          <sc-if value="{{ profile_hasError }}"><div style="background:var(--neg-bg);border:1px solid var(--border);border-radius:13px;padding:16px;color:var(--neg);display:flex;justify-content:space-between;gap:12px;align-items:center"><span>{{ profile_error }}</span><button onclick="{{ profile_reload }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);padding:0 11px">重新加载</button></div></sc-if>
+          <sc-if value="{{ profile_empty }}"><div style="background:var(--bg-elev);border:1px dashed var(--border);border-radius:13px;padding:20px;text-align:center;color:var(--text-3)">当前数据不足，未在当前核验样本中找到该企业。</div></sc-if>
+
+          <sc-if value="{{ profile_hasData }}">
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:17px 18px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap">
+              <div>
+                <div style="font-size:21px;font-weight:750;letter-spacing:-.02em;margin-bottom:4px">{{ profile_displayName }}</div>
+                <div style="font-size:12px;color:var(--text-3)">归一主体：{{ profile_canonicalName }}</div>
+                <sc-if value="{{ profile_hasAliases }}"><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px"><sc-for list="{{ profile_aliases }}" as="a"><span style="font-size:11px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 8px">{{ a.text }}</span></sc-for></div></sc-if>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button onclick="{{ profile_allSources }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">查看全部来源</button>
+                <button onclick="{{ profile_compare }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">打开企业对比</button>
+                <button onclick="{{ profile_grounded }}" style="height:34px;border-radius:9px;border:0;background:var(--brand-600);color:#fff;font-size:12px;font-weight:700;padding:0 12px">进入循证问答</button>
+              </div>
+            </div>
+
+            <div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px">
+              <sc-for list="{{ profile_metrics }}" as="m" hint-placeholder-count="12">
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px">
+                  <div style="font-size:11px;color:var(--text-3);margin-bottom:5px">{{ m.label }}</div>
+                  <div style="font-size:23px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;margin-bottom:5px">{{ m.value }}</div>
+                  <div style="font-size:10.8px;color:var(--text-3);line-height:1.45">{{ m.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div data-cols="" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px">
+                <div style="font-size:14px;font-weight:750;margin-bottom:12px">来源类型构成</div>
+                <div style="display:flex;flex-direction:column;gap:8px"><sc-for list="{{ profile_sourceTypes }}" as="d"><div style="display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding-bottom:7px;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">{{ d.label }}</span><span style="font-weight:700">{{ d.count }}</span></div></sc-for></div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px">
+                <div style="font-size:14px;font-weight:750;margin-bottom:12px">研究状态构成</div>
+                <div style="display:flex;flex-direction:column;gap:8px"><sc-for list="{{ profile_studyStatuses }}" as="d"><div style="display:flex;justify-content:space-between;gap:12px;font-size:12.5px;padding-bottom:7px;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">{{ d.label }}</span><span style="font-weight:700">{{ d.count }}</span></div></sc-for></div>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:17px">
+              <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:12px"><div><div style="font-size:15px;font-weight:750">试验证据链</div><div style="font-size:11.5px;color:var(--text-3);margin-top:3px">论文、登记和公司页面按已确认试验关系聚合，不重复计为多项试验。</div></div></div>
+              <sc-if value="{{ !profile_hasTrialChains }}"><div style="font-size:12.5px;color:var(--text-3);background:var(--bg-sunken);border-radius:10px;padding:13px">当前样本未收录可确认的试验级证据链。</div></sc-if>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:11px">
+                <sc-for list="{{ profile_trialChains }}" as="ch">
+                  <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px">
+                    <div style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--brand-600);overflow-wrap:anywhere">{{ ch.chain_id }}</div>
+                    <div style="font-size:13.5px;font-weight:750;line-height:1.45">{{ ch.study_name }}</div>
+                    <div style="display:grid;grid-template-columns:86px 1fr;gap:5px 8px;font-size:11.8px"><span style="color:var(--text-3)">trial_id</span><span>{{ ch.trial_id }}</span><span style="color:var(--text-3)">来源数量</span><span>{{ ch.source_count }}</span><span style="color:var(--text-3)">版本构成</span><span>{{ ch.version_text }}</span><span style="color:var(--text-3)">研究状态</span><span>{{ ch.study_status }}</span></div>
+                    <button onclick="{{ ch.onClick }}" style="height:31px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--brand-600);font-size:12px;font-weight:700;margin-top:auto">查看证据链</button>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:17px">
+              <div style="font-size:15px;font-weight:750;margin-bottom:4px">药物级监管链</div>
+              <div style="font-size:11.5px;color:var(--text-3);margin-bottom:12px">监管资料与试验级证据分开计数，药物级监管链不计入临床试验数量，也不将监管背景追加为临床试验来源。B015正式授权；B016 CHMP积极意见，非最终批准。</div>
+              <sc-if value="{{ profile_noRegulatory }}"><div style="font-size:12.5px;color:var(--text-3);background:var(--bg-sunken);border:1px dashed var(--border);border-radius:10px;padding:14px">当前样本未收录独立监管链；该表述不代表企业没有监管进展。</div></sc-if>
+              <sc-for list="{{ profile_regulatoryChains }}" as="ch">
+                <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:12px;padding:14px;margin-top:10px">
+                  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px"><div><div style="font-family:var(--font-mono);font-size:11px;color:var(--brand-600);font-weight:700">{{ ch.chain_id }}</div><div style="font-size:13.5px;font-weight:750;margin-top:3px">{{ ch.chain_name }}</div></div><button onclick="{{ ch.onClick }}" style="height:31px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 11px">查看证据链</button></div>
+                  <div style="font-size:11.8px;color:var(--text-2);margin-bottom:9px">{{ ch.counting_note }} 关联试验背景：{{ ch.related_trials }}</div>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px"><sc-for list="{{ ch.sources }}" as="src"><div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:10px;padding:11px"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:5px"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ src.source_id }}</span><span style="font-size:10.8px;color:var(--text-3)">{{ src.status_note }}</span></div><div style="font-size:12.5px;font-weight:700;line-height:1.45;margin-bottom:5px">{{ src.title }}</div><div style="font-size:11px;color:var(--text-3);margin-bottom:5px">{{ src.source_type }}</div><div style="font-size:11.5px;color:var(--text-2);line-height:1.55">{{ src.risk_notes }}</div></div></sc-for></div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div data-cols="" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;min-width:0">
+                <div style="font-size:14px;font-weight:750;margin-bottom:4px">独立资料</div><div style="font-size:11.5px;color:var(--text-3);margin-bottom:11px">指当前没有新旧版本关系的资料；仍可能已进入证据链或处于待确认状态。</div>
+                <sc-if value="{{ !profile_hasIndependent }}"><div style="font-size:12px;color:var(--text-3)">当前没有可展示的独立资料。</div></sc-if>
+                <div style="display:flex;flex-direction:column;gap:8px;max-height:430px;overflow:auto"><sc-for list="{{ profile_independent }}" as="src"><div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:10px 11px"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ src.source_id }}</span><span style="font-size:10.8px;color:var(--text-3)">{{ src.link_status }}</span></div><div style="font-size:12.3px;font-weight:650;line-height:1.45;margin:4px 0">{{ src.title }}</div><div style="font-size:10.8px;color:var(--text-3)">{{ src.source_type }} · {{ src.study_status }}</div></div></sc-for></div>
+              </div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;min-width:0">
+                <div style="font-size:14px;font-weight:750;margin-bottom:4px">待确认关系</div><div style="font-size:11.5px;color:var(--text-3);margin-bottom:11px">仅展示人工配置中仍缺少明确一对一依据的关系。</div>
+                <sc-if value="{{ !profile_hasUnresolved }}"><div style="font-size:12px;color:var(--text-3);background:var(--bg-sunken);border-radius:10px;padding:12px">当前样本没有待确认关系。</div></sc-if>
+                <div style="display:flex;flex-direction:column;gap:8px;max-height:430px;overflow:auto"><sc-for list="{{ profile_unresolved }}" as="u"><div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:10px 11px"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ u.source_id }}</span><span style="font-size:10.8px;color:var(--text-3)">{{ u.source_type }}</span></div><div style="font-size:12.3px;font-weight:650;line-height:1.45;margin:4px 0">{{ u.title }}</div><div style="font-size:11.5px;color:var(--text-2);line-height:1.55">{{ u.description }}</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;margin-top:4px">缺口：{{ u.gaps }}</div></div></sc-for></div>
+              </div>
+            </div>
+
+            <div data-cols="" style="display:grid;grid-template-columns:1fr 1.5fr;gap:14px">
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px"><div style="font-size:14px;font-weight:750;margin-bottom:10px">数据元信息</div><div style="display:grid;grid-template-columns:100px 1fr;gap:7px 9px;font-size:11.8px"><span style="color:var(--text-3)">数据版本</span><span style="font-family:var(--font-mono);overflow-wrap:anywhere">{{ profile_dataVersion }}</span><span style="color:var(--text-3)">核验日期</span><span>{{ profile_verifiedAt }}</span><span style="color:var(--text-3)">生成时间</span><span style="font-family:var(--font-mono);overflow-wrap:anywhere">{{ profile_generatedAt }}</span></div></div>
+              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px"><div style="font-size:14px;font-weight:750;margin-bottom:10px">限制说明</div><div style="display:flex;flex-direction:column;gap:7px"><sc-for list="{{ profile_limitations }}" as="l"><div style="display:flex;gap:8px;font-size:11.8px;line-height:1.6;color:var(--text-2)"><span style="color:var(--brand-600)">•</span><span>{{ l.text }}</span></div></sc-for></div></div>
             </div>
           </sc-if>
         </div>
@@ -5029,6 +5133,8 @@ class Component extends DCLogic {
     runtimeCapabilities:null, runtimeCapabilitiesLoaded:false, runtimeCapabilitiesLoading:false,
     legacyNotice:'',
     evidenceWorkbench:null, evidenceWorkbenchLoading:false, evidenceWorkbenchLoaded:false, evidenceWorkbenchError:'',
+    companyProfileCompany:'恒瑞医药', companyProfileCompanies:[], companyProfile:null,
+    companyProfileLoading:false, companyProfileCompaniesLoading:false, companyProfileError:'',
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -5064,7 +5170,7 @@ class Component extends DCLogic {
   nf(n){ return Number(n).toLocaleString('en-US'); }
   yi(){ return this.D.trendYears.indexOf(String(this.state.year)); }
 
-  _legacyPages(){ return {chat:1,compare:1,research:1,whitebox:1,database:1,timeline:1,advanced:1}; }
+  _legacyPages(){ return {chat:1,research:1,whitebox:1,database:1,timeline:1,advanced:1}; }
   _legacyAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.legacy_features_available); }
   _legacyReason(){ const c=this.state.runtimeCapabilities||{}; return c.legacy_unavailable_reason||'旧数据未配置'; }
   _isLegacyPage(p){ return !!this._legacyPages()[p]; }
@@ -5209,7 +5315,7 @@ class Component extends DCLogic {
     const p=this.state.page;
     if(this._isLegacyPage(p) && !this._legacyAvailable()) return;
     if(p==='today') this.loadDashboard();
-    else if(p==='compare'){ this.loadProfile(); this.loadCompare(); }
+    else if(p==='compare') this.loadCompanyEvidenceProfilePage();
     else if(p==='timeline') this.loadTimeline();
     else if(p==='database') this.loadDbCatalog();
     else if(p==='whitebox') this.loadWhitebox();
@@ -5222,6 +5328,46 @@ class Component extends DCLogic {
     if(this.state.evidenceWorkbenchLoading || this.state.evidenceWorkbenchLoaded) return;
     this.setState({evidenceWorkbenchLoading:true,evidenceWorkbenchError:'',evidenceWorkbenchLoaded:true});
     this._api('/api/evidence/workbench').then(d=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbench:(d&&d.workbench)||null})).catch(()=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbenchError:'证据工作台加载失败，请稍后重试'}));
+  }
+  loadCompanyEvidenceProfilePage(){
+    this.loadCompanyProfileCompanies();
+    this.loadCompanyEvidenceProfile();
+  }
+  loadCompanyProfileCompanies(){
+    if(this.state.companyProfileCompaniesLoading || this.state.companyProfileCompanies.length) return;
+    this.setState({companyProfileCompaniesLoading:true});
+    this._api('/api/evidence/company-profile-companies').then(d=>{
+      const items=Array.isArray(d&&d.items)?d.items:[];
+      this.setState({companyProfileCompaniesLoading:false,companyProfileCompanies:items});
+    }).catch(()=>this.setState({companyProfileCompaniesLoading:false,companyProfileError:'企业列表加载失败，请稍后重试'}));
+  }
+  loadCompanyEvidenceProfile(){
+    if(this.state.companyProfileLoading) return;
+    const name=String(this.state.companyProfileCompany||'恒瑞医药').trim();
+    this.setState({companyProfileLoading:true,companyProfileError:''});
+    this._api('/api/evidence/company-profile/'+encodeURIComponent(name)).then(d=>this.setState({companyProfileLoading:false,companyProfile:(d&&d.profile)||null})).catch(()=>this.setState({companyProfileLoading:false,companyProfile:null,companyProfileError:'企业证据画像加载失败，请稍后重试'}));
+  }
+  selectCompanyEvidenceProfile(value){
+    this.setState({companyProfileCompany:value,companyProfile:null,companyProfileError:''},()=>this.loadCompanyEvidenceProfile());
+  }
+  openProfileChain(chainId){
+    const cid=String(chainId||'').trim();
+    if(!cid) return;
+    this.setState({page:'evidence',evidenceTab:'chains',chainError:'',navOpen:false},()=>{
+      this.loadChainSummary();
+      this.loadUnresolvedLinks();
+      this.loadChainDetail(cid);
+    });
+  }
+  openProfileSources(){
+    const company=this.state.companyProfileCompany||'恒瑞医药';
+    this.setState({page:'evidence',evidenceTab:'sources',evidenceKind:'company',evidenceQuery:company,evidenceLatestOnly:false,evidenceHasSearched:false,navOpen:false},()=>this.loadEvidence());
+  }
+  openProfileComparison(){
+    this.setState({page:'evidence',evidenceTab:'companyCompare',navOpen:false},()=>this.loadCompanyComparisonPage());
+  }
+  openProfileGroundedQa(){
+    this.setState({page:'evidence',evidenceTab:'groundedQa',navOpen:false},()=>this.loadGroundedCapabilities());
   }
   loadProfile(){ if(!this._legacyAvailable()) return; const key=this._curKey(), s=this.state;
     this._api('/api/profile',{company_name:s.company, report_year:s.year}).then(d=>this._mergeApi({profile:{key,data:d}})).catch(()=>{}); }
@@ -6125,7 +6271,7 @@ class Component extends DCLogic {
       main:[
         {key:'today',label:'研发决策工作台',icon:['M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z']},
         {key:'chat',label:'智能问答',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
-        {key:'compare',label:'公司画像 · 对比',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
+        {key:'compare',label:'企业证据画像',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
         {key:'research',label:'自动化研报',icon:['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6','M9 13h6','M9 17h6']},
         {key:'evidence',label:'研发证据查询',icon:['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5','M8 13h8','M8 17h5']},
         {key:'whitebox',label:'白盒溯源',icon:['M3 7V5a2 2 0 0 1 2-2h2','M17 3h2a2 2 0 0 1 2 2v2','M21 17v2a2 2 0 0 1-2 2h-2','M7 21H5a2 2 0 0 1-2-2v-2','M7 12h10'],badge:'核心'}
@@ -6147,7 +6293,7 @@ class Component extends DCLogic {
   shellVals(){
     const s=this.state;
     const nd=this.navDef();
-    const META={today:['研发决策工作台','真实证据总览'],chat:['智能问答','对话与证据'],compare:['公司画像','双公司对比'],research:['自动化研报','报告生成'],evidence:['研发证据查询','来源检索'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['事件时间轴','公司动态'],advanced:['高级分析','图谱与编排']};
+    const META={today:['研发决策工作台','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据查询','来源检索'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['事件时间轴','公司动态'],advanced:['高级分析','图谱与编排']};
     const m=META[s.page]||['',''];
     const segBase='flex:1;height:24px;border:0;border-radius:5px;font-size:11.5px;font-weight:500;cursor:pointer;transition:all .12s;';
     return {
@@ -6258,6 +6404,56 @@ class Component extends DCLogic {
       today_latestVerifiedAt:this._evidenceText(metadata.latest_verified_at),
       today_generatedAt:this._evidenceText(metadata.generated_at),
       today_dataScope:this._evidenceText(metadata.data_scope_label||metadata.data_scope)
+    };
+  }
+
+  companyProfileVals(){
+    const s=this.state, profile=s.companyProfile||{}, company=profile.company||{}, summary=profile.summary||{}, metadata=profile.metadata||{};
+    const text=(v)=>this._evidenceText(v);
+    const companies=(s.companyProfileCompanies.length?s.companyProfileCompanies:[
+      {canonical_name:'恒瑞医药',display_name:'恒瑞医药'},
+      {canonical_name:'百济神州',display_name:'百济神州 / BeOne Medicines'}
+    ]).map(item=>({value:text(item.canonical_name),label:text(item.display_name||item.canonical_name)}));
+    const metric=(label,key,note)=>({label,value:text(summary[key]),note});
+    const distributions=(items)=>Array.isArray(items)?items.map(item=>({label:text(item&&item.label),count:text(item&&item.count)})):[];
+    const trialChains=(Array.isArray(profile.trial_chains)?profile.trial_chains:[]).map(chain=>({
+      chain_id:text(chain.chain_id),study_name:text(chain.study_name||chain.chain_name),trial_id:text(chain.trial_id),source_count:text(chain.source_count),
+      version_text:'最新 '+text(chain.latest_count)+' · 历史 '+text(chain.historical_count)+' · 独立 '+text(chain.independent_count),
+      study_status:text(chain.study_status),onClick:()=>this.openProfileChain(chain.chain_id)
+    }));
+    const regulatoryChains=(Array.isArray(profile.regulatory_chains)?profile.regulatory_chains:[]).map(chain=>({
+      chain_id:text(chain.chain_id),chain_name:text(chain.chain_name),source_count:text(chain.source_count),counting_note:text(chain.counting_note),
+      related_trials:(Array.isArray(chain.related_trial_ids)?chain.related_trial_ids:[]).join('、')||'暂无',
+      sources:(Array.isArray(chain.sources)?chain.sources:[]).map(source=>({source_id:text(source.source_id),source_type:text(source.source_type),title:text(source.title),status_note:text(source.status_note),risk_notes:text(source.risk_notes)})),
+      onClick:()=>this.openProfileChain(chain.chain_id)
+    }));
+    const independent=(Array.isArray(profile.independent_sources)?profile.independent_sources:[]).map(item=>({source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),link_status:text(item.link_status),study_status:text(item.study_status)}));
+    const unresolved=(Array.isArray(profile.unresolved_links)?profile.unresolved_links:[]).map(item=>({source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),description:text(item.description),gaps:Array.isArray(item.evidence_gaps)?item.evidence_gaps.join('；'):text(item.evidence_gaps)}));
+    const limitations=(Array.isArray(profile.limitations)?profile.limitations:[]).map(item=>({text:text(item)}));
+    const aliases=Array.isArray(company.aliases)?company.aliases.map(alias=>({text:text(alias)})):[];
+    return {
+      profile_loading:s.companyProfileLoading, profile_hasError:!!s.companyProfileError, profile_error:s.companyProfileError,
+      profile_hasData:!!company.canonical_name, profile_empty:!s.companyProfileLoading&&!s.companyProfileError&&!!s.companyProfile&&!company.canonical_name,
+      profile_company:s.companyProfileCompany, profile_companies:companies, profile_onCompany:(e)=>this.selectCompanyEvidenceProfile(e.target.value),
+      profile_reload:()=>this.loadCompanyEvidenceProfile(), profile_displayName:text(company.display_name), profile_canonicalName:text(company.canonical_name),
+      profile_aliases:aliases, profile_hasAliases:aliases.length>0,
+      profile_metrics:[
+        metric('当前来源','source_count','当前样本内来源条数'),metric('已核验来源','verified_source_count','人工核验状态'),
+        metric('试验级证据链','trial_chain_count','按试验去重'),metric('药物级监管链','regulatory_chain_count','不计入试验数量'),
+        metric('多来源试验链','multi_source_trial_chain_count','登记、论文或公司资料关联'),metric('单来源试验链','single_source_trial_chain_count','当前仅收录一个来源'),
+        metric('论文来源','publication_source_count','按 source_type 统计'),metric('试验登记来源','trial_registry_source_count','按 source_type 统计'),
+        metric('最新资料','latest_count','版本关系为 latest'),metric('历史版本','historical_count','版本关系为 historical'),
+        metric('独立资料','independent_count','无新旧版本关系'),metric('待确认关系','unresolved_link_count','缺少明确一对一核验依据')
+      ],
+      profile_sourceTypes:distributions(profile.source_type_distribution), profile_studyStatuses:distributions(profile.study_status_distribution),
+      profile_trialChains:trialChains, profile_hasTrialChains:trialChains.length>0,
+      profile_regulatoryChains:regulatoryChains, profile_hasRegulatoryChains:regulatoryChains.length>0,
+      profile_noRegulatory:!!company.canonical_name&&!regulatoryChains.length,
+      profile_independent:independent, profile_hasIndependent:independent.length>0,
+      profile_unresolved:unresolved, profile_hasUnresolved:unresolved.length>0,
+      profile_limitations:limitations, profile_dataVersion:text(metadata.data_version), profile_verifiedAt:text(metadata.latest_verified_at), profile_generatedAt:text(metadata.generated_at),
+      profile_scopeWarning:'本画像仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力或完整研发管线。',
+      profile_allSources:()=>this.openProfileSources(), profile_compare:()=>this.openProfileComparison(), profile_grounded:()=>this.openProfileGroundedQa()
     };
   }
 
@@ -6886,7 +7082,7 @@ class Component extends DCLogic {
   }
 
   renderVals(){
-    return Object.assign({}, this.shellVals(), this.todayVals(), this.chatVals(), this.compareVals(), this.researchVals(), this.evidenceVals(), this.whiteboxVals(), this.databaseVals(), this.timelineVals(), this.advancedVals());
+    return Object.assign({}, this.shellVals(), this.todayVals(), this.companyProfileVals(), this.chatVals(), this.researchVals(), this.evidenceVals(), this.whiteboxVals(), this.databaseVals(), this.timelineVals(), this.advancedVals());
   }
 }
 

@@ -71,9 +71,11 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         self.assertNotIn("retry", runtime_block.lower())
         self.assertEqual(self.component.count("this.loadBootstrap()"), 1)
 
-    def test_06_full_legacy_navigation_and_api_code_is_retained(self):
-        for text in ["研发决策工作台", "智能问答", "公司画像 · 对比", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
+    def test_06_current_navigation_and_legacy_api_code_are_retained(self):
+        for text in ["研发决策工作台", "智能问答", "企业证据画像", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
             self.assertIn(text, self.component)
+        self.assertNotIn("label:'公司画像 · 对比'", self.component)
+        self.assertIn('<sc-if value="{{ isLegacyCompare }}">', self.template)
         for path in ["/api/bootstrap", "/api/profile", "/api/compare", "/api/timeline"]:
             self.assertIn(path, self.component)
         self.assertIn("@app.get(\"/api/dashboard\")", Path(ROOT / "webapp" / "main.py").read_text(encoding="utf-8"))

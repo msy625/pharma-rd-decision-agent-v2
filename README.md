@@ -39,6 +39,7 @@
 | 引用分析报告 | 根据检索证据生成带编号引用的比较结论 | 规划开发 |
 | 数据与检索底座 | SQLite、Chroma、FastAPI及基础导入流程 | 已具备 |
 | 研发证据查询 | Web 页面按关键词、企业、药物、临床试验、研究名称和来源ID检索31条人工核验证据 | 已完成 |
+| 企业证据画像 | 按归一企业主体展示来源、试验链、监管链、版本构成、独立资料和待确认关系 | 已完成 |
 | 基础工程稳定性 | 空数据处理、延迟加载、缓存兼容和测试隔离 | 已完成 |
 
 > 功能状态会随开发进度更新。README 中不会将规划功能描述为已经完成。
@@ -129,6 +130,26 @@ DeepSeek组织答案
 旧 `data/enterprise_analysis.db` 当前为空，旧 Chroma 数据也不在轻量部署资产中，因此旧财务工作台不进入比赛主链路。新工作台仅反映已收录并核验的 NSCLC 证据样本，不代表企业整体研发实力，也不输出评分、排名、成功率、疗效优劣或投资建议。
 
 Day6 本地浏览器人工验收已通过；该验收不是 Render 线上部署验收。
+
+## 企业证据画像
+
+主导航“公司画像 · 对比”已重构为“企业证据画像”。该页面只请求：
+
+- `GET /api/evidence/company-profile-companies`
+- `GET /api/evidence/company-profile/{name}`
+
+当前支持两个归一主体：
+
+- 恒瑞医药。
+- 百济神州 / BeOne Medicines；`百济神州`、`BeOne Medicines` 和 `BeiGene` 归一为同一主体。
+
+画像数量来自 `SourceRegistryService`、`EvidenceChainService` 和现有数据版本逻辑动态计算。当前样本中，恒瑞医药为 15 条来源、6 条试验级证据链、0 条药物级监管链；百济神州 / BeOne Medicines 为 16 条来源、4 条试验级证据链、1 条药物级监管链。B015/B016 只组成药物级监管链：B015 表示正式授权，B016 表示 CHMP 积极意见且不是最终批准；B016 不增加 RATIONALE-315 的试验证据数量。
+
+页面同时展示来源类型、研究状态、最新/历史/独立资料、试验链、监管链、独立资料和待确认关系，并提供“查看全部来源”“打开企业对比”“进入循证问答”快捷入口。旧财务画像、雷达评分、风险分、企业排名和 winner 逻辑不进入当前导航或自动请求；双企业证据对比仍保留在“研发证据查询—企业对比”内部页签。
+
+Day6 企业证据画像本地浏览器人工验收已通过：企业切换、指标、B015/B016 监管口径、证据链跳转、三个快捷入口、旧 API 隔离、Console 和窄屏布局均正常。该结论不是 Render 线上部署验收。
+
+范围限制：企业证据画像只反映当前收录并核验的 NSCLC 证据样本，不代表企业整体研发实力或完整研发管线；当前数据缺少统一的 `project_id`、`target`、`mechanism` 和 `drug_type`，不得从 `drug_name` 推断项目数量。
 
 本地启动 FastAPI Web 服务：
 
@@ -284,7 +305,7 @@ GROUNDED_QA_LLM_MAX_CONCURRENCY=2
 GET /api/runtime-capabilities
 ```
 
-该接口用于区分比赛核心轻量环境与旧功能能力状态。证据工作台可用时返回 `default_page=today`，首页默认进入真实“研发决策工作台”，只请求 `/api/evidence/workbench`，不会自动请求 `/api/bootstrap`、`/api/profile`、`/api/dashboard` 等旧接口，也不会展示旧工作台固定兜底统计。旧功能具备真实 SQLite 数据和可选依赖时仍可按能力保留，但不再决定默认工作台。
+该接口用于区分比赛核心轻量环境与旧功能能力状态。响应包含 `evidence_workbench_available` 和 `company_evidence_profile_available`；企业证据画像能力只依赖当前 CSV/JSON 证据服务，不因旧 SQLite 为空而关闭。证据工作台可用时返回 `default_page=today`，首页默认进入真实“研发决策工作台”，只请求 `/api/evidence/workbench`，不会自动请求 `/api/bootstrap`、`/api/profile`、`/api/dashboard` 等旧接口，也不会展示旧工作台固定兜底统计。旧功能具备真实 SQLite 数据和可选依赖时仍可按能力保留，但不再决定默认工作台。
 
 运行能力检查不使用 `.env` 判断旧功能是否可用，不读取或返回密钥，不创建 DeepSeek 客户端，不访问网络，也不加载 Chroma、sentence-transformers 或 Torch。
 

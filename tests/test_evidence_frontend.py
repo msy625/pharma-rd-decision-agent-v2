@@ -47,8 +47,8 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
         self.assertLess(research, evidence)
         self.assertLess(evidence, whitebox)
 
-    def test_original_eight_nav_labels_still_exist(self):
-        for label in ["工作台", "智能问答", "公司画像 · 对比", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
+    def test_primary_nav_labels_still_exist(self):
+        for label in ["工作台", "智能问答", "企业证据画像", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
             self.assertIn(label, self.component)
 
     def test_evidence_state_fields_exist(self):

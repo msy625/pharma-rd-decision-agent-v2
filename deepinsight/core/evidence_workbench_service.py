@@ -130,15 +130,19 @@ class EvidenceWorkbenchService:
             "source_type_distribution": self.source_type_distribution(),
             "study_status_distribution": self.study_status_distribution(),
             "evidence_gaps": self.evidence_gaps(),
-            "metadata": {
-                "data_scope": DATA_SCOPE,
-                "data_scope_label": "NSCLC；恒瑞医药；百济神州/BeOne Medicines；第一版人工核验来源",
-                "data_version": self.grounded_qa_service.data_version(),
-                "latest_verified_at": self._latest_verified_at(rows),
-                "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                "generated_at_note": "响应生成时间，不代表证据事件日期或核验日期。",
-            },
+            "metadata": self.metadata(rows),
             "limitations": list(LIMITATIONS),
+        }
+
+    def metadata(self, rows: Iterable[dict[str, str]] | None = None) -> dict[str, str]:
+        selected_rows = list(rows) if rows is not None else self.source_registry_service.load_rows()
+        return {
+            "data_scope": DATA_SCOPE,
+            "data_scope_label": "NSCLC；恒瑞医药；百济神州/BeOne Medicines；第一版人工核验来源",
+            "data_version": self.grounded_qa_service.data_version(),
+            "latest_verified_at": self._latest_verified_at(selected_rows),
+            "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "generated_at_note": "响应生成时间，不代表证据事件日期或核验日期。",
         }
 
     @staticmethod

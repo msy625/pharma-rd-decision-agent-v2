@@ -122,7 +122,7 @@ class CompanyEvidenceComparisonFrontendStaticTest(unittest.TestCase):
 
     def test_21_existing_evidence_tabs_and_nav_remain(self):
         self.assertIn("label:'研发证据查询'", self.component)
-        self.assertIn("label:'公司画像 · 对比'", self.component)
+        self.assertIn("label:'企业证据画像'", self.component)
         self.assertIn("查询类型", self.evidence_template)
         self.assertIn("证据链列表", self.evidence_template)
 

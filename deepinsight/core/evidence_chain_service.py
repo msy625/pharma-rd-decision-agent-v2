@@ -152,6 +152,7 @@ class EvidenceChainService:
             "company_name": chain_config.get("company_name", ""),
             "drug_names": list(chain_config.get("drug_names", [])),
             "trial_ids": list(chain_config.get("trial_ids", [])),
+            "related_trial_ids": list(chain_config.get("related_trial_ids", [])),
             "study_names": list(chain_config.get("study_names", [])),
             "study_status": self._chain_study_status(evidence_items),
             "evidence_items": evidence_items,

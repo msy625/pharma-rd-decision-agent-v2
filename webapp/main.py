@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
+from deepinsight.core.company_evidence_profile_service import CompanyEvidenceProfileService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
@@ -97,6 +98,14 @@ def _competition_core_available() -> bool:
 def _evidence_workbench_available() -> bool:
     try:
         _evidence_workbench_service().summary()
+        return True
+    except Exception:
+        return False
+
+
+def _company_evidence_profile_available() -> bool:
+    try:
+        _company_evidence_profile_service().build_profile("恒瑞医药")
         return True
     except Exception:
         return False
@@ -1552,6 +1561,31 @@ def _company_evidence_comparison_service() -> CompanyEvidenceComparisonService:
     )
 
 
+def _company_evidence_profile_service() -> CompanyEvidenceProfileService:
+    source_service = _evidence_service()
+    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+    company_comparison_service = CompanyEvidenceComparisonService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+    )
+    evidence_workbench_service = EvidenceWorkbenchService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+        grounded_qa_service=GroundedQAService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+            company_comparison_service=company_comparison_service,
+        ),
+    )
+    return CompanyEvidenceProfileService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        evidence_workbench_service=evidence_workbench_service,
+        company_comparison_service=company_comparison_service,
+    )
+
+
 def _evidence_workbench_service() -> EvidenceWorkbenchService:
     source_service = _evidence_service()
     evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
@@ -1712,10 +1746,12 @@ def ready() -> dict[str, Any]:
 def runtime_capabilities() -> dict[str, Any]:
     competition_available = _competition_core_available()
     workbench_available = _evidence_workbench_available()
+    company_profile_available = _company_evidence_profile_available()
     legacy_available = _legacy_features_available()
     return {
         "competition_core_available": competition_available,
         "evidence_workbench_available": workbench_available,
+        "company_evidence_profile_available": company_profile_available,
         "legacy_features_available": legacy_available,
         "default_page": "today" if workbench_available else "evidence",
         "legacy_unavailable_reason": "" if legacy_available else LEGACY_UNAVAILABLE_REASON,
@@ -1961,6 +1997,31 @@ def evidence_company_comparison(
         }
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/company-profile-companies")
+def evidence_company_profile_companies() -> dict[str, Any]:
+    try:
+        items = _company_evidence_profile_service().available_companies()
+        return {"count": len(items), "items": items}
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/company-profile/{name}")
+def evidence_company_profile(name: str) -> dict[str, Any]:
+    try:
+        profile = _company_evidence_profile_service().build_profile(name)
+        return {
+            "profile": profile,
+            "metadata": {
+                "data_scope": profile.get("metadata", {}).get(
+                    "data_scope", "first_version_nsclc_hengrui_beone"
+                )
+            },
+        }
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 

@@ -96,6 +96,10 @@ class CompanyEvidenceComparisonService:
     def available_companies(self) -> list[dict[str, object]]:
         return [dict(subject) for subject in COMPANY_SUBJECTS]
 
+    def normalize_company(self, company_name: str) -> dict[str, object]:
+        subject = self._resolve_company(company_name)
+        return dict(subject) if subject else {}
+
     def company_profile(self, company_name: str) -> dict[str, object]:
         subject = self._resolve_company(company_name)
         if not subject:
