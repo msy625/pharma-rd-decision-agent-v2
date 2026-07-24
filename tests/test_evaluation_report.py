@@ -24,7 +24,8 @@ class EvaluationReportTest(unittest.TestCase):
             output_dir = Path(tmp) / "report"
             run_benchmark(output_dir=output_dir)
             failures = json.loads((output_dir / "failures.json").read_text(encoding="utf-8"))
-            self.assertTrue(any(item["case_id"] == "SRC-001" and item["baseline"] == "grounded_qa_local" for item in failures))
+            self.assertTrue(any(item["case_id"] == "SRC-001" and item["baseline"] == "keyword_contains" for item in failures))
+            self.assertFalse(any(item["case_id"] == "SRC-001" and item["baseline"] == "grounded_qa_local" for item in failures))
             with (output_dir / "baseline_comparison.csv").open(encoding="utf-8", newline="") as handle:
                 rows = list(csv.DictReader(handle))
             self.assertEqual({row["baseline"] for row in rows}, {"keyword_contains", "structured_no_chain", "grounded_qa_local"})

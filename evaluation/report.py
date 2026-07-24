@@ -54,7 +54,9 @@ def build_markdown_report(
     lines = [
         "# 药研制策离线量化评测报告",
         "",
-        "> 本报告是12题pilot试运行结果，用于验证评测框架并暴露当前能力缺口，不是最终业务成绩。",
+        ("> 本报告是12题pilot试运行结果，用于验证评测框架并暴露当前能力缺口，不是最终业务成绩。"
+         if run_manifest["benchmark_stage"] == "pilot"
+         else f"> 本报告是{run_manifest['case_count']}题{run_manifest['benchmark_stage']}离线评测结果。"),
         "",
         "## 运行信息",
         "",
@@ -70,23 +72,25 @@ def build_markdown_report(
         "",
         "## 基线汇总",
         "",
-        "| 基线 | 通过题数 | 自动通过率 | Source F1 | Chain完全匹配 | 必要事实覆盖 | Median延迟(ms) | P95延迟(ms) |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        "| 基线 | 状态通过题数 | 覆盖率 | 适用题通过率 | 端到端通过率 | Source F1 | Chain完全匹配 | 必要事实覆盖 | Median延迟(ms) | P95延迟(ms) |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in aggregates["baseline_summary"]:
         latency = latency_by_baseline[row["baseline"]]
         pass_count = sum(
-            int(record["metrics"]["overall_pass"])
+            int(record["status"] == "passed")
             for record in records
             if record["baseline"] == row["baseline"]
         )
         lines.append(
-            "| {baseline} | {passed}/{count} | {pass_rate:.1%} | {source_f1:.3f} | {chain:.3f} | "
+            "| {baseline} | {passed}/{count} | {coverage:.1%} | {applicable} | {e2e:.1%} | {source_f1:.3f} | {chain:.3f} | "
             "{facts:.3f} | {median:.3f} | {p95:.3f} |".format(
                 baseline=row["baseline"],
                 passed=pass_count,
                 count=row["case_count"],
-                pass_rate=row["overall_pass_rate"],
+                coverage=row["coverage"],
+                applicable=(f"{row['applicable_pass_rate']:.1%}" if row["applicable_pass_rate"] is not None else "N/A"),
+                e2e=row["end_to_end_pass_rate"],
                 source_f1=row["source_f1"],
                 chain=row["chain_exact_match"],
                 facts=row["required_fact_coverage"],
@@ -156,6 +160,7 @@ def _write_metric_details(path: Path, records: list[dict[str, Any]]) -> None:
                 "split": record["split"],
                 "category": record["category"],
                 "target": record["target"],
+                "status": record["status"],
                 "retrieval_precision_at_k": metrics["retrieval_precision_at_k"],
                 "retrieval_recall_at_k": metrics["retrieval_recall_at_k"],
                 "source_precision": metrics["source_precision"],
@@ -196,6 +201,7 @@ def _failure_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "citations": record["result"]["citations"],
             "error": record["result"]["error"],
             "manual_review_pending": record["metrics"]["manual_review_pending"],
+            "status": record["status"],
         }
         for record in records
         if not record["metrics"]["overall_pass"]

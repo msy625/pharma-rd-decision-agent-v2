@@ -102,3 +102,17 @@ Ubuntu Bash：
 ## Pilot解释规则
 
 评测工具自动测试通过只表示schema、runner、指标和报告实现符合协议，不能写成业务准确率。pilot中出现的自然语言别名、公司组合分类或证据缺口分类失败，应记录为当前生产能力缺口；本阶段不得为了提高分数修改生产服务或硬编码答案。
+
+## 结果状态与分母
+
+每条结果只取一个状态：`passed`、`failed`、`not_applicable`、`unsupported`、`manual_review`。不支持的基线能力标记为`unsupported`，不进入适用题通过率分母，也绝不记为通过。
+
+- 覆盖率 = `passed + failed + manual_review` / 全部题目。
+- 适用题通过率 = `passed` / `passed + failed`；没有适用题时为`N/A`，不能显示100%。
+- 端到端通过率 = `passed` / 全部题目。
+
+Pilot人工复核记录位于`evaluation/reviews/pilot_manual_reviews.json`。其中明确披露当前为非人工签字的辅助证据复核，项目负责人签字前不得对外表述为已完成人工验收。
+
+## 60题正式集
+
+正式集冻结于`formal_manifest.json`和`formal_cases.jsonl`，共60题：来源检索10、试验状态8、证据链10、监管状态8、企业比较8、证据缺口6、禁止或不支持10。拆分为42题开发集与18题锁定验收集。生成脚本只从人工Pilot金标准合同复制预期来源、链、事实与安全边界并改写问法，不调用被测服务；锁定验收集不得用于针对性修复或调参。

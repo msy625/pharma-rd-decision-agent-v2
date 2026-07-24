@@ -18,7 +18,7 @@ from deepinsight.core.grounded_qa_service import GroundedQAService
 from deepinsight.core.source_registry_service import SourceRegistryService
 from evaluation.adapters import ProductionServiceAdapters
 from evaluation.baselines import BASELINE_NAMES, build_baselines
-from evaluation.metrics import aggregate_results, evaluate_case
+from evaluation.metrics import aggregate_results, evaluate_case, result_status
 from evaluation.report import write_evaluation_outputs
 from evaluation.validators import (
     PROJECT_ROOT,
@@ -32,6 +32,7 @@ from evaluation.validators import (
 
 DEFAULT_MANIFEST_PATH = PROJECT_ROOT / "evaluation" / "cases" / "pilot_manifest.json"
 DEFAULT_CASES_PATH = PROJECT_ROOT / "evaluation" / "cases" / "pilot_cases.jsonl"
+DEFAULT_REVIEWS_PATH = PROJECT_ROOT / "evaluation" / "reviews" / "pilot_manual_reviews.json"
 
 
 def run_benchmark(
@@ -40,11 +41,13 @@ def run_benchmark(
     manifest_path: str | Path = DEFAULT_MANIFEST_PATH,
     cases_path: str | Path = DEFAULT_CASES_PATH,
     baseline_names: list[str] | None = None,
+    reviews_path: str | Path | None = DEFAULT_REVIEWS_PATH,
 ) -> dict[str, Any]:
     started_clock = perf_counter()
     started_at = _utc_now()
     manifest = load_json(manifest_path)
     cases = load_cases(cases_path)
+    reviews = _load_reviews(reviews_path) if manifest.get("benchmark_stage") == "pilot" else {}
 
     source_service = SourceRegistryService()
     chain_service = EvidenceChainService(source_registry_service=source_service)
@@ -83,6 +86,7 @@ def run_benchmark(
         for case in cases:
             result = baseline.run(case)
             metrics = evaluate_case(case, result)
+            manual_review = reviews.get(case["case_id"])
             records.append(
                 {
                     "baseline": baseline.name,
@@ -97,6 +101,8 @@ def run_benchmark(
                     "expected_chain_ids": case["expected_chain_ids"],
                     "result": result,
                     "metrics": metrics,
+                    "manual_review": manual_review,
+                    "status": result_status(baseline.name, case["category"], metrics, manual_review),
                 }
             )
 
@@ -126,6 +132,7 @@ def run_benchmark(
             "cases_path": str(Path(cases_path)),
             "output_dir": str(output_path),
             "baseline_names": selected_names,
+            "reviews_path": str(Path(reviews_path)) if reviews_path else "",
         },
         "notes": [
             "本次运行未读取.env，也未创建或调用模型客户端。",
@@ -170,8 +177,16 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _load_reviews(path: str | Path | None) -> dict[str, dict[str, Any]]:
+    if not path or not Path(path).exists():
+        return {}
+    payload = load_json(path)
+    reviews = payload.get("reviews") or []
+    return {str(item["case_id"]): item for item in reviews}
+
+
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="运行药研制策12题离线pilot评测")
+    parser = argparse.ArgumentParser(description="运行药研制策离线量化评测")
     parser.add_argument("--output-dir", required=True, help="结果输出目录；不得位于data或config事实目录")
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST_PATH), help="pilot manifest路径")
     parser.add_argument("--cases", default=str(DEFAULT_CASES_PATH), help="pilot JSONL用例路径")

@@ -4,6 +4,7 @@ from collections import Counter
 
 from evaluation.runner import DEFAULT_CASES_PATH, DEFAULT_MANIFEST_PATH
 from evaluation.validators import (
+    PROJECT_ROOT,
     EvaluationValidationError,
     load_cases,
     load_json,
@@ -20,6 +21,20 @@ class EvaluationSchemaTest(unittest.TestCase):
 
     def test_pilot_manifest_and_cases_are_valid(self):
         validate_suite(self.manifest, self.cases)
+
+    def test_formal_suite_is_frozen_with_required_distribution_and_split(self):
+        manifest = load_json(PROJECT_ROOT / "evaluation" / "cases" / "formal_manifest.json")
+        cases = load_cases(PROJECT_ROOT / "evaluation" / "cases" / "formal_cases.jsonl")
+        validate_suite(manifest, cases)
+        self.assertEqual(Counter(item["split"] for item in cases), {"dev": 42, "acceptance": 18})
+        self.assertEqual(
+            Counter(item["category"] for item in cases),
+            {
+                "source_search": 10, "trial_status": 8, "evidence_chain": 10,
+                "regulatory_status": 8, "company_comparison": 8, "evidence_gap": 6,
+                "prohibited_or_unsupported": 10,
+            },
+        )
         self.assertEqual(self.manifest["case_count"], 12)
         self.assertEqual(len(self.cases), 12)
 

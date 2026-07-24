@@ -209,6 +209,23 @@ def evaluate_case(case: dict[str, Any], result: dict[str, Any]) -> dict[str, Any
     }
 
 
+def result_status(
+    baseline: str,
+    category: str,
+    metrics: dict[str, Any],
+    manual_review: dict[str, Any] | None = None,
+) -> str:
+    """Return one mutually-exclusive case status without inflating pass rates."""
+    if baseline != "grounded_qa_local" and category != "source_search":
+        return "unsupported"
+    if metrics.get("manual_review_pending"):
+        verdict = str((manual_review or {}).get("verdict") or "manual_review")
+        if verdict in {"passed", "failed"}:
+            return verdict if metrics.get("overall_pass") else "failed"
+        return "manual_review"
+    return "passed" if metrics.get("overall_pass") else "failed"
+
+
 def aggregate_results(records: list[dict[str, Any]]) -> dict[str, Any]:
     by_baseline: dict[str, list[dict[str, Any]]] = defaultdict(list)
     by_baseline_category: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
@@ -256,7 +273,17 @@ def _aggregate_group(records: list[dict[str, Any]]) -> dict[str, Any]:
         "latency_within_budget",
         "overall_pass",
     ]
-    summary: dict[str, Any] = {"case_count": len(records)}
+    statuses = [record.get("status") or ("passed" if record["metrics"]["overall_pass"] else "failed") for record in records]
+    counts = {name: statuses.count(name) for name in ["passed", "failed", "not_applicable", "unsupported", "manual_review"]}
+    covered = counts["passed"] + counts["failed"] + counts["manual_review"]
+    applicable = counts["passed"] + counts["failed"]
+    summary: dict[str, Any] = {
+        "case_count": len(records),
+        **{f"{name}_count": count for name, count in counts.items()},
+        "coverage": covered / len(records) if records else 0.0,
+        "applicable_pass_rate": counts["passed"] / applicable if applicable else None,
+        "end_to_end_pass_rate": counts["passed"] / len(records) if records else 0.0,
+    }
     for name in metric_names:
         values = [float(record["metrics"][name]) for record in records]
         output_name = "overall_pass_rate" if name == "overall_pass" else name

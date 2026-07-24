@@ -28,7 +28,9 @@ def _read(path: Path) -> str:
 
 
 def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    # Manifest hashes represent repository content and must not vary when
+    # core.autocrlf materializes text assets with CRLF on Windows.
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def _local_static_paths(html: str) -> set[str]:

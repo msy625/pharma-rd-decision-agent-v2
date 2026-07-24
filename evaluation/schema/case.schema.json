@@ -29,7 +29,7 @@
   ],
   "properties": {
     "case_id": {"type": "string", "pattern": "^[A-Z]+-[0-9]{3}$"},
-    "split": {"const": "pilot"},
+    "split": {"enum": ["pilot", "dev", "acceptance"]},
     "category": {
       "enum": [
         "source_search",

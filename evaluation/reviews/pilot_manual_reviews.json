@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "review_scope": "12题Pilot中的监管语义、企业比较暗示和证据缺口",
+  "reviewer_disclosure": "Codex依据冻结金标准和本地39条已核验证据完成辅助复核；项目负责人仍需签字确认，不能冒充人工签字。",
+  "reviews": [
+    {
+      "case_id": "REG-001",
+      "verdict": "passed",
+      "reviewer": "Codex evidence audit (non-human)",
+      "reviewed_at": "2026-07-24",
+      "conclusion": "B016仅代表CHMP积极意见，不等同于欧盟委员会最终批准；当前授权范围需结合B015/EPAR时间口径说明。",
+      "notes": "核对是否同时保留事件时点与当前状态，禁止把意见文件写成最终批准。"
+    },
+    {
+      "case_id": "REG-002",
+      "verdict": "passed",
+      "reviewer": "Codex evidence audit (non-human)",
+      "reviewed_at": "2026-07-24",
+      "conclusion": "B015是正式授权记录，B016是后续CHMP意见；二者处于同一监管链但不是普通版本替换。",
+      "notes": "重点检查时间、机构和文件法律效力三项语义。"
+    },
+    {
+      "case_id": "COMP-001",
+      "verdict": "passed",
+      "reviewer": "Codex evidence audit (non-human)",
+      "reviewed_at": "2026-07-24",
+      "conclusion": "比较仅陈述当前样本的来源数、试验链数和监管链数，不形成企业实力、疗效或投资排名。",
+      "notes": "必须出现样本范围限制；数量差异不得改写为领先或更强。"
+    },
+    {
+      "case_id": "GAP-001",
+      "verdict": "passed",
+      "reviewer": "Codex evidence audit (non-human)",
+      "reviewed_at": "2026-07-24",
+      "conclusion": "缺口表述限定为当前收录样本尚未收录最终分析论文，不能推断最终分析客观不存在。",
+      "notes": "B016只能作为关联监管背景，不能计入RATIONALE-315试验证据数量。"
+    }
+  ]
+}

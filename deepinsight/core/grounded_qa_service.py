@@ -156,8 +156,7 @@ class GroundedQAService:
         kws = self.rules.get("classification_keywords") or {}
         source_ids = [sid.upper() for sid in SOURCE_ID_RE.findall(text)]
         nct_ids = [trial_id.upper() for trial_id in NCT_RE.findall(text)]
-        has_hengrui = self._mentions_company(text, "hengrui")
-        has_beone = self._mentions_company(text, "beone")
+        mentioned_companies = self._extract_companies(text)
         has_rationale = bool(self._extract_study_names(text))
 
         if nct_ids and _contains_any(text, kws.get("trial_status", [])):
@@ -170,12 +169,16 @@ class GroundedQAService:
             return "regulatory_status"
         if _contains_any(text, kws.get("regulatory_status", [])):
             return "regulatory_status"
-        if has_rationale or _contains_any(text, kws.get("evidence_chain", [])):
-            return "evidence_chain"
-        if has_hengrui and has_beone and _contains_any(text, kws.get("company_comparison", [])):
+        if len(mentioned_companies) >= 2 and _contains_any(text, kws.get("company_comparison", [])):
             return "company_comparison"
         if _contains_any(text, kws.get("evidence_gap", [])):
             return "evidence_gap"
+        if _contains_any(text, kws.get("evidence_chain", [])):
+            return "evidence_chain"
+        if _contains_any(text, kws.get("source_search", [])):
+            return "source_search"
+        if has_rationale:
+            return "evidence_chain"
         return "source_search"
 
     def retrieve_evidence(self, question: str, question_type: str | None = None) -> dict[str, Any]:
@@ -190,7 +193,10 @@ class GroundedQAService:
             return self._retrieve_by_source_ids(source_ids, qtype)
 
         if qtype == "company_comparison":
-            comparison = self.company_comparison_service.compare("恒瑞医药", "百济神州")
+            companies = self._extract_companies(question)
+            if len(companies) < 2:
+                return self._empty_retrieval(qtype)
+            comparison = self.company_comparison_service.compare(companies[0], companies[1])
             sources = self._sources_from_comparison(comparison)
             return {
                 "question_type": qtype,
@@ -203,19 +209,26 @@ class GroundedQAService:
             }
 
         if qtype == "evidence_gap":
-            gaps = self.evidence_chain_service.get_unresolved_links()
-            sources = [item.get("source") for item in gaps if isinstance(item.get("source"), dict)]
+            chains = self._matching_chains(question)
+            if chains:
+                gaps = self._gaps_from_chains(chains)
+                sources = [item for chain in chains for item in chain.get("evidence_items") or []]
+                related = [item for chain in chains for item in chain.get("related_regulatory_items") or []]
+            else:
+                gaps = self.evidence_chain_service.get_unresolved_links()
+                sources = [item.get("source") for item in gaps if isinstance(item.get("source"), dict)]
+                related = []
             return {
                 "question_type": qtype,
-                "sources": [source for source in sources if source],
-                "chains": [],
-                "related_regulatory_items": [],
+                "sources": self._dedupe_sources([source for source in sources if source]),
+                "chains": self._dedupe_chains(chains),
+                "related_regulatory_items": self._dedupe_sources(related),
                 "comparison": None,
                 "evidence_gaps": gaps,
                 "retrieval_service": ["EvidenceChainService", "SourceRegistryService"],
             }
 
-        chains = self._matching_chains(question)
+        chains = [] if qtype == "source_search" else self._matching_chains(question)
         related_regulatory_items = []
         sources = []
         for chain in chains:
@@ -431,12 +444,14 @@ class GroundedQAService:
             self.rules_path,
         ]:
             try:
-                path_label = str(path.resolve().relative_to(PROJECT_ROOT))
+                # Keep the facts fingerprint stable across Windows and POSIX
+                # checkouts, including Git's optional CRLF conversion.
+                path_label = path.resolve().relative_to(PROJECT_ROOT).as_posix()
             except ValueError:
                 path_label = path.name
             digest.update(path_label.encode("utf-8"))
             digest.update(b"\0")
-            digest.update(path.read_bytes())
+            digest.update(path.read_bytes().replace(b"\r\n", b"\n"))
             digest.update(b"\0")
         return "sha256:" + digest.hexdigest()[:16]
 
@@ -477,8 +492,22 @@ class GroundedQAService:
         aliases = ((self.rules.get("confirmed_terms") or {}).get("companies") or {}).get(company_key, [])
         return _contains_any(question, aliases)
 
+    def _extract_companies(self, question: str) -> list[str]:
+        companies = []
+        for subject in self.company_comparison_service.available_companies():
+            aliases = list(subject.get("aliases") or [])
+            for configured_aliases in ((self.rules.get("confirmed_terms") or {}).get("companies") or {}).values():
+                normalized = [self.company_comparison_service.normalize_company(alias) for alias in configured_aliases]
+                if any(item.get("company_name") == subject.get("company_name") for item in normalized):
+                    aliases.extend(configured_aliases)
+            if _contains_any(question, aliases):
+                companies.append(str(subject["company_name"]))
+        return _unique_values(companies)
+
     def _extract_study_names(self, question: str) -> list[str]:
-        studies = ((self.rules.get("confirmed_terms") or {}).get("studies") or [])
+        studies = list((self.rules.get("confirmed_terms") or {}).get("studies") or [])
+        studies.extend(row.get("study_name", "") for row in self.source_registry_service.load_rows())
+        studies = _unique_values([study for study in studies if study])
         return [study for study in studies if norm(study) in norm(question)]
 
     def _extract_source_ids(self, question: str) -> list[str]:
@@ -491,6 +520,9 @@ class GroundedQAService:
         out = []
         for aliases in ((self.rules.get("confirmed_terms") or {}).get("drugs") or {}).values():
             if _contains_any(question, aliases):
+                out.append(aliases[0])
+        for alias, aliases in self.source_registry_service.load_aliases().items():
+            if alias and alias in norm(question) and aliases:
                 out.append(aliases[0])
         return _unique_values(out)
 
@@ -568,6 +600,12 @@ class GroundedQAService:
     def _sources_from_comparison(self, comparison: dict[str, Any]) -> list[dict[str, Any]]:
         source_ids = []
         for profile in comparison.get("companies") or []:
+            company_name = str(profile.get("company_name") or "")
+            if company_name:
+                source_ids.extend(
+                    row.get("source_id", "")
+                    for row in self.source_registry_service.query(company=company_name)
+                )
             for chain in profile.get("trial_chains") or []:
                 source_ids.extend(chain.get("source_ids") or [])
             for chain in profile.get("regulatory_chains") or []:
@@ -829,7 +867,7 @@ class GroundedQAService:
                     f"试验链 {profile.get('trial_chain_count', 0)} 条，监管链 {profile.get('regulatory_chain_count', 0)} 条，"
                     f"待确认关系 {profile.get('unresolved_link_count', 0)} 条。"
                 )
-            citations = [self._citation_for_source(source) for source in sources[:12]]
+            citations = [self._citation_for_source(source) for source in sources]
             limitations.append(SCOPE_WARNING)
             return "\n".join(lines), citations, evidence_used, limitations
 
@@ -838,11 +876,20 @@ class GroundedQAService:
             if not gaps:
                 return "当前数据不足：未找到待确认关系或证据缺口记录。", [], [], limitations
             lines = ["本地证据摘要："]
+            if sources:
+                lines.append("- 当前试验证据：" + "、".join(source["source_id"] for source in sources) + "。")
+                citations.extend(self._citation_for_source(source, "当前试验证据") for source in sources)
+            if related:
+                lines.append(
+                    "- " + "、".join(source["source_id"] for source in related)
+                    + "为关联监管背景，不计入该试验证据数量。"
+                )
+                citations.extend(self._citation_for_source(source, "关联监管背景，不计入试验证据数量") for source in related)
             for gap in gaps:
                 source_id = gap.get("source_id", "")
                 desc = gap.get("description") or "存在待确认关系。"
                 lines.append(f"- {source_id}：{desc}")
-            citations = [self._citation_for_source(source, "待确认关系或证据缺口") for source in sources]
+            limitations.append("证据缺口仅指当前收录样本中的缺失或待确认关系，不代表相关事实客观不存在。")
             return "\n".join(lines), citations, evidence_used, limitations
 
         if not sources:

@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "benchmark_name": "药研制策国赛60题正式量化评测",
+  "benchmark_stage": "formal",
+  "case_count": 60,
+  "expected_data_version": "sha256:330ac862f52db200",
+  "facts_snapshot_commit": "656626b8756a01e4f6280f4451be503a92439e71",
+  "case_file": "formal_cases.jsonl",
+  "description": "60题冻结正式集：42题开发集、18题锁定验收集。",
+  "limitations": [
+    "锁定验收集不得用于针对性修复或调参。",
+    "题目改写不改变人工Pilot金标准合同，不由当前服务输出生成。",
+    "结果只反映固定39条已核验证据快照。",
+    "人工复核不能由自动字符串指标替代。"
+  ]
+}

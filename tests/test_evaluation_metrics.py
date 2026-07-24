@@ -8,6 +8,7 @@ from evaluation.metrics import (
     latency_summary,
     retrieval_precision_at_k,
     retrieval_recall_at_k,
+    result_status,
     set_f1,
     set_precision,
     set_recall,
@@ -144,6 +145,17 @@ class EvaluationMetricsTest(unittest.TestCase):
         self.assertEqual(summary["required_fact_coverage"], 0.5)
         self.assertEqual(summary["forbidden_claim_trigger_rate"], 1.0)
         self.assertEqual(summary["citation_whitelist_compliance"], 0.5)
+
+    def test_statuses_and_denominators_do_not_turn_unsupported_into_passes(self):
+        passed = {"overall_pass": 1.0, "manual_review_pending": False}
+        failed = {"overall_pass": 0.0, "manual_review_pending": False}
+        self.assertEqual(result_status("keyword_contains", "trial_status", passed), "unsupported")
+        self.assertEqual(result_status("grounded_qa_local", "source_search", passed), "passed")
+        self.assertEqual(result_status("grounded_qa_local", "source_search", failed), "failed")
+        self.assertEqual(
+            result_status("grounded_qa_local", "regulatory_status", {**passed, "manual_review_pending": True}),
+            "manual_review",
+        )
 
 
 if __name__ == "__main__":

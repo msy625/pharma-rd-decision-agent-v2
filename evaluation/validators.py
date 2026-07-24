@@ -66,8 +66,8 @@ def validate_manifest(manifest: dict[str, Any]) -> None:
     missing = sorted(required - set(manifest))
     if missing:
         raise EvaluationValidationError(f"Manifest missing fields: {', '.join(missing)}")
-    if manifest["benchmark_stage"] != "pilot":
-        raise EvaluationValidationError("benchmark_stage must be pilot")
+    if manifest["benchmark_stage"] not in {"pilot", "formal"}:
+        raise EvaluationValidationError("benchmark_stage must be pilot or formal")
     if not isinstance(manifest["case_count"], int) or manifest["case_count"] <= 0:
         raise EvaluationValidationError("case_count must be a positive integer")
     if not DATA_VERSION_RE.fullmatch(str(manifest["expected_data_version"])):
@@ -94,8 +94,8 @@ def validate_case(case: dict[str, Any], schema: dict[str, Any] | None = None) ->
     case_id = str(case.get("case_id") or "")
     if not re.fullmatch(r"^[A-Z]+-[0-9]{3}$", case_id):
         raise EvaluationValidationError(f"Invalid case_id: {case_id}")
-    if case.get("split") != "pilot":
-        raise EvaluationValidationError(f"{case_id} split must be pilot")
+    if case.get("split") not in {"pilot", "dev", "acceptance"}:
+        raise EvaluationValidationError(f"{case_id} split must be pilot, dev, or acceptance")
 
     for field in ["question", "expected_question_type", "category", "target", "notes"]:
         if not isinstance(case.get(field), str):
@@ -162,8 +162,10 @@ def validate_suite(
         raise EvaluationValidationError(
             f"Manifest case_count={manifest['case_count']} does not match JSONL count={len(cases)}"
         )
-    if any(case["split"] != "pilot" for case in cases):
-        raise EvaluationValidationError("All pilot cases must use split=pilot")
+    stage = manifest["benchmark_stage"]
+    allowed_splits = {"pilot"} if stage == "pilot" else {"dev", "acceptance"}
+    if any(case["split"] not in allowed_splits for case in cases):
+        raise EvaluationValidationError(f"{stage} cases must use splits {sorted(allowed_splits)}")
 
     if known_source_ids is not None:
         known = set(known_source_ids)

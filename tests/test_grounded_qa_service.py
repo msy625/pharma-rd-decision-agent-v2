@@ -309,6 +309,19 @@ class GroundedQAServiceTest(unittest.TestCase):
 
     def test_data_version_stable(self):
         self.assertEqual(self.service.data_version(), self.service.data_version())
+        self.assertEqual(self.service.data_version(), "sha256:330ac862f52db200")
+
+    def test_pilot_natural_language_semantic_regressions(self):
+        laura = self.service.answer_question("研究名称LAURA有哪些来源？")
+        self.assertEqual(self.source_ids(laura), ["A005", "A006"])
+        tagrisso = self.service.answer_question("TAGRISSO有哪些已核验来源？")
+        self.assertEqual(len(self.source_ids(tagrisso)), 8)
+        comparison = self.service.answer_question("阿斯利康与百济神州当前证据样本有什么差异？")
+        self.assertEqual(comparison["question_type"], "company_comparison")
+        self.assertIn("阿斯利康/AstraZeneca", comparison["answer"])
+        gap = self.service.answer_question("RATIONALE-315当前还存在哪些证据缺口？")
+        self.assertEqual(gap["question_type"], "evidence_gap")
+        self.assertIn("尚未收录最终分析论文", gap["answer"])
 
     def test_data_version_changes_when_content_changes(self):
         with tempfile.TemporaryDirectory() as tmpdir:
