@@ -148,8 +148,8 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
             self.assertNotIn(word, self.evidence_component)
 
     def test_24_original_source_search_and_nav_remain(self):
-        self.assertIn("label:'研发证据查询'", self.component)
-        self.assertIn("label:'白盒溯源'", self.component)
+        self.assertIn("label:'研发证据中心'", self.component)
+        self.assertIn("label:'循证问答'", self.component)
         self.assertIn("查询类型", self.evidence_template)
         self.assertIn("排除历史版本", self.evidence_template)
         self.assertIn("结果列表", self.evidence_template)
@@ -159,6 +159,9 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
         self.assertEqual(self.static_index, expected)
         self.assertIn("/api/evidence/chain-summary", self.static_index)
         self.assertIn("关联监管背景不计入该试验的证据数量", self.static_index)
+
+    def test_26_chain_sources_prefer_normalized_chinese_titles(self):
+        self.assertIn("item.description_zh||item.title_original||item.study_name||item.source_id", self.evidence_component)
 
 
 if __name__ == "__main__":

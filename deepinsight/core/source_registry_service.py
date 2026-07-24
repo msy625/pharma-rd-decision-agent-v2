@@ -203,7 +203,8 @@ class SourceRegistryService:
         latest_only: bool = False,
         normalized: bool = True,
     ) -> list[dict[str, str]]:
-        if not any([source_id, company, trial_id, pmid, study_name, drug, source_type, status, text]):
+        study_name_query = str(study_name or "").strip()
+        if not any([source_id, company, trial_id, pmid, study_name_query, drug, source_type, status, text]):
             return []
 
         rows = self.load_rows()
@@ -227,11 +228,6 @@ class SourceRegistryService:
                 pmid_blob = _joined(row, ["pmid", "registry_id", "url"])
                 if not contains(pmid_blob, pmid):
                     continue
-            if study_name and not contains(
-                _joined(row, ["study_name", "normalized_title_zh", "original_title", "original_title_en"]),
-                study_name,
-            ):
-                continue
             if drug:
                 drug_blob = _joined(row, ["drug_names", "intervention", "normalized_title_zh", "original_title", "notes"])
                 if not any(contains(drug_blob, term) for term in drug_terms):
@@ -245,6 +241,23 @@ class SourceRegistryService:
             if text and not contains(_joined(row, SEARCH_FIELDS), text):
                 continue
             matched.append(row)
+
+        if study_name_query:
+            study_name_key = norm(study_name_query)
+            exact_matches = [
+                row for row in matched if norm(row.get("study_name", "")).strip() == study_name_key
+            ]
+            if exact_matches:
+                matched = exact_matches
+            else:
+                matched = [
+                    row
+                    for row in matched
+                    if contains(
+                        _joined(row, ["study_name", "normalized_title_zh", "original_title", "original_title_en"]),
+                        study_name_query,
+                    )
+                ]
 
         return self.to_result_rows(matched) if normalized else matched
 

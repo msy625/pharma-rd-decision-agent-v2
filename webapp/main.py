@@ -10,7 +10,9 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
+from deepinsight.core.company_evidence_profile_service import CompanyEvidenceProfileService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
+from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
 from deepinsight.core.grounded_qa_usage_guard import (
@@ -20,6 +22,7 @@ from deepinsight.core.grounded_qa_usage_guard import (
     grounded_qa_usage_config_from_env,
 )
 from deepinsight.core.industry_taxonomy import infer_industry_name
+from deepinsight.core.rd_event_timeline_service import RDEventTimelineService
 from deepinsight.config import DB_PATH as DEFAULT_DB_PATH
 from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
 
@@ -88,6 +91,30 @@ def _competition_core_available() -> bool:
         source_service = _evidence_service()
         source_service.summary()
         EvidenceChainService(source_registry_service=source_service).summary()
+        return True
+    except Exception:
+        return False
+
+
+def _evidence_workbench_available() -> bool:
+    try:
+        _evidence_workbench_service().summary()
+        return True
+    except Exception:
+        return False
+
+
+def _company_evidence_profile_available() -> bool:
+    try:
+        _company_evidence_profile_service().build_profile("恒瑞医药")
+        return True
+    except Exception:
+        return False
+
+
+def _rd_event_timeline_available() -> bool:
+    try:
+        _rd_event_timeline_service().build_timeline(include_undated=False)
         return True
     except Exception:
         return False
@@ -1509,7 +1536,7 @@ def fetch_industry_ranking_dashboard(company_name: str | None, report_year: int 
         conn.close()
 
 
-app = FastAPI(title="医药生物企业智能分析与决策支持系统")
+app = FastAPI(title="药研制策｜可信医药研发证据智能分析")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
@@ -1540,6 +1567,81 @@ def _company_evidence_comparison_service() -> CompanyEvidenceComparisonService:
     return CompanyEvidenceComparisonService(
         source_registry_service=source_service,
         evidence_chain_service=EvidenceChainService(source_registry_service=source_service),
+    )
+
+
+def _company_evidence_profile_service() -> CompanyEvidenceProfileService:
+    source_service = _evidence_service()
+    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+    company_comparison_service = CompanyEvidenceComparisonService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+    )
+    evidence_workbench_service = EvidenceWorkbenchService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+        grounded_qa_service=GroundedQAService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+            company_comparison_service=company_comparison_service,
+        ),
+    )
+    return CompanyEvidenceProfileService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        evidence_workbench_service=evidence_workbench_service,
+        company_comparison_service=company_comparison_service,
+    )
+
+
+def _rd_event_timeline_service() -> RDEventTimelineService:
+    source_service = _evidence_service()
+    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+    company_comparison_service = CompanyEvidenceComparisonService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+    )
+    evidence_workbench_service = EvidenceWorkbenchService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+        grounded_qa_service=GroundedQAService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+            company_comparison_service=company_comparison_service,
+        ),
+    )
+    company_profile_service = CompanyEvidenceProfileService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        evidence_workbench_service=evidence_workbench_service,
+        company_comparison_service=company_comparison_service,
+    )
+    return RDEventTimelineService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_evidence_profile_service=company_profile_service,
+        evidence_workbench_service=evidence_workbench_service,
+    )
+
+
+def _evidence_workbench_service() -> EvidenceWorkbenchService:
+    source_service = _evidence_service()
+    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+    company_comparison_service = CompanyEvidenceComparisonService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+    )
+    return EvidenceWorkbenchService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+        grounded_qa_service=GroundedQAService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+            company_comparison_service=company_comparison_service,
+        ),
     )
 
 
@@ -1683,11 +1785,17 @@ def ready() -> dict[str, Any]:
 @app.get("/api/runtime-capabilities")
 def runtime_capabilities() -> dict[str, Any]:
     competition_available = _competition_core_available()
+    workbench_available = _evidence_workbench_available()
+    company_profile_available = _company_evidence_profile_available()
+    timeline_available = _rd_event_timeline_available()
     legacy_available = _legacy_features_available()
     return {
         "competition_core_available": competition_available,
+        "evidence_workbench_available": workbench_available,
+        "company_evidence_profile_available": company_profile_available,
+        "rd_event_timeline_available": timeline_available,
         "legacy_features_available": legacy_available,
-        "default_page": "today" if legacy_available else "evidence",
+        "default_page": "today" if workbench_available else "evidence",
         "legacy_unavailable_reason": "" if legacy_available else LEGACY_UNAVAILABLE_REASON,
     }
 
@@ -1835,6 +1943,20 @@ def evidence_chain_summary() -> dict[str, Any]:
         raise _handle_source_registry_error(exc) from exc
 
 
+@app.get("/api/evidence/workbench")
+def evidence_workbench() -> dict[str, Any]:
+    try:
+        workbench = _evidence_workbench_service().build_workbench()
+        return {
+            "workbench": workbench,
+            "metadata": {
+                "data_scope": workbench.get("metadata", {}).get("data_scope", "verified_nsclc_multi_company_sample"),
+            },
+        }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
 @app.get("/api/evidence/chains")
 def evidence_chains(
     company: Annotated[str | None, Query()] = None,
@@ -1919,6 +2041,84 @@ def evidence_company_comparison(
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/company-profile-companies")
+def evidence_company_profile_companies() -> dict[str, Any]:
+    try:
+        items = _company_evidence_profile_service().available_companies()
+        return {"count": len(items), "items": items}
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/company-profile/{name}")
+def evidence_company_profile(name: str) -> dict[str, Any]:
+    try:
+        profile = _company_evidence_profile_service().build_profile(name)
+        return {
+            "profile": profile,
+            "metadata": {
+                "data_scope": profile.get("metadata", {}).get(
+                    "data_scope", "verified_nsclc_multi_company_sample"
+                )
+            },
+        }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/timeline")
+def evidence_timeline(
+    company: Annotated[str | None, Query()] = None,
+    trial_id: Annotated[str | None, Query()] = None,
+    drug: Annotated[str | None, Query()] = None,
+    event_type: Annotated[str | None, Query()] = None,
+    year: Annotated[int | None, Query(ge=1900, le=2100)] = None,
+    include_auxiliary: Annotated[bool, Query()] = False,
+    include_undated: Annotated[bool, Query()] = True,
+) -> dict[str, Any]:
+    try:
+        timeline = _rd_event_timeline_service().build_timeline(
+            company_name=company,
+            trial_id=trial_id,
+            drug_name=drug,
+            event_type=event_type,
+            year=year,
+            include_auxiliary=include_auxiliary,
+            include_undated=include_undated,
+        )
+        return {
+            "timeline": timeline,
+            "metadata": {
+                "data_scope": timeline.get("metadata", {}).get(
+                    "data_scope", "verified_nsclc_multi_company_sample"
+                )
+            },
+        }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/timeline/{company}")
+def evidence_timeline_by_company(
+    company: str,
+    trial_id: Annotated[str | None, Query()] = None,
+    drug: Annotated[str | None, Query()] = None,
+    event_type: Annotated[str | None, Query()] = None,
+    year: Annotated[int | None, Query(ge=1900, le=2100)] = None,
+    include_auxiliary: Annotated[bool, Query()] = False,
+    include_undated: Annotated[bool, Query()] = True,
+) -> dict[str, Any]:
+    return evidence_timeline(
+        company=company,
+        trial_id=trial_id,
+        drug=drug,
+        event_type=event_type,
+        year=year,
+        include_auxiliary=include_auxiliary,
+        include_undated=include_undated,
+    )
 
 
 @app.get("/api/evidence/grounded-qa/capabilities")

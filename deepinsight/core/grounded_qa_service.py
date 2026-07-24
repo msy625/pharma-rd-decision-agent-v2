@@ -37,7 +37,7 @@ QUESTION_TYPES = {
     "prohibited_or_unsupported",
 }
 NCT_RE = re.compile(r"(?<![A-Za-z0-9])NCT\d{8}(?![A-Za-z0-9])", re.IGNORECASE)
-SOURCE_ID_RE = re.compile(r"\b[HB]\d{3}\b", re.IGNORECASE)
+SOURCE_ID_RE = re.compile(r"(?<![A-Za-z0-9])[AHB]\d{3}(?![A-Za-z0-9])", re.IGNORECASE)
 UNKNOWN_SAFETY_CATEGORY_LABEL = "其他不支持的问题类型"
 
 
@@ -84,8 +84,8 @@ def _version_label(item: dict[str, Any]) -> str:
 def _item_title(item: dict[str, Any]) -> str:
     return (
         item.get("title")
-        or item.get("title_original")
         or item.get("description_zh")
+        or item.get("title_original")
         or item.get("study_name")
         or item.get("trial_id")
         or item.get("source_id")
@@ -185,6 +185,10 @@ class GroundedQAService:
         if qtype == "prohibited_or_unsupported":
             return self._empty_retrieval(qtype)
 
+        source_ids = self._extract_source_ids(question)
+        if source_ids:
+            return self._retrieve_by_source_ids(source_ids, qtype)
+
         if qtype == "company_comparison":
             comparison = self.company_comparison_service.compare("恒瑞医药", "百济神州")
             sources = self._sources_from_comparison(comparison)
@@ -255,6 +259,7 @@ class GroundedQAService:
             "comparison": retrieval.get("comparison"),
             "evidence_gaps": retrieval.get("evidence_gaps") or [],
             "retrieval_service": retrieval.get("retrieval_service") or [],
+            "anchor_source_ids": retrieval.get("anchor_source_ids") or [],
             "allowed_source_ids": source_ids,
             "primary_source_ids": [item["source_id"] for item in sources if item.get("source_id")],
             "chain_ids": chain_ids,
@@ -267,6 +272,11 @@ class GroundedQAService:
         evidence_packet: dict[str, Any],
     ) -> tuple[list[dict[str, Any]], list[str]]:
         allowed = set(evidence_packet.get("allowed_source_ids") or [])
+        packet_sources = {
+            item.get("source_id"): item
+            for item in evidence_packet.get("all_sources") or []
+            if isinstance(item, dict) and item.get("source_id")
+        }
         seen = set()
         valid = []
         limitations = []
@@ -294,7 +304,7 @@ class GroundedQAService:
                     "source_url": expected_url,
                     "source_type": row.get("source_type", ""),
                     "verified_at": row.get("verified_at", ""),
-                    "support_summary": citation.get("support_summary") or self._support_summary(row),
+                    "support_summary": self._support_summary(packet_sources.get(source_id) or row),
                 }
             )
             seen.add(source_id)
@@ -456,6 +466,7 @@ class GroundedQAService:
             "comparison": None,
             "evidence_gaps": [],
             "retrieval_service": [],
+            "anchor_source_ids": [],
             "allowed_source_ids": [],
             "primary_source_ids": [],
             "chain_ids": [],
@@ -500,6 +511,38 @@ class GroundedQAService:
             if chain:
                 chains.append(chain)
         return self._dedupe_chains(chains)
+
+    def _retrieve_by_source_ids(self, source_ids: list[str], qtype: str) -> dict[str, Any]:
+        """Use explicit source IDs as anchors and expand only their confirmed primary chains."""
+        anchors = self._sources_by_ids(source_ids)
+        anchor_set = {item.get("source_id") for item in anchors if item.get("source_id")}
+        chains = []
+        for chain in self.evidence_chain_service.list_chains():
+            primary_ids = {
+                item.get("source_id")
+                for item in chain.get("evidence_items") or []
+                if item.get("source_id")
+            }
+            if anchor_set & primary_ids:
+                chains.append(chain)
+
+        sources = []
+        related_regulatory_items = []
+        for chain in chains:
+            sources.extend(chain.get("evidence_items") or [])
+            related_regulatory_items.extend(chain.get("related_regulatory_items") or [])
+        sources.extend(anchors)
+
+        return {
+            "question_type": qtype,
+            "sources": self._dedupe_sources(sources),
+            "chains": self._dedupe_chains(chains),
+            "related_regulatory_items": self._dedupe_sources(related_regulatory_items),
+            "comparison": None,
+            "evidence_gaps": self._gaps_from_chains(chains),
+            "retrieval_service": ["SourceRegistryService", "EvidenceChainService"],
+            "anchor_source_ids": [item for item in source_ids if item in anchor_set],
+        }
 
     def _regulatory_chain_for_question(self, question: str) -> dict[str, Any]:
         if _contains_any(question, ["Tevimbra", "替雷利珠单抗", "tislelizumab", "B015", "B016", "EMA", "CHMP"]):
@@ -594,18 +637,100 @@ class GroundedQAService:
         }
 
     def _support_summary(self, source: dict[str, Any]) -> str:
-        parts = []
-        if source.get("study_name"):
+        regulatory_summary = self._regulatory_support_summary(source)
+        if regulatory_summary:
+            return regulatory_summary
+
+        role_labels = {
+            "trial_registry": "试验登记",
+            "interim_publication": "中期分析论文",
+            "final_publication": "最终分析论文",
+            "company_document": "公司正式资料",
+            "independent_evidence": "独立资料",
+        }
+        parts = [str(source.get("source_type") or "资料")]
+        role_label = role_labels.get(str(source.get("role") or ""))
+        if role_label:
+            parts.append(role_label)
+        if source.get("description_zh"):
+            parts.append(str(source["description_zh"]))
+        elif source.get("study_name"):
             parts.append(str(source["study_name"]))
-        if source.get("trial_id"):
+        if source.get("trial_id") and source.get("trial_id") != source.get("study_name"):
             parts.append(str(source["trial_id"]))
-        if source.get("study_status"):
-            parts.append(f"study_status={source['study_status']}")
-        if source.get("authorisation_status"):
-            parts.append(str(source["authorisation_status"]))
-        if source.get("regulatory_event_type"):
-            parts.append(str(source["regulatory_event_type"]))
-        return "；".join(parts) or _item_title(source)
+        status = str(source.get("study_status") or "").strip()
+        if status and status != "不适用":
+            parts.append(f"研究状态：{status}")
+        return "；".join(_unique_values(parts)) or _item_title(source)
+
+    @staticmethod
+    def _is_regulatory_opinion(source: dict[str, Any]) -> bool:
+        return source.get("role") == "regulatory_opinion" or "chmp positive opinion" in norm(
+            source.get("regulatory_event_type")
+        )
+
+    @staticmethod
+    def _is_regulatory_authorisation(source: dict[str, Any]) -> bool:
+        return source.get("role") == "regulatory_authorisation" or bool(source.get("authorisation_status"))
+
+    def _regulatory_support_summary(self, source: dict[str, Any]) -> str:
+        date = str(source.get("publication_date") or "").strip()
+        if self._is_regulatory_opinion(source):
+            dated = f"{date}的" if date else ""
+            return f"{source.get('source_type') or 'EMA/CHMP监管资料'}；{dated}CHMP积极意见，非欧盟委员会最终批准"
+        if self._is_regulatory_authorisation(source):
+            title = norm(_item_title(source))
+            if "tevimbra" in title:
+                parts = [
+                    str(source.get("source_type") or "EMA授权资料"),
+                    f"{date}为Tevimbra欧盟初始许可日期" if date else "Tevimbra欧盟初始许可",
+                ]
+                updated = str(source.get("source_last_updated") or "").strip()
+                if updated:
+                    parts.append(f"当前EPAR页面更新时间为{updated}")
+                if self._has_current_perioperative_authorisation(source):
+                    parts.append("当前EPAR已将围手术期NSCLC适应症列入正式授权范围")
+                parts.append("该当前授权记录不是B016本身的欧盟委员会最终批准文件")
+                return "；".join(_unique_values(parts))
+            return "；".join(
+                _unique_values(
+                    [
+                        str(source.get("source_type") or "监管授权资料"),
+                        str(source.get("authorisation_status") or "正式授权状态"),
+                        str(source.get("description_zh") or ""),
+                    ]
+                )
+            )
+        return ""
+
+    def _regulatory_answer_summary(self, source: dict[str, Any]) -> str:
+        date = str(source.get("publication_date") or "").strip()
+        if self._is_regulatory_opinion(source):
+            dated = f"；日期为{date}，且非欧盟委员会最终批准" if date else "，非欧盟委员会最终批准"
+            return f"CHMP积极意见，非最终批准{dated}"
+        if self._is_regulatory_authorisation(source):
+            if "tevimbra" in norm(_item_title(source)):
+                parts = [
+                    "EMA/欧盟正式授权记录（当前EPAR）",
+                    f"{date}为Tevimbra欧盟初始许可日期" if date else "Tevimbra欧盟初始许可",
+                ]
+                updated = str(source.get("source_last_updated") or "").strip()
+                if updated:
+                    parts.append(f"页面更新时间为{updated}")
+                if self._has_current_perioperative_authorisation(source):
+                    parts.append("当前EPAR已将围手术期NSCLC适应症列入正式授权范围")
+                parts.append("该记录说明当前授权状态，但不是B016本身的欧盟委员会最终批准文件")
+                return "；".join(_unique_values(parts))
+            return str(source.get("authorisation_status") or source.get("regulatory_event_type") or "监管授权资料")
+        return self._support_summary(source)
+
+    @staticmethod
+    def _has_current_perioperative_authorisation(source: dict[str, Any]) -> bool:
+        context = " ".join(
+            str(source.get(field) or "")
+            for field in ["notes", "risk_notes", "scope_limitation", "description_zh"]
+        )
+        return "围手术期" in context and "正式授权范围" in context
 
     def _local_answer_parts(
         self,
@@ -633,14 +758,43 @@ class GroundedQAService:
         if qtype == "regulatory_status":
             if not sources:
                 return "当前数据不足：未找到可核验的监管资料。", [], [], limitations
-            lines = ["本地证据摘要："]
+            anchor_ids = set(packet.get("anchor_source_ids") or [])
+            opinion = next((source for source in sources if self._is_regulatory_opinion(source)), None)
+            authorisation = next((source for source in sources if self._is_regulatory_authorisation(source)), None)
+            focused_opinion = next(
+                (
+                    source
+                    for source in sources
+                    if source.get("source_id") in anchor_ids and self._is_regulatory_opinion(source)
+                ),
+                None,
+            )
+            focused_authorisation = next(
+                (
+                    source
+                    for source in sources
+                    if source.get("source_id") in anchor_ids and self._is_regulatory_authorisation(source)
+                ),
+                None,
+            )
+            lines = []
+            if focused_opinion or (not anchor_ids and opinion):
+                opinion = focused_opinion or opinion
+                conclusion = "直接结论：不代表最终批准。"
+                opinion_date = str(opinion.get("publication_date") or "").strip()
+                dated_opinion = f"{opinion_date}的" if opinion_date else ""
+                conclusion += f"{opinion.get('source_id')}是{dated_opinion}CHMP积极意见，非欧盟委员会最终批准。"
+                if authorisation:
+                    conclusion += f"{authorisation.get('source_id')}是{self._regulatory_answer_summary(authorisation)}。"
+                lines.append(conclusion)
+            elif focused_authorisation:
+                lines.append(
+                    f"直接结论：{focused_authorisation.get('source_id')}是"
+                    f"{self._regulatory_answer_summary(focused_authorisation)}。"
+                )
+            lines.append("本地证据摘要：")
             for source in sources:
-                if source.get("source_id") == "B015":
-                    summary = "EMA/欧盟正式授权"
-                elif source.get("source_id") == "B016":
-                    summary = "CHMP积极意见，非最终批准"
-                else:
-                    summary = source.get("authorisation_status") or source.get("regulatory_event_type") or "监管资料"
+                summary = self._regulatory_answer_summary(source)
                 lines.append(f"- {source['source_id']}：{summary}。")
                 citations.append(self._citation_for_source(source, summary))
             return "\n".join(lines), citations, evidence_used, limitations

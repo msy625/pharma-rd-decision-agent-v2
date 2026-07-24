@@ -160,8 +160,8 @@ def main() -> int:
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         return 1
-        _fields, rows, _errors = load_rows()
-        print(f"source_registry validation passed: {len(rows)} verified sources across required data sets.")
+    _fields, rows, _errors = load_rows()
+    print(f"source_registry validation passed: {len(rows)} verified sources across required data sets.")
     return 0
 
 

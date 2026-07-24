@@ -213,6 +213,12 @@ class EvidenceChainApiHttpTest(unittest.TestCase):
         payload = self.get_json("/api/evidence/summary")
         self.assertEqual(payload["total_sources"], 39)
 
+    def test_22_astrazeneca_has_four_paired_trial_chains(self):
+        payload = self.get_json("/api/evidence/chains?company=AstraZeneca&chain_type=trial")
+        self.assertEqual(payload["count"], 4)
+        by_trial = {item["trial_ids"][0]: _ids(item["evidence_items"]) for item in payload["items"]}
+        self.assertEqual(by_trial["NCT03521154"], {"A005", "A006"})
+
 
 if __name__ == "__main__":
     unittest.main()

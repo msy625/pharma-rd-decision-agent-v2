@@ -65,6 +65,26 @@ class SourceRegistryServiceTest(unittest.TestCase):
         self.assertIn("B007", ids)
         self.assertNotIn("B006", ids)
 
+    def test_study_name_exact_match_has_priority_over_substrings(self):
+        self.assertEqual(self.ids(self.service.query(study_name="LAURA")), {"A005", "A006"})
+        self.assertEqual(self.ids(self.service.query(study_name="FLAURA")), {"A001", "A002"})
+        self.assertEqual(self.ids(self.service.query(study_name="FLAURA2")), {"A007", "A008"})
+
+    def test_study_name_exact_match_normalizes_case_and_outer_whitespace(self):
+        self.assertEqual(self.ids(self.service.query(study_name="  laura  ")), {"A005", "A006"})
+
+    def test_study_name_partial_match_remains_as_fallback(self):
+        self.assertEqual(
+            self.ids(self.service.query(study_name="LAUR")),
+            {"A001", "A002", "A005", "A006", "A007", "A008"},
+        )
+
+    def test_keyword_laura_keeps_broad_substring_search(self):
+        self.assertEqual(
+            self.ids(self.service.query(text="LAURA")),
+            {"A001", "A002", "A005", "A006", "A007", "A008"},
+        )
+
     def test_10_nct03663205_related_evidence(self):
         rows = self.service.related_evidence("NCT03663205")
         self.assertEqual(self.ids(rows), {"B003", "B006", "B007"})

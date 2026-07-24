@@ -210,6 +210,14 @@ class CompanyEvidenceComparisonApiTest(unittest.TestCase):
         payload = self.get_json("/api/evidence/chain-summary")
         self.assertEqual(payload["total_chain_count"], 15)
 
+    def test_19_astrazeneca_comparison_uses_current_verified_sample(self):
+        payload = self.get_json("/api/evidence/company-comparison?company_a=AstraZeneca&company_b=恒瑞医药")
+        astrazeneca = _profile(payload, "阿斯利康")
+        self.assertEqual(astrazeneca["source_count"], 8)
+        self.assertEqual(astrazeneca["trial_chain_count"], 4)
+        self.assertEqual(astrazeneca["regulatory_chain_count"], 0)
+        self.assertIn("不代表企业整体研发实力", payload["comparison"]["comparison_notes"][0])
+
 
 if __name__ == "__main__":
     unittest.main()

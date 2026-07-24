@@ -22,10 +22,12 @@ class GroundedQAFrontendStaticTest(unittest.TestCase):
         cls.evidence_template = cls.template[t_start:t_end]
         cls.evidence_all = cls.evidence_component + "\n" + cls.evidence_template
 
-    def test_01_grounded_qa_fourth_tab_exists(self):
+    def test_01_grounded_qa_is_top_level_page_reusing_existing_component(self):
         self.assertIn("循证问答", self.evidence_template)
         self.assertIn("ev_isGroundedTab", self.evidence_template)
-        self.assertIn("switchEvidenceTab('groundedQa')", self.evidence_component)
+        self.assertIn("ev_isGroundedTab:s.page==='groundedQa'", self.evidence_component)
+        self.assertIn("openGroundedQa(question)", self.component)
+        self.assertNotIn("switchEvidenceTab('groundedQa')", self.evidence_component)
 
     def test_02_original_three_evidence_tabs_still_exist(self):
         for text in ["来源检索", "证据链", "企业对比", "ev_isSourceTab", "ev_isChainTab", "ev_isCompanyCompareTab"]:
@@ -143,6 +145,7 @@ class GroundedQAFrontendStaticTest(unittest.TestCase):
 
     def test_23_chain_id_jump_uses_existing_encoded_loader(self):
         self.assertIn("openGroundedChain(chainId)", self.evidence_component)
+        self.assertIn("page:'evidence',evidenceTab:'chains'", self.evidence_component)
         self.assertIn("this.loadChainDetail(cid)", self.evidence_component)
         self.assertIn("'/api/evidence/chains/'+encodeURIComponent(cid)", self.evidence_component)
         self.assertIn("查看证据链 {{ ch.chain_id }}", self.evidence_template)

@@ -36,33 +36,39 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         self.assertNotIn("this.loadPage()", mount)
         self.assertIn("'/api/runtime-capabilities'", self.component)
 
-    def test_02_light_runtime_defaults_to_evidence_and_skips_old_requests(self):
+    def test_02_light_runtime_defaults_to_real_workbench_and_skips_old_requests(self):
         for snippet in [
-            "const legacy=!!caps.legacy_features_available",
-            "const nextPage=(legacy||!this._isLegacyPage(page))?page:'evidence'",
-            "if(legacy) this.loadBootstrap()",
+            "const requestedPage=caps.default_page||'today'",
+            "const nextPage=this._isLegacyPage(requestedPage)?(caps.evidence_workbench_available?'today':'evidence'):requestedPage",
             "if(this._isLegacyPage(p) && !this._legacyAvailable()) return",
         ]:
             self.assertIn(snippet, self.component)
-        for loader in ["loadDashboard()", "loadProfile()", "loadCompare()", "loadTimeline()", "loadDbCatalog()"]:
+        runtime = self.component[self.component.index("  loadRuntimeCapabilities(){") : self.component.index("  loadBootstrap(){")]
+        self.assertNotIn("this.loadBootstrap()", runtime)
+        dashboard = self.component[self.component.index("  loadDashboard()") : self.component.index("  loadProfile()")]
+        self.assertIn("'/api/evidence/workbench'", dashboard)
+        self.assertNotIn("'/api/dashboard'", dashboard)
+        for loader in ["loadProfile()", "loadCompare()", "loadDbCatalog()"]:
             start = self.component.index("  " + loader)
             body = self.component[start:start + 220]
             self.assertIn("!this._legacyAvailable()", body)
+        timeline_start = self.component.index("  loadTimeline(){")
+        timeline_body = self.component[timeline_start:self.component.index("  loadWhitebox(){", timeline_start)]
+        self.assertNotIn("!this._legacyAvailable()", timeline_body)
+        self.assertIn("'/api/evidence/timeline'", timeline_body)
+        self.assertNotIn("'/api/timeline'", timeline_body)
 
-    def test_03_unavailable_old_navigation_shows_friendly_prompt(self):
-        for text in ["旧数据未配置", "legacyNotice", "legacyLabel", "hasLegacyNotice"]:
-            self.assertIn(text, self.component + self.template)
+    def test_03_legacy_notice_state_is_not_rendered_in_competition_shell(self):
+        self.assertIn("legacyNotice", self.component)
+        for text in ["legacyNotice", "legacyLabel", "hasLegacyNotice", "旧数据未配置"]:
+            self.assertNotIn(text, self.template)
 
-    def test_04_fixed_old_business_stats_are_not_rendered_in_light_mode(self):
-        light_branch = self.component[self.component.index("if(!this._legacyAvailable()){", self.component.index("todayVals()")):]
-        light_branch = light_branch[:light_branch.index("const D=this.D")]
-        self.assertIn("today_kpis:[]", light_branch)
-        self.assertIn("today_ranking:[]", light_branch)
-        self.assertIn("today_alerts:[]", light_branch)
-        self.assertNotIn("48", light_branch)
-        self.assertNotIn("312", light_branch)
-        self.assertNotIn("18642", light_branch)
-        self.assertNotIn("1286", light_branch)
+    def test_04_fixed_old_business_stats_are_not_rendered_in_real_workbench(self):
+        today_block = self.component[self.component.index("  todayVals(){") : self.component.index("  // ---- chat ----")]
+        self.assertIn("today_metrics", today_block)
+        self.assertIn("today_scopeWarning", today_block)
+        for forbidden in ["48", "312", "18642", "1286", "today_ranking", "today_alerts", "today_trendLabels"]:
+            self.assertNotIn(forbidden, today_block)
 
     def test_05_no_infinite_retry_loop_for_failed_legacy_503(self):
         start = self.component.index("  loadRuntimeCapabilities(){")
@@ -71,11 +77,21 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         self.assertNotIn("retry", runtime_block.lower())
         self.assertEqual(self.component.count("this.loadBootstrap()"), 1)
 
-    def test_06_full_legacy_navigation_and_api_code_is_retained(self):
-        for text in ["工作台", "智能问答", "公司画像 · 对比", "自动化研报", "白盒溯源", "数据库浏览", "事件时间轴", "高级分析"]:
-            self.assertIn(text, self.component)
-        for path in ["/api/bootstrap", "/api/profile", "/api/dashboard", "/api/compare", "/api/timeline"]:
+    def test_06_competition_navigation_and_remaining_legacy_api_code_are_retained(self):
+        nav = self.component[self.component.index("  navDef(){") : self.component.index("  navItem(it){")]
+        for text in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "循证问答"]:
+            self.assertIn(text, nav)
+        for text in ["智能问答", "自动化研报", "白盒溯源", "数据库浏览", "高级分析"]:
+            self.assertNotIn(text, nav)
+        self.assertNotIn("label:'公司画像 · 对比'", self.component)
+        self.assertIn('<sc-if value="{{ isLegacyCompare }}">', self.template)
+        for path in ["/api/bootstrap", "/api/profile", "/api/compare"]:
             self.assertIn(path, self.component)
+        self.assertNotIn("'/api/timeline'", self.component)
+        main = Path(ROOT / "webapp" / "main.py").read_text(encoding="utf-8")
+        self.assertIn("@app.get(\"/api/dashboard\")", main)
+        self.assertIn("@app.get(\"/api/timeline\")", main)
+        self.assertIn("@app.get(\"/api/evidence/timeline\")", main)
 
     def test_07_svg_templates_do_not_pass_raw_bindings_to_sensitive_attrs(self):
         combined = self.template + "\n" + self.component
@@ -108,10 +124,11 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         ]:
             self.assertIn(expected, self.runtime)
 
-    def test_11_evidence_four_tabs_still_exist(self):
-        for label in ["来源检索", "证据链", "企业对比", "循证问答"]:
+    def test_11_evidence_three_tabs_and_top_level_grounded_qa_exist(self):
+        for label in ["来源检索", "证据链", "企业对比", "进入循证问答"]:
             self.assertIn(label, self.template)
             self.assertIn(label, self.index)
+        self.assertIn("label:'循证问答'", self.component)
 
     def test_12_frontend_build_artifact_matches_source(self):
         expected = self.template.replace("/*__COMPONENT__*/", self.component)
