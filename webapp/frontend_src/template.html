@@ -3712,6 +3712,21 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-evidence-metrics]{grid-template-columns:minmax(0,1fr) !important}
   [data-evidence-center-tabs]>button{flex-basis:100%}
 }
+@media(max-width:700px){
+  [data-brief-paper]{padding:20px 16px !important}
+  [data-brief-paper] section[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important}
+  [data-brief-paper] button[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important}
+}
+@media print{
+  [data-sidebar],[data-header],[data-brief-toolbar]{display:none !important}
+  [data-app]{display:block !important;height:auto !important;background:#fff !important}
+  main,[data-scale]{height:auto !important;overflow:visible !important}
+  [data-content]{padding:0 !important;max-width:none !important}
+  [data-decision-brief]{max-width:none !important;color:#111 !important}
+  [data-brief-paper]{border:0 !important;padding:10mm !important;background:#fff !important}
+  [data-brief-paper] section{break-inside:avoid}
+  [data-brief-paper] button{color:#111 !important}
+}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
 }
@@ -4159,6 +4174,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <button onclick="{{ profile_allSources }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">查看全部来源</button>
                 <button onclick="{{ profile_compare }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">打开企业对比</button>
                 <button onclick="{{ profile_grounded }}" style="height:34px;border-radius:9px;border:0;background:var(--brand-600);color:#fff;font-size:12px;font-weight:700;padding:0 12px">进入循证问答</button>
+                <button onclick="{{ profile_brief }}" style="height:34px;border-radius:9px;border:1px solid var(--brand-600);background:var(--bg-elev);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">生成决策简报</button>
               </div>
             </div>
 
@@ -4438,6 +4454,38 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               </div>
             </div>
           </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isBrief }}">
+        <div data-decision-brief="" style="animation:fadeUp .45s var(--ease-out) both;display:flex;flex-direction:column;gap:16px;max-width:1120px;margin:0 auto">
+          <div data-brief-toolbar="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:14px">
+            <div><div style="font-size:22px;font-weight:700">证据决策简报</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">当前事实、证据充分性、风险缺口与下一步证据方向</div></div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <select aria-label="简报企业" value="{{ brief_company }}" onchange="{{ brief_onCompany }}" style="height:36px;min-width:210px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text);padding:0 10px"><sc-for list="{{ brief_companies }}" as="c"><option value="{{ c.value }}">{{ c.label }}</option></sc-for></select>
+              <button onclick="{{ brief_reload }}" style="height:36px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text-2);padding:0 13px">刷新</button>
+              <button onclick="{{ brief_print }}" style="height:36px;border:0;border-radius:8px;background:var(--brand-600);color:#fff;padding:0 14px;font-weight:700">打印 / PDF</button>
+            </div>
+          </div>
+          <sc-if value="{{ brief_loading }}"><div style="padding:42px;text-align:center;color:var(--text-3)">正在汇总已核验证据…</div></sc-if>
+          <sc-if value="{{ brief_hasError }}"><div style="padding:16px;border:1px solid var(--neg);background:var(--neg-bg);color:var(--neg);border-radius:8px">{{ brief_error }}</div></sc-if>
+          <sc-if value="{{ brief_empty }}"><div style="padding:42px;text-align:center;border:1px dashed var(--border);color:var(--text-3)">当前没有可生成的简报数据</div></sc-if>
+          <sc-if value="{{ brief_hasData }}">
+            <article data-brief-paper="" style="background:var(--bg-elev);border:1px solid var(--border);padding:30px 34px;display:flex;flex-direction:column;gap:28px">
+              <header><div style="font-size:11px;color:var(--brand-600);font-weight:700">研发证据决策支持</div><h1 style="font-size:27px;line-height:1.25;margin:7px 0 8px;letter-spacing:0">{{ brief_title }}</h1><div style="font-size:12px;color:var(--text-3)">{{ brief_scope }} · 药物：{{ brief_drugs }}</div></header>
+              <section><h2 style="font-size:16px;margin:0 0 12px">1. 执行摘要</h2><div style="display:flex;flex-direction:column;gap:9px"><sc-for list="{{ brief_summary }}" as="x"><div style="border-left:3px solid var(--brand-400);padding:8px 12px;background:var(--bg-sunken)"><div style="display:flex;justify-content:space-between;gap:10px"><span style="font-size:13px;line-height:1.65">{{ x.text }}</span><span style="font-size:10px;color:var(--brand-600);white-space:nowrap">{{ x.status }}</span></div><div style="font-size:10.5px;color:var(--text-3);margin-top:5px">来源 {{ x.sources }} · 证据链 {{ x.chains }}</div></div></sc-for></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">2. 企业与数据概况</h2><div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px"><sc-for list="{{ brief_metrics }}" as="m"><div style="border-top:2px solid var(--brand-400);background:var(--bg-sunken);padding:12px"><div style="font-size:11px;color:var(--text-3)">{{ m.label }}</div><div style="font-size:22px;font-weight:700;margin-top:4px">{{ m.value }}</div></div></sc-for></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">3. 核心临床试验证据</h2><sc-if value="{{ brief_hasChains }}"><div style="display:flex;flex-direction:column;border-top:1px solid var(--border)"><sc-for list="{{ brief_chains }}" as="c"><button onclick="{{ c.onClick }}" style="display:grid;grid-template-columns:1.4fr .9fr .6fr;gap:12px;text-align:left;border:0;border-bottom:1px solid var(--border);background:transparent;padding:13px 4px;color:var(--text)"><span><b>{{ c.chain_name }}</b><small style="display:block;color:var(--text-3);margin-top:4px">{{ c.source_ids }}</small></span><span style="font-size:12px">{{ c.status }}<small style="display:block;color:var(--text-3);margin-top:4px">{{ c.version }}</small></span><span style="font-size:12px;color:var(--brand-600)">{{ c.source_count }} 条来源</span></button></sc-for></div></sc-if></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">4. 证据版本演进与研发时间轴</h2><sc-if value="{{ brief_hasEvents }}"><div style="display:flex;flex-direction:column;gap:0"><sc-for list="{{ brief_events }}" as="e"><button onclick="{{ e.onClick }}" style="display:grid;grid-template-columns:110px 120px 1fr 70px;gap:10px;border:0;border-bottom:1px solid var(--border);background:transparent;text-align:left;padding:10px 3px;color:var(--text);font-size:12px"><b style="font-family:var(--font-mono)">{{ e.date }}</b><span style="color:var(--text-3)">{{ e.event_type }}</span><span>{{ e.title }}</span><span style="color:var(--brand-600)">{{ e.source_id }}</span></button></sc-for></div></sc-if></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">5. 监管状态与时间口径</h2><sc-if value="{{ brief_hasRegulatory }}"><sc-for list="{{ brief_regulatory }}" as="r"><button onclick="{{ r.onClick }}" style="width:100%;text-align:left;border:1px solid var(--border);background:var(--bg-sunken);padding:12px;color:var(--text);margin-bottom:8px"><b>{{ r.chain_name }}</b><div style="font-size:11px;color:var(--text-3);margin-top:5px">{{ r.source_ids }} · {{ r.note }}</div></button></sc-for></sc-if><sc-if value="{{ brief_hasRegulatory }}"></sc-if></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">6. 证据强度及来源构成</h2><p style="font-size:12px;color:var(--text-2);line-height:1.65">{{ brief_strengthNote }}</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:18px"><div><b style="font-size:12px">来源类型</b><sc-for list="{{ brief_sourceTypes }}" as="d"><div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:7px 0;font-size:12px"><span>{{ d.label }}</span><b>{{ d.count }}</b></div></sc-for></div><div><b style="font-size:12px">版本构成</b><sc-for list="{{ brief_versions }}" as="d"><div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:7px 0;font-size:12px"><span>{{ d.label }}</span><b>{{ d.count }}</b></div></sc-for></div></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">7. 证据缺口与待确认关系</h2><sc-if value="{{ brief_hasGaps }}"><sc-for list="{{ brief_gaps }}" as="g"><div style="border-left:3px solid var(--warn);padding:9px 12px;background:var(--warn-bg);margin-bottom:8px"><b style="font-size:12px">{{ g.source_id }} · {{ g.title }}</b><div style="font-size:12px;line-height:1.6;margin-top:4px">{{ g.description }} {{ g.gaps }}</div></div></sc-for></sc-if><sc-if value="{{ brief_hasGaps }}"></sc-if></section>
+              <section style="display:grid;grid-template-columns:1fr 1fr;gap:24px"><div><h2 style="font-size:16px;margin:0 0 12px">8. 风险与限制</h2><sc-for list="{{ brief_limitations }}" as="x"><p style="font-size:12px;line-height:1.6;margin:0 0 7px">· {{ x.text }}</p></sc-for></div><div><h2 style="font-size:16px;margin:0 0 12px">9. 下一步证据方向</h2><sc-for list="{{ brief_directions }}" as="x"><p style="font-size:12px;line-height:1.6;margin:0 0 7px"><b>{{ x.priority }}</b> · {{ x.direction }}</p></sc-for></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">10. 引用来源及证据链</h2><sc-if value="{{ brief_hasCitations }}"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px"><sc-for list="{{ brief_citations }}" as="c"><button onclick="{{ c.onClick }}" style="text-align:left;border:0;border-bottom:1px solid var(--border);background:transparent;padding:8px 2px;color:var(--text)"><b style="font-size:11px;color:var(--brand-600)">{{ c.source_id }}</b><div style="font-size:11.5px;line-height:1.45;margin-top:3px">{{ c.title }}</div><small style="color:var(--text-3)">{{ c.source_type }} · 核验 {{ c.verified_at }}</small></button></sc-for></div></sc-if></section>
+              <section style="border-top:1px solid var(--border);padding-top:18px"><h2 style="font-size:16px;margin:0 0 12px">11. 禁止推断</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ brief_prohibited }}" as="x"><span style="font-size:11px;border:1px solid var(--neg);color:var(--neg);padding:4px 8px">{{ x.text }}</span></sc-for></div></section>
+              <footer style="border-top:1px solid var(--border);padding-top:15px;font-size:10.5px;color:var(--text-3);line-height:1.7">数据版本 {{ brief_dataVersion }} · 最近核验 {{ brief_verifiedAt }} · 生成时间 {{ brief_generatedAt }}<br>{{ brief_verificationScope }}</footer>
+            </article>
+          </sc-if>
         </div>
       </sc-if>
 
@@ -5010,7 +5058,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">研发事件时间轴</div>
               <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,.78);margin-top:5px">按真实结构化日期展示论文分析、公司披露和监管事件。核验日期、响应生成时间与页面更新时间均不作为研发事件日期。</div>
             </div>
-            <button onclick="{{ tl_reload }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:700;padding:0 13px">刷新时间轴</button>
+            <div style="display:flex;gap:8px"><button onclick="{{ tl_brief }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.5);background:#fff;color:var(--brand-700);font-size:12.5px;font-weight:700;padding:0 13px">生成决策简报</button><button onclick="{{ tl_reload }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:700;padding:0 13px">刷新时间轴</button></div>
           </div>
 
           <div data-timeline-filters="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:grid;grid-template-columns:repeat(5,minmax(132px,1fr));gap:11px;align-items:end">

@@ -36,7 +36,7 @@ class CompetitionNavigationFrontendTest(unittest.TestCase):
             cls.template.index('<sc-if value="{{ isEvidenceCenter }}">') : cls.template.index('<sc-if value="{{ ev_isSourceTab }}">')
         ]
 
-    def test_01_navigation_has_exactly_five_entries_in_order(self):
+    def test_01_navigation_has_competition_entries_in_order(self):
         entries = re.findall(r"\{key:'([^']+)',label:'([^']+)'", self.nav_block)
         self.assertEqual(
             entries,
@@ -46,6 +46,7 @@ class CompetitionNavigationFrontendTest(unittest.TestCase):
                 ("timeline", "研发事件时间轴"),
                 ("evidence", "研发证据中心"),
                 ("groundedQa", "循证问答"),
+                ("brief", "证据决策简报"),
             ],
         )
 

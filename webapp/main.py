@@ -12,6 +12,7 @@ from pydantic import BaseModel, Field
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.company_evidence_profile_service import CompanyEvidenceProfileService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
+from deepinsight.core.evidence_decision_brief_service import EvidenceDecisionBriefService
 from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
@@ -115,6 +116,14 @@ def _company_evidence_profile_available() -> bool:
 def _rd_event_timeline_available() -> bool:
     try:
         _rd_event_timeline_service().build_timeline(include_undated=False)
+        return True
+    except Exception:
+        return False
+
+
+def _evidence_decision_brief_available() -> bool:
+    try:
+        _evidence_decision_brief_service().build_brief("恒瑞医药")
         return True
     except Exception:
         return False
@@ -1645,6 +1654,25 @@ def _evidence_workbench_service() -> EvidenceWorkbenchService:
     )
 
 
+def _evidence_decision_brief_service() -> EvidenceDecisionBriefService:
+    source_service = _evidence_service()
+    chain_service = EvidenceChainService(source_registry_service=source_service)
+    profile_service = CompanyEvidenceProfileService(
+        source_registry_service=source_service,
+        evidence_chain_service=chain_service,
+    )
+    return EvidenceDecisionBriefService(
+        source_registry_service=source_service,
+        evidence_chain_service=chain_service,
+        company_profile_service=profile_service,
+        timeline_service=RDEventTimelineService(
+            source_registry_service=source_service,
+            evidence_chain_service=chain_service,
+            company_evidence_profile_service=profile_service,
+        ),
+    )
+
+
 def _grounded_qa_service() -> GroundedQAService:
     source_service = _evidence_service()
     evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
@@ -1788,12 +1816,14 @@ def runtime_capabilities() -> dict[str, Any]:
     workbench_available = _evidence_workbench_available()
     company_profile_available = _company_evidence_profile_available()
     timeline_available = _rd_event_timeline_available()
+    brief_available = _evidence_decision_brief_available()
     legacy_available = _legacy_features_available()
     return {
         "competition_core_available": competition_available,
         "evidence_workbench_available": workbench_available,
         "company_evidence_profile_available": company_profile_available,
         "rd_event_timeline_available": timeline_available,
+        "evidence_decision_brief_available": brief_available,
         "legacy_features_available": legacy_available,
         "default_page": "today" if workbench_available else "evidence",
         "legacy_unavailable_reason": "" if legacy_available else LEGACY_UNAVAILABLE_REASON,
@@ -2064,6 +2094,28 @@ def evidence_company_profile(name: str) -> dict[str, Any]:
                 )
             },
         }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/decision-brief/companies")
+def evidence_decision_brief_companies() -> dict[str, Any]:
+    try:
+        items = _evidence_decision_brief_service().available_companies()
+        return {"count": len(items), "items": items}
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/decision-brief/{company}")
+def evidence_decision_brief(company: str) -> dict[str, Any]:
+    if not str(company or "").strip():
+        raise HTTPException(status_code=400, detail="企业名称不能为空。")
+    try:
+        brief = _evidence_decision_brief_service().build_brief(company)
+        return {"brief": brief, "metadata": brief.get("metadata", {})}
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 

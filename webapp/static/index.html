@@ -3712,6 +3712,21 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-evidence-metrics]{grid-template-columns:minmax(0,1fr) !important}
   [data-evidence-center-tabs]>button{flex-basis:100%}
 }
+@media(max-width:700px){
+  [data-brief-paper]{padding:20px 16px !important}
+  [data-brief-paper] section[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important}
+  [data-brief-paper] button[style*="grid-template-columns"]{grid-template-columns:minmax(0,1fr) !important}
+}
+@media print{
+  [data-sidebar],[data-header],[data-brief-toolbar]{display:none !important}
+  [data-app]{display:block !important;height:auto !important;background:#fff !important}
+  main,[data-scale]{height:auto !important;overflow:visible !important}
+  [data-content]{padding:0 !important;max-width:none !important}
+  [data-decision-brief]{max-width:none !important;color:#111 !important}
+  [data-brief-paper]{border:0 !important;padding:10mm !important;background:#fff !important}
+  [data-brief-paper] section{break-inside:avoid}
+  [data-brief-paper] button{color:#111 !important}
+}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
 }
@@ -4159,6 +4174,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <button onclick="{{ profile_allSources }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">查看全部来源</button>
                 <button onclick="{{ profile_compare }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">打开企业对比</button>
                 <button onclick="{{ profile_grounded }}" style="height:34px;border-radius:9px;border:0;background:var(--brand-600);color:#fff;font-size:12px;font-weight:700;padding:0 12px">进入循证问答</button>
+                <button onclick="{{ profile_brief }}" style="height:34px;border-radius:9px;border:1px solid var(--brand-600);background:var(--bg-elev);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">生成决策简报</button>
               </div>
             </div>
 
@@ -4438,6 +4454,38 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               </div>
             </div>
           </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isBrief }}">
+        <div data-decision-brief="" style="animation:fadeUp .45s var(--ease-out) both;display:flex;flex-direction:column;gap:16px;max-width:1120px;margin:0 auto">
+          <div data-brief-toolbar="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:14px">
+            <div><div style="font-size:22px;font-weight:700">证据决策简报</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">当前事实、证据充分性、风险缺口与下一步证据方向</div></div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <select aria-label="简报企业" value="{{ brief_company }}" onchange="{{ brief_onCompany }}" style="height:36px;min-width:210px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text);padding:0 10px"><sc-for list="{{ brief_companies }}" as="c"><option value="{{ c.value }}">{{ c.label }}</option></sc-for></select>
+              <button onclick="{{ brief_reload }}" style="height:36px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text-2);padding:0 13px">刷新</button>
+              <button onclick="{{ brief_print }}" style="height:36px;border:0;border-radius:8px;background:var(--brand-600);color:#fff;padding:0 14px;font-weight:700">打印 / PDF</button>
+            </div>
+          </div>
+          <sc-if value="{{ brief_loading }}"><div style="padding:42px;text-align:center;color:var(--text-3)">正在汇总已核验证据…</div></sc-if>
+          <sc-if value="{{ brief_hasError }}"><div style="padding:16px;border:1px solid var(--neg);background:var(--neg-bg);color:var(--neg);border-radius:8px">{{ brief_error }}</div></sc-if>
+          <sc-if value="{{ brief_empty }}"><div style="padding:42px;text-align:center;border:1px dashed var(--border);color:var(--text-3)">当前没有可生成的简报数据</div></sc-if>
+          <sc-if value="{{ brief_hasData }}">
+            <article data-brief-paper="" style="background:var(--bg-elev);border:1px solid var(--border);padding:30px 34px;display:flex;flex-direction:column;gap:28px">
+              <header><div style="font-size:11px;color:var(--brand-600);font-weight:700">研发证据决策支持</div><h1 style="font-size:27px;line-height:1.25;margin:7px 0 8px;letter-spacing:0">{{ brief_title }}</h1><div style="font-size:12px;color:var(--text-3)">{{ brief_scope }} · 药物：{{ brief_drugs }}</div></header>
+              <section><h2 style="font-size:16px;margin:0 0 12px">1. 执行摘要</h2><div style="display:flex;flex-direction:column;gap:9px"><sc-for list="{{ brief_summary }}" as="x"><div style="border-left:3px solid var(--brand-400);padding:8px 12px;background:var(--bg-sunken)"><div style="display:flex;justify-content:space-between;gap:10px"><span style="font-size:13px;line-height:1.65">{{ x.text }}</span><span style="font-size:10px;color:var(--brand-600);white-space:nowrap">{{ x.status }}</span></div><div style="font-size:10.5px;color:var(--text-3);margin-top:5px">来源 {{ x.sources }} · 证据链 {{ x.chains }}</div></div></sc-for></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">2. 企业与数据概况</h2><div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px"><sc-for list="{{ brief_metrics }}" as="m"><div style="border-top:2px solid var(--brand-400);background:var(--bg-sunken);padding:12px"><div style="font-size:11px;color:var(--text-3)">{{ m.label }}</div><div style="font-size:22px;font-weight:700;margin-top:4px">{{ m.value }}</div></div></sc-for></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">3. 核心临床试验证据</h2><sc-if value="{{ brief_hasChains }}"><div style="display:flex;flex-direction:column;border-top:1px solid var(--border)"><sc-for list="{{ brief_chains }}" as="c"><button onclick="{{ c.onClick }}" style="display:grid;grid-template-columns:1.4fr .9fr .6fr;gap:12px;text-align:left;border:0;border-bottom:1px solid var(--border);background:transparent;padding:13px 4px;color:var(--text)"><span><b>{{ c.chain_name }}</b><small style="display:block;color:var(--text-3);margin-top:4px">{{ c.source_ids }}</small></span><span style="font-size:12px">{{ c.status }}<small style="display:block;color:var(--text-3);margin-top:4px">{{ c.version }}</small></span><span style="font-size:12px;color:var(--brand-600)">{{ c.source_count }} 条来源</span></button></sc-for></div></sc-if></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">4. 证据版本演进与研发时间轴</h2><sc-if value="{{ brief_hasEvents }}"><div style="display:flex;flex-direction:column;gap:0"><sc-for list="{{ brief_events }}" as="e"><button onclick="{{ e.onClick }}" style="display:grid;grid-template-columns:110px 120px 1fr 70px;gap:10px;border:0;border-bottom:1px solid var(--border);background:transparent;text-align:left;padding:10px 3px;color:var(--text);font-size:12px"><b style="font-family:var(--font-mono)">{{ e.date }}</b><span style="color:var(--text-3)">{{ e.event_type }}</span><span>{{ e.title }}</span><span style="color:var(--brand-600)">{{ e.source_id }}</span></button></sc-for></div></sc-if></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">5. 监管状态与时间口径</h2><sc-if value="{{ brief_hasRegulatory }}"><sc-for list="{{ brief_regulatory }}" as="r"><button onclick="{{ r.onClick }}" style="width:100%;text-align:left;border:1px solid var(--border);background:var(--bg-sunken);padding:12px;color:var(--text);margin-bottom:8px"><b>{{ r.chain_name }}</b><div style="font-size:11px;color:var(--text-3);margin-top:5px">{{ r.source_ids }} · {{ r.note }}</div></button></sc-for></sc-if><sc-if value="{{ brief_hasRegulatory }}"></sc-if></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">6. 证据强度及来源构成</h2><p style="font-size:12px;color:var(--text-2);line-height:1.65">{{ brief_strengthNote }}</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:18px"><div><b style="font-size:12px">来源类型</b><sc-for list="{{ brief_sourceTypes }}" as="d"><div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:7px 0;font-size:12px"><span>{{ d.label }}</span><b>{{ d.count }}</b></div></sc-for></div><div><b style="font-size:12px">版本构成</b><sc-for list="{{ brief_versions }}" as="d"><div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:7px 0;font-size:12px"><span>{{ d.label }}</span><b>{{ d.count }}</b></div></sc-for></div></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">7. 证据缺口与待确认关系</h2><sc-if value="{{ brief_hasGaps }}"><sc-for list="{{ brief_gaps }}" as="g"><div style="border-left:3px solid var(--warn);padding:9px 12px;background:var(--warn-bg);margin-bottom:8px"><b style="font-size:12px">{{ g.source_id }} · {{ g.title }}</b><div style="font-size:12px;line-height:1.6;margin-top:4px">{{ g.description }} {{ g.gaps }}</div></div></sc-for></sc-if><sc-if value="{{ brief_hasGaps }}"></sc-if></section>
+              <section style="display:grid;grid-template-columns:1fr 1fr;gap:24px"><div><h2 style="font-size:16px;margin:0 0 12px">8. 风险与限制</h2><sc-for list="{{ brief_limitations }}" as="x"><p style="font-size:12px;line-height:1.6;margin:0 0 7px">· {{ x.text }}</p></sc-for></div><div><h2 style="font-size:16px;margin:0 0 12px">9. 下一步证据方向</h2><sc-for list="{{ brief_directions }}" as="x"><p style="font-size:12px;line-height:1.6;margin:0 0 7px"><b>{{ x.priority }}</b> · {{ x.direction }}</p></sc-for></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">10. 引用来源及证据链</h2><sc-if value="{{ brief_hasCitations }}"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px"><sc-for list="{{ brief_citations }}" as="c"><button onclick="{{ c.onClick }}" style="text-align:left;border:0;border-bottom:1px solid var(--border);background:transparent;padding:8px 2px;color:var(--text)"><b style="font-size:11px;color:var(--brand-600)">{{ c.source_id }}</b><div style="font-size:11.5px;line-height:1.45;margin-top:3px">{{ c.title }}</div><small style="color:var(--text-3)">{{ c.source_type }} · 核验 {{ c.verified_at }}</small></button></sc-for></div></sc-if></section>
+              <section style="border-top:1px solid var(--border);padding-top:18px"><h2 style="font-size:16px;margin:0 0 12px">11. 禁止推断</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ brief_prohibited }}" as="x"><span style="font-size:11px;border:1px solid var(--neg);color:var(--neg);padding:4px 8px">{{ x.text }}</span></sc-for></div></section>
+              <footer style="border-top:1px solid var(--border);padding-top:15px;font-size:10.5px;color:var(--text-3);line-height:1.7">数据版本 {{ brief_dataVersion }} · 最近核验 {{ brief_verifiedAt }} · 生成时间 {{ brief_generatedAt }}<br>{{ brief_verificationScope }}</footer>
+            </article>
+          </sc-if>
         </div>
       </sc-if>
 
@@ -5010,7 +5058,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">研发事件时间轴</div>
               <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,.78);margin-top:5px">按真实结构化日期展示论文分析、公司披露和监管事件。核验日期、响应生成时间与页面更新时间均不作为研发事件日期。</div>
             </div>
-            <button onclick="{{ tl_reload }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:700;padding:0 13px">刷新时间轴</button>
+            <div style="display:flex;gap:8px"><button onclick="{{ tl_brief }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.5);background:#fff;color:var(--brand-700);font-size:12.5px;font-weight:700;padding:0 13px">生成决策简报</button><button onclick="{{ tl_reload }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:700;padding:0 13px">刷新时间轴</button></div>
           </div>
 
           <div data-timeline-filters="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:grid;grid-template-columns:repeat(5,minmax(132px,1fr));gap:11px;align-items:end">
@@ -5190,6 +5238,7 @@ class Component extends DCLogic {
     timelineCompany:'', timelineTrial:'', timelineDrug:'', timelineEventType:'', timelineYear:'',
     timelineIncludeAuxiliary:false, timelineData:null, timelineLoading:false, timelineLoaded:false, timelineError:'',
     timelineCompanyOptions:[], timelineTrialOptions:[], timelineDrugOptions:[], timelineEventTypeOptions:[], timelineYearOptions:[],
+    briefCompany:'阿斯利康', briefCompanies:[], briefData:null, briefLoading:false, briefLoaded:false, briefError:'',
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -5381,6 +5430,7 @@ class Component extends DCLogic {
     else if(p==='research') this._ensureResProfile(this._resActive());
     else if(p==='evidence') this.loadEvidencePage();
     else if(p==='groundedQa') this.loadGroundedCapabilities();
+    else if(p==='brief') this.loadDecisionBriefPage();
   }
 
   loadDashboard(){
@@ -5439,6 +5489,25 @@ class Component extends DCLogic {
     this.setState({page:'evidence',evidenceTab:'sources',evidenceKind:'source',evidenceQuery:sid,evidenceLatestOnly:false,evidenceHasSearched:false,navOpen:false},()=>this.loadEvidence());
   }
   openTimelineChain(chainId){ this.openProfileChain(chainId); }
+  openDecisionBrief(company){
+    const name=String(company||this.state.companyProfileCompany||this.state.timelineCompany||'阿斯利康').trim();
+    this.setState({page:'brief',briefCompany:name,briefData:null,briefError:'',navOpen:false},()=>this.loadDecisionBriefPage());
+  }
+  loadDecisionBriefPage(){
+    if(!this.state.briefCompanies.length){
+      this._api('/api/evidence/decision-brief/companies').then(d=>this.setState({briefCompanies:Array.isArray(d&&d.items)?d.items:[]})).catch(()=>{});
+    }
+    this.loadDecisionBrief();
+  }
+  loadDecisionBrief(){
+    if(this.state.briefLoading) return;
+    const company=String(this.state.briefCompany||'').trim();
+    if(!company){ this.setState({briefError:'请选择企业',briefLoaded:true}); return; }
+    this.setState({briefLoading:true,briefLoaded:true,briefError:''});
+    this._api('/api/evidence/decision-brief/'+encodeURIComponent(company)).then(d=>this.setState({briefLoading:false,briefData:(d&&d.brief)||null})).catch(()=>this.setState({briefLoading:false,briefData:null,briefError:'证据决策简报加载失败，请检查企业或稍后重试'}));
+  }
+  selectBriefCompany(value){ this.setState({briefCompany:value,briefData:null,briefError:''},()=>this.loadDecisionBrief()); }
+  printDecisionBrief(){ try{ window.print(); }catch(e){} }
   openTimelineGroundedQa(sourceId,title){
     const sid=String(sourceId||'').trim(), topic=String(title||'').trim();
     const question=sid?('请基于已核验证据说明 '+sid+(topic?'（'+topic+'）':'')+' 的事件口径、证据关系和限制。'):'请说明当前研发事件时间轴的证据关系和限制。';
@@ -6393,7 +6462,8 @@ class Component extends DCLogic {
       {key:'compare',label:'企业证据画像',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
       {key:'timeline',label:'研发事件时间轴',icon:['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']},
       {key:'evidence',label:'研发证据中心',icon:['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5','M8 13h8','M8 17h5']},
-      {key:'groundedQa',label:'循证问答',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']}
+      {key:'groundedQa',label:'循证问答',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
+      {key:'brief',label:'证据决策简报',icon:['M6 2h9l5 5v15H6z','M14 2v6h6','M9 13h8','M9 17h6']}
     ];
   }
   navItem(it){
@@ -6405,13 +6475,13 @@ class Component extends DCLogic {
   shellVals(){
     const s=this.state;
     const nd=this.navDef();
-    const META={today:['研发决策总览','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据中心','来源、证据链与企业对比'],groundedQa:['循证问答','本地证据优先'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
+    const META={today:['研发决策总览','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据中心','来源、证据链与企业对比'],groundedQa:['循证问答','本地证据优先'],brief:['证据决策简报','结构化决策支持'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
     const m=META[s.page]||['',''];
     return {
       theme:s.theme, present:this._isLegacyPage(s.page)&&s.present?'on':'off', navOpenAttr:s.navOpen?'1':'0',
       navMain:nd.map(it=>this.navItem(it)),
       crumbGroup:m[0], crumbSub:m[1],
-      isToday:s.page==='today', isChat:s.page==='chat', isCompare:s.page==='compare', isResearch:s.page==='research', isEvidence:s.page==='evidence'||s.page==='groundedQa', isEvidenceCenter:s.page==='evidence', isGroundedQaPage:s.page==='groundedQa', isWhitebox:s.page==='whitebox', isDatabase:s.page==='database', isTimeline:s.page==='timeline', isAdvanced:s.page==='advanced',
+      isToday:s.page==='today', isChat:s.page==='chat', isCompare:s.page==='compare', isResearch:s.page==='research', isEvidence:s.page==='evidence'||s.page==='groundedQa', isEvidenceCenter:s.page==='evidence', isGroundedQaPage:s.page==='groundedQa', isBrief:s.page==='brief', isWhitebox:s.page==='whitebox', isDatabase:s.page==='database', isTimeline:s.page==='timeline', isAdvanced:s.page==='advanced',
       themeIconPaths: this._paths(s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']),
       toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
       openNav:()=>this.setState({navOpen:true}), closeNav:()=>this.setState({navOpen:false})
@@ -6441,6 +6511,7 @@ class Component extends DCLogic {
       evidenceQuick('查看证据链','检查试验登记、论文和监管事件的人工关联。','chains',['M7 7h.01M17 7h.01M7 17h.01M17 17h.01','M7 7h10M7 17h10M7 7v10M17 7v10']),
       pageQuick('查看研发事件时间轴','按真实结构化日期查看核心事件、版本演进和无日期资料。','timeline',['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']),
       evidenceQuick('查看企业对比','对比恒瑞与百济/BeOne在当前样本内的证据覆盖。','companyCompare',['M4 4h6v16H4zM14 4h6v16h-6z']),
+      pageQuick('生成证据决策简报','汇总企业、试验、版本、监管、缺口和引用。','brief',['M6 2h9l5 5v15H6z','M9 13h8']),
       pageQuick('进入循证问答','使用安全边界内的本地循证摘要或已启用的智能生成。','groundedQa',['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2 2h14a2 2 0 0 1 2 2z'])
     ];
     const dist=(list)=>Array.isArray(list)?list.map(x=>({label:this._evidenceText(x&&x.label),count:this._evidenceText(x&&x.count)})):[];
@@ -6546,7 +6617,7 @@ class Component extends DCLogic {
       profile_unresolved:unresolved, profile_hasUnresolved:unresolved.length>0,
       profile_limitations:limitations, profile_dataVersion:text(metadata.data_version), profile_verifiedAt:text(metadata.latest_verified_at), profile_generatedAt:text(metadata.generated_at),
       profile_scopeWarning:'本画像仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力或完整研发管线。',
-      profile_allSources:()=>this.openProfileSources(), profile_compare:()=>this.openProfileComparison(), profile_grounded:()=>this.openProfileGroundedQa()
+      profile_allSources:()=>this.openProfileSources(), profile_compare:()=>this.openProfileComparison(), profile_grounded:()=>this.openProfileGroundedQa(), profile_brief:()=>this.openDecisionBrief(s.companyProfileCompany)
     };
   }
 
@@ -7151,7 +7222,7 @@ class Component extends DCLogic {
       tl_onCompany:(e)=>this.setTimelineFilter({timelineCompany:e.target.value,timelineTrial:'',timelineDrug:'',timelineEventType:'',timelineYear:''}),
       tl_onTrial:(e)=>this.setTimelineFilter({timelineTrial:e.target.value}), tl_onDrug:(e)=>this.setTimelineFilter({timelineDrug:e.target.value}),
       tl_onEventType:(e)=>this.setTimelineFilter({timelineEventType:e.target.value}), tl_onYear:(e)=>this.setTimelineFilter({timelineYear:e.target.value}),
-      tl_onAuxiliary:(e)=>this.setTimelineFilter({timelineIncludeAuxiliary:!!e.target.checked}), tl_reset:()=>this.resetTimelineFilters(), tl_reload:()=>this.loadTimeline(),
+      tl_onAuxiliary:(e)=>this.setTimelineFilter({timelineIncludeAuxiliary:!!e.target.checked}), tl_reset:()=>this.resetTimelineFilters(), tl_reload:()=>this.loadTimeline(), tl_brief:()=>this.openDecisionBrief(s.timelineCompany||'阿斯利康'),
       tl_cards:[
         {label:'核心事件',value:clean(summary.core_event_count||0),note:'默认时间轴事件',color:'var(--brand-600)'},
         {label:'唯一试验',value:clean(summary.unique_trial_count||0),note:'按试验证据链去重',color:'var(--series-4)'},
@@ -7222,8 +7293,45 @@ class Component extends DCLogic {
     };
   }
 
+  briefVals(){
+    const s=this.state, b=s.briefData||{}, subject=b.subject||{}, overview=b.overview||{}, metadata=b.metadata||{};
+    const text=v=>this._evidenceText(v), statusLabel={verified_fact:'已核验事实',structured_summary:'结构化归纳',insufficient_evidence:'证据不足',prohibited_inference:'禁止推断'};
+    const conclusions=(Array.isArray(b.executive_summary)?b.executive_summary:[]).map(item=>({
+      text:text(item.text),status:statusLabel[item.evidence_status]||text(item.evidence_status),statusKey:item.evidence_status||'',
+      sources:(item.source_ids||[]).join('、')||'无',chains:(item.chain_ids||[]).join('、')||'无'
+    }));
+    const chains=(Array.isArray(b.clinical_evidence)?b.clinical_evidence:[]).map(item=>({
+      chain_id:text(item.chain_id),chain_name:text(item.chain_name),trial_id:text(item.trial_id),status:text(item.study_status),
+      source_count:text(item.source_count),source_ids:(item.source_ids||[]).join('、'),version:'最新 '+text(item.latest_count)+' · 历史 '+text(item.historical_count)+' · 独立 '+text(item.independent_count),
+      onClick:()=>this.openProfileChain(item.chain_id)
+    }));
+    const events=(Array.isArray(b.timeline&&b.timeline.events)?b.timeline.events:[]).map(item=>({
+      date:text(item.date),event_type:text(item.event_type),title:text(item.title),source_id:text(item.source_id),
+      onClick:()=>this.openTimelineSource(item.source_id)
+    }));
+    const regulatory=(Array.isArray(b.regulatory_status)?b.regulatory_status:[]).map(item=>({
+      chain_id:text(item.chain_id),chain_name:text(item.chain_name),source_ids:(item.source_ids||[]).join('、'),note:text(item.counting_note),
+      onClick:()=>this.openProfileChain(item.chain_id)
+    }));
+    const gaps=(Array.isArray(b.evidence_gaps)?b.evidence_gaps:[]).map(item=>({source_id:text(item.source_id),title:text(item.title),description:text(item.description),gaps:(item.evidence_gaps||[]).join('；')}));
+    const citations=(Array.isArray(b.citations)?b.citations:[]).map(item=>({source_id:text(item.source_id),title:text(item.title),source_type:text(item.source_type),verified_at:text(item.verified_at),onClick:()=>this.openTimelineSource(item.source_id)}));
+    const companies=(s.briefCompanies.length?s.briefCompanies:[{canonical_name:'阿斯利康',display_name:'阿斯利康 / AstraZeneca'}]).map(item=>({value:text(item.canonical_name),label:text(item.display_name||item.canonical_name)}));
+    const dist=list=>(Array.isArray(list)?list:[]).map(item=>({label:text(item.label),count:text(item.count)}));
+    return {
+      brief_loading:s.briefLoading,brief_loaded:s.briefLoaded,brief_hasError:!!s.briefError,brief_error:s.briefError,brief_hasData:!!b.brief_id,brief_empty:s.briefLoaded&&!s.briefLoading&&!s.briefError&&!b.brief_id,
+      brief_company:s.briefCompany,brief_companies:companies,brief_onCompany:e=>this.selectBriefCompany(e.target.value),brief_reload:()=>this.loadDecisionBrief(),brief_print:()=>this.printDecisionBrief(),
+      brief_title:text(b.title),brief_scope:text(subject.data_scope),brief_drugs:(subject.drug_names||[]).join('、')||'当前数据不足',brief_summary:conclusions,
+      brief_metrics:[['已核验来源',overview.verified_source_count],['试验证据链',overview.trial_chain_count],['监管证据链',overview.regulatory_chain_count],['待确认关系',overview.unresolved_link_count]].map(x=>({label:x[0],value:text(x[1])})),
+      brief_chains:chains,brief_hasChains:chains.length>0,brief_events:events,brief_hasEvents:events.length>0,brief_regulatory:regulatory,brief_hasRegulatory:regulatory.length>0,
+      brief_sourceTypes:dist(b.evidence_strength&&b.evidence_strength.source_type_distribution),brief_versions:dist(b.evidence_strength&&b.evidence_strength.version_distribution),brief_strengthNote:text(b.evidence_strength&&b.evidence_strength.interpretation),
+      brief_gaps:gaps,brief_hasGaps:gaps.length>0,brief_limitations:(b.risks_and_limitations||[]).map(x=>({text:text(x)})),brief_directions:(b.next_evidence_directions||[]).map(x=>({priority:text(x.priority),direction:text(x.direction)})),
+      brief_citations:citations,brief_hasCitations:citations.length>0,brief_prohibited:(b.prohibited_inferences||[]).map(x=>({text:text(x)})),
+      brief_dataVersion:text(metadata.data_version),brief_verifiedAt:text(metadata.latest_verified_at),brief_generatedAt:text(metadata.generated_at),brief_verificationScope:text(metadata.verification_scope)
+    };
+  }
+
   renderVals(){
-    const competition=Object.assign({}, this.shellVals(), this.todayVals(), this.companyProfileVals(), this.evidenceVals(), this.timelineVals());
+    const competition=Object.assign({}, this.shellVals(), this.todayVals(), this.companyProfileVals(), this.evidenceVals(), this.timelineVals(), this.briefVals());
     if(!this._isLegacyPage(this.state.page)) return competition;
     const legacyValues={
       chat:()=>this.chatVals(),

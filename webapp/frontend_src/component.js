@@ -29,6 +29,7 @@ class Component extends DCLogic {
     timelineCompany:'', timelineTrial:'', timelineDrug:'', timelineEventType:'', timelineYear:'',
     timelineIncludeAuxiliary:false, timelineData:null, timelineLoading:false, timelineLoaded:false, timelineError:'',
     timelineCompanyOptions:[], timelineTrialOptions:[], timelineDrugOptions:[], timelineEventTypeOptions:[], timelineYearOptions:[],
+    briefCompany:'阿斯利康', briefCompanies:[], briefData:null, briefLoading:false, briefLoaded:false, briefError:'',
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -220,6 +221,7 @@ class Component extends DCLogic {
     else if(p==='research') this._ensureResProfile(this._resActive());
     else if(p==='evidence') this.loadEvidencePage();
     else if(p==='groundedQa') this.loadGroundedCapabilities();
+    else if(p==='brief') this.loadDecisionBriefPage();
   }
 
   loadDashboard(){
@@ -278,6 +280,25 @@ class Component extends DCLogic {
     this.setState({page:'evidence',evidenceTab:'sources',evidenceKind:'source',evidenceQuery:sid,evidenceLatestOnly:false,evidenceHasSearched:false,navOpen:false},()=>this.loadEvidence());
   }
   openTimelineChain(chainId){ this.openProfileChain(chainId); }
+  openDecisionBrief(company){
+    const name=String(company||this.state.companyProfileCompany||this.state.timelineCompany||'阿斯利康').trim();
+    this.setState({page:'brief',briefCompany:name,briefData:null,briefError:'',navOpen:false},()=>this.loadDecisionBriefPage());
+  }
+  loadDecisionBriefPage(){
+    if(!this.state.briefCompanies.length){
+      this._api('/api/evidence/decision-brief/companies').then(d=>this.setState({briefCompanies:Array.isArray(d&&d.items)?d.items:[]})).catch(()=>{});
+    }
+    this.loadDecisionBrief();
+  }
+  loadDecisionBrief(){
+    if(this.state.briefLoading) return;
+    const company=String(this.state.briefCompany||'').trim();
+    if(!company){ this.setState({briefError:'请选择企业',briefLoaded:true}); return; }
+    this.setState({briefLoading:true,briefLoaded:true,briefError:''});
+    this._api('/api/evidence/decision-brief/'+encodeURIComponent(company)).then(d=>this.setState({briefLoading:false,briefData:(d&&d.brief)||null})).catch(()=>this.setState({briefLoading:false,briefData:null,briefError:'证据决策简报加载失败，请检查企业或稍后重试'}));
+  }
+  selectBriefCompany(value){ this.setState({briefCompany:value,briefData:null,briefError:''},()=>this.loadDecisionBrief()); }
+  printDecisionBrief(){ try{ window.print(); }catch(e){} }
   openTimelineGroundedQa(sourceId,title){
     const sid=String(sourceId||'').trim(), topic=String(title||'').trim();
     const question=sid?('请基于已核验证据说明 '+sid+(topic?'（'+topic+'）':'')+' 的事件口径、证据关系和限制。'):'请说明当前研发事件时间轴的证据关系和限制。';
@@ -1232,7 +1253,8 @@ class Component extends DCLogic {
       {key:'compare',label:'企业证据画像',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
       {key:'timeline',label:'研发事件时间轴',icon:['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']},
       {key:'evidence',label:'研发证据中心',icon:['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5','M8 13h8','M8 17h5']},
-      {key:'groundedQa',label:'循证问答',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']}
+      {key:'groundedQa',label:'循证问答',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
+      {key:'brief',label:'证据决策简报',icon:['M6 2h9l5 5v15H6z','M14 2v6h6','M9 13h8','M9 17h6']}
     ];
   }
   navItem(it){
@@ -1244,13 +1266,13 @@ class Component extends DCLogic {
   shellVals(){
     const s=this.state;
     const nd=this.navDef();
-    const META={today:['研发决策总览','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据中心','来源、证据链与企业对比'],groundedQa:['循证问答','本地证据优先'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
+    const META={today:['研发决策总览','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据中心','来源、证据链与企业对比'],groundedQa:['循证问答','本地证据优先'],brief:['证据决策简报','结构化决策支持'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
     const m=META[s.page]||['',''];
     return {
       theme:s.theme, present:this._isLegacyPage(s.page)&&s.present?'on':'off', navOpenAttr:s.navOpen?'1':'0',
       navMain:nd.map(it=>this.navItem(it)),
       crumbGroup:m[0], crumbSub:m[1],
-      isToday:s.page==='today', isChat:s.page==='chat', isCompare:s.page==='compare', isResearch:s.page==='research', isEvidence:s.page==='evidence'||s.page==='groundedQa', isEvidenceCenter:s.page==='evidence', isGroundedQaPage:s.page==='groundedQa', isWhitebox:s.page==='whitebox', isDatabase:s.page==='database', isTimeline:s.page==='timeline', isAdvanced:s.page==='advanced',
+      isToday:s.page==='today', isChat:s.page==='chat', isCompare:s.page==='compare', isResearch:s.page==='research', isEvidence:s.page==='evidence'||s.page==='groundedQa', isEvidenceCenter:s.page==='evidence', isGroundedQaPage:s.page==='groundedQa', isBrief:s.page==='brief', isWhitebox:s.page==='whitebox', isDatabase:s.page==='database', isTimeline:s.page==='timeline', isAdvanced:s.page==='advanced',
       themeIconPaths: this._paths(s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']),
       toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
       openNav:()=>this.setState({navOpen:true}), closeNav:()=>this.setState({navOpen:false})
@@ -1280,6 +1302,7 @@ class Component extends DCLogic {
       evidenceQuick('查看证据链','检查试验登记、论文和监管事件的人工关联。','chains',['M7 7h.01M17 7h.01M7 17h.01M17 17h.01','M7 7h10M7 17h10M7 7v10M17 7v10']),
       pageQuick('查看研发事件时间轴','按真实结构化日期查看核心事件、版本演进和无日期资料。','timeline',['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']),
       evidenceQuick('查看企业对比','对比恒瑞与百济/BeOne在当前样本内的证据覆盖。','companyCompare',['M4 4h6v16H4zM14 4h6v16h-6z']),
+      pageQuick('生成证据决策简报','汇总企业、试验、版本、监管、缺口和引用。','brief',['M6 2h9l5 5v15H6z','M9 13h8']),
       pageQuick('进入循证问答','使用安全边界内的本地循证摘要或已启用的智能生成。','groundedQa',['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2 2h14a2 2 0 0 1 2 2z'])
     ];
     const dist=(list)=>Array.isArray(list)?list.map(x=>({label:this._evidenceText(x&&x.label),count:this._evidenceText(x&&x.count)})):[];
@@ -1385,7 +1408,7 @@ class Component extends DCLogic {
       profile_unresolved:unresolved, profile_hasUnresolved:unresolved.length>0,
       profile_limitations:limitations, profile_dataVersion:text(metadata.data_version), profile_verifiedAt:text(metadata.latest_verified_at), profile_generatedAt:text(metadata.generated_at),
       profile_scopeWarning:'本画像仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力或完整研发管线。',
-      profile_allSources:()=>this.openProfileSources(), profile_compare:()=>this.openProfileComparison(), profile_grounded:()=>this.openProfileGroundedQa()
+      profile_allSources:()=>this.openProfileSources(), profile_compare:()=>this.openProfileComparison(), profile_grounded:()=>this.openProfileGroundedQa(), profile_brief:()=>this.openDecisionBrief(s.companyProfileCompany)
     };
   }
 
@@ -1990,7 +2013,7 @@ class Component extends DCLogic {
       tl_onCompany:(e)=>this.setTimelineFilter({timelineCompany:e.target.value,timelineTrial:'',timelineDrug:'',timelineEventType:'',timelineYear:''}),
       tl_onTrial:(e)=>this.setTimelineFilter({timelineTrial:e.target.value}), tl_onDrug:(e)=>this.setTimelineFilter({timelineDrug:e.target.value}),
       tl_onEventType:(e)=>this.setTimelineFilter({timelineEventType:e.target.value}), tl_onYear:(e)=>this.setTimelineFilter({timelineYear:e.target.value}),
-      tl_onAuxiliary:(e)=>this.setTimelineFilter({timelineIncludeAuxiliary:!!e.target.checked}), tl_reset:()=>this.resetTimelineFilters(), tl_reload:()=>this.loadTimeline(),
+      tl_onAuxiliary:(e)=>this.setTimelineFilter({timelineIncludeAuxiliary:!!e.target.checked}), tl_reset:()=>this.resetTimelineFilters(), tl_reload:()=>this.loadTimeline(), tl_brief:()=>this.openDecisionBrief(s.timelineCompany||'阿斯利康'),
       tl_cards:[
         {label:'核心事件',value:clean(summary.core_event_count||0),note:'默认时间轴事件',color:'var(--brand-600)'},
         {label:'唯一试验',value:clean(summary.unique_trial_count||0),note:'按试验证据链去重',color:'var(--series-4)'},
@@ -2061,8 +2084,45 @@ class Component extends DCLogic {
     };
   }
 
+  briefVals(){
+    const s=this.state, b=s.briefData||{}, subject=b.subject||{}, overview=b.overview||{}, metadata=b.metadata||{};
+    const text=v=>this._evidenceText(v), statusLabel={verified_fact:'已核验事实',structured_summary:'结构化归纳',insufficient_evidence:'证据不足',prohibited_inference:'禁止推断'};
+    const conclusions=(Array.isArray(b.executive_summary)?b.executive_summary:[]).map(item=>({
+      text:text(item.text),status:statusLabel[item.evidence_status]||text(item.evidence_status),statusKey:item.evidence_status||'',
+      sources:(item.source_ids||[]).join('、')||'无',chains:(item.chain_ids||[]).join('、')||'无'
+    }));
+    const chains=(Array.isArray(b.clinical_evidence)?b.clinical_evidence:[]).map(item=>({
+      chain_id:text(item.chain_id),chain_name:text(item.chain_name),trial_id:text(item.trial_id),status:text(item.study_status),
+      source_count:text(item.source_count),source_ids:(item.source_ids||[]).join('、'),version:'最新 '+text(item.latest_count)+' · 历史 '+text(item.historical_count)+' · 独立 '+text(item.independent_count),
+      onClick:()=>this.openProfileChain(item.chain_id)
+    }));
+    const events=(Array.isArray(b.timeline&&b.timeline.events)?b.timeline.events:[]).map(item=>({
+      date:text(item.date),event_type:text(item.event_type),title:text(item.title),source_id:text(item.source_id),
+      onClick:()=>this.openTimelineSource(item.source_id)
+    }));
+    const regulatory=(Array.isArray(b.regulatory_status)?b.regulatory_status:[]).map(item=>({
+      chain_id:text(item.chain_id),chain_name:text(item.chain_name),source_ids:(item.source_ids||[]).join('、'),note:text(item.counting_note),
+      onClick:()=>this.openProfileChain(item.chain_id)
+    }));
+    const gaps=(Array.isArray(b.evidence_gaps)?b.evidence_gaps:[]).map(item=>({source_id:text(item.source_id),title:text(item.title),description:text(item.description),gaps:(item.evidence_gaps||[]).join('；')}));
+    const citations=(Array.isArray(b.citations)?b.citations:[]).map(item=>({source_id:text(item.source_id),title:text(item.title),source_type:text(item.source_type),verified_at:text(item.verified_at),onClick:()=>this.openTimelineSource(item.source_id)}));
+    const companies=(s.briefCompanies.length?s.briefCompanies:[{canonical_name:'阿斯利康',display_name:'阿斯利康 / AstraZeneca'}]).map(item=>({value:text(item.canonical_name),label:text(item.display_name||item.canonical_name)}));
+    const dist=list=>(Array.isArray(list)?list:[]).map(item=>({label:text(item.label),count:text(item.count)}));
+    return {
+      brief_loading:s.briefLoading,brief_loaded:s.briefLoaded,brief_hasError:!!s.briefError,brief_error:s.briefError,brief_hasData:!!b.brief_id,brief_empty:s.briefLoaded&&!s.briefLoading&&!s.briefError&&!b.brief_id,
+      brief_company:s.briefCompany,brief_companies:companies,brief_onCompany:e=>this.selectBriefCompany(e.target.value),brief_reload:()=>this.loadDecisionBrief(),brief_print:()=>this.printDecisionBrief(),
+      brief_title:text(b.title),brief_scope:text(subject.data_scope),brief_drugs:(subject.drug_names||[]).join('、')||'当前数据不足',brief_summary:conclusions,
+      brief_metrics:[['已核验来源',overview.verified_source_count],['试验证据链',overview.trial_chain_count],['监管证据链',overview.regulatory_chain_count],['待确认关系',overview.unresolved_link_count]].map(x=>({label:x[0],value:text(x[1])})),
+      brief_chains:chains,brief_hasChains:chains.length>0,brief_events:events,brief_hasEvents:events.length>0,brief_regulatory:regulatory,brief_hasRegulatory:regulatory.length>0,
+      brief_sourceTypes:dist(b.evidence_strength&&b.evidence_strength.source_type_distribution),brief_versions:dist(b.evidence_strength&&b.evidence_strength.version_distribution),brief_strengthNote:text(b.evidence_strength&&b.evidence_strength.interpretation),
+      brief_gaps:gaps,brief_hasGaps:gaps.length>0,brief_limitations:(b.risks_and_limitations||[]).map(x=>({text:text(x)})),brief_directions:(b.next_evidence_directions||[]).map(x=>({priority:text(x.priority),direction:text(x.direction)})),
+      brief_citations:citations,brief_hasCitations:citations.length>0,brief_prohibited:(b.prohibited_inferences||[]).map(x=>({text:text(x)})),
+      brief_dataVersion:text(metadata.data_version),brief_verifiedAt:text(metadata.latest_verified_at),brief_generatedAt:text(metadata.generated_at),brief_verificationScope:text(metadata.verification_scope)
+    };
+  }
+
   renderVals(){
-    const competition=Object.assign({}, this.shellVals(), this.todayVals(), this.companyProfileVals(), this.evidenceVals(), this.timelineVals());
+    const competition=Object.assign({}, this.shellVals(), this.todayVals(), this.companyProfileVals(), this.evidenceVals(), this.timelineVals(), this.briefVals());
     if(!this._isLegacyPage(this.state.page)) return competition;
     const legacyValues={
       chat:()=>this.chatVals(),
