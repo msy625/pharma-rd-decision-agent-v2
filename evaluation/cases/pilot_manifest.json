@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "benchmark_name": "药研制策国赛量化评测",
+  "benchmark_stage": "pilot",
+  "case_count": 12,
+  "expected_data_version": "sha256:330ac862f52db200",
+  "facts_snapshot_commit": "656626b8756a01e4f6280f4451be503a92439e71",
+  "case_file": "pilot_cases.jsonl",
+  "description": "12题人工编写的离线试运行集，不属于最终开发集或锁定验收集。",
+  "limitations": [
+    "本结果只用于验证评测框架和暴露当前生产能力缺口，不是最终业务成绩。",
+    "结果不能外推到整个医药研发领域。",
+    "自由文本监管语义仍需人工复核。",
+    "服务层延迟不等于浏览器端到端延迟。"
+  ]
+}
