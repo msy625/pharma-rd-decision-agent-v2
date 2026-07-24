@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharma-rd-decision-agent.local/evaluation/case.schema.json",
+  "title": "药研制策离线评测用例",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "split",
+    "category",
+    "target",
+    "question",
+    "request",
+    "expected_question_type",
+    "expected_source_ids",
+    "allowed_source_ids",
+    "forbidden_source_ids",
+    "expected_chain_ids",
+    "required_facts",
+    "forbidden_claims",
+    "required_limitations",
+    "expected_refusal",
+    "expected_safety_category",
+    "retrieval_k",
+    "latency_budget_ms",
+    "manual_review_required",
+    "tags",
+    "notes"
+  ],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^[A-Z]+-[0-9]{3}$"},
+    "split": {"const": "pilot"},
+    "category": {
+      "enum": [
+        "source_search",
+        "trial_status",
+        "evidence_chain",
+        "regulatory_status",
+        "company_comparison",
+        "evidence_gap",
+        "prohibited_or_unsupported"
+      ]
+    },
+    "target": {
+      "enum": [
+        "source_registry",
+        "evidence_chain",
+        "company_comparison",
+        "grounded_qa_local"
+      ]
+    },
+    "question": {"type": "string", "minLength": 1},
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["query_mode", "query_value", "keyword_queries"],
+      "properties": {
+        "query_mode": {
+          "enum": ["none", "study_name", "drug", "trial_id", "source_id", "source_ids", "company", "company_pair"]
+        },
+        "query_value": {
+          "oneOf": [
+            {"type": "string"},
+            {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+          ]
+        },
+        "keyword_queries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        }
+      }
+    },
+    "expected_question_type": {
+      "enum": [
+        "source_search",
+        "trial_status",
+        "evidence_chain",
+        "regulatory_status",
+        "company_comparison",
+        "evidence_gap",
+        "prohibited_or_unsupported"
+      ]
+    },
+    "expected_source_ids": {"$ref": "#/$defs/sourceIds"},
+    "allowed_source_ids": {"$ref": "#/$defs/sourceIds"},
+    "forbidden_source_ids": {"$ref": "#/$defs/sourceIds"},
+    "expected_chain_ids": {"$ref": "#/$defs/chainIds"},
+    "required_facts": {"type": "array", "items": {"$ref": "#/$defs/matchRule"}},
+    "forbidden_claims": {"type": "array", "items": {"$ref": "#/$defs/matchRule"}},
+    "required_limitations": {"type": "array", "items": {"$ref": "#/$defs/matchRule"}},
+    "expected_refusal": {"type": "boolean"},
+    "expected_safety_category": {"type": "string"},
+    "retrieval_k": {"type": "integer", "minimum": 1},
+    "latency_budget_ms": {"type": "number", "exclusiveMinimum": 0},
+    "manual_review_required": {"type": "boolean"},
+    "tags": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "notes": {"type": "string"}
+  },
+  "$defs": {
+    "sourceIds": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^[AHB][0-9]{3}$"},
+      "uniqueItems": true
+    },
+    "chainIds": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^(trial:[A-Za-z0-9-]+|regulatory:[a-z0-9][a-z0-9-]*)$"},
+      "uniqueItems": true
+    },
+    "matchRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "field_path",
+        "operator",
+        "expected",
+        "supporting_source_ids",
+        "manual_review_required"
+      ],
+      "properties": {
+        "rule_id": {"type": "string", "minLength": 1},
+        "field_path": {"type": "string", "minLength": 1},
+        "operator": {
+          "enum": ["exact", "casefold_exact", "contains", "contains_all", "contains_any", "set_equal", "set_contains_all"]
+        },
+        "expected": {},
+        "supporting_source_ids": {"$ref": "#/$defs/sourceIds"},
+        "manual_review_required": {"type": "boolean"}
+      }
+    }
+  }
+}
