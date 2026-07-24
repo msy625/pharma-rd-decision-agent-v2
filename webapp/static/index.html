@@ -3658,23 +3658,59 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 [data-scrim]{display:none;position:fixed;inset:0;background:rgba(10,12,20,.45);z-index:55;backdrop-filter:blur(2px)}
 [data-present="on"] [data-scale]{zoom:1.12}
 [data-present="on"] [data-chrome]{display:none}
+[data-evidence-page],
+[data-evidence],
+[data-evidence-chain],
+[data-evidence-company-compare],
+[data-evidence-results],
+[data-evidence-detail],
+[data-evidence-chain-detail],
+[data-evidence-company-card]{width:100%;min-width:0;max-width:100%}
+[data-evidence-page]{overflow-wrap:anywhere;word-break:normal}
+[data-evidence-card]{width:100%;min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:normal}
+[data-evidence-page] input,[data-evidence-page] select,[data-evidence-page] button{max-width:100%}
 @media(max-width:1080px){
   [data-app]{grid-template-columns:1fr !important}
   [data-sidebar]{position:fixed;top:0;left:0;bottom:0;width:248px;z-index:60;transform:translateX(-100%);transition:transform .25s var(--ease-out)}
   [data-sidebar][data-open="1"]{transform:none;box-shadow:0 24px 60px rgba(10,12,20,.4)}
   [data-hamburger]{display:inline-flex !important}
   [data-scrim][data-open="1"]{display:block}
-  [data-cols],[data-chat],[data-research],[data-evidence]{grid-template-columns:1fr !important}
+  [data-cols],[data-chat],[data-research],[data-evidence]{grid-template-columns:minmax(0,1fr) !important}
   [data-timeline-filters]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
   [data-timeline-grid]{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
   [data-timeline-layout]{grid-template-columns:1fr !important}
 }
+@media(max-width:900px){
+  [data-evidence-chain],[data-evidence-company-compare]{grid-template-columns:minmax(0,1fr) !important}
+}
 @media(max-width:640px){
+  [data-header]{padding:0 12px !important;gap:10px !important}
+  [data-header]>button{flex:none}
+  [data-breadcrumb]{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  [data-breadcrumb]>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  [data-content]{padding:16px 14px 44px !important}
   [data-grid4]{grid-template-columns:repeat(2,1fr) !important}
   [data-hero]{grid-template-columns:1fr !important}
+  [data-evidence-center-tabs]{width:100%;align-items:stretch !important}
+  [data-evidence-center-tabs]>button{flex:1 1 calc(50% - 4px);min-width:0;padding-left:10px !important;padding-right:10px !important}
+  [data-evidence-query-controls],[data-evidence-toolbar]{align-items:stretch !important}
+  [data-evidence-query-controls]>input{flex:1 1 100%;width:100%;min-width:0 !important}
+  [data-evidence-query-controls]>label,[data-evidence-query-controls]>select,[data-evidence-query-controls]>button{width:100%;justify-content:center}
+  [data-evidence-toolbar]>label{width:100%;min-width:0;justify-content:space-between}
+  [data-evidence-toolbar]>label select{flex:1;min-width:0}
+  [data-evidence-toolbar]>button{width:100%}
+  [data-evidence-metrics]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [data-evidence-card-fields],[data-evidence-detail-fields],[data-evidence-item-fields],[data-evidence-compact-grid]{grid-template-columns:minmax(0,1fr) !important}
+  [data-evidence-card-head]{align-items:flex-start !important;flex-wrap:wrap}
+  [data-evidence-card-head]>:first-child{flex:1 1 180px;min-width:0}
+  [data-evidence-detail-fields]>span,[data-evidence-card-fields]>span,[data-evidence-item-fields]>span{min-width:0;overflow-wrap:anywhere}
   [data-timeline-filters]{grid-template-columns:1fr !important}
   [data-timeline-grid]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
   [data-timeline-event]{grid-template-columns:70px 18px minmax(0,1fr) !important;gap:6px !important}
+}
+@media(max-width:420px){
+  [data-evidence-metrics]{grid-template-columns:minmax(0,1fr) !important}
+  [data-evidence-center-tabs]>button{flex-basis:100%}
 }
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
@@ -3707,11 +3743,11 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   </aside>
 
   <main style="display:flex;flex-direction:column;height:100vh;min-width:0;overflow:hidden">
-    <header style="height:56px;flex:none;border-bottom:1px solid var(--border);background:var(--bg-elev);display:flex;align-items:center;gap:14px;padding:0 20px">
+    <header data-header="" style="height:56px;flex:none;border-bottom:1px solid var(--border);background:var(--bg-elev);display:flex;align-items:center;gap:14px;padding:0 20px">
       <button data-hamburger="" onclick="{{ openNav }}" style="width:34px;height:34px;border-radius:8px;border:1px solid var(--border);align-items:center;justify-content:center;color:var(--text-2);background:var(--bg-elev)">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
       </button>
-      <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0">
+      <div data-breadcrumb="" style="display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0">
         <span style="color:var(--text-3)">{{ crumbGroup }}</span>
         <span style="color:var(--gray-300)">/</span>
         <span style="font-weight:600;color:var(--text)">{{ crumbSub }}</span>
@@ -3723,7 +3759,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
     </header>
 
     <div data-scale="" style="flex:1;overflow-y:auto;overflow-x:hidden">
-      <div style="padding:24px 28px 60px;max-width:1320px;margin:0 auto">
+      <div data-content="" style="padding:24px 28px 60px;max-width:1320px;margin:0 auto">
       <sc-if value="{{ isToday }}">
         <div style="animation:fadeUp .5s var(--ease-out) both">
           <div data-hero="" style="display:grid;grid-template-columns:1.45fr 1fr;gap:22px;margin-bottom:22px">
@@ -4406,7 +4442,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
       </sc-if>
 
       <sc-if value="{{ isEvidence }}">
-        <div style="animation:fadeUp .5s var(--ease-out) both;display:flex;flex-direction:column;gap:16px">
+        <div data-evidence-page="" style="animation:fadeUp .5s var(--ease-out) both;display:flex;flex-direction:column;gap:16px">
           <sc-if value="{{ isEvidenceCenter }}">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
               <div>
@@ -4439,7 +4475,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 统计加载中 / 刷新统计
               </button>
             </div>
-            <div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+            <div data-grid4="" data-evidence-metrics="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
               <sc-for list="{{ ev_scope }}" as="s" hint-placeholder-count="4">
                 <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px">
                   <div style="font-size:11px;color:var(--text-3);margin-bottom:5px">{{ s.label }}</div>
@@ -4456,7 +4492,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                   <sc-for list="{{ ev_modes }}" as="m"><button onclick="{{ m.onClick }}" style="{{ m.style }}">{{ m.label }}</button></sc-for>
                 </div>
               </div>
-              <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <div data-evidence-query-controls="" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
                 <input id="evidence-query-input" name="evidence_query" aria-label="证据查询内容" value="{{ ev_query }}" oninput="{{ ev_onQuery }}" onkeydown="{{ ev_onKey }}" placeholder="{{ ev_placeholder }}" style="flex:1;min-width:260px;height:38px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;padding:0 12px;outline:none">
                 <label for="evidence-latest-checkbox" style="height:38px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:9px;padding:0 11px;background:var(--bg-sunken);font-size:12.5px;color:var(--text-2);white-space:nowrap">
                   <input id="evidence-latest-checkbox" name="evidence_latest_only" type="checkbox" checked="{{ ev_latest }}" onchange="{{ ev_onLatest }}" style="accent-color:var(--brand-600)">排除历史版本
@@ -4482,13 +4518,13 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div data-evidence-results="" style="display:flex;flex-direction:column;gap:10px;min-width:0">
                 <div style="font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--text-3)">结果列表</div>
                 <sc-for list="{{ ev_items }}" as="it" hint-placeholder-count="6">
-                  <button onclick="{{ it.onClick }}" style="{{ it.style }}" style-hover="border-color:var(--brand-300)">
-                    <div style="display:flex;align-items:center;gap:8px;justify-content:space-between">
+                  <button data-evidence-card="" onclick="{{ it.onClick }}" style="{{ it.style }}" style-hover="border-color:var(--brand-300)">
+                    <div data-evidence-card-head="" style="display:flex;align-items:center;gap:8px;justify-content:space-between">
                       <span style="font-size:12px;font-family:var(--font-mono);font-weight:700;color:var(--brand-600)">{{ it.source_id }}</span>
                       <span style="font-size:10.5px;font-weight:600;color:{{ it.latestColor }};background:var(--bg-sunken);border-radius:999px;padding:2px 8px">{{ it.latestLabel }}</span>
                     </div>
                     <div style="font-size:13.5px;font-weight:600;color:var(--text);line-height:1.45">{{ it.title_original }}</div>
-                    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;font-size:11.5px;color:var(--text-3)">
+                    <div data-evidence-card-fields="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;font-size:11.5px;color:var(--text-3)">
                       <span>企业：{{ it.company_name }}</span><span>药物：{{ it.drug_name }}</span>
                       <span>试验：{{ it.trial_id }}</span><span>研究：{{ it.study_name }}</span>
                       <span>来源：{{ it.source_type }}</span><span>状态：{{ it.study_status }}</span>
@@ -4510,7 +4546,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                     <div style="font-size:14.5px;font-weight:600;line-height:1.5">{{ ev_detailTitle }}</div>
                     <div style="font-size:12.5px;line-height:1.65;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:11px 12px">{{ ev_detailDesc }}</div>
                   </div>
-                  <div style="display:grid;grid-template-columns:118px 1fr;gap:7px 10px;font-size:12px">
+                  <div data-evidence-detail-fields="" style="display:grid;grid-template-columns:118px 1fr;gap:7px 10px;font-size:12px">
                     <sc-for list="{{ ev_detailFields }}" as="f">
                       <span style="color:var(--text-3)">{{ f.label }}</span><span style="color:var(--text);min-width:0;overflow-wrap:anywhere">{{ f.value }}</span>
                     </sc-for>
@@ -4523,14 +4559,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
           </sc-if>
 
           <sc-if value="{{ ev_isChainTab }}">
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+            <div data-evidence-metrics="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
               <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px"><div style="font-size:11px;color:var(--text-3);margin-bottom:5px">总证据链</div><div style="font-size:18px;font-weight:700;color:var(--text)">{{ chain_total }}</div></div>
               <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px"><div style="font-size:11px;color:var(--text-3);margin-bottom:5px">试验级证据链</div><div style="font-size:18px;font-weight:700;color:var(--text)">{{ chain_trial }}</div></div>
               <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px"><div style="font-size:11px;color:var(--text-3);margin-bottom:5px">药物级监管链</div><div style="font-size:18px;font-weight:700;color:var(--text)">{{ chain_regulatory }}</div></div>
               <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px"><div style="font-size:11px;color:var(--text-3);margin-bottom:5px">待确认关系数量</div><div style="font-size:18px;font-weight:700;color:var(--text)">{{ chain_unresolvedCount }}</div></div>
             </div>
 
-            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <div data-evidence-toolbar="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
               <label for="chain-company-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">企业
                 <select id="chain-company-select" name="chain_company" value="{{ chain_company }}" onchange="{{ chain_onCompany }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                   <option value="">全部</option><sc-for list="{{ chain_companyOptions }}" as="co"><option value="{{ co.value }}">{{ co.label }}</option></sc-for>
@@ -4552,12 +4588,12 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
                 <div style="font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--text-3)">证据链列表 · {{ chain_count }} 条</div>
                 <sc-for list="{{ chain_items }}" as="c" hint-placeholder-count="6">
-                  <button onclick="{{ c.onClick }}" style="{{ c.style }}" style-hover="border-color:var(--brand-300)">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                  <button data-evidence-card="" onclick="{{ c.onClick }}" style="{{ c.style }}" style-hover="border-color:var(--brand-300)">
+                    <div data-evidence-card-head="" style="display:flex;align-items:center;justify-content:space-between;gap:10px">
                       <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.35">{{ c.chain_name }}</div>
                       <span style="font-size:10.5px;font-weight:700;color:var(--brand-600);background:var(--brand-50);border-radius:999px;padding:2px 8px;white-space:nowrap">{{ c.typeLabel }}</span>
                     </div>
-                    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;font-size:11.5px;color:var(--text-3)">
+                    <div data-evidence-card-fields="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;font-size:11.5px;color:var(--text-3)">
                       <span>企业：{{ c.company_name }}</span><span>资料数：{{ c.source_count }}</span>
                       <span>药物：{{ c.drugText }}</span><sc-if value="{{ c.hasStudyStatus }}"><span>状态：{{ c.study_status }}</span></sc-if>
                       <span>编号：{{ c.trialText }}</span><span>{{ c.versionCounts }}</span>
@@ -4567,7 +4603,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 </sc-for>
               </div>
 
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:13px;min-width:0">
+              <div data-evidence-chain-detail="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:13px;min-width:0">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
                   <div style="font-size:14px;font-weight:600">证据链详情</div>
                   <sc-if value="{{ chain_detailLoading }}"><span style="font-size:11.5px;color:var(--brand-600)">详情加载中</span></sc-if>
@@ -4575,7 +4611,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <sc-if value="{{ chain_detail.has }}">
                   <div style="display:flex;flex-direction:column;gap:7px">
                     <div style="font-size:15px;font-weight:700;line-height:1.45">{{ chain_detail.chain_name }}</div>
-                    <div style="display:grid;grid-template-columns:88px 1fr;gap:6px 10px;font-size:12px">
+                    <div data-evidence-detail-fields="" style="display:grid;grid-template-columns:88px 1fr;gap:6px 10px;font-size:12px">
                       <span style="color:var(--text-3)">企业</span><span>{{ chain_detail.company_name }}</span>
                       <span style="color:var(--text-3)">药物</span><span>{{ chain_detail.drugText }}</span>
                       <span style="color:var(--text-3)">试验编号</span><span>{{ chain_detail.trialText }}</span>
@@ -4592,9 +4628,9 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                           <div style="font-size:11.5px;font-weight:700;color:var(--text-3)">{{ sec.title }}</div>
                           <sc-for list="{{ sec.items }}" as="it">
                             <div style="border:1px solid var(--border);border-radius:10px;padding:10px 11px;background:var(--bg-sunken);display:flex;flex-direction:column;gap:6px">
-                              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11.5px;font-weight:700;color:var(--brand-600)">{{ it.source_id }}</span><span style="font-size:10.5px;font-weight:700;color:{{ it.versionColor }}">{{ it.versionLabel }}</span></div>
+                              <div data-evidence-card-head="" style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11.5px;font-weight:700;color:var(--brand-600)">{{ it.source_id }}</span><span style="font-size:10.5px;font-weight:700;color:{{ it.versionColor }}">{{ it.versionLabel }}</span></div>
                               <div style="font-size:12.5px;font-weight:600;line-height:1.45">{{ it.title }}</div>
-                              <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-size:11.5px;color:var(--text-3)"><span>角色：{{ it.roleLabel }}</span><sc-if value="{{ it.hasAuthorisation }}"><span>授权状态：{{ it.authorisationDisplay }}</span></sc-if><sc-if value="{{ it.hasStudyStatus }}"><span>状态：{{ it.study_status }}</span></sc-if><sc-if value="{{ it.hasVersionRelation }}"><span>版本关系：{{ it.versionRelation }}</span></sc-if><span>核验：{{ it.verified_at }}</span></div>
+                              <div data-evidence-item-fields="" style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-size:11.5px;color:var(--text-3)"><span>角色：{{ it.roleLabel }}</span><sc-if value="{{ it.hasAuthorisation }}"><span>授权状态：{{ it.authorisationDisplay }}</span></sc-if><sc-if value="{{ it.hasStudyStatus }}"><span>状态：{{ it.study_status }}</span></sc-if><sc-if value="{{ it.hasVersionRelation }}"><span>版本关系：{{ it.versionRelation }}</span></sc-if><span>核验：{{ it.verified_at }}</span></div>
                               <sc-if value="{{ it.hasUrl }}"><a href="{{ it.source_url }}" target="_blank" rel="noopener noreferrer" style="font-size:11.5px;color:var(--brand-600);font-weight:600;text-decoration:none">打开原始来源</a></sc-if>
                             </div>
                           </sc-for>
@@ -4664,7 +4700,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 </div>
               </div>
 
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+              <div data-evidence-toolbar="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
                 <label for="evidence-compare-company-a-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">左侧企业
                   <select id="evidence-compare-company-a-select" name="evidence_compare_company_a" value="{{ cmp_companyA }}" onchange="{{ cmp_onCompanyA }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                     <sc-for list="{{ cmp_companyOptions }}" as="co"><option value="{{ co.value }}">{{ co.label }}</option></sc-for>
@@ -4686,7 +4722,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
               <div data-evidence-company-compare="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start">
                 <sc-for list="{{ cmp_profiles }}" as="cp" hint-placeholder-count="2">
-                  <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:13px;min-width:0">
+                  <div data-evidence-company-card="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:13px;min-width:0">
                     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
                       <div>
                         <div style="font-size:16px;font-weight:800;color:var(--text);line-height:1.35">{{ cp.company_name }}</div>
@@ -4696,7 +4732,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
                     <div style="display:flex;flex-direction:column;gap:8px">
                       <div style="font-size:12px;font-weight:700;color:var(--text-2)">数据覆盖</div>
-                      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                      <div data-evidence-compact-grid="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">当前样本来源数</div><div style="font-size:18px;font-weight:800;color:var(--text)">{{ cp.source_count }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">已核验来源数</div><div style="font-size:18px;font-weight:800;color:var(--text)">{{ cp.verified_source_count }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
                       </div>
@@ -4704,7 +4740,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
                     <div style="display:flex;flex-direction:column;gap:8px">
                       <div style="font-size:12px;font-weight:700;color:var(--text-2)">证据链</div>
-                      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+                      <div data-evidence-compact-grid="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">试验级证据链数</div><div style="font-size:18px;font-weight:800;color:var(--text)">{{ cp.trial_chain_count }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">药物级监管链数</div><div style="font-size:18px;font-weight:800;color:var(--text)">{{ cp.regulatory_chain_count }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">单来源试验链数</div><div style="font-size:18px;font-weight:800;color:var(--text)">{{ cp.single_source_trial_chain_count }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
@@ -4714,7 +4750,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
                     <div style="display:flex;flex-direction:column;gap:8px">
                       <div style="font-size:12px;font-weight:700;color:var(--text-2)">版本构成</div>
-                      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+                      <div data-evidence-compact-grid="" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">最新版本</div><div style="font-size:17px;font-weight:800;color:var(--text)">{{ cp.latest }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">历史版本</div><div style="font-size:17px;font-weight:800;color:var(--text)">{{ cp.historical }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
                         <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:10px"><div style="font-size:11px;color:var(--text-3)">独立资料</div><div style="font-size:17px;font-weight:800;color:var(--text)">{{ cp.independent }}</div><div style="font-size:10.5px;color:var(--text-3)">当前样本内</div></div>
@@ -4750,7 +4786,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                         <div style="display:flex;flex-direction:column;gap:7px">
                           <sc-for list="{{ cp.trialChains }}" as="ch">
                             <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:9px 10px;display:flex;flex-direction:column;gap:6px">
-                              <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:12px;font-weight:700;color:var(--text);line-height:1.4">{{ ch.chain_name }}</span><span style="font-size:10.5px;color:var(--brand-600);font-weight:700;white-space:nowrap">{{ ch.chain_type }}</span></div>
+                              <div data-evidence-card-head="" style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:12px;font-weight:700;color:var(--text);line-height:1.4">{{ ch.chain_name }}</span><span style="font-size:10.5px;color:var(--brand-600);font-weight:700;white-space:nowrap">{{ ch.chain_type }}</span></div>
                               <div style="font-size:11.5px;color:var(--text-3)">编号：{{ ch.trialText }} · source_count：{{ ch.source_count }}</div>
                               <button onclick="{{ ch.onClick }}" style="height:28px;align-self:flex-start;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--brand-600);font-size:11.5px;font-weight:700;padding:0 10px">查看证据链</button>
                             </div>
@@ -4761,7 +4797,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                         <div style="display:flex;flex-direction:column;gap:7px">
                           <sc-for list="{{ cp.regulatoryChains }}" as="ch">
                             <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:9px 10px;display:flex;flex-direction:column;gap:6px">
-                              <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:12px;font-weight:700;color:var(--text);line-height:1.4">{{ ch.chain_name }}</span><span style="font-size:10.5px;color:var(--brand-600);font-weight:700;white-space:nowrap">{{ ch.chain_type }}</span></div>
+                              <div data-evidence-card-head="" style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:12px;font-weight:700;color:var(--text);line-height:1.4">{{ ch.chain_name }}</span><span style="font-size:10.5px;color:var(--brand-600);font-weight:700;white-space:nowrap">{{ ch.chain_type }}</span></div>
                               <div style="font-size:11.5px;color:var(--text-3)">编号：{{ ch.trialText }} · source_count：{{ ch.source_count }}</div>
                               <button onclick="{{ ch.onClick }}" style="height:28px;align-self:flex-start;border-radius:7px;border:1px solid var(--border);background:var(--bg-elev);color:var(--brand-600);font-size:11.5px;font-weight:700;padding:0 10px">查看证据链</button>
                             </div>
@@ -4777,7 +4813,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <button onclick="{{ cmp_toggleRules }}" style="width:100%;height:32px;border:0;background:transparent;color:var(--text);font-size:13px;font-weight:800;text-align:left;cursor:pointer">如何理解这些数字</button>
                 <sc-if value="{{ cmp_rulesOpen }}">
                   <sc-if value="{{ cmp_hasMetricRules }}">
-                    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+                    <div data-evidence-compact-grid="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
                       <sc-for list="{{ cmp_metricRules }}" as="mr">
                         <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:10px 11px;display:flex;flex-direction:column;gap:6px">
                           <div style="font-size:12.5px;font-weight:800;color:var(--text)">{{ mr.name }}</div>
@@ -4795,7 +4831,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px">
                 <div style="font-size:13px;font-weight:800;color:var(--text)">当前数据不足</div>
                 <div style="font-size:12px;color:var(--text-3);line-height:1.6">以下维度缺少统一结构化字段，因此本版不输出强结论。</div>
-                <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px">
+                <div data-evidence-compact-grid="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px">
                   <sc-for list="{{ cmp_dataInsufficient }}" as="di">
                     <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:9px 10px;display:flex;flex-direction:column;gap:5px">
                       <div style="font-size:12px;font-weight:800;color:var(--text)">{{ di.name }}</div>
