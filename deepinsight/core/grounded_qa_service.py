@@ -39,6 +39,14 @@ QUESTION_TYPES = {
 NCT_RE = re.compile(r"(?<![A-Za-z0-9])NCT\d{8}(?![A-Za-z0-9])", re.IGNORECASE)
 SOURCE_ID_RE = re.compile(r"(?<![A-Za-z0-9])[AHB]\d{3}(?![A-Za-z0-9])", re.IGNORECASE)
 UNKNOWN_SAFETY_CATEGORY_LABEL = "其他不支持的问题类型"
+COMPANY_KEY_TO_CANONICAL = {
+    "hengrui": "恒瑞医药",
+    "beone": "百济神州",
+    "astrazeneca": "阿斯利康",
+}
+EXTRA_DRUG_ALIAS_GROUPS = {
+    "奥希替尼": ["奥希替尼", "泰瑞沙", "TAGRISSO", "Osimertinib", "AZD9291"],
+}
 
 
 def _load_rules(path: str | Path | None = None) -> dict[str, Any]:
@@ -65,6 +73,23 @@ def _contains_any(text: str, terms: list[str]) -> bool:
 def _matching_terms(text: str, terms: list[str]) -> list[str]:
     text_key = norm(text)
     return [term for term in terms if term and norm(term) in text_key]
+
+
+def _term_match_start(text: str, term: str) -> int | None:
+    raw_text = str(text or "")
+    raw_term = str(term or "").strip()
+    if not raw_term:
+        return None
+    if re.search(r"[A-Za-z0-9]", raw_term):
+        pattern = re.escape(raw_term).replace(r"\ ", r"\s+")
+        match = re.search(rf"(?<![A-Za-z0-9]){pattern}(?![A-Za-z0-9])", raw_text, re.IGNORECASE)
+        return match.start() if match else None
+    index = norm(raw_text).find(norm(raw_term))
+    return index if index >= 0 else None
+
+
+def _term_in_text(text: str, term: str) -> bool:
+    return _term_match_start(text, term) is not None
 
 
 def _version_label(item: dict[str, Any]) -> str:
@@ -156,13 +181,15 @@ class GroundedQAService:
         kws = self.rules.get("classification_keywords") or {}
         source_ids = [sid.upper() for sid in SOURCE_ID_RE.findall(text)]
         nct_ids = [trial_id.upper() for trial_id in NCT_RE.findall(text)]
-        has_hengrui = self._mentions_company(text, "hengrui")
-        has_beone = self._mentions_company(text, "beone")
-        has_rationale = bool(self._extract_study_names(text))
+        company_names = self._extract_company_names(text)
+        has_study = bool(self._extract_study_names(text))
+        has_chain_intent = _contains_any(text, kws.get("evidence_chain", []))
 
+        if self._has_explicit_evidence_gap_intent(text):
+            return "evidence_gap"
         if nct_ids and _contains_any(text, kws.get("trial_status", [])):
             return "trial_status"
-        if has_rationale and _contains_any(text, kws.get("trial_status", [])):
+        if has_study and _contains_any(text, kws.get("trial_status", [])):
             return "trial_status"
         if "试验" in text and _contains_any(text, kws.get("trial_status", [])):
             return "trial_status"
@@ -170,10 +197,12 @@ class GroundedQAService:
             return "regulatory_status"
         if _contains_any(text, kws.get("regulatory_status", [])):
             return "regulatory_status"
-        if has_rationale or _contains_any(text, kws.get("evidence_chain", [])):
-            return "evidence_chain"
-        if has_hengrui and has_beone and _contains_any(text, kws.get("company_comparison", [])):
+        if len(company_names) >= 2 and _contains_any(text, kws.get("company_comparison", [])):
             return "company_comparison"
+        if _contains_any(text, kws.get("source_search", [])) and not has_chain_intent:
+            return "source_search"
+        if has_study or has_chain_intent:
+            return "evidence_chain"
         if _contains_any(text, kws.get("evidence_gap", [])):
             return "evidence_gap"
         return "source_search"
@@ -190,7 +219,10 @@ class GroundedQAService:
             return self._retrieve_by_source_ids(source_ids, qtype)
 
         if qtype == "company_comparison":
-            comparison = self.company_comparison_service.compare("恒瑞医药", "百济神州")
+            company_names = self._extract_company_names(question)
+            if len(company_names) < 2:
+                return self._empty_retrieval(qtype)
+            comparison = self.company_comparison_service.compare(company_names[0], company_names[1])
             sources = self._sources_from_comparison(comparison)
             return {
                 "question_type": qtype,
@@ -203,6 +235,22 @@ class GroundedQAService:
             }
 
         if qtype == "evidence_gap":
+            chains = self._matching_chains(question)
+            if chains:
+                sources = []
+                related_regulatory_items = []
+                for chain in chains:
+                    sources.extend(chain.get("evidence_items") or [])
+                    related_regulatory_items.extend(chain.get("related_regulatory_items") or [])
+                return {
+                    "question_type": qtype,
+                    "sources": self._dedupe_sources(sources),
+                    "chains": self._dedupe_chains(chains),
+                    "related_regulatory_items": self._dedupe_sources(related_regulatory_items),
+                    "comparison": None,
+                    "evidence_gaps": self._gaps_from_chains(chains),
+                    "retrieval_service": ["EvidenceChainService", "SourceRegistryService"],
+                }
             gaps = self.evidence_chain_service.get_unresolved_links()
             sources = [item.get("source") for item in gaps if isinstance(item.get("source"), dict)]
             return {
@@ -215,7 +263,7 @@ class GroundedQAService:
                 "retrieval_service": ["EvidenceChainService", "SourceRegistryService"],
             }
 
-        chains = self._matching_chains(question)
+        chains = [] if qtype == "source_search" else self._matching_chains(question)
         related_regulatory_items = []
         sources = []
         for chain in chains:
@@ -474,12 +522,52 @@ class GroundedQAService:
         }
 
     def _mentions_company(self, question: str, company_key: str) -> bool:
-        aliases = ((self.rules.get("confirmed_terms") or {}).get("companies") or {}).get(company_key, [])
-        return _contains_any(question, aliases)
+        canonical = COMPANY_KEY_TO_CANONICAL.get(company_key, company_key)
+        return canonical in self._extract_company_names(question)
+
+    def _extract_company_names(self, question: str) -> list[str]:
+        matches = []
+        for company_name, aliases in self._company_alias_groups().items():
+            positions = [
+                position
+                for position in (_term_match_start(question, alias) for alias in aliases)
+                if position is not None
+            ]
+            if positions:
+                matches.append((min(positions), company_name))
+        return _unique_values([company_name for _, company_name in sorted(matches)])
+
+    def _company_alias_groups(self) -> dict[str, list[str]]:
+        groups: dict[str, list[str]] = {}
+        for subject in self.company_comparison_service.available_companies():
+            company_name = str(subject.get("company_name") or "").strip()
+            if not company_name:
+                continue
+            aliases = [
+                company_name,
+                str(subject.get("display_name") or ""),
+                *[str(alias) for alias in subject.get("aliases") or []],
+            ]
+            groups[company_name] = _unique_values([alias for alias in aliases if alias])
+        configured = ((self.rules.get("confirmed_terms") or {}).get("companies") or {})
+        for company_key, aliases in configured.items():
+            company_name = COMPANY_KEY_TO_CANONICAL.get(str(company_key), str(company_key))
+            groups[company_name] = _unique_values(
+                [
+                    *groups.get(company_name, []),
+                    *[str(alias) for alias in aliases or [] if str(alias)],
+                ]
+            )
+        return groups
 
     def _extract_study_names(self, question: str) -> list[str]:
-        studies = ((self.rules.get("confirmed_terms") or {}).get("studies") or [])
-        return [study for study in studies if norm(study) in norm(question)]
+        return [study for study in self._known_study_names() if _term_in_text(question, study)]
+
+    def _known_study_names(self) -> list[str]:
+        studies = [str(study).strip() for study in ((self.rules.get("confirmed_terms") or {}).get("studies") or [])]
+        for chain in self.evidence_chain_service.list_chains():
+            studies.extend(str(study).strip() for study in chain.get("study_names") or [])
+        return _unique_values([study for study in studies if study])
 
     def _extract_source_ids(self, question: str) -> list[str]:
         return _unique_values([item.upper() for item in SOURCE_ID_RE.findall(question or "")])
@@ -489,10 +577,42 @@ class GroundedQAService:
 
     def _extract_drug_terms(self, question: str) -> list[str]:
         out = []
-        for aliases in ((self.rules.get("confirmed_terms") or {}).get("drugs") or {}).values():
-            if _contains_any(question, aliases):
-                out.append(aliases[0])
+        for canonical, aliases in self._drug_alias_groups():
+            if any(_term_in_text(question, alias) for alias in aliases):
+                out.append(canonical)
         return _unique_values(out)
+
+    def _drug_alias_groups(self) -> list[tuple[str, list[str]]]:
+        groups = []
+        seen = set()
+        for aliases in ((self.rules.get("confirmed_terms") or {}).get("drugs") or {}).values():
+            if not aliases:
+                continue
+            canonical = str(aliases[0])
+            key = tuple(norm(alias) for alias in aliases)
+            if key not in seen:
+                seen.add(key)
+                groups.append((canonical, [str(alias) for alias in aliases if str(alias)]))
+        for aliases in self.source_registry_service.load_aliases().values():
+            if not aliases:
+                continue
+            canonical = str(aliases[0])
+            key = tuple(norm(alias) for alias in aliases)
+            if key not in seen:
+                seen.add(key)
+                groups.append((canonical, [str(alias) for alias in aliases if str(alias)]))
+        for canonical, aliases in EXTRA_DRUG_ALIAS_GROUPS.items():
+            key = tuple(norm(alias) for alias in aliases)
+            if key not in seen:
+                seen.add(key)
+                groups.append((canonical, aliases))
+        return groups
+
+    def _has_explicit_evidence_gap_intent(self, question: str) -> bool:
+        return any(
+            term in str(question or "")
+            for term in ["证据缺口", "缺口", "缺什么", "证据不足", "待确认"]
+        )
 
     def _matching_chains(self, question: str) -> list[dict[str, Any]]:
         chains = []
@@ -568,6 +688,9 @@ class GroundedQAService:
     def _sources_from_comparison(self, comparison: dict[str, Any]) -> list[dict[str, Any]]:
         source_ids = []
         for profile in comparison.get("companies") or []:
+            for source in self.source_registry_service.query(company=str(profile.get("company_name") or "")):
+                if source.get("source_id"):
+                    source_ids.append(source["source_id"])
             for chain in profile.get("trial_chains") or []:
                 source_ids.extend(chain.get("source_ids") or [])
             for chain in profile.get("regulatory_chains") or []:
@@ -834,6 +957,23 @@ class GroundedQAService:
             return "\n".join(lines), citations, evidence_used, limitations
 
         if qtype == "evidence_gap":
+            if chains:
+                lines = ["本地证据摘要："]
+                for chain in chains:
+                    evidence_items = chain.get("evidence_items") or []
+                    source_ids = "、".join(item["source_id"] for item in evidence_items)
+                    lines.append(f"- {chain.get('chain_name')}：当前试验证据包含 {source_ids}。")
+                    for item in evidence_items:
+                        citations.append(self._citation_for_source(item))
+                    if chain.get("related_regulatory_items"):
+                        ids = "、".join(item["source_id"] for item in chain["related_regulatory_items"])
+                        lines.append(f"  - 关联监管背景：{ids}，不计入该试验证据数量。")
+                        for item in chain["related_regulatory_items"]:
+                            citations.append(self._citation_for_source(item, "关联监管背景，不计入试验证据数量"))
+                    for gap in chain.get("evidence_gaps") or []:
+                        lines.append(f"  - 证据缺口：{self._sample_scoped_gap(gap)}")
+                limitations.append("本回答仅反映当前收录样本中的证据缺口。")
+                return "\n".join(lines), citations, evidence_used, limitations
             gaps = packet.get("evidence_gaps") or []
             if not gaps:
                 return "当前数据不足：未找到待确认关系或证据缺口记录。", [], [], limitations
