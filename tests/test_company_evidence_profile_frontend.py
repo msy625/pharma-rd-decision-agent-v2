@@ -65,11 +65,11 @@ class CompanyEvidenceProfileFrontendTest(unittest.TestCase):
         self.assertIn("当前样本未收录独立监管链；该表述不代表企业没有监管进展。", self.view)
 
     def test_08_quick_entries_reuse_existing_evidence_tabs(self):
-        for label in ["查看全部来源", "打开企业对比", "进入循证问答"]:
+        for label in ["查看全部来源", "打开企业对比", "进入智能决策 Agent"]:
             self.assertIn(label, self.view)
         for tab in ["evidenceTab:'sources'", "evidenceTab:'companyCompare'"]:
             self.assertIn(tab, self.loader)
-        self.assertIn("this.openGroundedQa()", self.loader)
+        self.assertIn("this.openGroundedQa('请基于当前已核验证据样本说明 '+company", self.loader)
         self.assertIn("page:'groundedQa'", self.loader)
 
     def test_09_metadata_limitations_and_empty_states(self):

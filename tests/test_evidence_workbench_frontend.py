@@ -77,7 +77,7 @@ class EvidenceWorkbenchFrontendTest(unittest.TestCase):
             self.assertIn(text, self.today_vals + self.today_template)
 
     def test_08_quick_links_cover_evidence_timeline_and_grounded_qa(self):
-        for label in ["查看来源检索", "查看证据链", "查看研发事件时间轴", "查看企业对比", "进入循证问答"]:
+        for label in ["查看来源检索", "查看证据链", "查看研发事件时间轴", "查看企业对比", "进入智能决策 Agent"]:
             self.assertIn(label, self.today_vals + self.today_template)
         self.assertIn("evidenceTab:tab", self.today_vals)
         for tab in ["'sources'", "'chains'", "'companyCompare'"]:
