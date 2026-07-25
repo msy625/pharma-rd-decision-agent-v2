@@ -121,6 +121,7 @@ class CompanyEvidenceComparisonService:
             "display_name": subject["display_name"],
             "data_scope": DATA_SCOPE,
             "interpretation_scope": INTERPRETATION_SCOPE,
+            "source_ids": self._source_ids_from_rows(rows),
             "source_count": len(rows),
             "verified_source_count": sum(1 for row in rows if row.get("verification_status") == "已人工核验"),
             "trial_chain_count": len(trial_chains),
@@ -254,6 +255,7 @@ class CompanyEvidenceComparisonService:
             "display_name": str(company_name or "").strip(),
             "data_scope": DATA_SCOPE,
             "interpretation_scope": INTERPRETATION_SCOPE,
+            "source_ids": [],
             "source_count": 0,
             "verified_source_count": 0,
             "trial_chain_count": 0,
@@ -309,6 +311,10 @@ class CompanyEvidenceComparisonService:
             }
             for chain in chains
         ]
+
+    @staticmethod
+    def _source_ids_from_rows(rows: Iterable[dict[str, str]]) -> list[str]:
+        return sorted({str(row.get("source_id", "")) for row in rows if row.get("source_id")})
 
     @staticmethod
     def _evidence_gaps(unresolved_links: Iterable[dict[str, object]]) -> list[dict[str, object]]:

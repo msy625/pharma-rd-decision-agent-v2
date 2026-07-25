@@ -22,6 +22,7 @@ from deepinsight.core.grounded_qa_usage_guard import (
     grounded_qa_usage_config_from_env,
 )
 from deepinsight.core.industry_taxonomy import infer_industry_name
+from deepinsight.core.rd_decision_agent_service import RDDecisionAgentService
 from deepinsight.core.rd_event_timeline_service import RDEventTimelineService
 from deepinsight.config import DB_PATH as DEFAULT_DB_PATH
 from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
@@ -213,6 +214,11 @@ class BatchWorkflowRequest(BaseModel):
 class GroundedQARequest(BaseModel):
     question: str | None = None
     generation_mode: str = "auto"
+
+
+class RDDecisionAgentRequest(BaseModel):
+    question: str | None = None
+    generation_mode: str = "local"
 
 
 class CompanyNotFoundError(ValueError):
@@ -1658,6 +1664,37 @@ def _grounded_qa_service() -> GroundedQAService:
     )
 
 
+def _rd_decision_agent_service() -> RDDecisionAgentService:
+    source_service = _evidence_service()
+    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
+    company_comparison_service = CompanyEvidenceComparisonService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+    )
+    company_profile_service = CompanyEvidenceProfileService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+    )
+    grounded_qa_service = GroundedQAService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+    )
+    return RDDecisionAgentService(
+        source_registry_service=source_service,
+        evidence_chain_service=evidence_chain_service,
+        company_comparison_service=company_comparison_service,
+        company_profile_service=company_profile_service,
+        rd_event_timeline_service=RDEventTimelineService(
+            source_registry_service=source_service,
+            evidence_chain_service=evidence_chain_service,
+            company_evidence_profile_service=company_profile_service,
+        ),
+        grounded_qa_service=grounded_qa_service,
+    )
+
+
 _GROUNDED_QA_USAGE_GUARD: GroundedQAUsageGuard | None = None
 
 
@@ -1741,6 +1778,14 @@ def _handle_grounded_qa_error(exc: Exception) -> HTTPException:
     if isinstance(exc, (SourceRegistryStructureError, ValueError)):
         return HTTPException(status_code=503, detail="循证问答资料结构异常，请检查CSV或配置文件。")
     return HTTPException(status_code=500, detail="循证问答服务暂时不可用。")
+
+
+def _handle_decision_agent_error(exc: Exception) -> HTTPException:
+    if isinstance(exc, (SourceRegistryFileNotFound, FileNotFoundError)):
+        return HTTPException(status_code=503, detail="决策Agent资料文件不可用，请检查Source Registry和证据链配置。")
+    if isinstance(exc, (SourceRegistryStructureError, ValueError)):
+        return HTTPException(status_code=503, detail="决策Agent资料结构异常，请检查CSV或配置文件。")
+    return HTTPException(status_code=500, detail="决策Agent服务暂时不可用。")
 
 
 @app.get("/health")
@@ -2151,6 +2196,33 @@ def evidence_grounded_qa_capabilities() -> dict[str, Any]:
         }
     except Exception as exc:
         raise _handle_grounded_qa_error(exc) from exc
+
+
+@app.get("/api/evidence/decision-agent/capabilities")
+def evidence_decision_agent_capabilities() -> dict[str, Any]:
+    try:
+        return _rd_decision_agent_service().capabilities()
+    except Exception as exc:
+        raise _handle_decision_agent_error(exc) from exc
+
+
+@app.post("/api/evidence/decision-agent", response_model=None)
+def evidence_decision_agent(payload: RDDecisionAgentRequest) -> dict[str, Any]:
+    question = (payload.question or "").strip()
+    if not question:
+        raise HTTPException(status_code=400, detail="question 不能为空。")
+    if len(question) > 1000:
+        raise HTTPException(status_code=400, detail="question 不能超过 1000 个字符。")
+    generation_mode = (payload.generation_mode or "local").strip().lower()
+    if generation_mode not in {"local", "auto"}:
+        raise HTTPException(status_code=400, detail="generation_mode 只允许 local 或 auto。")
+    try:
+        result = _rd_decision_agent_service().run(question, generation_mode=generation_mode)
+        if result.get("error"):
+            return result
+        return result
+    except Exception as exc:
+        raise _handle_decision_agent_error(exc) from exc
 
 
 def _grounded_local_response(
