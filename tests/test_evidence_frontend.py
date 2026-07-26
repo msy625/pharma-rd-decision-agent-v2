@@ -43,13 +43,13 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
     def test_evidence_nav_exists_in_required_position(self):
         timeline = self.component.index("label:'研发事件时间轴'")
         evidence = self.component.index("label:'研发证据中心'")
-        grounded = self.component.index("label:'循证问答'")
+        grounded = self.component.index("label:'智能决策 Agent'")
         self.assertLess(timeline, evidence)
         self.assertLess(evidence, grounded)
 
     def test_primary_nav_labels_still_exist(self):
         nav = self.component[self.component.index("  navDef(){") : self.component.index("  navItem(it){")]
-        for label in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "循证问答"]:
+        for label in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "智能决策 Agent"]:
             self.assertIn(label, nav)
 
     def test_evidence_state_fields_exist(self):

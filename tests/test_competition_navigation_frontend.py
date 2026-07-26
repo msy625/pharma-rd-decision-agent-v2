@@ -45,7 +45,7 @@ class CompetitionNavigationFrontendTest(unittest.TestCase):
                 ("compare", "企业证据画像"),
                 ("timeline", "研发事件时间轴"),
                 ("evidence", "研发证据中心"),
-                ("groundedQa", "循证问答"),
+                ("groundedQa", "智能决策 Agent"),
                 ("brief", "证据决策简报"),
             ],
         )
@@ -79,32 +79,32 @@ class CompetitionNavigationFrontendTest(unittest.TestCase):
         for old in ["医策智脑", "DeepInsight · 决策支持"]:
             self.assertNotIn(old, self.template)
 
-    def test_05_grounded_qa_is_a_real_top_level_page_using_existing_state(self):
-        self.assertIn("else if(p==='groundedQa') this.loadGroundedCapabilities()", self.component)
+    def test_05_decision_agent_is_a_real_top_level_page_using_existing_key(self):
+        self.assertIn("else if(p==='groundedQa') this.loadDecisionAgentCapabilities()", self.component)
         self.assertIn("isGroundedQaPage:s.page==='groundedQa'", self.component)
         self.assertIn("ev_isGroundedTab:s.page==='groundedQa'", self.component)
-        self.assertIn("submitGroundedQA()", self.component)
+        self.assertIn("submitDecisionAgent()", self.component)
         self.assertIn("data-grounded-qa", self.template)
 
-    def test_06_grounded_qa_only_uses_new_evidence_endpoints(self):
+    def test_06_decision_agent_uses_decision_agent_endpoints(self):
         evidence_block = self.component[
             self.component.index("  // ---- evidence registry page ----") : self.component.index("  navDef()")
         ]
-        self.assertIn("/api/evidence/grounded-qa/capabilities", evidence_block)
-        self.assertIn("fetch('/api/evidence/grounded-qa'", evidence_block)
+        self.assertIn("/api/evidence/decision-agent/capabilities", evidence_block)
+        self.assertIn("fetch('/api/evidence/decision-agent'", evidence_block)
         self.assertNotIn("/api/chat", evidence_block)
 
-    def test_07_capability_failure_keeps_local_mode_available(self):
+    def test_07_capability_failure_keeps_agent_page_usable(self):
         for expected in [
-            "local_mode_available:true",
-            "llm_mode_available:false",
-            "groundedMode:'local'",
-            "已保留本地循证摘要模式",
+            "agentCapabilitiesLoading:false",
+            "agentCapabilitiesLoaded:true",
+            "agentCapabilities:null",
+            "能力信息加载失败，仍可使用本地稳定模式运行",
         ]:
             self.assertIn(expected, self.component)
 
     def test_08_evidence_center_has_three_internal_tabs_and_top_level_qa_entry(self):
-        for expected in ["来源检索", "证据链", "企业对比", "进入循证问答"]:
+        for expected in ["来源检索", "证据链", "企业对比", "进入智能决策 Agent"]:
             self.assertIn(expected, self.evidence_header)
         self.assertNotIn("ev_tabGrounded", self.component)
         self.assertNotIn("switchEvidenceTab('groundedQa')", self.component)

@@ -102,7 +102,6 @@ Ubuntu Bash：
 ## Pilot解释规则
 
 评测工具自动测试通过只表示schema、runner、指标和报告实现符合协议，不能写成业务准确率。pilot中出现的自然语言别名、公司组合分类或证据缺口分类失败，应记录为当前生产能力缺口；本阶段不得为了提高分数修改生产服务或硬编码答案。
-
 ## 结果状态与分母
 
 每条结果只取一个状态：`passed`、`failed`、`not_applicable`、`unsupported`、`manual_review`。不支持的基线能力标记为`unsupported`，不进入适用题通过率分母，也绝不记为通过。

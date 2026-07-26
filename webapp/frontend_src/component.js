@@ -18,6 +18,10 @@ class Component extends DCLogic {
     comparisonCompanyA:'恒瑞医药', comparisonCompanyB:'BeOne Medicines',
     companyComparison:null, metricRules:[], companyComparisonLoading:false, metricRulesLoading:false,
     companyComparisonError:'', companyComparisonLoaded:false, metricRulesOpen:false,
+    agentCapabilities:null, agentCapabilitiesLoading:false, agentCapabilitiesLoaded:false, agentCapabilitiesError:'',
+    agentQuestion:'', agentLoading:false, agentError:'', agentResult:null, agentSeq:0,
+    agentCapabilitiesOpen:false, agentTraceOpen:false, agentAllCitationsOpen:false,
+    agentProcessOpen:false, agentRunDetailsOpen:false,
     groundedCapabilities:null, groundedCapabilitiesLoading:false, groundedCapabilitiesLoaded:false,
     groundedQuestion:'', groundedMode:'local', groundedLoading:false, groundedError:'',
     groundedResult:null, groundedMeta:null, groundedTraceOpen:false, groundedSeq:0,
@@ -30,6 +34,7 @@ class Component extends DCLogic {
     timelineIncludeAuxiliary:false, timelineData:null, timelineLoading:false, timelineLoaded:false, timelineError:'',
     timelineCompanyOptions:[], timelineTrialOptions:[], timelineDrugOptions:[], timelineEventTypeOptions:[], timelineYearOptions:[],
     briefCompany:'阿斯利康', briefCompanies:[], briefData:null, briefLoading:false, briefLoaded:false, briefError:'',
+    workbenchDetailsOpen:false,
     wbTab:'flow',
     dbTable:'fact_financial', dbSearch:'',
     advLoading:false, advDone:true, advData:null,
@@ -220,7 +225,7 @@ class Component extends DCLogic {
     else if(p==='advanced') this.loadProfile();
     else if(p==='research') this._ensureResProfile(this._resActive());
     else if(p==='evidence') this.loadEvidencePage();
-    else if(p==='groundedQa') this.loadGroundedCapabilities();
+    else if(p==='groundedQa') this.loadDecisionAgentCapabilities();
     else if(p==='brief') this.loadDecisionBriefPage();
   }
 
@@ -267,12 +272,17 @@ class Component extends DCLogic {
     this.setState({page:'evidence',evidenceTab:'companyCompare',navOpen:false},()=>this.loadCompanyComparisonPage());
   }
   openGroundedQa(question){
-    const patch={page:'groundedQa',navOpen:false,groundedError:''};
-    if(question!=null) patch.groundedQuestion=String(question).slice(0,1000);
-    this.setState(patch,()=>this.loadGroundedCapabilities());
+    const patch={
+      page:'groundedQa',navOpen:false,agentError:'',agentResult:null,
+      agentTraceOpen:false,agentAllCitationsOpen:false,
+      agentProcessOpen:false,agentRunDetailsOpen:false
+    };
+    if(question!=null) patch.agentQuestion=String(question).slice(0,1000);
+    this.setState(patch,()=>this.loadDecisionAgentCapabilities());
   }
   openProfileGroundedQa(){
-    this.openGroundedQa();
+    const company=this.state.companyProfileCompany||'当前企业';
+    this.openGroundedQa('请基于当前已核验证据样本说明 '+company+' 的研发证据覆盖、证据链和限制。');
   }
   openTimelineSource(sourceId){
     const sid=String(sourceId||'').trim();
@@ -299,6 +309,13 @@ class Component extends DCLogic {
   }
   selectBriefCompany(value){ this.setState({briefCompany:value,briefData:null,briefError:''},()=>this.loadDecisionBrief()); }
   printDecisionBrief(){ try{ window.print(); }catch(e){} }
+  openChainGroundedQa(chain){
+    chain=chain||{};
+    const name=String(chain.chain_name||chain.study_name||'当前证据链').trim();
+    const ids=Array.isArray(chain.trial_ids)&&chain.trial_ids.length?chain.trial_ids.join('、'):String(chain.trial_id||chain.chain_id||'').trim();
+    const question='请说明 '+(ids||name)+' 当前证据链的主证据、关联背景、证据缺口和下一步核验。';
+    this.openGroundedQa(question);
+  }
   openTimelineGroundedQa(sourceId,title){
     const sid=String(sourceId||'').trim(), topic=String(title||'').trim();
     const question=sid?('请基于已核验证据说明 '+sid+(topic?'（'+topic+'）':'')+' 的事件口径、证据关系和限制。'):'请说明当前研发事件时间轴的证据关系和限制。';
@@ -629,72 +646,87 @@ class Component extends DCLogic {
       this.loadChainDetail(cid);
     });
   }
-  loadGroundedCapabilities(){
-    if(this.state.groundedCapabilitiesLoading || this.state.groundedCapabilitiesLoaded) return;
-    this.setState({groundedCapabilitiesLoading:true,groundedError:''});
-    this._api('/api/evidence/grounded-qa/capabilities').then(d=>{
-      const deepseekOk=!!(d&&d.llm_mode_available);
-      this.setState({
-        groundedCapabilitiesLoading:false,
-        groundedCapabilitiesLoaded:true,
-        groundedCapabilities:d||null,
-        groundedMode:deepseekOk?'auto':'local'
-      });
-    }).catch(()=>this.setState({
-      groundedCapabilitiesLoading:false,
-      groundedCapabilitiesLoaded:true,
-      groundedCapabilities:{
-        local_mode_available:true,
-        llm_mode_available:false,
-        supported_question_types:[],
-        data_version:'',
-        model_name:'',
-        description:'能力信息暂时不可用，本地循证摘要仍可使用。'
-      },
-      groundedMode:'local',
-      groundedError:'能力信息加载失败，已保留本地循证摘要模式。'
+  loadDecisionAgentCapabilities(){
+    if(this.state.agentCapabilitiesLoading || this.state.agentCapabilitiesLoaded) return;
+    this.setState({agentCapabilitiesLoading:true,agentCapabilitiesError:''});
+    this._api('/api/evidence/decision-agent/capabilities').then(d=>this.setState({
+      agentCapabilitiesLoading:false,
+      agentCapabilitiesLoaded:true,
+      agentCapabilities:d||null,
+      agentCapabilitiesError:''
+    })).catch(()=>this.setState({
+      agentCapabilitiesLoading:false,
+      agentCapabilitiesLoaded:false,
+      agentCapabilities:null,
+      agentCapabilitiesError:'能力信息加载失败，仍可使用本地稳定模式运行。'
     }));
   }
-  setGroundedMode(mode){
-    const cap=this.state.groundedCapabilities||{};
-    if(mode==='auto' && !cap.llm_mode_available){
-      this.setState({groundedMode:'local',groundedError:'DeepSeek当前不可用，请使用本地证据摘要。'});
-      return;
-    }
-    this.setState({groundedMode:mode,groundedError:''});
+  setDecisionAgentQuestion(question){
+    this.setState({agentQuestion:String(question||'').slice(0,1000),agentError:''});
   }
-  setGroundedExample(question){
-    this.setState({groundedQuestion:String(question||'').slice(0,1000),groundedError:''});
+  runDecisionAgentExample(question){
+    const q=String(question||'').slice(0,1000);
+    this.submitDecisionAgent(q);
   }
-  submitGroundedQA(){
-    const question=String(this.state.groundedQuestion||'').trim();
-    if(!question){ this.setState({groundedError:'请输入问题后再提交。'}); return; }
-    if(question.length>1000){ this.setState({groundedError:'问题不能超过 1000 个字符。'}); return; }
-    if(this.state.groundedLoading) return;
-    if(this._groundedAbort) this._groundedAbort.abort();
-    const seq=(this.state.groundedSeq||0)+1;
+  _agentNormalizeResult(data){
+    if(data&&data.result&&typeof data.result==='object') return data.result;
+    return data&&typeof data==='object'?data:null;
+  }
+  _agentResponseDetail(data, fallback){
+    const detail=data&&data.detail;
+    if(Array.isArray(detail)) return detail.map(x=>this._agentValueText(x,'')).filter(Boolean).join('；')||fallback;
+    if(detail&&typeof detail==='object') return this._agentValueText(detail,'')||fallback;
+    return detail?String(detail):fallback;
+  }
+  submitDecisionAgent(questionOverride){
+    const hasOverride=questionOverride!=null;
+    const question=String(hasOverride?questionOverride:this.state.agentQuestion||'').trim();
+    if(!question){ this.setState({agentError:'请输入研发决策问题后再运行。'}); return; }
+    if(question.length>1000){ this.setState({agentError:'问题不能超过 1000 个字符。'}); return; }
+    if(this.state.agentLoading && !hasOverride) return;
+    if(this._agentAbort) this._agentAbort.abort();
+    const seq=(this._agentSeq||0)+1;
+    this._agentSeq=seq;
     const controller=(typeof AbortController!=='undefined')?new AbortController():null;
-    this._groundedAbort=controller;
-    this.setState({groundedLoading:true,groundedError:'',groundedSeq:seq});
-    fetch('/api/evidence/grounded-qa', {
+    this._agentAbort=controller;
+    this.setState({
+      agentQuestion:question,
+      agentLoading:true,
+      agentError:'',
+      agentResult:null,
+      agentSeq:seq,
+      agentTraceOpen:false,
+      agentAllCitationsOpen:false,
+      agentProcessOpen:false,
+      agentRunDetailsOpen:false
+    });
+    fetch('/api/evidence/decision-agent', {
       method:'POST',
       headers:{'Content-Type':'application/json','accept':'application/json'},
-      body:JSON.stringify({question, generation_mode:this.state.groundedMode}),
+      body:JSON.stringify({question:question, generation_mode:'local'}),
       signal:controller?controller.signal:undefined
-    }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d,waitHeader:r.headers?r.headers.get('Retry-After'):''})).catch(()=>({ok:r.ok,status:r.status,data:null,waitHeader:r.headers?r.headers.get('Retry-After'):''}))).then(({ok,status,data,waitHeader})=>{
-      if(seq!==this.state.groundedSeq) return;
+    }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d})).catch(()=>({ok:r.ok,status:r.status,data:null}))).then(({ok,status,data})=>{
+      if(seq!==this._agentSeq) return;
       if(!ok){
-        const detail=data&&data.detail?String(data.detail):'循证问答请求失败，请稍后重试。';
-        const wait=waitHeader&&/^\d+$/.test(String(waitHeader))?'请约 '+waitHeader+' 秒后再试，或切换 local 继续使用。':'请稍后重试，或切换 local 继续使用。';
-        const msg=status===429?(detail+' '+wait):(status===400?detail:(status===503?'循证问答服务暂不可用，请稍后重试。':'循证问答服务暂时不可用。'));
-        this.setState({groundedLoading:false,groundedError:msg});
+        const detail=this._agentResponseDetail(data, '决策 Agent 请求失败，请稍后重试。');
+        const msg=status===400?detail:(status===503?'决策 Agent 服务暂不可用，请稍后重试。':detail);
+        this.setState({agentLoading:false,agentError:msg});
         return;
       }
-      this.setState({groundedLoading:false,groundedResult:(data&&data.result)||null,groundedMeta:(data&&data.metadata)||null});
+      const result=this._agentNormalizeResult(data);
+      if(!result){
+        this.setState({agentLoading:false,agentError:'决策 Agent 返回结构不可用。'});
+        return;
+      }
+      if(result.error){
+        this.setState({agentLoading:false,agentError:this._agentResponseDetail({detail:result.error}, '决策 Agent 执行失败。'),agentResult:null});
+        return;
+      }
+      this.setState({agentLoading:false,agentError:'',agentResult:result});
     }).catch(e=>{
       if(e&&e.name==='AbortError') return;
-      if(seq!==this.state.groundedSeq) return;
-      this.setState({groundedLoading:false,groundedError:'网络或服务暂时不可用，请稍后重试。'});
+      if(seq!==this._agentSeq) return;
+      this.setState({agentLoading:false,agentError:'网络或服务暂时不可用，请稍后重试。'});
     });
   }
   _questionTypeLabel(type){
@@ -834,6 +866,431 @@ class Component extends DCLogic {
     );
     return rows;
   }
+  _agentArray(value){
+    if(!Array.isArray(value)) return [];
+    const seen={}, out=[];
+    value.forEach(item=>{
+      const text=this._agentValueText(item,'').trim();
+      if(text && !seen[text]){ seen[text]=1; out.push(text); }
+    });
+    return out;
+  }
+  _agentFieldLabel(key){
+    const labels={
+      company:'企业',
+      source_diversity:'来源多样性',
+      source_type_count:'来源类型数',
+      source_type_distribution:'来源类型构成',
+      trial_evidence_chain:'试验证据链',
+      trial_chain_count:'试验链数量',
+      multi_source_trial_chain_count:'多来源试验链',
+      single_source_trial_chain_count:'单来源试验链',
+      version_composition:'最新、历史和独立资料构成',
+      latest:'最新资料',
+      historical:'历史资料',
+      independent:'独立资料',
+      regulatory_evidence_coverage:'监管证据覆盖',
+      regulatory_chain_count:'监管链数量',
+      regulatory_source_ids:'监管来源',
+      traceability_risk:'可追溯性风险',
+      unresolved_link_count:'待确认关系数量',
+      unresolved_source_ids:'待确认来源',
+      interpretation:'说明',
+      dimension:'维度',
+      values:'取值'
+    };
+    return labels[key]||String(key||'');
+  }
+  _agentValueText(value, empty){
+    const fallback=empty==null?'无':empty;
+    if(value==null || value==='') return fallback;
+    if(Array.isArray(value)){
+      const list=value.map(item=>this._agentValueText(item,'')).filter(Boolean);
+      return list.length?list.join('、'):fallback;
+    }
+    if(typeof value==='object'){
+      const keys=Object.keys(value).filter(k=>{
+        const v=value[k];
+        return v!=null && v!=='' && !(Array.isArray(v)&&!v.length);
+      });
+      if(!keys.length) return fallback;
+      return keys.map(k=>this._agentFieldLabel(k)+'：'+this._agentValueText(value[k],'无')).join('；');
+    }
+    const text=String(value).trim();
+    if(!text || text==='undefined' || text==='null' || text==='[object Object]') return fallback;
+    return text;
+  }
+  _agentEntityText(value){
+    const list=this._agentArray(value);
+    return list.length?list.join('、'):'未识别';
+  }
+  _agentSourceSortKey(sourceId){
+    const raw=String(sourceId||'').trim().toUpperCase();
+    const m=/^([A-Z]+)(\d+)$/.exec(raw);
+    return m?m[1]+String(Number(m[2])).padStart(6,'0'):raw;
+  }
+  _agentSortedIds(value){
+    const seen={}, out=[];
+    (Array.isArray(value)?value:[]).forEach(item=>{
+      const text=String(item||'').trim().toUpperCase();
+      if(text && !seen[text]){ seen[text]=1; out.push(text); }
+    });
+    return out.sort((a,b)=>this._agentSourceSortKey(a).localeCompare(this._agentSourceSortKey(b)));
+  }
+  _agentLatency(value){
+    if(typeof value==='number' && isFinite(value)) return value.toFixed(value>=10?0:1)+' ms';
+    const n=Number(value);
+    return isFinite(n)?n.toFixed(n>=10?0:1)+' ms':'无';
+  }
+  _agentStatusMeta(status){
+    const raw=String(status||'').trim().toLowerCase();
+    if(raw==='completed') return {label:'已完成', color:'var(--pos)', bg:'var(--pos-bg)'};
+    if(raw==='skipped') return {label:'已跳过', color:'var(--warn)', bg:'var(--warn-bg)'};
+    if(raw==='failed') return {label:'执行失败', color:'var(--neg)', bg:'var(--neg-bg)'};
+    return {label:raw||'无', color:'var(--text-3)', bg:'var(--bg-sunken)'};
+  }
+  _agentToolLabel(tool){
+    const raw=String(tool||'').trim();
+    const parts=raw.split('.');
+    return raw?((parts.length>1?parts[0]:raw)+' · '+(parts.length>1?parts.slice(1).join('.'):'')):'无';
+  }
+  _agentListVm(value){
+    const list=Array.isArray(value)?value:(value?[value]:[]);
+    return list.map(item=>({text:this._agentValueText(item,'')})).filter(item=>item.text);
+  }
+  _agentDimensionVm(item){
+    item=item||{};
+    const title=this._agentValueText(item.dimension||item.name||item.title,'维度');
+    const value=this._agentValueText(item.values||item.value||item,'无');
+    const interpretation=this._agentValueText(item.interpretation||item.summary,'');
+    return {title, value, interpretation, hasInterpretation:!!interpretation};
+  }
+  _agentMaturityVm(item){
+    item=item||{};
+    const known=[
+      ['source_diversity','来源多样性'],
+      ['trial_evidence_chain','试验证据链完整性'],
+      ['version_composition','最新、历史和独立资料构成'],
+      ['regulatory_evidence_coverage','监管证据覆盖'],
+      ['traceability_risk','未确认关系与可追溯性风险']
+    ];
+    let rows=known.map(([key,label])=>({label, value:this._agentValueText(item[key],'')})).filter(row=>row.value);
+    if(!rows.length){
+      rows=Object.keys(item).filter(k=>!['company','interpretation'].includes(k)).map(k=>({label:this._agentFieldLabel(k), value:this._agentValueText(item[k],'')})).filter(row=>row.value);
+    }
+    return {
+      title:this._agentValueText(item.company||item.name,'证据成熟度'),
+      rows,
+      hasRows:rows.length>0,
+      interpretation:this._agentValueText(item.interpretation,''),
+      hasInterpretation:!!this._agentValueText(item.interpretation,'')
+    };
+  }
+  _agentDecisionVm(decision, answer){
+    decision=decision||{};
+    const comparisonDimensions=(Array.isArray(decision.comparison_dimensions)?decision.comparison_dimensions:[]).map(x=>this._agentDimensionVm(x));
+    const evidenceMaturity=(Array.isArray(decision.evidence_maturity)?decision.evidence_maturity:[]).map(x=>this._agentMaturityVm(x));
+    const vm={
+      summary:this._agentValueText(decision.summary||answer,'无'),
+      keyFindings:this._agentListVm(decision.key_findings),
+      comparisonDimensions,
+      riskFlags:this._agentListVm(decision.risk_flags),
+      evidenceGaps:this._agentListVm(decision.evidence_gaps),
+      nextActions:this._agentListVm(decision.next_evidence_actions),
+      supportedConclusions:this._agentListVm(decision.supported_conclusions),
+      unsupportedConclusions:this._agentListVm(decision.unsupported_conclusions),
+      evidenceMaturity,
+      scopeStatement:this._agentValueText(decision.scope_statement,'无')
+    };
+    vm.hasScopeStatement=vm.scopeStatement!=='无';
+    vm.hasKeyFindings=vm.keyFindings.length>0;
+    vm.hasComparisonDimensions=vm.comparisonDimensions.length>0;
+    vm.hasRiskFlags=vm.riskFlags.length>0;
+    vm.hasEvidenceGaps=vm.evidenceGaps.length>0;
+    vm.hasNextActions=vm.nextActions.length>0;
+    vm.hasSupportedConclusions=vm.supportedConclusions.length>0;
+    vm.hasUnsupportedConclusions=vm.unsupportedConclusions.length>0;
+    vm.hasEvidenceMaturity=vm.evidenceMaturity.length>0;
+    return vm;
+  }
+  _agentStepVm(step){
+    step=step||{};
+    const status=this._agentStatusMeta(step.status);
+    const sourceIds=this._agentSortedIds(step.source_ids||[]);
+    const duration=step.duration_ms;
+    const reason=this._agentValueText(step.reason,'');
+    const input=this._agentValueText(step.input_summary,'');
+    const result=this._agentValueText(step.result_summary,'');
+    return {
+      step_id:this._agentValueText(step.step_id,'无'),
+      name:this._agentValueText(step.name,'无'),
+      tool:this._agentToolLabel(step.tool),
+      rawTool:this._agentValueText(step.tool,'无'),
+      status:this._agentValueText(step.status,'无'),
+      statusLabel:status.label,
+      statusColor:status.color,
+      statusBg:status.bg,
+      sourceText:sourceIds.length?sourceIds.join('、'):'无',
+      hasSources:sourceIds.length>0,
+      durationText:this._agentLatency(duration),
+      hasDuration:typeof duration==='number' && isFinite(duration),
+      reason,
+      input,
+      result,
+      hasReason:!!reason,
+      hasInput:!!input,
+      hasResult:!!result
+    };
+  }
+  _agentPlanVm(step){
+    const item=this._agentStepVm(step);
+    item.statusLabel='';
+    return item;
+  }
+  _agentCitationVm(item){
+    item=item||{};
+    const sourceId=this._agentValueText(item.source_id,'无');
+    const url=this._safeEvidenceUrl(item.url||item.source_url);
+    const produced=this._agentArray(item.produced_by_steps);
+    const verified=this._agentValueText(item.verified_at,'');
+    const support=this._agentValueText(item.support_summary||item.summary,'');
+    const org=this._agentValueText(item.organization||item.company_name,'');
+    const version=this._agentValueText(item.version_status,'');
+    return {
+      source_id:sourceId,
+      title:this._agentValueText(item.title||item.description_zh||item.title_original||item.study_name,'无'),
+      source_type:this._agentValueText(item.source_type,'无'),
+      organization:org,
+      hasOrganization:!!org,
+      verified_at:verified,
+      hasVerifiedAt:!!verified,
+      support_summary:support,
+      hasSupportSummary:!!support,
+      version_status:version,
+      hasVersionStatus:!!version,
+      produced_by_steps:produced.length?produced.join('、'):'无',
+      producedText:produced.length?('由步骤 '+produced.join('、')+' 产出'):'未返回步骤轨迹',
+      hasProducedSteps:produced.length>0,
+      source_url:url,
+      hasUrl:!!url,
+      onClick:()=>this.openGroundedSource(sourceId)
+    };
+  }
+  _agentTraceRows(trace){
+    trace=trace||{};
+    return Object.keys(trace).sort((a,b)=>this._agentSourceSortKey(a).localeCompare(this._agentSourceSortKey(b))).map(sourceId=>({
+      source_id:this._agentValueText(sourceId,'无'),
+      steps:this._agentArray(trace[sourceId]).join('、')||'无'
+    }));
+  }
+  _agentModeLabel(mode){
+    const raw=String(mode||'').trim();
+    const labels={local:'本地稳定模式',auto:'自动模式',llm:'大模型模式'};
+    return labels[raw]?(labels[raw]+'（'+raw+'）'):(raw||'无');
+  }
+  _agentModeCleanLabel(mode){
+    const raw=String(mode||'').trim();
+    const labels={local:'本地稳定模式',auto:'智能增强模式',llm:'大模型模式',safety_block:'安全边界拦截'};
+    return labels[raw]||raw||'无';
+  }
+  _agentIntentLabel(intent){
+    const raw=String(intent||'').trim();
+    const labels={
+      company_comparison:'企业比较',
+      evidence_gap:'证据缺口',
+      regulatory_status:'监管状态',
+      trial_status:'试验状态',
+      evidence_chain:'证据链',
+      source_search:'来源检索',
+      prohibited_or_unsupported:'安全边界'
+    };
+    return labels[raw]||this._questionTypeLabel(raw);
+  }
+  _agentDataScopeLabel(scope){
+    const raw=String(scope||'').trim();
+    const labels={verified_nsclc_multi_company_sample:'已核验 NSCLC 多企业样本'};
+    return labels[raw]||this._agentValueText(raw,'已核验 NSCLC 多企业样本');
+  }
+  _agentDataVersionShort(version){
+    const raw=String(version||'').trim();
+    if(!raw) return '暂无';
+    return raw.length>12?raw.slice(0,12):raw;
+  }
+  _agentEvidenceCount(cap){
+    cap=cap||{};
+    const keys=['verified_source_count','source_count','total_sources','evidence_source_count','source_registry_count'];
+    for(let i=0;i<keys.length;i++){
+      const n=Number(cap[keys[i]]);
+      if(isFinite(n) && n>0) return String(n)+' 条';
+    }
+    return '人工核验证据';
+  }
+  _agentCapabilityCompanyVm(item){
+    let name='';
+    if(item&&typeof item==='object'&&!Array.isArray(item)){
+      name=this._agentValueText(item.display_name||item.canonical_name||item.name,'');
+    }else{
+      name=this._agentValueText(item,'');
+    }
+    return {value:this._companyLabel(name||'无')};
+  }
+  _agentCapabilitiesVm(cap){
+    cap=cap||{};
+    const fields=[];
+    if(cap.service) fields.push({label:'服务', value:this._agentValueText(cap.service)});
+    if(cap.name) fields.push({label:'名称', value:this._agentValueText(cap.name)});
+    if('local_mode_available' in cap) fields.push({label:'本地模式', value:cap.local_mode_available?'可用':'不可用'});
+    if('auto_mode_available' in cap) fields.push({label:'自动模式', value:cap.auto_mode_available?'可用':'不可用'});
+    if('llm_mode_available' in cap) fields.push({label:'大模型模式', value:cap.llm_mode_available?'可用':'不可用'});
+    if(cap.data_version) fields.push({label:'数据版本', value:this._agentValueText(cap.data_version)});
+    if(cap.data_scope) fields.push({label:'数据范围', value:this._agentDataScopeLabel(cap.data_scope)});
+    if(cap.safety_scope) fields.push({label:'适用边界', value:this._agentValueText(cap.safety_scope)});
+    if(cap.scope_statement) fields.push({label:'适用边界', value:this._agentValueText(cap.scope_statement)});
+    const intentTags=this._agentArray(cap.supported_intents).map(value=>({value, label:this._agentIntentLabel(value)}));
+    const modes=this._agentArray(cap.supported_generation_modes).map(value=>({value:this._agentModeLabel(value)}));
+    const companies=(Array.isArray(cap.supported_companies)?cap.supported_companies:[]).map(x=>this._agentCapabilityCompanyVm(x)).filter(x=>x.value&&x.value!=='无');
+    const mapping=cap.tool_mapping||{};
+    const tools=Object.keys(mapping).sort().map(intent=>({
+      intent:this._agentIntentLabel(intent),
+      tools:this._agentValueText(mapping[intent])
+    }));
+    const heroStats=[
+      {label:'证据基础', value:this._agentEvidenceCount(cap)==='人工核验证据'?'人工核验来源':this._agentEvidenceCount(cap)},
+      {label:'企业覆盖', value:companies.length?String(companies.length)+' 家':'暂无'},
+      {label:'决策任务', value:intentTags.length?String(intentTags.length)+' 类':'暂无'},
+      {label:'现场模式', value:'稳定离线运行'},
+    ];
+    const detailSummary=[
+      {label:'覆盖企业', value:companies.length?String(companies.length)+' 家':'暂无'},
+      {label:'支持任务', value:intentTags.length?String(intentTags.length)+' 类':'暂无'},
+      {label:'数据版本', value:this._agentDataVersionShort(cap.data_version)}
+    ];
+    return {
+      fields,
+      hasFields:fields.length>0,
+      heroStats,
+      detailSummary,
+      intents:intentTags,
+      hasIntents:intentTags.length>0,
+      modes,
+      hasModes:modes.length>0,
+      companies,
+      hasCompanies:companies.length>0,
+      tools,
+      hasTools:tools.length>0
+    };
+  }
+  _agentOverviewVm(result){
+    result=result||{};
+    const entities=result.entities||{};
+    const meta=result.execution_metadata||{};
+    const sourceIds=this._agentSortedIds(result.source_ids||[]);
+    const chainIds=this._agentArray(result.chain_ids);
+    const rows=[];
+    if(result.intent) rows.push({label:'任务', value:this._questionTypeLabel(result.intent)});
+    this._agentEntityRows(entities, true).forEach(row=>rows.push(row));
+    if(sourceIds.length) rows.push({label:'来源', value:String(sourceIds.length)+' 条'});
+    if(chainIds.length) rows.push({label:'证据链', value:String(chainIds.length)+' 条'});
+    const latency=('latency_ms' in result)?result.latency_ms:meta.latency_ms;
+    const n=Number(latency);
+    if(isFinite(n)) rows.push({label:'耗时', value:this._agentLatency(n)});
+    return rows;
+  }
+  _agentEntityRows(entities, hideEmpty){
+    entities=entities||{};
+    const specs=[
+      ['companies','企业'],
+      ['drugs','药物'],
+      ['studies','研究'],
+      ['trial_ids','试验编号'],
+      ['source_ids','来源编号']
+    ];
+    const rows=[];
+    specs.forEach(([key,label])=>{
+      const list=this._agentArray(entities[key]);
+      if(list.length) rows.push({label, value:list.join('、')});
+      else if(!hideEmpty) rows.push({label, value:'未识别'});
+    });
+    return rows;
+  }
+  _agentRunDetailsVm(result){
+    result=result||{};
+    const entities=result.entities||{};
+    const meta=result.execution_metadata||{};
+    const sourceIds=this._agentSortedIds(result.source_ids||[]);
+    const chainIds=this._agentArray(result.chain_ids);
+    const generationMode=this._agentValueText(result.generation_mode||meta.generation_mode_used,'');
+    const latency=('latency_ms' in result)?result.latency_ms:meta.latency_ms;
+    const dataVersion=this._agentValueText(result.data_version||meta.data_version,'无');
+    const entityText=this._agentEntityRows(entities, false).map(row=>row.label+'：'+row.value).join('；');
+    const rows=[
+      {label:'运行模式', value:this._agentModeCleanLabel(generationMode), detail:generationMode?('generation_mode: '+generationMode):''},
+      {label:'模型调用', value:result.used_llm?'已调用模型':'未调用外部模型', detail:'used_llm: '+(result.used_llm?'true':'false')},
+      {label:'安全拦截', value:result.refused?'已触发安全拦截':'未触发安全拦截', detail:'refused: '+(result.refused?'true':'false')},
+      {label:'响应耗时', value:this._agentLatency(latency), detail:isFinite(Number(latency))?('latency_ms: '+Number(latency)):'latency_ms: 无'},
+      {label:'数据版本', value:dataVersion, detail:'data_version'},
+      {label:'完整实体识别', value:entityText||'无', detail:'entities'},
+      {label:'来源编号', value:sourceIds.length?sourceIds.join('、'):'无', detail:'source_ids'},
+      {label:'证据链编号', value:chainIds.length?chainIds.join('、'):'无', detail:'chain_ids'}
+    ];
+    if(meta && Object.keys(meta).length) rows.push({label:'执行元数据', value:this._agentValueText(meta,'无'), detail:'execution_metadata'});
+    const summary=[
+      {label:'运行模式', value:this._agentModeCleanLabel(generationMode)},
+      {label:'模型调用', value:result.used_llm?'已调用模型':'未调用外部模型'},
+      {label:'响应耗时', value:this._agentLatency(latency)}
+    ];
+    return {summary, rows, hasRows:rows.length>0};
+  }
+  _agentProcessSummary(plan, steps, traceRows){
+    const hasTrace=(traceRows||[]).length>0;
+    return [
+      {label:'任务规划', value:String((plan||[]).length)+' 步'},
+      {label:'实际工具步骤', value:String((steps||[]).length)+' 步'},
+      {label:'来源轨迹', value:hasTrace?'已返回':'无'}
+    ];
+  }
+  _agentDataInsufficient(result){
+    if(!result || result.refused || result.error) return false;
+    const sourceCount=this._agentSortedIds(result.source_ids||[]).length;
+    const citationCount=Array.isArray(result.citations)?result.citations.length:0;
+    const decision=result.decision||{};
+    const text=[decision.summary,result.answer,(decision.evidence_gaps||[]).join('；')].map(x=>String(x||'')).join(' ');
+    return sourceCount===0 && citationCount===0 && /当前数据不足|未找到|未命中|未识别|无法/.test(text);
+  }
+  _agentChainLinks(result){
+    return this._agentArray(result&&result.chain_ids).map(id=>({
+      chain_id:id,
+      onClick:()=>this.openGroundedChain(id)
+    }));
+  }
+  _agentGoldenCases(){
+    const cases=[
+      {
+        type:'企业决策',
+        title:'比较两家企业的当前证据结构',
+        desc:'从来源覆盖、证据链完整度、监管证据和可追溯风险等维度形成比较结论。',
+        question:'阿斯利康与百济神州当前 NSCLC 证据样本有什么差异？',
+        buttonText:'生成企业比较结论'
+      },
+      {
+        type:'证据诊断',
+        title:'定位试验当前的证据缺口',
+        desc:'梳理已有证据、识别尚未收录的资料，并给出下一步核验行动。',
+        question:'RATIONALE-315 当前还存在哪些证据缺口？',
+        buttonText:'生成缺口分析'
+      },
+      {
+        type:'监管判断',
+        title:'辨析监管文件代表的真实状态',
+        desc:'区分 CHMP 积极意见、正式授权和当前资料能够支持的结论边界。',
+        question:'B016 是否代表替雷利珠单抗已经获得 EMA 正式批准？',
+        buttonText:'生成监管判断'
+      }
+    ];
+    return cases.map(item=>Object.assign({}, item, {
+      onClick:()=>this.runDecisionAgentExample(item.question)
+    }));
+  }
   _chainTypeLabel(t){ return t==='trial'?'试验级':'药物级监管'; }
   _roleLabel(role){
     return ({
@@ -951,7 +1408,8 @@ class Component extends DCLogic {
       gaps:(Array.isArray(chain.evidence_gaps)?chain.evidence_gaps:[]).map(x=>({text:x})),
       risks:(Array.isArray(chain.risk_notes)?chain.risk_notes:[]).map(x=>({text:x})),
       hasGaps:Array.isArray(chain.evidence_gaps)&&chain.evidence_gaps.length>0,
-      hasRisks:Array.isArray(chain.risk_notes)&&chain.risk_notes.length>0
+      hasRisks:Array.isArray(chain.risk_notes)&&chain.risk_notes.length>0,
+      openGrounded:()=>this.openChainGroundedQa(chain)
     };
   }
   _unresolvedVm(item){
@@ -1080,33 +1538,35 @@ class Component extends DCLogic {
       {name:'药物类型', reason:'当前没有统一 drug_type 字段。'},
       {name:'疗效与安全性', reason:'不支持跨试验疗效、安全性或成功率比较。'}
     ];
-    const groundedCap=s.groundedCapabilities||{};
-    const groundedResult=s.groundedResult||{};
-    const groundedMeta=s.groundedMeta||{};
-    const groundedTrace=groundedResult.trace||{};
-    const groundedDeepseek=!!groundedCap.llm_mode_available;
-    const groundedModeStyle=(mode,enabled)=>'height:34px;border-radius:9px;border:1px solid '+(s.groundedMode===mode?'var(--brand-600)':'var(--border)')+';background:'+(s.groundedMode===mode?'var(--brand-600)':'var(--bg-elev)')+';color:'+(s.groundedMode===mode?'#fff':'var(--text-2)')+';font-size:12.5px;font-weight:700;padding:0 13px;cursor:'+(enabled?'pointer':'not-allowed')+';opacity:'+(enabled?'1':'.55');
-    const questionTypes=Array.isArray(groundedCap.supported_question_types)?groundedCap.supported_question_types.map(t=>({label:this._questionTypeLabel(t),value:t})):[];
-    const groundedCitations=(Array.isArray(groundedResult.citations)?groundedResult.citations:[]).map(x=>this._groundedCitationVm(x));
-    const groundedLimitations=(Array.isArray(groundedResult.limitations)?groundedResult.limitations:[]).filter(Boolean).map(x=>({text:this._evidenceText(x)}));
-    const groundedChainIds=(Array.isArray(groundedTrace.retrieved_chain_ids)?groundedTrace.retrieved_chain_ids:[]).map(id=>({chain_id:this._evidenceText(id),onClick:()=>this.openGroundedChain(id)}));
-    const groundedFallback=!!(groundedMeta.fallback_used||groundedTrace.fallback_used);
-    const groundedUsedLlm=!!(groundedMeta.llm_used||groundedTrace.used_llm);
-    const groundedGenerationMode=String((groundedMeta&&groundedMeta.generation_mode_used)||groundedTrace.generation_mode_used||'');
-    const groundedSafetyBlock=groundedGenerationMode==='safety_block';
-    const groundedSubmitDisabled=s.groundedLoading||!String(s.groundedQuestion||'').trim()||String(s.groundedQuestion||'').length>1000;
-    const groundedStatusTags=[
-      {text:'问题类型：'+this._questionTypeLabel(groundedResult.question_type), color:groundedSafetyBlock?'var(--warn)':'var(--brand-600)', bg:groundedSafetyBlock?'var(--warn-bg)':'var(--brand-50)'},
-      {text:groundedSafetyBlock?'执行方式：安全规则拦截':(groundedUsedLlm?'执行方式：DeepSeek智能生成':'执行方式：本地循证摘要'), color:groundedSafetyBlock?'var(--warn)':(groundedUsedLlm?'var(--pos)':'var(--text-2)'), bg:groundedSafetyBlock?'var(--warn-bg)':(groundedUsedLlm?'var(--pos-bg)':'var(--bg-sunken)')}
-    ];
-    if(groundedUsedLlm){
-      groundedStatusTags.push({text:'模型：'+this._groundedModelLabel((groundedMeta&&groundedMeta.model_name)||groundedTrace.model_name), color:'var(--text-2)', bg:'var(--bg-sunken)'});
-    }else if(groundedSafetyBlock){
-      groundedStatusTags.push({text:'模型：未调用模型', color:'var(--warn)', bg:'var(--warn-bg)'});
-    }else{
-      groundedStatusTags.push({text:'模型：本地循证摘要', color:'var(--text-2)', bg:'var(--bg-sunken)'});
-    }
-    if(groundedFallback) groundedStatusTags.push({text:'DeepSeek暂不可用，已回退本地证据摘要', color:'var(--warn)', bg:'var(--warn-bg)'});
+    const agentCap=s.agentCapabilities||{};
+    const agentCapVm=this._agentCapabilitiesVm(agentCap);
+    const agentResult=s.agentResult||null;
+    const agentDecision=this._agentDecisionVm((agentResult&&agentResult.decision)||{}, agentResult&&agentResult.answer);
+    const agentOverview=agentResult?this._agentOverviewVm(agentResult):[];
+    const agentPlan=(Array.isArray(agentResult&&agentResult.plan)?agentResult.plan:[]).map(x=>this._agentPlanVm(x));
+    const agentSteps=(Array.isArray(agentResult&&agentResult.steps)?agentResult.steps:[]).map(x=>this._agentStepVm(x));
+    const agentTraceRows=this._agentTraceRows((agentResult&&agentResult.source_trace)||{});
+    const agentRunDetails=agentResult?this._agentRunDetailsVm(agentResult):{summary:[],rows:[],hasRows:false};
+    const agentProcessSummary=this._agentProcessSummary(agentPlan, agentSteps, agentTraceRows);
+    const agentFullCitations=(Array.isArray(agentResult&&agentResult.citations)?agentResult.citations:[]).map(x=>this._agentCitationVm(x));
+    const rawFeatured=Array.isArray(agentResult&&agentResult.featured_citations)?agentResult.featured_citations:[];
+    const agentFeaturedFallback=!rawFeatured.length && agentFullCitations.length>0;
+    const agentFeaturedCitations=(rawFeatured.length?rawFeatured.map(x=>this._agentCitationVm(x)):agentFullCitations.slice(0,Math.min(6,agentFullCitations.length)));
+    const agentVisibleAllCitations=s.agentAllCitationsOpen?agentFullCitations:[];
+    const agentLimitations=(Array.isArray(agentResult&&agentResult.limitations)?agentResult.limitations:[]).map(x=>({text:this._agentValueText(x,'')})).filter(x=>x.text);
+    const agentWarnings=(Array.isArray(agentResult&&agentResult.warnings)?agentResult.warnings:[]).map(x=>({text:this._agentValueText(x,'')})).filter(x=>x.text);
+    const agentRefused=!!(agentResult&&agentResult.refused);
+    const agentDataInsufficient=this._agentDataInsufficient(agentResult);
+    const agentHasDecision=!!agentResult && !agentRefused && !agentDataInsufficient;
+    const agentChainLinks=this._agentChainLinks(agentResult||{});
+    const agentQuestion=String(s.agentQuestion||'');
+    const agentSubmitDisabled=s.agentLoading||!agentQuestion.trim()||agentQuestion.length>1000;
+    const agentSubmitStyle='height:38px;border-radius:9px;background:var(--brand-600);color:#fff;border:0;font-size:13.5px;font-weight:800;padding:0 17px;display:inline-flex;align-items:center;gap:8px;opacity:'+(agentSubmitDisabled?'.55':'1')+';cursor:'+(agentSubmitDisabled?'not-allowed':'pointer');
+    const agentExampleButtonStyle='height:32px;border-radius:8px;border:1px solid var(--brand-600);background:var(--brand-600);color:#fff;font-size:12px;font-weight:800;padding:0 11px;cursor:'+(s.agentLoading?'not-allowed':'pointer')+';opacity:'+(s.agentLoading?'.6':'1');
+    const agentGoldenCases=this._agentGoldenCases().map(item=>Object.assign({}, item, {disabled:s.agentLoading, buttonStyle:agentExampleButtonStyle}));
+    const agentStatusTags=agentResult?[
+      {text:'任务：'+(agentResult.intent?this._questionTypeLabel(agentResult.intent):'未识别'), color:agentRefused?'var(--warn)':'var(--brand-600)', bg:agentRefused?'var(--warn-bg)':'var(--brand-50)'}
+    ]:[];
     return {
       ev_tabSourceStyle:tabStyle(s.evidenceTab==='sources'),
       ev_tabChainStyle:tabStyle(s.evidenceTab==='chains'),
@@ -1195,55 +1655,94 @@ class Component extends DCLogic {
       cmp_dataInsufficient:dataInsufficient,
       cmp_scopeText:'以下结果仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力。',
       cmp_objects:companyProfiles.length?companyProfiles.map(x=>x.company_name).join('、'):'暂无',
-      gqa_capLoading:s.groundedCapabilitiesLoading,
-      gqa_capLoaded:s.groundedCapabilitiesLoaded,
-      gqa_localAvailable:groundedCap.local_mode_available?'可用':'不可用',
-      gqa_deepseekAvailable:groundedDeepseek?'可用':'不可用',
-      gqa_deepseekOk:groundedDeepseek,
-      gqa_model:this._groundedModelLabel(groundedCap.model_name),
-      gqa_dataVersion:this._evidenceText(groundedCap.data_version),
-      gqa_questionTypes:questionTypes,
-      gqa_mode:s.groundedMode,
-      gqa_autoStyle:groundedModeStyle('auto', groundedDeepseek),
-      gqa_localStyle:groundedModeStyle('local', true),
-      gqa_chooseAuto:()=>this.setGroundedMode('auto'),
-      gqa_chooseLocal:()=>this.setGroundedMode('local'),
-      gqa_question:s.groundedQuestion,
-      gqa_questionCount:String(s.groundedQuestion||'').length,
-      gqa_onQuestion:(e)=>this.setState({groundedQuestion:String(e.target.value||'').slice(0,1000),groundedError:''}),
-      gqa_onKey:(e)=>{ if(e.key==='Enter'&&e.ctrlKey) this.submitGroundedQA(); },
-      gqa_submit:()=>this.submitGroundedQA(),
-      gqa_loading:s.groundedLoading,
-      gqa_submitDisabled:groundedSubmitDisabled,
-      gqa_submitStyle:'height:38px;border-radius:9px;background:var(--brand-600);color:#fff;border:0;font-size:13.5px;font-weight:700;padding:0 17px;display:inline-flex;align-items:center;gap:8px;opacity:'+(groundedSubmitDisabled?'.55':'1')+';cursor:'+(groundedSubmitDisabled?'not-allowed':'pointer'),
-      gqa_examples:[
-        'RATIONALE-304有哪些证据版本？',
-        'RATIONALE-315形成了怎样的证据链？',
-        'NCT04619433当前是什么状态？',
-        'B015和B016有什么区别？',
-        '恒瑞与百济当前证据样本有什么差异？',
-        '当前数据还存在哪些缺口？'
-      ].map(q=>({text:q,onClick:()=>this.setGroundedExample(q)})),
-      gqa_hasError:!!s.groundedError,
-      gqa_error:s.groundedError,
-      gqa_hasResult:!!s.groundedResult,
-      gqa_answer:this._friendlyGroundedText(groundedResult.answer),
-      gqa_statusTags:groundedStatusTags,
-      gqa_citations:groundedCitations,
-      gqa_hasCitations:groundedCitations.length>0,
-      gqa_noCitationText:groundedSafetyBlock?'当前回答不需要引用。':'当前回答没有可展示引用。',
-      gqa_limitations:groundedLimitations,
-      gqa_hasLimitations:groundedLimitations.length>0,
-      gqa_safetyNotice:this._evidenceText(groundedResult.safety_notice),
-      gqa_hasSafetyNotice:!!groundedResult.safety_notice,
-      gqa_traceOpen:s.groundedTraceOpen,
-      gqa_toggleTrace:()=>this.setState({groundedTraceOpen:!this.state.groundedTraceOpen}),
-      gqa_traceRows:this._groundedTraceRows(groundedTrace),
-      gqa_chainLinks:groundedChainIds,
-      gqa_hasChainLinks:groundedChainIds.length>0,
-      gqa_staticSafety:'系统仅根据当前已核验的NSCLC证据样本回答，不提供诊断、个体治疗'+('建'+'议')+'、疗效保证、跨试验排名、成功'+('率'+'预测')+'或投资'+('建'+'议')+'。',
-      gqa_autoNotice:'智能生成会先检索证据，再让 DeepSeek 组织答案；auto 失败时会自动回退本地摘要。',
-      gqa_autoUnavailable:'DeepSeek智能生成当前未启用，本地循证摘要仍可使用。页面不会读取、保存或显示任何密钥值。'
+      agent_capLoading:s.agentCapabilitiesLoading,
+      agent_capLoaded:s.agentCapabilitiesLoaded,
+      agent_capError:s.agentCapabilitiesError,
+      agent_hasCapError:!!s.agentCapabilitiesError,
+      agent_heroStats:agentCapVm.heroStats,
+      agent_hasHeroStats:agentCapVm.heroStats.length>0,
+      agent_capDetailSummary:agentCapVm.detailSummary,
+      agent_hasCapDetailSummary:agentCapVm.detailSummary.length>0,
+      agent_capFields:agentCapVm.fields,
+      agent_hasCapFields:agentCapVm.hasFields,
+      agent_capIntents:agentCapVm.intents,
+      agent_hasCapIntents:agentCapVm.hasIntents,
+      agent_capModes:agentCapVm.modes,
+      agent_hasCapModes:agentCapVm.hasModes,
+      agent_capCompanies:agentCapVm.companies,
+      agent_hasCapCompanies:agentCapVm.hasCompanies,
+      agent_capTools:agentCapVm.tools,
+      agent_hasCapTools:agentCapVm.hasTools,
+      agent_capabilitiesOpen:s.agentCapabilitiesOpen,
+      agent_toggleCapabilities:()=>this.setState({agentCapabilitiesOpen:!this.state.agentCapabilitiesOpen}),
+      agent_capabilitiesToggleText:s.agentCapabilitiesOpen?'收起详情':'展开详情',
+      agent_backEvidence:()=>this.setState({page:'evidence',evidenceTab:'sources',navOpen:false},()=>this.loadEvidencePage()),
+      agent_question:s.agentQuestion,
+      agent_questionCount:agentQuestion.length,
+      agent_onQuestion:(e)=>this.setDecisionAgentQuestion(e.target.value),
+      agent_onKey:(e)=>{ if(e.key==='Enter'&&e.ctrlKey) this.submitDecisionAgent(); },
+      agent_submit:()=>this.submitDecisionAgent(),
+      agent_loading:s.agentLoading,
+      agent_submitDisabled:agentSubmitDisabled,
+      agent_submitStyle:agentSubmitStyle,
+      agent_goldenCases:agentGoldenCases,
+      agent_hasError:!!s.agentError,
+      agent_error:s.agentError,
+      agent_hasResult:!!agentResult,
+      agent_hasDecision:agentHasDecision,
+      agent_refused:agentRefused,
+      agent_dataInsufficient:agentDataInsufficient,
+      agent_decision:agentDecision,
+      agent_displayQuestion:this._agentValueText(agentResult&&agentResult.question, agentQuestion||'无'),
+      agent_answer:this._agentValueText(agentResult&&agentResult.answer,'无'),
+      agent_statusTags:agentStatusTags,
+      agent_overview:agentOverview,
+      agent_hasOverview:agentOverview.length>0,
+      agent_runSummary:agentRunDetails.summary,
+      agent_runDetailsRows:agentRunDetails.rows,
+      agent_hasRunDetails:agentRunDetails.hasRows,
+      agent_runDetailsOpen:s.agentRunDetailsOpen,
+      agent_toggleRunDetails:()=>this.setState({agentRunDetailsOpen:!this.state.agentRunDetailsOpen}),
+      agent_runDetailsToggleText:s.agentRunDetailsOpen?'收起运行详情':'展开运行详情',
+      agent_plan:agentPlan,
+      agent_hasPlan:agentPlan.length>0,
+      agent_steps:agentSteps,
+      agent_hasSteps:agentSteps.length>0,
+      agent_processSummary:agentProcessSummary,
+      agent_processOpen:s.agentProcessOpen,
+      agent_toggleProcess:()=>this.setState({agentProcessOpen:!this.state.agentProcessOpen}),
+      agent_processToggleText:s.agentProcessOpen?'收起决策过程':'展开决策过程',
+      agent_traceRows:agentTraceRows,
+      agent_hasTraceRows:agentTraceRows.length>0,
+      agent_traceOpen:s.agentTraceOpen,
+      agent_toggleTrace:()=>this.setState({agentTraceOpen:!this.state.agentTraceOpen}),
+      agent_featuredCitations:agentFeaturedCitations,
+      agent_featuredCitationCount:agentFeaturedCitations.length,
+      agent_hasFeaturedCitations:agentFeaturedCitations.length>0,
+      agent_featuredFallback:agentFeaturedFallback,
+      agent_allCitations:agentVisibleAllCitations,
+      agent_fullCitationCount:agentFullCitations.length,
+      agent_hasFullCitations:agentFullCitations.length>0,
+      agent_allCitationsOpen:s.agentAllCitationsOpen,
+      agent_toggleAllCitations:()=>this.setState({agentAllCitationsOpen:!this.state.agentAllCitationsOpen}),
+      agent_allCitationsToggleText:s.agentAllCitationsOpen?'收起完整证据清单':'查看全部证据',
+      agent_showAllCitationsToggle:agentFullCitations.length>0,
+      agent_noCitationText:agentRefused?'安全拒答不需要引用。':'当前结果没有可展示引用。',
+      agent_limitations:agentLimitations,
+      agent_hasLimitations:agentLimitations.length>0,
+      agent_warnings:agentWarnings,
+      agent_hasWarnings:agentWarnings.length>0,
+      agent_chainLinks:agentChainLinks,
+      agent_hasChainLinks:agentChainLinks.length>0,
+      agent_localNotice:'现场稳定模式 · 基于本地已核验证据运行',
+      agent_scopeItems:[
+        {text:'当前仅覆盖已收录并核验的 NSCLC 证据样本'},
+        {text:'不代表企业完整研发实力'},
+        {text:'不提供个体医疗建议'},
+        {text:'不提供疗效保证'},
+        {text:'不进行跨试验疗效排名'},
+        {text:'不提供成功率预测或投资建议'}
+      ]
     };
   }
 
@@ -1253,7 +1752,7 @@ class Component extends DCLogic {
       {key:'compare',label:'企业证据画像',icon:['M4 4h6v16H4zM14 4h6v16h-6z']},
       {key:'timeline',label:'研发事件时间轴',icon:['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']},
       {key:'evidence',label:'研发证据中心',icon:['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5','M8 13h8','M8 17h5']},
-      {key:'groundedQa',label:'循证问答',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
+      {key:'groundedQa',label:'智能决策 Agent',icon:['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z']},
       {key:'brief',label:'证据决策简报',icon:['M6 2h9l5 5v15H6z','M14 2v6h6','M9 13h8','M9 17h6']}
     ];
   }
@@ -1266,7 +1765,7 @@ class Component extends DCLogic {
   shellVals(){
     const s=this.state;
     const nd=this.navDef();
-    const META={today:['研发决策总览','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据中心','来源、证据链与企业对比'],groundedQa:['循证问答','本地证据优先'],brief:['证据决策简报','结构化决策支持'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
+    const META={today:['研发决策总览','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据中心','来源、证据链与企业对比'],groundedQa:['智能研发决策 Agent','输入研发问题，获得可追溯决策分析'],brief:['证据决策简报','结构化决策支持'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
     const m=META[s.page]||['',''];
     return {
       theme:s.theme, present:this._isLegacyPage(s.page)&&s.present?'on':'off', navOpenAttr:s.navOpen?'1':'0',
@@ -1283,27 +1782,38 @@ class Component extends DCLogic {
     const wb=this.state.evidenceWorkbench||{};
     const summary=wb.summary||{};
     const metadata=wb.metadata||{};
+    const versionShort=(value)=>{
+      const raw=String(value||'').trim().replace(/^sha256:/,'');
+      return raw?raw.slice(0,12):'暂无';
+    };
+    const joinNames=(names)=>{
+      const list=(names||[]).filter(Boolean);
+      return list.length?list.join('、'):'已收录企业';
+    };
     const metric=(label,value,hint,icon)=>({label,value:this._evidenceText(value),hint,iconPaths:this._paths(icon)});
     const today_metrics=[
-      metric('总来源',summary.source_count,'当前来源登记表中的人工核验样本总数',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M8 13h8','M8 17h5']),
-      metric('已核验来源',summary.verified_source_count,'当前来源登记表中 verification_status=已人工核验',['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
-      metric('企业主体',summary.company_count,'按当前已归一企业主体动态统计',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
-      metric('试验级证据链',summary.trial_chain_count,'同一 trial_id 只计一项试验链',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5']),
-      metric('药物级监管链',summary.regulatory_chain_count,'监管链单独统计，不计入试验数量',['M9 12l2 2 4-4','M7 4h10l2 4v12H5V8z']),
-      metric('最新资料',summary.latest_count,'is_latest_evidence=true',['M12 8v4l3 2','M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z']),
-      metric('历史版本',summary.historical_count,'is_latest_evidence=false',['M3 12a9 9 0 1 0 3-6.7','M3 3v6h6']),
-      metric('独立资料',summary.independent_count,'未形成版本替代关系的核验资料',['M8 7h8M8 12h8M8 17h5','M5 3h14v18H5z']),
-      metric('待确认关系',summary.unresolved_link_count,'当前样本尚缺明确一对一关联',['M12 9v4M12 17h.01','M10.3 3.9 1.8 7.2a2 2 0 0 0 1.9 2.5h14a2 2 0 0 0 1.9-2.5l-7.2-7.2a2 2 0 0 0-2.8 0z'])
+      metric('已核验来源',summary.verified_source_count||summary.source_count,'当前样本中已完成人工核验的证据资料',['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
+      metric('覆盖企业',summary.company_count,'当前证据样本覆盖的企业数量',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
+      metric('试验级证据链',summary.trial_chain_count,'已建立关联的试验登记、论文与公司资料链',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5']),
+      metric('药物级监管链',summary.regulatory_chain_count,'独立统计的药物监管事件证据链',['M9 12l2 2 4-4','M7 4h10l2 4v12H5V8z'])
     ];
-    const evidenceQuick=(label,desc,tab,icon)=>({label,desc,onClick:()=>this.setState({page:'evidence',evidenceTab:tab,navOpen:false},()=>this.loadEvidencePage()),iconPaths:this._paths(icon)});
-    const pageQuick=(label,desc,page,icon)=>({label,desc,onClick:()=>page==='groundedQa'?this.openGroundedQa():this.go(page),iconPaths:this._paths(icon)});
+    const today_qualityMetrics=[
+      metric('最新版本资料',summary.latest_count,'当前样本中标记为最新版本的资料',['M12 8v4l3 2','M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z']),
+      metric('历史版本资料',summary.historical_count,'当前样本中保留的历史版本资料',['M3 12a9 9 0 1 0 3-6.7','M3 3v6h6']),
+      metric('独立资料',summary.independent_count,'尚未形成明确版本替代关系的核验资料',['M8 7h8M8 12h8M8 17h5','M5 3h14v18H5z']),
+      metric('待确认关系',summary.unresolved_link_count,'当前样本中尚缺少明确一对一关联的资料',['M12 9v4M12 17h.01','M10.3 3.9 1.8 7.2a2 2 0 0 0 1.9 2.5h14a2 2 0 0 0 1.9-2.5l-7.2-7.2a2 2 0 0 0-2.8 0z'])
+    ];
+    const cardStyle=(primary)=>'text-align:left;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:9px;min-height:168px;transition:border-color .15s,transform .15s,box-shadow .15s;'+(primary?'background:var(--brand-50);border:1px solid var(--brand-300);':'background:var(--bg-elev);border:1px solid var(--border);');
+    const iconStyle=(primary)=>'width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;'+(primary?'background:var(--brand-600);color:#fff':'background:var(--brand-50);color:var(--brand-600)');
+    const evidenceQuick=(label,desc,tab,icon,action)=>({label,desc,action:action||'进入',primary:false,style:cardStyle(false),iconStyle:iconStyle(false),onClick:()=>this.setState({page:'evidence',evidenceTab:tab,navOpen:false},()=>this.loadEvidencePage()),iconPaths:this._paths(icon)});
+    const pageQuick=(label,desc,page,icon,action,primary)=>({label,desc,action:action||'进入',primary:!!primary,style:cardStyle(!!primary),iconStyle:iconStyle(!!primary),onClick:()=>page==='groundedQa'?this.openGroundedQa():this.go(page),iconPaths:this._paths(icon)});
     const today_quickLinks=[
-      evidenceQuick('查看来源检索','按企业、药物、试验或来源ID查看核验记录。','sources',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M8 13h8']),
-      evidenceQuick('查看证据链','检查试验登记、论文和监管事件的人工关联。','chains',['M7 7h.01M17 7h.01M7 17h.01M17 17h.01','M7 7h10M7 17h10M7 7v10M17 7v10']),
-      pageQuick('查看研发事件时间轴','按真实结构化日期查看核心事件、版本演进和无日期资料。','timeline',['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2']),
-      evidenceQuick('查看企业对比','对比恒瑞与百济/BeOne在当前样本内的证据覆盖。','companyCompare',['M4 4h6v16H4zM14 4h6v16h-6z']),
-      pageQuick('生成证据决策简报','汇总企业、试验、版本、监管、缺口和引用。','brief',['M6 2h9l5 5v15H6z','M9 13h8']),
-      pageQuick('进入循证问答','使用安全边界内的本地循证摘要或已启用的智能生成。','groundedQa',['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2 2h14a2 2 0 0 1 2 2z'])
+      pageQuick('智能决策 Agent','提交企业、药物、研究或监管问题，获得带证据引用和工具轨迹的决策分析。','groundedQa',['M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2 2h14a2 2 0 0 1 2 2z'],'开始决策分析',true),
+      pageQuick('生成证据决策简报','汇总企业、试验、版本、监管、缺口和引用。','brief',['M6 2h9l5 5v15H6z','M9 13h8'],'生成决策简报'),
+      evidenceQuick('查看证据链','检查试验登记、论文、公司资料和监管事件的人工关联。','chains',['M7 7h.01M17 7h.01M7 17h.01M17 17h.01','M7 7h10M7 17h10M7 7v10M17 7v10'],'查看证据链'),
+      evidenceQuick('查看来源检索','按企业、药物、试验或来源编号查看核验记录。','sources',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M8 13h8'],'进入来源检索'),
+      evidenceQuick('查看企业对比','选择任意两家已收录企业，对比当前样本中的证据覆盖、证据链和监管资料。','companyCompare',['M4 4h6v16H4zM14 4h6v16h-6z'],'查看企业对比'),
+      pageQuick('查看研发事件时间轴','按真实结构化日期查看核心事件、版本演进和无日期资料。','timeline',['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2'],'查看时间轴')
     ];
     const dist=(list)=>Array.isArray(list)?list.map(x=>({label:this._evidenceText(x&&x.label),count:this._evidenceText(x&&x.count)})):[];
     const companies=(Array.isArray(wb.companies)?wb.companies:[]).map(c=>{
@@ -1338,6 +1848,12 @@ class Component extends DCLogic {
       gapText:Array.isArray(g&&g.evidence_gaps)?g.evidence_gaps.join('；'):this._evidenceText(g&&g.evidence_gaps)
     }));
     const limitations=(Array.isArray(wb.limitations)?wb.limitations:[]).map(x=>({text:this._evidenceText(x)}));
+    const companyNames=companies.map(c=>c.name).filter(Boolean);
+    const scopeBullets=[
+      {text:'当前覆盖'+joinNames(companyNames)+'。'},
+      {text:'当前包含人工核验的 NSCLC 证据资料与已确认关联关系。'},
+      {text:'所有结论仅反映当前样本，不提供个体医疗建议或投资建议。'}
+    ];
     return {
       today_loading:this.state.evidenceWorkbenchLoading,
       today_hasError:!!this.state.evidenceWorkbenchError,
@@ -1345,7 +1861,14 @@ class Component extends DCLogic {
       today_hasData:!!(wb&&wb.summary),
       today_empty:this.state.evidenceWorkbenchLoaded&&!this.state.evidenceWorkbenchLoading&&!this.state.evidenceWorkbenchError&&!wb.summary,
       today_metrics,
+      today_qualityMetrics,
       today_quickLinks,
+      today_openAgent:()=>this.openGroundedQa(),
+      today_openEvidence:()=>this.setState({page:'evidence',evidenceTab:'sources',navOpen:false},()=>this.loadEvidencePage()),
+      today_detailsOpen:this.state.workbenchDetailsOpen,
+      today_toggleDetails:()=>this.setState({workbenchDetailsOpen:!this.state.workbenchDetailsOpen}),
+      today_detailsToggleText:this.state.workbenchDetailsOpen?'收起详情':'展开详情',
+      today_scopeBullets:scopeBullets,
       today_companies:companies,
       today_hasCompanies:companies.length>0,
       today_sourceTypes:dist(wb.source_type_distribution),
@@ -1356,6 +1879,7 @@ class Component extends DCLogic {
       today_limitations:limitations,
       today_scopeWarning:'当前结果仅反映已收录并核验的NSCLC证据样本，不代表企业整体研发实力。',
       today_dataVersion:this._evidenceText(metadata.data_version),
+      today_dataVersionShort:versionShort(metadata.data_version),
       today_latestVerifiedAt:this._evidenceText(metadata.latest_verified_at),
       today_generatedAt:this._evidenceText(metadata.generated_at),
       today_dataScope:this._evidenceText(metadata.data_scope_label||metadata.data_scope)

@@ -38,3 +38,6 @@ webapp/static/_legacy_native/
 .env
 .env.*
 !.env.example
+
+# Generated evaluation reports
+evaluation_outputs/

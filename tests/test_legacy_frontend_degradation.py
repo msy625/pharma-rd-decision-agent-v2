@@ -79,7 +79,7 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
 
     def test_06_competition_navigation_and_remaining_legacy_api_code_are_retained(self):
         nav = self.component[self.component.index("  navDef(){") : self.component.index("  navItem(it){")]
-        for text in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "循证问答"]:
+        for text in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "智能决策 Agent"]:
             self.assertIn(text, nav)
         for text in ["智能问答", "自动化研报", "白盒溯源", "数据库浏览", "高级分析"]:
             self.assertNotIn(text, nav)
@@ -125,10 +125,10 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
             self.assertIn(expected, self.runtime)
 
     def test_11_evidence_three_tabs_and_top_level_grounded_qa_exist(self):
-        for label in ["来源检索", "证据链", "企业对比", "进入循证问答"]:
+        for label in ["来源检索", "证据链", "企业对比", "进入智能决策 Agent"]:
             self.assertIn(label, self.template)
             self.assertIn(label, self.index)
-        self.assertIn("label:'循证问答'", self.component)
+        self.assertIn("label:'智能决策 Agent'", self.component)
 
     def test_12_frontend_build_artifact_matches_source(self):
         expected = self.template.replace("/*__COMPONENT__*/", self.component)

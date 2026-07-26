@@ -33,7 +33,9 @@ class GroundedQAServiceTest(unittest.TestCase):
             "B015和B016有什么区别？": "regulatory_status",
             "RATIONALE-315形成了怎样的证据链？": "evidence_chain",
             "恒瑞与百济当前证据样本有什么差异？": "company_comparison",
+            "阿斯利康与百济神州当前证据样本有什么差异？": "company_comparison",
             "当前数据还存在哪些缺口？": "evidence_gap",
+            "RATIONALE-315当前还存在哪些证据缺口？": "evidence_gap",
             "SHR-1210有哪些相关资料？": "source_search",
         }
         for question, expected in cases.items():
@@ -165,6 +167,42 @@ class GroundedQAServiceTest(unittest.TestCase):
         self.assertIn("当前收录样本中包含中期分析论文，尚未收录最终分析论文", response["answer"])
         self.assertNotIn("该证据链仅包含中期分析", response["answer"])
 
+    def test_quoted_laura_source_search_returns_exact_sources_without_chain(self):
+        response = self.service.answer_question("研究名称“ LAURA ”有哪些来源？")
+        self.assertEqual(response["question_type"], "source_search")
+        self.assertEqual(self.source_ids(response), ["A005", "A006"])
+        self.assertEqual(response["trace"]["retrieved_source_ids"], ["A005", "A006"])
+        self.assertEqual(response["trace"]["retrieved_chain_ids"], [])
+
+    def test_osimertinib_alias_source_search_returns_all_tagrisso_sources(self):
+        expected = {f"A{i:03d}" for i in range(1, 9)}
+        questions = [
+            "TAGRISSO有哪些已核验来源？",
+            "泰瑞沙有哪些已核验来源？",
+            "奥希替尼有哪些已核验来源？",
+            "Osimertinib有哪些已核验来源？",
+            "AZD9291有哪些已核验来源？",
+        ]
+        for question in questions:
+            with self.subTest(question=question):
+                response = self.service.answer_question(question)
+                self.assertEqual(response["question_type"], "source_search")
+                self.assertEqual(set(response["trace"]["retrieved_source_ids"]), expected)
+                self.assertEqual(set(self.source_ids(response)), expected)
+
+    def test_astrazeneca_study_names_do_not_cross_match(self):
+        cases = {
+            "FLAURA有哪些来源？": ["A001", "A002"],
+            "研究名称' LAURA '有哪些来源？": ["A005", "A006"],
+            "FLAURA2有哪些来源？": ["A007", "A008"],
+            "ADAURA有哪些来源？": ["A003", "A004"],
+        }
+        for question, expected in cases.items():
+            with self.subTest(question=question):
+                response = self.service.answer_question(question)
+                self.assertEqual(response["question_type"], "source_search")
+                self.assertEqual(self.source_ids(response), expected)
+
     def test_nct04619433_is_terminated(self):
         response = self.service.answer_question("NCT04619433当前是什么状态？")
         self.assertIn("Terminated", response["answer"])
@@ -241,11 +279,47 @@ class GroundedQAServiceTest(unittest.TestCase):
         self.assertIn("当前收录并核验的NSCLC证据样本", response["answer"])
         self.assertIn("当前收录并核验的NSCLC证据样本", " ".join(response["limitations"]))
 
+    def test_company_comparison_extracts_supported_company_pairs(self):
+        cases = [
+            ("恒瑞与百济当前证据样本有什么差异？", ["恒瑞医药", "百济神州/BeOne Medicines"]),
+            ("恒瑞医药与阿斯利康当前证据样本有什么差异？", ["恒瑞医药", "阿斯利康/AstraZeneca"]),
+            ("阿斯利康与百济神州当前证据样本有什么差异？", ["阿斯利康/AstraZeneca", "百济神州/BeOne Medicines"]),
+        ]
+        for question, display_names in cases:
+            with self.subTest(question=question):
+                response = self.service.answer_question(question)
+                self.assertEqual(response["question_type"], "company_comparison")
+                for display_name in display_names:
+                    self.assertIn(display_name, response["answer"])
+
+    def test_astrazeneca_beone_comparison_returns_full_current_sample(self):
+        response = self.service.answer_question("阿斯利康与百济神州当前证据样本有什么差异？")
+        expected = {f"A{i:03d}" for i in range(1, 9)} | {f"B{i:03d}" for i in range(1, 17)}
+        self.assertEqual(response["question_type"], "company_comparison")
+        self.assertEqual(set(response["trace"]["retrieved_source_ids"]), expected)
+        self.assertIn("阿斯利康/AstraZeneca：来源 8 条", response["answer"])
+        self.assertIn("试验链 4 条，监管链 0 条", response["answer"])
+        self.assertIn("百济神州/BeOne Medicines：来源 16 条", response["answer"])
+        self.assertIn("试验链 4 条，监管链 1 条", response["answer"])
+        self.assertIn("不代表企业整体研发实力", " ".join([response["answer"], *response["limitations"]]))
+
     def test_evidence_gap_returns_expected_unresolved_sources(self):
         response = self.service.answer_question("当前数据还存在哪些缺口？")
         ids = set(self.source_ids(response))
         for source_id in ["H008", "H009", "H010", "H011", "H012", "H014"]:
             self.assertIn(source_id, ids)
+
+    def test_rationale_315_gap_uses_chain_sources_and_related_regulatory_context(self):
+        response = self.service.answer_question("RATIONALE-315当前还存在哪些证据缺口？")
+        self.assertEqual(response["question_type"], "evidence_gap")
+        self.assertEqual(response["trace"]["retrieved_source_ids"], ["B011", "B012", "B013", "B016"])
+        self.assertEqual(response["trace"]["retrieved_chain_ids"], ["trial:NCT04379635"])
+        self.assertEqual(self.source_ids(response), ["B011", "B012", "B013", "B016"])
+        self.assertIn("B011、B012、B013", response["answer"])
+        self.assertIn("关联监管背景：B016", response["answer"])
+        self.assertIn("不计入该试验证据数量", response["answer"])
+        self.assertIn("尚未收录最终分析论文", response["answer"])
+        self.assertIn("当前收录样本", " ".join([response["answer"], *response["limitations"]]))
 
     def test_shr_1210_alias_query(self):
         response = self.service.answer_question("SHR-1210有哪些相关资料？")

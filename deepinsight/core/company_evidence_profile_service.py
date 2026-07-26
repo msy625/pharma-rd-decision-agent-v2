@@ -182,6 +182,7 @@ class CompanyEvidenceProfileService:
         rows = self._company_rows(subject)
         return {
             "company": subject,
+            "source_ids": [row["source_id"] for row in rows if row.get("source_id")],
             "summary": self.company_summary(company_name),
             "trial_chains": self.trial_chains(company_name),
             "regulatory_chains": self.regulatory_chains(company_name),
@@ -258,6 +259,7 @@ class CompanyEvidenceProfileService:
     def _empty_profile(self, company_name: str) -> dict[str, object]:
         return {
             "company": {"canonical_name": "", "display_name": str(company_name or "").strip(), "aliases": []},
+            "source_ids": [],
             "summary": self._empty_summary(),
             "trial_chains": [],
             "regulatory_chains": [],

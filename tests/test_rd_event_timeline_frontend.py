@@ -87,7 +87,7 @@ class RDEventTimelineFrontendTest(unittest.TestCase):
         self.assertIn("版本演进", self.view)
 
     def test_08_source_chain_and_grounded_qa_entries_are_wired(self):
-        for label in ["查看来源", "查看证据链", "进入循证问答"]:
+        for label in ["查看来源", "查看证据链", "进入智能决策 Agent"]:
             self.assertIn(label, self.view)
         self.assertIn("encodeURIComponent(cid)", self.component)
         self.assertIn("page:'evidence',evidenceTab:'sources'", self.component)
