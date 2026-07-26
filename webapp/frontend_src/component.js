@@ -1085,12 +1085,12 @@ class Component extends DCLogic {
   }
   _agentModeLabel(mode){
     const raw=String(mode||'').trim();
-    const labels={local:'本地稳定模式',auto:'自动模式',llm:'大模型模式'};
+    const labels={local:'本地稳定模式',auto:'自动模式',llm:'智能增强模式'};
     return labels[raw]?(labels[raw]+'（'+raw+'）'):(raw||'无');
   }
   _agentModeCleanLabel(mode){
     const raw=String(mode||'').trim();
-    const labels={local:'本地稳定模式',auto:'智能增强模式',llm:'大模型模式',safety_block:'安全边界拦截'};
+    const labels={local:'本地稳定模式',auto:'智能增强模式',llm:'智能增强模式',safety_block:'安全边界拦截'};
     return labels[raw]||raw||'无';
   }
   _agentIntentLabel(intent){
@@ -1141,7 +1141,7 @@ class Component extends DCLogic {
     if(cap.name) fields.push({label:'名称', value:this._agentValueText(cap.name)});
     if('local_mode_available' in cap) fields.push({label:'本地模式', value:cap.local_mode_available?'可用':'不可用'});
     if('auto_mode_available' in cap) fields.push({label:'自动模式', value:cap.auto_mode_available?'可用':'不可用'});
-    if('llm_mode_available' in cap) fields.push({label:'大模型模式', value:cap.llm_mode_available?'可用':'不可用'});
+    if('llm_mode_available' in cap) fields.push({label:'智能分析模式', value:cap.llm_mode_available?'可用':'不可用'});
     if(cap.data_version) fields.push({label:'数据版本', value:this._agentValueText(cap.data_version)});
     if(cap.data_scope) fields.push({label:'数据范围', value:this._agentDataScopeLabel(cap.data_scope)});
     if(cap.safety_scope) fields.push({label:'适用边界', value:this._agentValueText(cap.safety_scope)});
@@ -1790,16 +1790,28 @@ class Component extends DCLogic {
       const list=(names||[]).filter(Boolean);
       return list.length?list.join('、'):'已收录企业';
     };
+    const pick=(obj,keys)=>{
+      obj=obj||{};
+      for(let i=0;i<keys.length;i++){
+        const key=keys[i];
+        if(Object.prototype.hasOwnProperty.call(obj,key) && obj[key]!==undefined && obj[key]!==null && obj[key]!=='') return obj[key];
+      }
+      return '';
+    };
     const metric=(label,value,hint,icon)=>({label,value:this._evidenceText(value),hint,iconPaths:this._paths(icon)});
+    const totalSourceCount=pick(summary,['source_count','total_sources','evidence_source_count']);
+    const verifiedSourceCount=pick(summary,['verified_source_count','source_count']);
+    const generatedAt=pick(metadata,['generated_at','response_time'])||pick(wb,['generated_at','response_time']);
     const today_metrics=[
-      metric('已核验来源',summary.verified_source_count||summary.source_count,'当前样本中已完成人工核验的证据资料',['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
-      metric('覆盖企业',summary.company_count,'当前证据样本覆盖的企业数量',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
+      metric('总来源',totalSourceCount,'当前样本中已收录的证据资料总数',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5']),
+      metric('已核验来源',verifiedSourceCount,'当前样本中已完成人工核验的证据资料',['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
+      metric('企业主体',summary.company_count,'当前证据样本覆盖的企业数量',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
       metric('试验级证据链',summary.trial_chain_count,'已建立关联的试验登记、论文与公司资料链',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5']),
       metric('药物级监管链',summary.regulatory_chain_count,'独立统计的药物监管事件证据链',['M9 12l2 2 4-4','M7 4h10l2 4v12H5V8z'])
     ];
     const today_qualityMetrics=[
-      metric('最新版本资料',summary.latest_count,'当前样本中标记为最新版本的资料',['M12 8v4l3 2','M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z']),
-      metric('历史版本资料',summary.historical_count,'当前样本中保留的历史版本资料',['M3 12a9 9 0 1 0 3-6.7','M3 3v6h6']),
+      metric('最新资料',summary.latest_count,'当前样本中标记为最新版本的资料',['M12 8v4l3 2','M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z']),
+      metric('历史版本',summary.historical_count,'当前样本中保留的历史版本资料',['M3 12a9 9 0 1 0 3-6.7','M3 3v6h6']),
       metric('独立资料',summary.independent_count,'尚未形成明确版本替代关系的核验资料',['M8 7h8M8 12h8M8 17h5','M5 3h14v18H5z']),
       metric('待确认关系',summary.unresolved_link_count,'当前样本中尚缺少明确一对一关联的资料',['M12 9v4M12 17h.01','M10.3 3.9 1.8 7.2a2 2 0 0 0 1.9 2.5h14a2 2 0 0 0 1.9-2.5l-7.2-7.2a2 2 0 0 0-2.8 0z'])
     ];
@@ -1881,7 +1893,7 @@ class Component extends DCLogic {
       today_dataVersion:this._evidenceText(metadata.data_version),
       today_dataVersionShort:versionShort(metadata.data_version),
       today_latestVerifiedAt:this._evidenceText(metadata.latest_verified_at),
-      today_generatedAt:this._evidenceText(metadata.generated_at),
+      today_generatedAt:this._evidenceText(generatedAt),
       today_dataScope:this._evidenceText(metadata.data_scope_label||metadata.data_scope)
     };
   }
@@ -1966,7 +1978,7 @@ class Component extends DCLogic {
     const finish=(resp)=>{ const m2=this.getMsgs().slice(); m2[ai]={role:'ai',loading:false,resp}; this.setState({chatMsgs:m2,chatLoading:false}, ()=>this._saveConvs()); };
     this._apiPost('/api/chat',{question:q, company_name:s.company||null, report_year:s.year||null, top_k:s.topK||5, history, model:s.chatModel||'flash'})
       .then(d=>finish(this._liveChatResp(d)))
-      .catch((e)=>{ finish({route:'连接失败', blocks:[{t:'p', text:'⚠️ 在线问答暂时不可用：服务器调用大模型失败（'+String((e&&e.message)||e).slice(0,90)+'）。常见原因是服务器无法连接 api.deepseek.com（DNS/网络）。修复后重试即可。'}], sql:'', cols:[], rows:[], chunks:[]}); });
+      .catch((e)=>{ finish({route:'连接失败', blocks:[{t:'p', text:'⚠️ 在线问答暂时不可用：服务器智能分析服务调用失败（'+String((e&&e.message)||e).slice(0,90)+'）。常见原因是服务器无法连接 api.deepseek.com（DNS/网络）。修复后重试即可。'}], sql:'', cols:[], rows:[], chunks:[]}); });
   }
   send(){ const q=(this.state.chatInput||'').trim(); if(q&&!this.state.chatLoading) this.ask(q); }
   answerFor(q){
