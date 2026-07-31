@@ -41,3 +41,6 @@ webapp/static/_legacy_native/
 
 # Generated evaluation reports
 evaluation_outputs/
+
+# Local competition submission drafts (review before external packaging)
+competition_submission/
