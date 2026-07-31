@@ -33,6 +33,7 @@ from evaluation.validators import (
 DEFAULT_MANIFEST_PATH = PROJECT_ROOT / "evaluation" / "cases" / "pilot_manifest.json"
 DEFAULT_CASES_PATH = PROJECT_ROOT / "evaluation" / "cases" / "pilot_cases.jsonl"
 DEFAULT_REVIEWS_PATH = PROJECT_ROOT / "evaluation" / "reviews" / "pilot_manual_reviews.json"
+RELEASE_METADATA_PATH = PROJECT_ROOT / "RELEASE_METADATA.json"
 
 
 def run_benchmark(
@@ -166,11 +167,34 @@ def _git_info(repo_root: Path) -> dict[str, Any]:
         )
         return completed.stdout.strip()
 
-    return {
-        "sha": run("rev-parse", "HEAD"),
-        "branch": run("branch", "--show-current"),
-        "dirty": bool(run("status", "--porcelain")),
-    }
+    try:
+        return {
+            "sha": run("rev-parse", "HEAD"),
+            "branch": run("branch", "--show-current"),
+            "dirty": bool(run("status", "--porcelain")),
+            "source": "git",
+        }
+    except (OSError, subprocess.CalledProcessError) as exc:
+        metadata_path = repo_root / RELEASE_METADATA_PATH.name
+        try:
+            payload = json.loads(metadata_path.read_text(encoding="utf-8"))
+            source_commit = str(payload.get("source_commit") or "").strip()
+            if source_commit:
+                return {
+                    "sha": source_commit,
+                    "branch": "release-metadata",
+                    "dirty": False,
+                    "source": "release_metadata",
+                }
+        except (OSError, json.JSONDecodeError, TypeError):
+            pass
+        return {
+            "sha": "unknown",
+            "branch": "unknown",
+            "dirty": False,
+            "source": "unknown",
+            "error": f"Git和{metadata_path.name}均不可用：{type(exc).__name__}",
+        }
 
 
 def _utc_now() -> str:

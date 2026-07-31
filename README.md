@@ -146,6 +146,29 @@ PORT=8000 make web-deploy
 
 ## 测试与校验
 
+比赛精简源码包可安装独立测试依赖并运行离线核心验证入口：
+
+```bash
+python -m pip install -r requirements-test.txt
+python scripts/validate_competition_package.py
+```
+
+该入口使用 `tests/competition_core_tests.txt` 中的显式白名单，覆盖当前比赛数据、核心 API、local Agent、静态资源、部署配置和离线评测；不读取 `.env`，不调用 DeepSeek，也不要求源码包保留 `.git`。
+
+仓库只保存 `RELEASE_METADATA.template.json`。正式创建白名单暂存目录时，必须在已提交且工作区干净的 Git 仓库中执行：
+
+```bash
+python scripts/build_competition_staging.py --output-dir /tmp/pharma-rd-source-stage
+```
+
+脚本会读取当前 `git rev-parse HEAD`，在暂存目录生成最终 `RELEASE_METADATA.json`；模板不会进入暂存包。若 Git 不可用或工作区不干净，正式模式会停止。仅在当前改动尚未提交的预打包验证阶段，可显式传入待验证 SHA：
+
+```bash
+python scripts/build_competition_staging.py \
+  --output-dir /tmp/pharma-rd-source-stage-preview \
+  --source-commit 3dcb2ae3a5fdd4ad25bc82013164f8d5911bcbd0
+```
+
 不需要启动服务即可执行当前数据完整性和相关轻量回归检查：
 
 ```bash

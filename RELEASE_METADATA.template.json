@@ -1,0 +1,11 @@
+{
+  "project": "药研制策",
+  "version": "competition-submission-v1.0",
+  "source_commit": "__GENERATED_AT_PACKAGING__",
+  "data_version": "sha256:330ac862f52db200",
+  "company_count": 3,
+  "source_count": 39,
+  "trial_chain_count": 14,
+  "regulatory_chain_count": 1,
+  "pending_relation_count": 7
+}

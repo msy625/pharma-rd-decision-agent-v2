@@ -5,11 +5,54 @@ from pathlib import Path
 from unittest.mock import patch
 
 from evaluation.report import OUTPUT_FILENAMES
-from evaluation.runner import DEFAULT_CASES_PATH, DEFAULT_MANIFEST_PATH, run_benchmark
+from evaluation.runner import DEFAULT_CASES_PATH, DEFAULT_MANIFEST_PATH, _git_info, run_benchmark
 from evaluation.validators import DataVersionMismatchError, EvaluationValidationError, PROJECT_ROOT
 
 
+def subprocess_result(stdout: str):
+    from subprocess import CompletedProcess
+
+    return CompletedProcess(args=["git"], returncode=0, stdout=stdout, stderr="")
+
+
 class EvaluationRunnerTest(unittest.TestCase):
+    def test_git_info_prefers_available_git(self):
+        completed = [
+            subprocess_result("a" * 40),
+            subprocess_result("main"),
+            subprocess_result(""),
+        ]
+        with patch("evaluation.runner.subprocess.run", side_effect=completed):
+            result = _git_info(Path("/temporary/repository"))
+        self.assertEqual(result["sha"], "a" * 40)
+        self.assertEqual(result["branch"], "main")
+        self.assertFalse(result["dirty"])
+        self.assertEqual(result["source"], "git")
+
+    def test_git_info_uses_release_metadata_when_git_is_unavailable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "RELEASE_METADATA.json").write_text(
+                json.dumps({"source_commit": "b" * 40}),
+                encoding="utf-8",
+            )
+            with patch("evaluation.runner.subprocess.run", side_effect=FileNotFoundError("git")):
+                result = _git_info(root)
+        self.assertEqual(result["sha"], "b" * 40)
+        self.assertEqual(result["branch"], "release-metadata")
+        self.assertFalse(result["dirty"])
+        self.assertEqual(result["source"], "release_metadata")
+
+    def test_git_info_returns_unknown_when_git_and_metadata_are_unavailable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with patch("evaluation.runner.subprocess.run", side_effect=FileNotFoundError("git")):
+                result = _git_info(Path(tmp))
+        self.assertEqual(result["sha"], "unknown")
+        self.assertEqual(result["branch"], "unknown")
+        self.assertFalse(result["dirty"])
+        self.assertEqual(result["source"], "unknown")
+        self.assertIn("RELEASE_METADATA.json", result["error"])
+
     def test_runner_writes_all_outputs_to_caller_directory(self):
         with tempfile.TemporaryDirectory() as tmp:
             output_dir = Path(tmp) / "pilot results with spaces"

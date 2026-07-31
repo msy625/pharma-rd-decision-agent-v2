@@ -1,0 +1,4 @@
+-r requirements-deploy.txt
+
+# Competition package test runner; verified in the clean validation environment.
+pytest==9.1.1
