@@ -19,7 +19,7 @@ class Component extends DCLogic {
     companyComparison:null, metricRules:[], companyComparisonLoading:false, metricRulesLoading:false,
     companyComparisonError:'', companyComparisonLoaded:false, metricRulesOpen:false,
     agentCapabilities:null, agentCapabilitiesLoading:false, agentCapabilitiesLoaded:false, agentCapabilitiesError:'',
-    agentQuestion:'', agentLoading:false, agentError:'', agentResult:null, agentSeq:0,
+    agentQuestion:'', agentGenerationMode:'auto', agentLoading:false, agentError:'', agentResult:null, agentSeq:0,
     agentCapabilitiesOpen:false, agentTraceOpen:false, agentAllCitationsOpen:false,
     agentProcessOpen:false, agentRunDetailsOpen:false,
     groundedCapabilities:null, groundedCapabilitiesLoading:false, groundedCapabilitiesLoaded:false,
@@ -664,6 +664,10 @@ class Component extends DCLogic {
   setDecisionAgentQuestion(question){
     this.setState({agentQuestion:String(question||'').slice(0,1000),agentError:''});
   }
+  setDecisionAgentMode(mode){
+    const value=String(mode||'').toLowerCase()==='local'?'local':'auto';
+    this.setState({agentGenerationMode:value,agentError:''});
+  }
   runDecisionAgentExample(question){
     const q=String(question||'').slice(0,1000);
     this.submitDecisionAgent(q);
@@ -703,7 +707,7 @@ class Component extends DCLogic {
     fetch('/api/evidence/decision-agent', {
       method:'POST',
       headers:{'Content-Type':'application/json','accept':'application/json'},
-      body:JSON.stringify({question:question, generation_mode:'local'}),
+      body:JSON.stringify({question:question, generation_mode:this.state.agentGenerationMode||'auto'}),
       signal:controller?controller.signal:undefined
     }).then(r=>r.json().then(d=>({ok:r.ok,status:r.status,data:d})).catch(()=>({ok:r.ok,status:r.status,data:null}))).then(({ok,status,data})=>{
       if(seq!==this._agentSeq) return;
@@ -1680,6 +1684,13 @@ class Component extends DCLogic {
       agent_question:s.agentQuestion,
       agent_questionCount:agentQuestion.length,
       agent_onQuestion:(e)=>this.setDecisionAgentQuestion(e.target.value),
+      agent_mode:s.agentGenerationMode,
+      agent_autoSelected:s.agentGenerationMode!=='local',
+      agent_localSelected:s.agentGenerationMode==='local',
+      agent_autoModeStyle:'height:34px;border-radius:9px;border:1px solid '+(s.agentGenerationMode!=='local'?'var(--brand-600)':'var(--border)')+';background:'+(s.agentGenerationMode!=='local'?'var(--brand-50)':'var(--bg-elev)')+';color:'+(s.agentGenerationMode!=='local'?'var(--brand-600)':'var(--text-2)')+';font-size:12px;font-weight:850;padding:0 12px',
+      agent_localModeStyle:'height:34px;border-radius:9px;border:1px solid '+(s.agentGenerationMode==='local'?'var(--brand-600)':'var(--border)')+';background:'+(s.agentGenerationMode==='local'?'var(--brand-50)':'var(--bg-elev)')+';color:'+(s.agentGenerationMode==='local'?'var(--brand-600)':'var(--text-2)')+';font-size:12px;font-weight:850;padding:0 12px',
+      agent_chooseAuto:()=>this.setDecisionAgentMode('auto'),
+      agent_chooseLocal:()=>this.setDecisionAgentMode('local'),
       agent_onKey:(e)=>{ if(e.key==='Enter'&&e.ctrlKey) this.submitDecisionAgent(); },
       agent_submit:()=>this.submitDecisionAgent(),
       agent_loading:s.agentLoading,
@@ -1734,7 +1745,7 @@ class Component extends DCLogic {
       agent_hasWarnings:agentWarnings.length>0,
       agent_chainLinks:agentChainLinks,
       agent_hasChainLinks:agentChainLinks.length>0,
-      agent_localNotice:'现场稳定模式 · 基于本地已核验证据运行',
+      agent_localNotice:s.agentGenerationMode==='local'?'本地模式 · 始终不调用模型':'自动模式 · DeepSeek不可用时回退本地分析',
       agent_scopeItems:[
         {text:'当前仅覆盖已收录并核验的 NSCLC 证据样本'},
         {text:'不代表企业完整研发实力'},

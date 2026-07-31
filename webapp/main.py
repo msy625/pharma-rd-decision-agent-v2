@@ -2,6 +2,7 @@ from collections import defaultdict
 import importlib.util
 from pathlib import Path
 import sqlite3
+from time import perf_counter
 from typing import Annotated, Any
 
 from fastapi import FastAPI, HTTPException, Query, Request
@@ -227,7 +228,7 @@ class GroundedQARequest(BaseModel):
 
 class RDDecisionAgentRequest(BaseModel):
     question: str | None = None
-    generation_mode: str = "local"
+    generation_mode: str = "auto"
 
 
 class CompanyNotFoundError(ValueError):
@@ -2253,25 +2254,170 @@ def evidence_grounded_qa_capabilities() -> dict[str, Any]:
 @app.get("/api/evidence/decision-agent/capabilities")
 def evidence_decision_agent_capabilities() -> dict[str, Any]:
     try:
-        return _rd_decision_agent_service().capabilities()
+        payload = _rd_decision_agent_service().capabilities()
+        llm_settings = grounded_llm_settings()
+        usage_config = grounded_qa_usage_config_from_env()
+        llm_available = bool(usage_config.llm_enabled and llm_settings["configured"])
+        payload.update(
+            {
+                "llm_mode_available": llm_available,
+                "llm_enabled": usage_config.llm_enabled,
+                "default_generation_mode": "auto",
+                "requires_api_key_for_llm": True,
+                "model_name": llm_settings["model"],
+            }
+        )
+        return payload
     except Exception as exc:
         raise _handle_decision_agent_error(exc) from exc
 
 
+def _decision_agent_local_fallback(
+    result: dict[str, Any],
+    reason: str,
+    *,
+    llm_attempted: bool = False,
+) -> dict[str, Any]:
+    result["generation_mode"] = "auto"
+    result["used_llm"] = False
+    result.setdefault("warnings", []).append(reason)
+    result.setdefault("limitations", []).append(reason)
+    metadata = result.setdefault("execution_metadata", {})
+    metadata.update(
+        {
+            "generation_mode_requested": "auto",
+            "generation_mode_used": "local",
+            "used_llm": False,
+            "llm_attempted": llm_attempted,
+            "fallback_used": True,
+            "fallback_reason": reason,
+            "model_name": "local-deterministic-agent",
+        }
+    )
+    return result
+
+
+def _decision_agent_auto_result(
+    service: RDDecisionAgentService,
+    result: dict[str, Any],
+    question: str,
+    request: Request,
+) -> dict[str, Any]:
+    if result.get("refused"):
+        return result
+    if not result.get("source_ids"):
+        return _decision_agent_local_fallback(result, "当前未检索到可用本地证据，未调用模型。")
+
+    usage_config = grounded_qa_usage_config_from_env()
+    if not usage_config.llm_enabled:
+        return _decision_agent_local_fallback(result, "DeepSeek智能生成当前未启用，已使用本地结构化分析。")
+    llm_settings = grounded_llm_settings()
+    if not llm_settings["configured"]:
+        return _decision_agent_local_fallback(result, "DeepSeek API Key 未配置，已使用本地结构化分析。")
+
+    guard = _grounded_qa_usage_guard()
+    decision = guard.acquire(_grounded_qa_client_id(request))
+    if not decision.allowed:
+        reasons = {
+            "per_client_limit": "当前客户端的DeepSeek调用已达到临时上限，已使用本地结构化分析。",
+            "global_limit": "DeepSeek调用已达到临时全局上限，已使用本地结构化分析。",
+            "concurrency_limit": "DeepSeek并发请求较多，已使用本地结构化分析。",
+        }
+        return _decision_agent_local_fallback(
+            result,
+            reasons.get(decision.reason, "DeepSeek调用当前受限，已使用本地结构化分析。"),
+        )
+
+    try:
+        llm_started = perf_counter()
+        grounded = service.grounded_qa_service.answer_question(
+            question,
+            model_name=llm_settings["model"],
+            use_configured_llm=True,
+        )
+        llm_duration_ms = round((perf_counter() - llm_started) * 1000, 3)
+    except Exception:
+        return _decision_agent_local_fallback(
+            result,
+            "模型输出或调用不可用，已使用本地结构化分析。",
+            llm_attempted=True,
+        )
+    finally:
+        guard.release(decision)
+
+    trace = grounded.get("trace") or {}
+    if not trace.get("used_llm"):
+        fallback_reason = next(
+            (
+                str(item)
+                for item in reversed(grounded.get("limitations") or [])
+                if "回退" in str(item) or "模型" in str(item)
+            ),
+            "模型输出或调用不可用，已使用本地结构化分析。",
+        )
+        return _decision_agent_local_fallback(
+            result,
+            fallback_reason,
+            llm_attempted=bool(trace.get("llm_attempted", True)),
+        )
+
+    result["answer"] = grounded.get("answer") or result.get("answer", "")
+    result["generation_mode"] = "auto"
+    result["used_llm"] = True
+    result["limitations"] = list(dict.fromkeys([*(result.get("limitations") or []), *(grounded.get("limitations") or [])]))
+    model_source_ids = [
+        str(item.get("source_id"))
+        for item in grounded.get("citations") or []
+        if item.get("source_id")
+    ]
+    result.setdefault("steps", []).append(
+        {
+            "step_id": f"S{len(result.get('steps') or []) + 1}",
+            "name": "基于已检索证据组织答案",
+            "tool": "GroundedQAService.answer_question(auto)",
+            "status": "completed",
+            "reason": "仅在本地证据检索完成后调用DeepSeek组织答案并校验引用",
+            "input_summary": f"已检索证据{len(result.get('source_ids') or [])}条",
+            "result_summary": f"模型答案通过引用校验，引用{len(model_source_ids)}条",
+            "source_ids": model_source_ids,
+            "duration_ms": llm_duration_ms,
+        }
+    )
+    metadata = result.setdefault("execution_metadata", {})
+    total_latency_ms = round(float(result.get("latency_ms") or 0.0) + llm_duration_ms, 3)
+    result["latency_ms"] = total_latency_ms
+    metadata.update(
+        {
+            "generation_mode_requested": "auto",
+            "generation_mode_used": "llm",
+            "used_llm": True,
+            "llm_attempted": True,
+            "fallback_used": False,
+            "fallback_reason": "",
+            "model_name": trace.get("model_name") or llm_settings["model"],
+            "latency_ms": total_latency_ms,
+        }
+    )
+    return result
+
+
 @app.post("/api/evidence/decision-agent", response_model=None)
-def evidence_decision_agent(payload: RDDecisionAgentRequest) -> dict[str, Any]:
+def evidence_decision_agent(payload: RDDecisionAgentRequest, request: Request) -> dict[str, Any]:
     question = (payload.question or "").strip()
     if not question:
         raise HTTPException(status_code=400, detail="question 不能为空。")
     if len(question) > 1000:
         raise HTTPException(status_code=400, detail="question 不能超过 1000 个字符。")
-    generation_mode = (payload.generation_mode or "local").strip().lower()
+    generation_mode = (payload.generation_mode or "auto").strip().lower()
     if generation_mode not in {"local", "auto"}:
         raise HTTPException(status_code=400, detail="generation_mode 只允许 local 或 auto。")
     try:
-        result = _rd_decision_agent_service().run(question, generation_mode=generation_mode)
+        service = _rd_decision_agent_service()
+        result = service.run(question, generation_mode=generation_mode)
         if result.get("error"):
             return result
+        if generation_mode == "auto":
+            result = _decision_agent_auto_result(service, result, question, request)
         return result
     except Exception as exc:
         raise _handle_decision_agent_error(exc) from exc

@@ -39,9 +39,10 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
         self.assertNotIn("submitDecisionAgent", load_method)
         self.assertNotIn("fetch('/api/evidence/decision-agent'", load_method)
 
-    def test_03_post_uses_decision_agent_api_and_local_mode(self):
+    def test_03_post_uses_decision_agent_api_and_selected_mode(self):
         self.assertIn("fetch('/api/evidence/decision-agent'", self.evidence_component)
-        self.assertIn("JSON.stringify({question:question, generation_mode:'local'})", self.evidence_component)
+        self.assertIn("agentGenerationMode:'auto'", self.component)
+        self.assertIn("generation_mode:this.state.agentGenerationMode||'auto'", self.evidence_component)
         self.assertNotIn("generation_mode:this.state.groundedMode", self.evidence_component)
         self.assertNotIn("/api/evidence/grounded-qa/capabilities", self.evidence_component)
         self.assertNotIn("fetch('/api/evidence/grounded-qa'", self.evidence_component)
@@ -204,13 +205,13 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             self.evidence_component,
         )
 
-    def test_16_no_deepseek_auto_local_toggle_in_agent_main_ui(self):
-        for forbidden in [
-            "gqa_chooseAuto", "gqa_chooseLocal", "智能生成（auto）",
-            "本地证据摘要（local）", "DeepSeek暂不可用",
+    def test_16_auto_is_default_and_local_remains_selectable(self):
+        for required in [
+            "data-agent-generation-mode", "智能生成（auto）", "本地证据分析（local）",
+            "agent_chooseAuto", "agent_chooseLocal", "setDecisionAgentMode(mode)",
+            "DeepSeek不可用时回退本地分析", "始终不调用模型",
         ]:
-            self.assertNotIn(forbidden, self.evidence_template)
-        self.assertIn("本地稳定模式", self.evidence_all)
+            self.assertIn(required, self.evidence_all)
 
     def test_17_cross_page_prefill_writes_agent_question_without_auto_run(self):
         open_method = self.component[

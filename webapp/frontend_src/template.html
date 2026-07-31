@@ -4992,6 +4992,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                   <div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:16px;font-weight:900;color:var(--text)">提出你的研发问题</div><div style="font-size:12.5px;color:var(--text-2);line-height:1.55">支持企业、药物、研究名称、NCT 编号和来源编号相关问题。</div></div>
                   <span style="font-size:12px;color:var(--text-3);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 10px">{{ agent_localNotice }}</span>
                 </div>
+                <div data-agent-generation-mode="" role="group" aria-label="答案生成模式" style="display:flex;gap:8px;flex-wrap:wrap">
+                  <button onclick="{{ agent_chooseAuto }}" aria-pressed="{{ agent_autoSelected }}" style="{{ agent_autoModeStyle }}">智能生成（auto）</button>
+                  <button onclick="{{ agent_chooseLocal }}" aria-pressed="{{ agent_localSelected }}" style="{{ agent_localModeStyle }}">本地证据分析（local）</button>
+                </div>
                 <textarea id="decision-agent-question-input" name="decision_agent_question" aria-label="智能研发决策 Agent 问题" value="{{ agent_question }}" oninput="{{ agent_onQuestion }}" onkeydown="{{ agent_onKey }}" maxlength="1000" rows="4" placeholder="例如：RATIONALE-315 目前缺少哪些关键证据？" style="width:100%;resize:vertical;min-height:104px;border-radius:10px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;line-height:1.65;font-family:var(--font-sans);padding:11px 12px;outline:none"></textarea>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
                   <span style="font-size:12px;color:var(--text-3)">字符数：{{ agent_questionCount }} / 1000</span>
@@ -5003,7 +5007,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <sc-if value="{{ agent_hasError }}"><div data-agent-system-error="" style="font-size:12.5px;color:var(--neg);background:var(--neg-bg);border:1px solid var(--neg);border-radius:10px;padding:9px 11px">{{ agent_error }}</div></sc-if>
               </section>
 
-              <sc-if value="{{ agent_loading }}"><div style="font-size:12.5px;color:var(--brand-600);background:var(--brand-50);border:1px solid var(--brand-300);border-radius:10px;padding:10px 12px">决策 Agent 正在调用本地证据工具，请稍候。</div></sc-if>
+              <sc-if value="{{ agent_loading }}"><div style="font-size:12.5px;color:var(--brand-600);background:var(--brand-50);border:1px solid var(--brand-300);border-radius:10px;padding:10px 12px">决策 Agent 正在检索本地证据并生成分析，请稍候。</div></sc-if>
 
               <sc-if value="{{ agent_hasResult }}">
                 <div data-agent-result="" style="display:flex;flex-direction:column;gap:14px">

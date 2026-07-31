@@ -16,4 +16,4 @@ services:
       - key: DEEPSEEK_MODEL
         value: deepseek-v4-flash
       - key: GROUNDED_QA_LLM_ENABLED
-        value: "false"
+        value: "true"

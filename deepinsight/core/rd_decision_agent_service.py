@@ -178,9 +178,6 @@ class RDDecisionAgentService:
         if mode not in {"local", "auto"}:
             warnings.append("generation_mode只支持local或auto，已回退到local。")
             mode = "local"
-        if mode == "auto":
-            warnings.append("决策Agent MVP未启用模型增强，已使用local确定性编排。")
-
         response = self._base_response(text, mode)
         response["warnings"] = warnings
         if not text:
@@ -288,6 +285,9 @@ class RDDecisionAgentService:
                 "generation_mode_requested": generation_mode,
                 "generation_mode_used": "local",
                 "used_llm": False,
+                "llm_attempted": False,
+                "fallback_used": False,
+                "fallback_reason": "",
                 "model_name": "local-deterministic-agent",
                 "data_version": self.data_version(),
                 "untraced_source_ids": [],

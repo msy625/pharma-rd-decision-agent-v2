@@ -85,10 +85,10 @@ class DeploymentConfigTest(unittest.TestCase):
         self.assertIn("region: singapore", text)
         self.assertIn("autoDeploy: false", text)
 
-    def test_10_render_grounded_qa_llm_is_disabled_by_default(self):
+    def test_10_render_grounded_qa_llm_is_enabled(self):
         text = _render_text()
         self.assertIn("key: GROUNDED_QA_LLM_ENABLED", text)
-        self.assertIn('value: "false"', text)
+        self.assertIn('value: "true"', text)
 
     def test_11_render_yaml_does_not_contain_real_secret(self):
         text = _render_text()

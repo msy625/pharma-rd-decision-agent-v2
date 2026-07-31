@@ -1,8 +1,10 @@
 import asyncio
 import json
+import os
 import sys
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 from urllib.parse import quote, unquote, urlsplit
 
 import anyio.to_thread
@@ -17,6 +19,7 @@ WEBAPP_IMPORT_ERROR = None
 webapp_main = None
 try:
     from webapp import main as webapp_main
+    from deepinsight.core import grounded_qa_llm
 except Exception as exc:  # pragma: no cover
     WEBAPP_IMPORT_ERROR = exc
 
@@ -94,11 +97,49 @@ class _ASGIClient:
         return asyncio.run(_request())
 
 
+class FakeResponse:
+    def __init__(self, content):
+        self.choices = [type("Choice", (), {"message": type("Message", (), {"content": content})()})()]
+
+
+class FakeLLMClient:
+    def __init__(self, *, error=None):
+        self.calls = []
+        self.error = error
+        self.chat = type("Chat", (), {})()
+        self.chat.completions = type("Completions", (), {})()
+        self.chat.completions.create = self.create
+
+    def create(self, **kwargs):
+        self.calls.append(kwargs)
+        if self.error:
+            raise self.error
+        return FakeResponse(
+            json.dumps(
+                {
+                    "answer": "DeepSeek基于B015与B016组织监管状态答案。",
+                    "citations": [
+                        {"source_id": "B015", "support_summary": "EMA当前授权页面"},
+                        {"source_id": "B016", "support_summary": "CHMP积极意见"},
+                    ],
+                    "limitations": ["仅限当前核验证据样本。"],
+                },
+                ensure_ascii=False,
+            )
+        )
+
+
 @unittest.skipIf(webapp_main is None, f"webapp.main import unavailable: {WEBAPP_IMPORT_ERROR!r}")
 class RDDecisionAgentApiTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.client = _ASGIClient(webapp_main.app)
+
+    def setUp(self):
+        webapp_main._GROUNDED_QA_USAGE_GUARD = None
+
+    def tearDown(self):
+        webapp_main._GROUNDED_QA_USAGE_GUARD = None
 
     def post_agent(self, question, generation_mode="local", expected_status=200):
         response = self.client.post(
@@ -164,6 +205,78 @@ class RDDecisionAgentApiTest(unittest.TestCase):
         grounded_payload = grounded_response.json()
         self.assertEqual(grounded_payload["result"]["question_type"], "evidence_gap")
         self.assertEqual(grounded_payload["result"]["trace"]["retrieved_source_ids"], ["B011", "B012", "B013", "B016"])
+
+    def test_auto_without_api_key_falls_back_to_local(self):
+        with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "", "GROUNDED_QA_LLM_ENABLED": "true"}, clear=False):
+            payload = self.post_agent("B016是否代表已经正式批准？", generation_mode="auto")
+        metadata = payload["execution_metadata"]
+        self.assertEqual(metadata["generation_mode_used"], "local")
+        self.assertTrue(metadata["fallback_used"])
+        self.assertFalse(metadata["used_llm"])
+        self.assertIn("API Key 未配置", metadata["fallback_reason"])
+        self.assertTrue(payload["citations"])
+        self.assertTrue(payload["limitations"])
+        self.assertTrue(payload["steps"])
+
+    def test_local_mode_never_creates_llm_client(self):
+        with patch.dict(
+            os.environ,
+            {"DEEPSEEK_API_KEY": "test-secret", "GROUNDED_QA_LLM_ENABLED": "true"},
+            clear=False,
+        ), patch.object(grounded_qa_llm, "create_grounded_llm_client", side_effect=AssertionError("must not call")):
+            payload = self.post_agent("B016是否代表已经正式批准？", generation_mode="local")
+        self.assertFalse(payload["used_llm"])
+        self.assertEqual(payload["execution_metadata"]["generation_mode_used"], "local")
+        self.assertFalse(payload["execution_metadata"]["llm_attempted"])
+
+    def test_auto_with_configured_client_uses_llm_after_local_evidence(self):
+        fake_client = FakeLLMClient()
+        with patch.dict(
+            os.environ,
+            {
+                "DEEPSEEK_API_KEY": "test-secret",
+                "DEEPSEEK_MODEL": "deepseek-v4-flash",
+                "GROUNDED_QA_LLM_ENABLED": "true",
+            },
+            clear=False,
+        ), patch.object(grounded_qa_llm, "create_grounded_llm_client", return_value=fake_client):
+            payload = self.post_agent("B016是否代表已经正式批准？", generation_mode="auto")
+        self.assertEqual(len(fake_client.calls), 1)
+        self.assertTrue(payload["source_ids"])
+        self.assertTrue(payload["used_llm"])
+        self.assertEqual(payload["execution_metadata"]["generation_mode_used"], "llm")
+        self.assertEqual(payload["execution_metadata"]["model_name"], "deepseek-v4-flash")
+        self.assertIn("DeepSeek基于", payload["answer"])
+        self.assertIn("GroundedQAService.answer_question(auto)", [step["tool"] for step in payload["steps"]])
+
+    def test_auto_model_failure_returns_200_local_fallback(self):
+        fake_client = FakeLLMClient(error=RuntimeError("timeout secret traceback"))
+        with patch.dict(
+            os.environ,
+            {"DEEPSEEK_API_KEY": "test-secret", "GROUNDED_QA_LLM_ENABLED": "true"},
+            clear=False,
+        ), patch.object(grounded_qa_llm, "create_grounded_llm_client", return_value=fake_client):
+            payload = self.post_agent("B016是否代表已经正式批准？", generation_mode="auto")
+        self.assertEqual(payload["execution_metadata"]["generation_mode_used"], "local")
+        self.assertTrue(payload["execution_metadata"]["fallback_used"])
+        self.assertIn("超时", payload["execution_metadata"]["fallback_reason"])
+        self.assertNotIn("secret", json.dumps(payload, ensure_ascii=False))
+        self.assertNotIn("traceback", json.dumps(payload, ensure_ascii=False))
+
+    def test_capabilities_report_enabled_llm_without_exposing_key(self):
+        with patch.dict(
+            os.environ,
+            {"DEEPSEEK_API_KEY": "test-secret", "GROUNDED_QA_LLM_ENABLED": "true"},
+            clear=False,
+        ):
+            grounded = self.client.get("/api/evidence/grounded-qa/capabilities").json()
+            agent = self.client.get("/api/evidence/decision-agent/capabilities").json()
+        for payload in [grounded, agent]:
+            self.assertTrue(payload["local_mode_available"])
+            self.assertTrue(payload["llm_mode_available"])
+            self.assertTrue(payload["llm_enabled"])
+            self.assertNotIn("test-secret", json.dumps(payload, ensure_ascii=False))
+        self.assertEqual(agent["default_generation_mode"], "auto")
 
 
 if __name__ == "__main__":
