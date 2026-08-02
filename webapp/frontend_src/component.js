@@ -21,7 +21,7 @@ class Component extends DCLogic {
     agentCapabilities:null, agentCapabilitiesLoading:false, agentCapabilitiesLoaded:false, agentCapabilitiesError:'',
     agentQuestion:'', agentGenerationMode:'auto', agentLoading:false, agentError:'', agentResult:null, agentSeq:0,
     agentCapabilitiesOpen:false, agentTraceOpen:false, agentAllCitationsOpen:false,
-    agentProcessOpen:false, agentRunDetailsOpen:false,
+    agentProcessOpen:false, agentRunDetailsOpen:false, agentChainLinksOpen:false, agentFeaturedCitationsOpen:false,
     groundedCapabilities:null, groundedCapabilitiesLoading:false, groundedCapabilitiesLoaded:false,
     groundedQuestion:'', groundedMode:'local', groundedLoading:false, groundedError:'',
     groundedResult:null, groundedMeta:null, groundedTraceOpen:false, groundedSeq:0,
@@ -281,7 +281,8 @@ class Component extends DCLogic {
     const patch={
       page:'groundedQa',navOpen:false,agentError:'',agentResult:null,
       agentTraceOpen:false,agentAllCitationsOpen:false,
-      agentProcessOpen:false,agentRunDetailsOpen:false
+      agentProcessOpen:false,agentRunDetailsOpen:false,
+      agentChainLinksOpen:false,agentFeaturedCitationsOpen:false
     };
     if(question!=null) patch.agentQuestion=String(question).slice(0,1000);
     this.setState(patch,()=>this.loadDecisionAgentCapabilities());
@@ -726,7 +727,9 @@ class Component extends DCLogic {
       agentTraceOpen:false,
       agentAllCitationsOpen:false,
       agentProcessOpen:false,
-      agentRunDetailsOpen:false
+      agentRunDetailsOpen:false,
+      agentChainLinksOpen:false,
+      agentFeaturedCitationsOpen:false
     });
     fetch('/api/evidence/decision-agent', {
       method:'POST',
@@ -1138,7 +1141,7 @@ class Component extends DCLogic {
       requested,
       used,
       fallback,
-      notice:fallback?this._agentValueText(meta.fallback_reason,'自动模式已回退到本地结构化分析。'):''
+      notice:fallback?('本次使用本地结构化分析，未调用外部模型。'+this._agentValueText(meta.fallback_reason,'自动模式已回退到本地结构化分析。')):''
     };
   }
   _agentWorkflowVm(result, steps, traceRows){
@@ -1723,7 +1726,8 @@ class Component extends DCLogic {
     const agentFullCitations=(Array.isArray(agentResult&&agentResult.citations)?agentResult.citations:[]).map(x=>this._agentCitationVm(x));
     const rawFeatured=Array.isArray(agentResult&&agentResult.featured_citations)?agentResult.featured_citations:[];
     const agentFeaturedFallback=!rawFeatured.length && agentFullCitations.length>0;
-    const agentFeaturedCitations=(rawFeatured.length?rawFeatured.map(x=>this._agentCitationVm(x)):agentFullCitations.slice(0,Math.min(6,agentFullCitations.length)));
+    const agentFeaturedAll=(rawFeatured.length?rawFeatured.map(x=>this._agentCitationVm(x)):agentFullCitations.slice(0,Math.min(6,agentFullCitations.length)));
+    const agentFeaturedCitations=s.agentFeaturedCitationsOpen?agentFeaturedAll:agentFeaturedAll.slice(0,3);
     const agentVisibleAllCitations=s.agentAllCitationsOpen?agentFullCitations:[];
     const runNotice=agentModePresentation.notice;
     const dedupeNotice=(x)=>x.text && (!runNotice || x.text!==runNotice) && !/回退/.test(x.text);
@@ -1732,7 +1736,8 @@ class Component extends DCLogic {
     const agentRefused=!!(agentResult&&agentResult.refused);
     const agentDataInsufficient=this._agentDataInsufficient(agentResult);
     const agentHasDecision=!!agentResult && !agentRefused && !agentDataInsufficient;
-    const agentChainLinks=this._agentChainLinks(agentResult||{});
+    const agentChainLinksAll=this._agentChainLinks(agentResult||{});
+    const agentChainLinks=s.agentChainLinksOpen?agentChainLinksAll:agentChainLinksAll.slice(0,3);
     const agentQuestion=String(s.agentQuestion||'');
     const agentSubmitDisabled=s.agentLoading||!agentQuestion.trim()||agentQuestion.length>1000;
     const agentSubmitStyle='height:38px;border-radius:9px;background:var(--brand-600);color:#fff;border:0;font-size:13.5px;font-weight:800;padding:0 17px;display:inline-flex;align-items:center;gap:8px;opacity:'+(agentSubmitDisabled?'.55':'1')+';cursor:'+(agentSubmitDisabled?'not-allowed':'pointer');
@@ -1917,8 +1922,13 @@ class Component extends DCLogic {
       agent_toggleTrace:()=>this.setState({agentTraceOpen:!this.state.agentTraceOpen}),
       agent_featuredCitations:agentFeaturedCitations,
       agent_featuredCitationCount:agentFeaturedCitations.length,
+      agent_featuredTotalCount:agentFeaturedAll.length,
       agent_hasFeaturedCitations:agentFeaturedCitations.length>0,
       agent_featuredFallback:agentFeaturedFallback,
+      agent_hasMoreFeaturedCitations:agentFeaturedAll.length>3,
+      agent_featuredCitationsOpen:s.agentFeaturedCitationsOpen,
+      agent_toggleFeaturedCitations:()=>this.setState({agentFeaturedCitationsOpen:!this.state.agentFeaturedCitationsOpen}),
+      agent_featuredCitationsToggleText:s.agentFeaturedCitationsOpen?'收起关键证据':'查看其余 '+Math.max(0,agentFeaturedAll.length-3)+' 条',
       agent_allCitations:agentVisibleAllCitations,
       agent_fullCitationCount:agentFullCitations.length,
       agent_hasFullCitations:agentFullCitations.length>0,
@@ -1933,6 +1943,10 @@ class Component extends DCLogic {
       agent_hasWarnings:agentWarnings.length>0,
       agent_chainLinks:agentChainLinks,
       agent_hasChainLinks:agentChainLinks.length>0,
+      agent_hasMoreChainLinks:agentChainLinksAll.length>3,
+      agent_chainLinksOpen:s.agentChainLinksOpen,
+      agent_toggleChainLinks:()=>this.setState({agentChainLinksOpen:!this.state.agentChainLinksOpen}),
+      agent_chainLinksToggleText:s.agentChainLinksOpen?'收起证据链':'其余 '+Math.max(0,agentChainLinksAll.length-3)+' 条',
       agent_localNotice:s.agentGenerationMode==='local'?'本地模式 · 始终不调用模型':'自动模式 · DeepSeek不可用时回退本地分析',
       agent_scopeItems:[
         {text:'当前仅覆盖已收录并核验的 NSCLC 证据样本'},

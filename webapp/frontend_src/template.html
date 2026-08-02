@@ -3743,6 +3743,64 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 [data-agent-workflow]::before{content:"";position:absolute;left:9%;right:9%;top:17px;height:2px;background:var(--border-strong);z-index:0}
 [data-agent-workflow-step]{position:relative;z-index:1;min-width:0}
 [data-agent-decision-sections]>:last-child:nth-child(odd){grid-column:1/-1}
+[data-agent-page]{gap:28px !important;max-width:1180px;margin:0 auto}
+[data-agent-page]>[data-agent-hero]{grid-template-columns:minmax(0,1fr) auto !important;align-items:center !important;padding-bottom:4px;border-bottom:1px solid var(--border)}
+[data-agent-trust]{display:flex;gap:16px;flex-wrap:wrap;color:var(--text-2);font-size:12px}
+[data-agent-trust] span{display:inline-flex;align-items:center;gap:6px;word-break:keep-all;writing-mode:horizontal-tb}
+[data-agent-trust] span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--medical-teal)}
+[data-agent-page]>[data-agent-hero-stats]{display:grid !important;grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:0 !important;min-height:68px;background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:8px 4px}
+[data-agent-hero-stat]{min-width:0;padding:7px 16px;border-left:1px solid var(--border)}
+[data-agent-hero-stat]:first-child{border-left:0}
+[data-agent-page]>[data-agent-question]{padding:20px 22px !important;gap:12px !important;border-radius:14px !important}
+[data-agent-question] textarea:focus-visible{outline:2px solid rgba(15,143,135,.34) !important;outline-offset:1px;border-color:var(--medical-teal) !important}
+[data-agent-mode-row]{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+[data-agent-generation-mode]{display:inline-flex !important;gap:0 !important;padding:3px;background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px}
+[data-agent-generation-mode] button{border-radius:7px !important;border:0 !important;min-height:34px}
+[data-agent-mode-note]{font-size:12px;line-height:1.5;color:var(--text-3)}
+[data-agent-page]>[data-agent-demo]{padding-top:2px}
+[data-agent-golden-cases]{gap:0 !important;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+[data-agent-golden-case]{appearance:none;text-align:left;border:0;border-left:1px solid var(--border);background:transparent;color:var(--text);padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0;cursor:pointer;transition:background .12s,border-color .12s}
+[data-agent-golden-case]:first-child{border-left:0}
+[data-agent-golden-case]:hover{background:rgba(15,143,135,.045)}
+[data-agent-golden-case]:focus-visible{outline:2px solid rgba(15,143,135,.5);outline-offset:-2px}
+[data-agent-page]>[data-agent-result]{gap:28px !important}
+[data-agent-result-question]{padding:16px 18px !important;gap:10px !important}
+[data-agent-result-meta]{display:flex;gap:14px 20px;flex-wrap:wrap;padding-top:9px;border-top:1px solid var(--border)}
+[data-agent-result-meta] span{font-size:12px;color:var(--text-2);word-break:keep-all;writing-mode:horizontal-tb}
+[data-agent-chain-links]{display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-width:0}
+[data-agent-chain-links] button{max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+[data-agent-chain-more]{border:0;background:transparent;color:var(--medical-teal);font-size:12px;font-weight:750;padding:4px;cursor:pointer}
+[data-agent-run-notice]{color:#725B2C !important;background:#F7F5ED !important;border:1px solid #E7DFC8 !important;padding:9px 12px !important}
+[data-agent-process-top]{padding:16px 18px !important;gap:14px !important}
+[data-agent-decision-layout]{grid-template-columns:minmax(0,1.8fr) minmax(300px,.8fr) !important;gap:20px !important}
+[data-agent-judgment]{background:#F2FAF8 !important;border:1px solid #CFE7E3 !important;border-left:4px solid var(--medical-teal) !important;padding:22px !important;gap:14px !important}
+[data-agent-judgment-summary]{font-size:21px !important;line-height:1.55 !important;font-weight:500 !important;color:var(--deep-sea) !important}
+[data-agent-judgment-scope]{background:rgba(255,255,255,.7) !important;border:0 !important;border-top:1px solid #D7E9E6 !important;border-radius:0 !important;padding:11px 0 0 !important}
+[data-agent-section]{background:transparent !important;border:0 !important;border-top:1px solid var(--border) !important;border-radius:0 !important;padding:16px 2px 0 !important}
+[data-agent-comparison-row],[data-agent-maturity-row]{display:grid;grid-template-columns:minmax(130px,.35fr) minmax(0,.65fr);gap:14px;padding:11px 0;border-top:1px solid var(--border);min-width:0}
+[data-agent-comparison-row]>*,[data-agent-maturity-row]>*{min-width:0;overflow-wrap:anywhere;word-break:normal;writing-mode:horizontal-tb}
+[data-agent-boundary]{background:var(--bg-elev) !important;border:1px solid var(--border) !important;border-left:3px solid #7890A5 !important;border-radius:12px !important;padding:14px 15px !important;min-width:0}
+[data-agent-boundary="gap"]{border-left-color:var(--evidence-amber) !important}
+[data-agent-boundary="action"],[data-agent-boundary="support"]{border-left-color:var(--medical-teal) !important}
+[data-agent-boundary="unsupported"]{grid-column:1/-1;border-left-color:#C76B6B !important;background:var(--bg-elev) !important}
+[data-agent-citation-item]{padding:10px 0 12px !important;border-bottom:1px solid var(--border);min-width:0}
+[data-agent-citation-item] button,[data-agent-citation-item] a{min-height:30px;display:inline-flex;align-items:center}
+[data-agent-fold]{background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:0 15px}
+[data-agent-fold] summary{list-style:none;min-height:48px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:750;color:var(--text);cursor:pointer}
+[data-agent-fold] summary::-webkit-details-marker{display:none}
+[data-agent-fold] summary::before{content:"›";font-size:20px;font-weight:400;color:var(--medical-teal);transition:transform .12s}
+[data-agent-fold][open] summary::before{transform:rotate(90deg)}
+[data-agent-fold-button]{width:100%;min-height:48px;border:0;background:transparent;color:var(--text);display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;padding:0;cursor:pointer}
+[data-agent-fold-button]::before{content:"›";font-size:20px;color:var(--medical-teal);transition:transform .12s}
+[data-agent-fold-button][aria-expanded="true"]::before{transform:rotate(90deg)}
+[data-agent-fold-button]>span:first-of-type{flex:1;font-size:13px;font-weight:750}
+[data-agent-tech-stack]{display:flex;flex-direction:column;gap:10px}
+[data-agent-page] button,[data-agent-page] summary,[data-agent-page] label{word-break:keep-all;overflow-wrap:normal;writing-mode:horizontal-tb}
+[data-agent-page] [data-agent-long]{min-width:0;overflow-wrap:anywhere;word-break:normal;writing-mode:horizontal-tb}
+[data-theme="dark"] [data-agent-judgment]{background:var(--brand-50) !important;border-color:var(--brand-300) !important}
+[data-theme="dark"] [data-agent-judgment-summary]{color:var(--text) !important}
+[data-theme="dark"] [data-agent-judgment-scope]{background:transparent !important;border-color:var(--brand-300) !important}
+[data-theme="dark"] [data-agent-run-notice]{background:var(--bg-sunken) !important;border-color:var(--border) !important;color:var(--text-2) !important}
 [data-chain-graph-grid]{display:grid;grid-template-columns:minmax(0,1.15fr) 64px minmax(220px,.82fr) 64px minmax(0,1.15fr);gap:10px;align-items:center}
 [data-chain-graph-column]{min-width:0;align-self:stretch}
 [data-chain-connector]{position:relative;min-height:54px;display:flex;align-items:flex-start;justify-content:center;padding-top:3px;color:var(--brand-600)}
@@ -3844,6 +3902,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-profile-structure-column]:last-child{padding-bottom:0}
   [data-profile-trial-grid]{grid-template-columns:repeat(2,minmax(0,1fr))}
   [data-profile-records],[data-profile-footer]{grid-template-columns:minmax(0,1fr)}
+  [data-agent-decision-layout]{grid-template-columns:minmax(0,1fr) !important}
 }
 @media(max-width:900px){
   [data-evidence-chain],[data-evidence-company-compare]{grid-template-columns:minmax(0,1fr) !important}
@@ -3886,6 +3945,15 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-profile-structure-column]:first-child{padding-top:0;border-top:0}
   [data-profile-structure-column]:last-child{padding-bottom:0}
   [data-profile-compositions]{grid-template-columns:minmax(0,1fr);gap:28px}
+  [data-agent-page]{gap:24px !important}
+  [data-agent-page]>[data-agent-hero]{grid-template-columns:minmax(0,1fr) !important}
+  [data-agent-page]>[data-agent-hero-stats]{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  [data-agent-hero-stat]:nth-child(odd){border-left:0}
+  [data-agent-hero-stat]:nth-child(n+3){border-top:1px solid var(--border)}
+  [data-agent-golden-cases]{grid-template-columns:minmax(0,1fr) !important}
+  [data-agent-golden-case]{border-left:0;border-top:1px solid var(--border)}
+  [data-agent-golden-case]:first-child{border-top:0}
+  [data-agent-comparison-row],[data-agent-maturity-row]{grid-template-columns:minmax(0,1fr);gap:5px}
 }
 @media(max-width:640px){
   [data-header]{padding:0 12px !important;gap:10px !important}
@@ -3943,6 +4011,11 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
   [data-profile-secondary-actions]{grid-template-columns:minmax(0,1fr)}
   [data-profile-actions] [data-action="text"]:last-child{grid-column:auto}
   [data-profile-coverage-row]{grid-template-columns:96px 28px minmax(52px,1fr);gap:7px}
+  [data-agent-mode-row]{align-items:stretch}
+  [data-agent-generation-mode]{width:100%}
+  [data-agent-generation-mode] button{flex:1;min-width:0;padding:0 7px !important}
+  [data-agent-question] textarea{min-height:88px !important}
+  [data-agent-chain-links] button{max-width:100%}
 }
 @media(max-width:700px){
   [data-brief-paper]{padding:20px 16px !important}
@@ -5372,7 +5445,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                   <div style="font-size:11px;font-weight:900;letter-spacing:.08em;color:var(--brand-600)">药研制策 · NSCLC 证据决策</div>
                   <div style="font-size:25px;font-weight:900;letter-spacing:-.02em;color:var(--text);line-height:1.2">智能研发决策 Agent</div>
                   <div style="font-size:14px;line-height:1.65;color:var(--text-2);max-width:780px">输入企业、研究、药物、试验编号或来源编号，Agent 将自动识别任务、调用已核验证据工具，并输出可追溯的研发决策分析。</div>
-                  <div style="display:flex;gap:7px;flex-wrap:wrap"><span style="font-size:11.5px;font-weight:850;color:var(--brand-600);background:var(--brand-50);border:1px solid var(--brand-100);border-radius:999px;padding:3px 10px">结论有证据</span><span style="font-size:11.5px;font-weight:850;color:var(--brand-600);background:var(--brand-50);border:1px solid var(--brand-100);border-radius:999px;padding:3px 10px">过程可追溯</span><span style="font-size:11.5px;font-weight:850;color:var(--brand-600);background:var(--brand-50);border:1px solid var(--brand-100);border-radius:999px;padding:3px 10px">边界可复核</span></div>
+                  <div data-agent-trust=""><span>结论有证据</span><span>过程可追溯</span><span>边界可复核</span></div>
                 </div>
                 <div style="display:flex;justify-content:flex-end;align-items:flex-start">
                   <button onclick="{{ agent_backEvidence }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-elev);color:var(--brand-600);font-size:12.5px;font-weight:850;padding:0 13px">返回研发证据中心</button>
@@ -5381,41 +5454,23 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
 
               <section data-agent-hero-stats="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px">
                 <sc-for list="{{ agent_heroStats }}" as="item">
-                  <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:10px 12px;min-width:0">
+                  <div data-agent-hero-stat="">
                     <div style="font-size:11px;color:var(--text-3);font-weight:800">{{ item.label }}</div>
                     <div style="font-size:15px;font-weight:900;color:var(--text);line-height:1.35;overflow-wrap:anywhere;margin-top:3px">{{ item.value }}</div>
                   </div>
                 </sc-for>
               </section>
 
-              <section data-agent-demo="" style="display:flex;flex-direction:column;gap:11px">
-                <div style="display:flex;flex-direction:column;gap:3px">
-                  <div style="font-size:17px;font-weight:900;color:var(--text)">推荐演示</div>
-                  <div style="font-size:12.8px;line-height:1.55;color:var(--text-2)">选择一个典型研发问题，一键查看 Agent 如何识别任务、调用证据并形成决策。</div>
-                </div>
-                <div data-agent-golden-cases="" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
-                  <sc-for list="{{ agent_goldenCases }}" as="ex">
-                    <article style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:15px;display:flex;flex-direction:column;gap:10px;min-width:0;min-height:210px">
-                      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start">
-                        <span style="font-size:12px;font-weight:850;color:var(--brand-600);background:var(--brand-50);border-radius:7px;padding:2px 8px">{{ ex.type }}</span>
-                      </div>
-                      <div style="font-size:14px;font-weight:900;color:var(--text)">{{ ex.title }}</div>
-                      <div style="font-size:15px;line-height:1.55;font-weight:850;color:var(--text);overflow-wrap:anywhere">{{ ex.question }}</div>
-                      <div style="font-size:12.5px;line-height:1.6;color:var(--text-2);margin-bottom:auto">{{ ex.desc }}</div>
-                      <button onclick="{{ ex.onClick }}" disabled="{{ ex.disabled }}" style="{{ ex.buttonStyle }}">{{ ex.buttonText }}</button>
-                    </article>
-                  </sc-for>
-                </div>
-              </section>
-
               <section data-agent-question="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
                   <div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:16px;font-weight:900;color:var(--text)">提出你的研发问题</div><div style="font-size:12.5px;color:var(--text-2);line-height:1.55">支持企业、药物、研究名称、NCT 编号和来源编号相关问题。</div></div>
-                  <span style="font-size:12px;color:var(--text-3);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 10px">{{ agent_localNotice }}</span>
                 </div>
-                <div data-agent-generation-mode="" role="group" aria-label="答案生成模式" style="display:flex;gap:8px;flex-wrap:wrap">
-                  <button onclick="{{ agent_chooseAuto }}" aria-pressed="{{ agent_autoSelected }}" style="{{ agent_autoModeStyle }}">智能生成（auto）</button>
-                  <button onclick="{{ agent_chooseLocal }}" aria-pressed="{{ agent_localSelected }}" style="{{ agent_localModeStyle }}">本地证据分析（local）</button>
+                <div data-agent-mode-row="">
+                  <div data-agent-generation-mode="" role="group" aria-label="答案生成模式">
+                    <button onclick="{{ agent_chooseAuto }}" aria-pressed="{{ agent_autoSelected }}" style="{{ agent_autoModeStyle }}">智能生成（auto）</button>
+                    <button onclick="{{ agent_chooseLocal }}" aria-pressed="{{ agent_localSelected }}" style="{{ agent_localModeStyle }}">本地证据分析（local）</button>
+                  </div>
+                  <span data-agent-mode-note="">{{ agent_localNotice }}</span>
                 </div>
                 <textarea id="decision-agent-question-input" name="decision_agent_question" aria-label="智能研发决策 Agent 问题" value="{{ agent_question }}" oninput="{{ agent_onQuestion }}" onkeydown="{{ agent_onKey }}" maxlength="1000" rows="4" placeholder="例如：RATIONALE-315 目前缺少哪些关键证据？" style="width:100%;resize:vertical;min-height:104px;border-radius:10px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:13.5px;line-height:1.65;font-family:var(--font-sans);padding:11px 12px;outline:none"></textarea>
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
@@ -5428,28 +5483,48 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <sc-if value="{{ agent_hasError }}"><div data-agent-system-error="" style="font-size:12.5px;color:var(--neg);background:var(--neg-bg);border:1px solid var(--neg);border-radius:10px;padding:9px 11px">{{ agent_error }}</div></sc-if>
               </section>
 
+              <section data-agent-demo="" style="display:flex;flex-direction:column;gap:11px">
+                <div style="display:flex;flex-direction:column;gap:3px">
+                  <div style="font-size:17px;font-weight:900;color:var(--text)">推荐演示</div>
+                  <div style="font-size:12.8px;line-height:1.55;color:var(--text-2)">选择一个典型研发问题，一键查看 Agent 如何识别任务、调用证据并形成决策。</div>
+                </div>
+                <div data-agent-golden-cases="" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+                  <sc-for list="{{ agent_goldenCases }}" as="ex">
+                    <button data-agent-golden-case="" onclick="{{ ex.onClick }}" disabled="{{ ex.disabled }}">
+                      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start">
+                        <span style="font-size:12px;font-weight:850;color:var(--brand-600);background:var(--brand-50);border-radius:7px;padding:2px 8px">{{ ex.type }}</span>
+                      </div>
+                      <div style="font-size:14px;font-weight:900;color:var(--text)">{{ ex.title }}</div>
+                      <div style="font-size:15px;line-height:1.55;font-weight:850;color:var(--text);overflow-wrap:anywhere">{{ ex.question }}</div>
+                      <div style="font-size:12.5px;line-height:1.6;color:var(--text-2);margin-bottom:auto">{{ ex.desc }}</div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;color:var(--medical-teal);font-size:12px;font-weight:750"><span>{{ ex.buttonText }}</span><span aria-hidden="true">→</span></div>
+                    </button>
+                  </sc-for>
+                </div>
+              </section>
+
               <sc-if value="{{ agent_loading }}"><div style="font-size:12.5px;color:var(--brand-600);background:var(--brand-50);border:1px solid var(--brand-300);border-radius:10px;padding:10px 12px">决策 Agent 正在检索本地证据并生成分析，请稍候。</div></sc-if>
 
               <sc-if value="{{ agent_hasResult }}">
                 <div data-agent-result="" style="display:flex;flex-direction:column;gap:14px">
                   <section data-agent-result-question="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;gap:9px">
-                    <div style="font-size:11.5px;font-weight:850;color:var(--text-3)">本次问题</div>
-                    <div style="font-size:15px;font-weight:850;line-height:1.55;color:var(--text);overflow-wrap:anywhere">{{ agent_displayQuestion }}</div>
+                    <div style="font-size:11.5px;font-weight:850;color:var(--text-3)">本次决策问题</div>
+                    <div data-agent-long="" style="font-size:15px;font-weight:750;line-height:1.6;color:var(--text)">{{ agent_displayQuestion }}</div>
                     <sc-if value="{{ agent_hasOverview }}">
-                      <div style="display:flex;gap:7px;flex-wrap:wrap">
+                      <div data-agent-result-meta="">
                         <sc-for list="{{ agent_overview }}" as="row">
-                          <span style="font-size:11.8px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 9px"><span style="color:var(--text-3)">{{ row.label }}：</span>{{ row.value }}</span>
+                          <span><span style="color:var(--text-3)">{{ row.label }}：</span>{{ row.value }}</span>
                         </sc-for>
                       </div>
                     </sc-if>
-                    <sc-if value="{{ agent_hasChainLinks }}"><div style="display:flex;gap:7px;flex-wrap:wrap"><sc-for list="{{ agent_chainLinks }}" as="ch"><button onclick="{{ ch.onClick }}" style="height:28px;border-radius:8px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">查看证据链 {{ ch.chain_id }}</button></sc-for></div></sc-if>
+                    <sc-if value="{{ agent_hasChainLinks }}"><div data-agent-chain-links=""><sc-for list="{{ agent_chainLinks }}" as="ch"><button title="查看完整证据链 {{ ch.chain_id }}" aria-label="查看证据链 {{ ch.chain_id }}" onclick="{{ ch.onClick }}" style="height:28px;border-radius:8px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">查看证据链 {{ ch.chain_id }}</button></sc-for><sc-if value="{{ agent_hasMoreChainLinks }}"><button data-agent-chain-more="" aria-expanded="{{ agent_chainLinksOpen }}" onclick="{{ agent_toggleChainLinks }}">{{ agent_chainLinksToggleText }}</button></sc-if></div></sc-if>
                     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:11.8px;font-weight:850;color:var(--medical-teal);background:var(--brand-50);border:1px solid var(--brand-200);border-radius:999px;padding:3px 10px">{{ agent_modeLabel }}</span></div>
                   </section>
 
-                  <sc-if value="{{ agent_hasRunNotice }}"><div data-agent-run-notice="" style="color:var(--warn);background:var(--warn-bg);border:1px solid rgba(217,154,43,.55);border-radius:10px;padding:9px 12px;font-size:12.5px;line-height:1.55"><strong>运行提示：</strong>{{ agent_runNotice }}</div></sc-if>
+                  <sc-if value="{{ agent_hasRunNotice }}"><div data-agent-run-notice="" style="border-radius:10px;font-size:12.5px;line-height:1.55"><strong>生成方式：</strong>{{ agent_runNotice }}</div></sc-if>
 
                   <section data-agent-process-top="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px;display:flex;flex-direction:column;gap:12px">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><div style="font-size:14px;font-weight:900;color:var(--deep-sea)">Agent 决策过程 · 五步执行流程</div><div style="font-size:11.5px;color:var(--text-3);margin-top:2px">根据本次接口返回的任务、实体、步骤、来源轨迹和运行状态汇总</div></div><button onclick="{{ agent_toggleProcess }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">{{ agent_processToggleText }}</button></div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><div style="font-size:14px;font-weight:900;color:var(--deep-sea)">Agent 决策过程 · 五步执行流程</div><div style="font-size:11.5px;color:var(--text-3);margin-top:2px">任务识别、实体归一、证据检索、证据链校验与结论生成</div></div><button aria-expanded="{{ agent_processOpen }}" onclick="{{ agent_toggleProcess }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">{{ agent_processToggleText }}</button></div>
                     <div data-agent-workflow=""><sc-for list="{{ agent_workflow }}" as="wf" hint-placeholder-count="5"><div data-agent-workflow-step="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px"><span style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ wf.statusBg }};color:{{ wf.statusColor }};border:2px solid {{ wf.statusColor }};box-shadow:0 0 0 4px var(--bg-elev);font-size:13px;font-weight:900">{{ wf.statusIcon }}</span><div><div style="font-size:12.5px;font-weight:850;color:var(--deep-sea)">{{ wf.name }}</div><div style="font-size:10.8px;line-height:1.4;color:var(--text-3);margin-top:2px;overflow-wrap:anywhere">{{ wf.summary }}</div><sc-if value="{{ wf.hasAuxLabel }}"><div style="display:inline-flex;font-size:9.8px;font-weight:800;color:var(--warn);background:var(--warn-bg);border-radius:999px;padding:2px 6px;margin-top:4px">{{ wf.auxLabel }}</div></sc-if><div style="font-size:10.5px;font-weight:750;color:{{ wf.statusColor }};margin-top:3px">{{ wf.statusLabel }}</div></div></div></sc-for></div>
                     <sc-if value="{{ agent_processOpen }}"><div style="display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--border);padding-top:11px"><sc-if value="{{ agent_hasPlan }}"><div style="display:flex;flex-direction:column;gap:7px"><div style="font-size:12px;font-weight:850;color:var(--text-3)">真实任务规划</div><sc-for list="{{ agent_plan }}" as="p"><div style="display:grid;grid-template-columns:42px minmax(0,1fr) minmax(150px,.8fr);gap:9px;font-size:11.8px"><span style="font-family:var(--font-mono);font-weight:900;color:var(--brand-600)">{{ p.step_id }}</span><span style="font-weight:800;color:var(--text)">{{ p.name }}</span><span style="color:var(--text-3);overflow-wrap:anywhere">{{ p.rawTool }}</span></div></sc-for></div></sc-if><sc-if value="{{ agent_hasSteps }}"><div data-agent-steps="" style="display:flex;flex-direction:column;gap:7px"><div style="font-size:12px;font-weight:850;color:var(--text-3)">实际工具轨迹</div><sc-for list="{{ agent_steps }}" as="st"><div style="border-left:3px solid {{ st.statusColor }};background:var(--bg-sunken);border-radius:9px;padding:8px 10px;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:6px 9px;font-size:11.5px"><span style="font-family:var(--font-mono);font-weight:900;color:var(--brand-600)">{{ st.step_id }}</span><div><strong style="color:var(--text)">{{ st.name }}</strong><div style="color:var(--text-3);overflow-wrap:anywhere">{{ st.rawTool }}</div><sc-if value="{{ st.hasResult }}"><div style="color:var(--text-2);margin-top:2px">{{ st.result }}</div></sc-if><div style="color:var(--text-3);margin-top:2px">产出来源：{{ st.sourceText }}<sc-if value="{{ st.hasDuration }}"> · 耗时 {{ st.durationText }}</sc-if></div></div><span style="color:{{ st.statusColor }};font-weight:850">{{ st.statusLabel }}</span></div></sc-for></div></sc-if></div></sc-if>
                   </section>
@@ -5475,37 +5550,37 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                   <sc-if value="{{ agent_hasDecision }}">
                     <div data-agent-decision-layout="" style="display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start">
                       <div data-agent-decision="" style="display:flex;flex-direction:column;gap:13px;min-width:0">
-                        <section style="background:var(--brand-50);border:1px solid var(--brand-300);border-left:4px solid var(--brand-600);border-radius:14px;padding:18px 18px 17px;display:flex;flex-direction:column;gap:12px">
+                        <section data-agent-judgment="" style="background:var(--brand-50);border:1px solid var(--brand-300);border-left:4px solid var(--brand-600);border-radius:14px;padding:18px 18px 17px;display:flex;flex-direction:column;gap:12px">
                           <div style="font-size:15px;font-weight:950;color:var(--brand-700)">Agent 判断</div>
-                          <div style="font-size:17px;line-height:1.65;font-weight:850;color:var(--text)">{{ agent_decision.summary }}</div>
-                          <sc-if value="{{ agent_decision.hasScopeStatement }}"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2);background:var(--bg-elev);border:1px solid var(--brand-100);border-radius:9px;padding:8px 10px">{{ agent_decision.scopeStatement }}</div></sc-if>
+                          <div data-agent-judgment-summary="" data-agent-long="">{{ agent_decision.summary }}</div>
+                          <sc-if value="{{ agent_decision.hasScopeStatement }}"><div data-agent-judgment-scope="" style="font-size:12.5px;line-height:1.65;color:var(--text-2)"><strong style="font-weight:750;color:var(--deep-sea)">结论边界：</strong>{{ agent_decision.scopeStatement }}</div></sc-if>
                         </section>
 
-                        <sc-if value="{{ agent_decision.hasKeyFindings }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px 16px;display:flex;flex-direction:column;gap:9px"><div style="font-size:13.5px;font-weight:900;color:var(--text)">关键依据</div><sc-for list="{{ agent_decision.keyFindings }}" as="item"><div style="font-size:12.8px;line-height:1.65;color:var(--text-2);display:flex;gap:8px"><span style="width:5px;height:5px;border-radius:50%;background:var(--brand-500);margin-top:8px;flex:none"></span><span>{{ item.text }}</span></div></sc-for></section></sc-if>
+                        <sc-if value="{{ agent_decision.hasKeyFindings }}"><section data-agent-section="" style="display:flex;flex-direction:column;gap:9px"><div style="font-size:13.5px;font-weight:900;color:var(--text)">关键依据</div><sc-for list="{{ agent_decision.keyFindings }}" as="item"><div style="font-size:12.8px;line-height:1.65;color:var(--text-2);display:flex;gap:8px"><span style="width:5px;height:5px;border-radius:50%;background:var(--brand-500);margin-top:8px;flex:none"></span><span data-agent-long="">{{ item.text }}</span></div></sc-for></section></sc-if>
 
-                        <sc-if value="{{ agent_decision.hasComparisonDimensions }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:flex;flex-direction:column;gap:10px"><div style="font-size:13.5px;font-weight:900;color:var(--text)">对比依据</div><sc-for list="{{ agent_decision.comparisonDimensions }}" as="dim"><div style="border-top:1px solid var(--border);padding-top:9px"><div style="font-size:12.5px;font-weight:850;color:var(--brand-600)">{{ dim.title }}</div><div style="font-size:12.5px;line-height:1.65;color:var(--text-2);margin-top:3px">{{ dim.value }}</div><sc-if value="{{ dim.hasInterpretation }}"><div style="font-size:11.5px;color:var(--text-3);line-height:1.55;margin-top:3px">{{ dim.interpretation }}</div></sc-if></div></sc-for></section></sc-if>
+                        <sc-if value="{{ agent_decision.hasComparisonDimensions }}"><section data-agent-section="" style="display:flex;flex-direction:column;gap:4px"><div style="font-size:13.5px;font-weight:900;color:var(--text)">结构化对比依据</div><sc-for list="{{ agent_decision.comparisonDimensions }}" as="dim"><div data-agent-comparison-row=""><div style="font-size:12.5px;font-weight:850;color:var(--brand-600)">{{ dim.title }}</div><div><div style="font-size:12.5px;line-height:1.65;color:var(--text-2)">{{ dim.value }}</div><sc-if value="{{ dim.hasInterpretation }}"><div style="font-size:11.5px;color:var(--text-3);line-height:1.55;margin-top:3px">{{ dim.interpretation }}</div></sc-if></div></div></sc-for></section></sc-if>
 
-                        <sc-if value="{{ agent_decision.hasEvidenceMaturity }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:flex;flex-direction:column;gap:10px"><div style="font-size:13.5px;font-weight:900;color:var(--text)">证据结构与可追溯性</div><sc-for list="{{ agent_decision.evidenceMaturity }}" as="mat"><div style="border-top:1px solid var(--border);padding-top:9px"><div style="font-size:12.5px;font-weight:850;color:var(--text)">{{ mat.title }}</div><sc-if value="{{ mat.hasRows }}"><div style="display:grid;grid-template-columns:140px 1fr;gap:6px 10px;margin-top:7px;font-size:12px"><sc-for list="{{ mat.rows }}" as="row"><span style="color:var(--text-3)">{{ row.label }}</span><span style="color:var(--text-2);overflow-wrap:anywhere">{{ row.value }}</span></sc-for></div></sc-if><sc-if value="{{ mat.hasInterpretation }}"><div style="font-size:11.5px;color:var(--text-3);line-height:1.55;margin-top:6px">{{ mat.interpretation }}</div></sc-if></div></sc-for></section></sc-if>
+                        <sc-if value="{{ agent_decision.hasEvidenceMaturity }}"><section data-agent-section="" style="display:flex;flex-direction:column;gap:4px"><div style="font-size:13.5px;font-weight:900;color:var(--text)">证据结构与可追溯性</div><sc-for list="{{ agent_decision.evidenceMaturity }}" as="mat"><div data-agent-maturity-row=""><div style="font-size:12.5px;font-weight:850;color:var(--text)">{{ mat.title }}</div><div><sc-if value="{{ mat.hasRows }}"><div style="display:grid;grid-template-columns:140px minmax(0,1fr);gap:6px 10px;font-size:12px"><sc-for list="{{ mat.rows }}" as="row"><span style="color:var(--text-3)">{{ row.label }}</span><span style="color:var(--text-2);overflow-wrap:anywhere">{{ row.value }}</span></sc-for></div></sc-if><sc-if value="{{ mat.hasInterpretation }}"><div style="font-size:11.5px;color:var(--text-3);line-height:1.55;margin-top:6px">{{ mat.interpretation }}</div></sc-if></div></div></sc-for></section></sc-if>
 
                         <div data-agent-decision-sections="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-                          <sc-if value="{{ agent_decision.hasEvidenceGaps }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--warn)">当前证据缺口</div><sc-for list="{{ agent_decision.evidenceGaps }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
-                          <sc-if value="{{ agent_decision.hasRiskFlags }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--warn)">决策边界</div><sc-for list="{{ agent_decision.riskFlags }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
-                          <sc-if value="{{ agent_decision.hasNextActions }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--brand-600)">建议核验行动</div><sc-for list="{{ agent_decision.nextActions }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
-                          <sc-if value="{{ agent_decision.hasSupportedConclusions }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--pos)">当前证据支持</div><sc-for list="{{ agent_decision.supportedConclusions }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
-                          <sc-if value="{{ agent_decision.hasUnsupportedConclusions }}"><section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--neg)">当前证据暂不支持</div><sc-for list="{{ agent_decision.unsupportedConclusions }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
+                          <sc-if value="{{ agent_decision.hasEvidenceGaps }}"><section data-agent-boundary="gap" style="display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--warn)">当前证据缺口</div><sc-for list="{{ agent_decision.evidenceGaps }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
+                          <sc-if value="{{ agent_decision.hasRiskFlags }}"><section data-agent-boundary="risk" style="display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:#62798C">决策边界</div><sc-for list="{{ agent_decision.riskFlags }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
+                          <sc-if value="{{ agent_decision.hasNextActions }}"><section data-agent-boundary="action" style="display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--brand-600)">建议核验行动</div><sc-for list="{{ agent_decision.nextActions }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
+                          <sc-if value="{{ agent_decision.hasSupportedConclusions }}"><section data-agent-boundary="support" style="display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--pos)">当前证据支持</div><sc-for list="{{ agent_decision.supportedConclusions }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
+                          <sc-if value="{{ agent_decision.hasUnsupportedConclusions }}"><section data-agent-boundary="unsupported" style="display:flex;flex-direction:column;gap:7px"><div style="font-size:13px;font-weight:900;color:var(--neg)">当前证据暂不支持</div><sc-for list="{{ agent_decision.unsupportedConclusions }}" as="item"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ item.text }}</div></sc-for></section></sc-if>
                         </div>
 
-                        <details style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:12px 14px"><summary style="font-size:13.5px;font-weight:900;color:var(--text);cursor:pointer">完整分析说明</summary><div style="white-space:pre-wrap;font-size:13px;line-height:1.7;color:var(--text-2);margin-top:10px">{{ agent_answer }}</div></details>
+                        <details data-agent-fold=""><summary>完整分析说明</summary><div data-agent-long="" style="white-space:pre-wrap;font-size:13px;line-height:1.7;color:var(--text-2);padding:0 0 14px">{{ agent_answer }}</div></details>
                       </div>
 
                       <aside style="display:flex;flex-direction:column;gap:12px;min-width:0">
                         <section data-agent-featured-citations="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:flex;flex-direction:column;gap:10px">
-                          <div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div style="font-size:14px;font-weight:900;color:var(--text)">支撑本次判断的关键证据</div><span style="font-size:11.5px;color:var(--text-3)">{{ agent_featuredCitationCount }} 条关键证据</span></div>
+                          <div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div style="font-size:14px;font-weight:900;color:var(--text)">支撑本次判断的关键证据</div><span style="font-size:11.5px;color:var(--text-3)">{{ agent_featuredTotalCount }} 条关键证据</span></div>
                           <sc-if value="{{ agent_featuredFallback }}"><div style="font-size:11.5px;color:var(--warn);background:var(--warn-bg);border-radius:8px;padding:7px 9px">未返回代表性证据时，暂展示完整证据清单中的前若干条。</div></sc-if>
                           <sc-if value="{{ !agent_hasFeaturedCitations }}"><div style="font-size:12.5px;color:var(--text-3);background:var(--bg-sunken);border:1px dashed var(--border);border-radius:10px;padding:14px;text-align:center">{{ agent_noCitationText }}</div></sc-if>
                           <sc-for list="{{ agent_featuredCitations }}" as="ct">
-                            <div style="border-bottom:1px solid var(--border);padding:7px 2px 9px;display:flex;flex-direction:column;gap:5px">
-                              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><button onclick="{{ ct.onClick }}" style="border:0;background:transparent;padding:0;font-family:var(--font-mono);font-size:12px;font-weight:900;color:var(--tech-blue);cursor:pointer">{{ ct.source_id }}</button><span style="font-size:11px;color:var(--text-3)">{{ ct.source_type }}</span></div>
+                            <div data-agent-citation-item="" style="display:flex;flex-direction:column;gap:5px">
+                              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><button onclick="{{ ct.onClick }}" style="border:0;background:transparent;padding:0;font-family:var(--font-mono);font-size:12px;font-weight:900;color:var(--tech-blue);cursor:pointer">{{ ct.source_id }}</button><span title="{{ ct.source_type }}" style="font-size:11px;color:var(--text-3)">{{ ct.source_type }}</span></div>
                               <div style="font-size:12.3px;font-weight:800;line-height:1.4;color:var(--text)">{{ ct.title }}</div>
                               <sc-if value="{{ ct.hasOrganization }}"><div style="font-size:11.5px;color:var(--text-3)">企业：{{ ct.organization }}</div></sc-if>
                               <sc-if value="{{ ct.hasSupportSummary }}"><div style="font-size:12px;line-height:1.55;color:var(--text-2)">支持摘要：{{ ct.support_summary }}</div></sc-if>
@@ -5513,11 +5588,12 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                               <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center"><button onclick="{{ ct.onClick }}" style="height:29px;border-radius:8px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">查看证据详情</button><sc-if value="{{ ct.hasUrl }}"><a href="{{ ct.source_url }}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:var(--text-3);font-weight:700;text-decoration:none;overflow-wrap:anywhere">打开原始来源</a></sc-if></div>
                             </div>
                           </sc-for>
+                          <sc-if value="{{ agent_hasMoreFeaturedCitations }}"><button data-agent-chain-more="" aria-expanded="{{ agent_featuredCitationsOpen }}" onclick="{{ agent_toggleFeaturedCitations }}">{{ agent_featuredCitationsToggleText }}</button></sc-if>
                         </section>
 
                         <section data-agent-all-citations="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:flex;flex-direction:column;gap:10px">
                           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div style="font-size:14px;font-weight:900;color:var(--text)">完整证据清单</div><span style="font-size:11.5px;color:var(--text-3)">{{ agent_fullCitationCount }} 条</span></div>
-                          <sc-if value="{{ agent_showAllCitationsToggle }}"><button onclick="{{ agent_toggleAllCitations }}" style="height:31px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:800;padding:0 10px">{{ agent_allCitationsToggleText }}</button></sc-if>
+                          <sc-if value="{{ agent_showAllCitationsToggle }}"><button aria-expanded="{{ agent_allCitationsOpen }}" onclick="{{ agent_toggleAllCitations }}" style="height:31px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:800;padding:0 10px">{{ agent_allCitationsToggleText }}</button></sc-if>
                           <sc-if value="{{ !agent_hasFullCitations }}"><div style="font-size:12.5px;color:var(--text-3);background:var(--bg-sunken);border:1px dashed var(--border);border-radius:10px;padding:14px;text-align:center">{{ agent_noCitationText }}</div></sc-if>
                           <sc-if value="{{ agent_allCitationsOpen }}"><div style="display:flex;flex-direction:column;gap:8px"><sc-for list="{{ agent_allCitations }}" as="ct"><div style="border-top:1px solid var(--border);padding-top:8px"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11.5px;font-weight:900;color:var(--brand-600)">{{ ct.source_id }}</span><span style="font-size:11px;color:var(--text-3)">{{ ct.source_type }}</span></div><div style="font-size:12.3px;line-height:1.45;font-weight:750;color:var(--text);margin-top:3px">{{ ct.title }}</div><div data-produced-by-steps="" style="font-size:10.8px;color:var(--brand-600);font-weight:750;margin-top:4px">{{ ct.producedText }}</div><div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:6px"><button onclick="{{ ct.onClick }}" style="height:27px;border-radius:7px;border:1px solid var(--brand-300);background:var(--brand-50);color:var(--brand-600);font-size:11px;font-weight:800;padding:0 8px">查看证据详情</button><sc-if value="{{ ct.hasUrl }}"><a href="{{ ct.source_url }}" target="_blank" rel="noopener noreferrer" style="font-size:11px;color:var(--brand-600);font-weight:700;text-decoration:none;overflow-wrap:anywhere">原始来源</a></sc-if></div></div></sc-for></div></sc-if>
                         </section>
@@ -5525,21 +5601,21 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                     </div>
                   </sc-if>
 
-                  <sc-if value="{{ agent_hasLimitations }}"><details style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:12px 14px"><summary style="font-size:13px;font-weight:900;color:var(--text);cursor:pointer">限制说明</summary><div style="display:flex;flex-direction:column;gap:7px;margin-top:10px"><sc-for list="{{ agent_limitations }}" as="lim"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2);background:var(--bg-sunken);border-radius:8px;padding:7px 9px">{{ lim.text }}</div></sc-for></div></details></sc-if>
+                  <sc-if value="{{ agent_hasLimitations }}"><details data-agent-fold=""><summary>限制说明</summary><div style="display:flex;flex-direction:column;gap:7px;padding:0 0 14px"><sc-for list="{{ agent_limitations }}" as="lim"><div style="font-size:12.5px;line-height:1.6;color:var(--text-2)">{{ lim.text }}</div></sc-for></div></details></sc-if>
                   <sc-if value="{{ agent_hasWarnings }}"><section style="background:var(--warn-bg);border:1px solid var(--warn);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;font-weight:900;color:var(--warn)">运行提示</div><sc-for list="{{ agent_warnings }}" as="w"><div style="font-size:12.5px;line-height:1.6;color:var(--warn)">{{ w.text }}</div></sc-for></section></sc-if>
 
-                  <section data-agent-run-details="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:flex;flex-direction:column;gap:11px">
-                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;gap:6px"><div style="font-size:14px;font-weight:900;color:var(--text)">运行详情</div><div style="display:flex;gap:7px;flex-wrap:wrap"><sc-for list="{{ agent_runSummary }}" as="item"><span style="font-size:11.5px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 9px">{{ item.label }}：{{ item.value }}</span></sc-for></div></div><button onclick="{{ agent_toggleRunDetails }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:11.5px;font-weight:800;padding:0 10px">{{ agent_runDetailsToggleText }}</button></div>
+                  <section data-agent-run-details="" data-agent-fold="" style="display:flex;flex-direction:column;gap:11px">
+                    <button data-agent-fold-button="" aria-expanded="{{ agent_runDetailsOpen }}" onclick="{{ agent_toggleRunDetails }}"><span>运行详情</span><span>{{ agent_runDetailsToggleText }}</span></button><div style="display:flex;gap:7px;flex-wrap:wrap"><sc-for list="{{ agent_runSummary }}" as="item"><span style="font-size:11.5px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 9px">{{ item.label }}：{{ item.value }}</span></sc-for></div>
                     <sc-if value="{{ agent_runDetailsOpen }}"><sc-if value="{{ agent_hasRunDetails }}"><div style="display:grid;grid-template-columns:150px minmax(0,1fr);gap:7px 12px;border-top:1px solid var(--border);padding-top:10px;font-size:12px"><sc-for list="{{ agent_runDetailsRows }}" as="row"><span style="color:var(--text-3);font-weight:750">{{ row.label }}</span><span style="color:var(--text-2);overflow-wrap:anywhere">{{ row.value }}<sc-if value="{{ row.detail }}"><span style="display:block;font-size:10.5px;color:var(--text-3);font-family:var(--font-mono);margin-top:2px">{{ row.detail }}</span></sc-if></span></sc-for></div></sc-if></sc-if>
                   </section>
 
                 </div>
               </sc-if>
 
-              <section data-agent-capabilities="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:14px 15px;display:flex;flex-direction:column;gap:10px">
+              <section data-agent-capabilities="" data-agent-fold="" style="display:flex;flex-direction:column;gap:10px">
                 <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
                   <div style="display:flex;flex-direction:column;gap:5px;min-width:0"><div style="font-size:14px;font-weight:900;color:var(--text)">数据范围与技术详情</div><div style="font-size:12px;color:var(--text-3);line-height:1.5">查看数据版本、任务范围、企业覆盖和工具路由。</div><div style="display:flex;gap:7px;flex-wrap:wrap"><sc-for list="{{ agent_capDetailSummary }}" as="item"><span style="font-size:11.5px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 9px">{{ item.label }}：{{ item.value }}</span></sc-for></div></div>
-                  <button onclick="{{ agent_toggleCapabilities }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:850;padding:0 11px">{{ agent_capabilitiesToggleText }}</button>
+                  <button aria-expanded="{{ agent_capabilitiesOpen }}" onclick="{{ agent_toggleCapabilities }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:850;padding:0 11px">{{ agent_capabilitiesToggleText }}</button>
                 </div>
                 <sc-if value="{{ agent_capabilitiesOpen }}">
                   <div style="display:flex;flex-direction:column;gap:11px">

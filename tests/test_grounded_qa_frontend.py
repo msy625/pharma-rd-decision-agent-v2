@@ -114,7 +114,7 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             "不提供成功率预测或投资建议",
             "推荐演示",
             "提出你的研发问题",
-            "本次问题",
+            "本次决策问题",
             "Agent 判断",
             "Agent 决策过程",
             "运行详情",
@@ -318,6 +318,68 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             "mock_agent_result",
         ]:
             self.assertNotIn(forbidden, agent_all)
+
+    def test_25_visual_hierarchy_and_progressive_disclosure_contracts(self):
+        for snippet in [
+            'grid-template-columns:minmax(0,1.8fr) minmax(300px,.8fr)',
+            'data-agent-hero-stat',
+            'data-agent-judgment',
+            'data-agent-boundary="gap"',
+            'data-agent-boundary="unsupported"',
+            'data-agent-fold',
+            'data-agent-fold-button',
+        ]:
+            self.assertIn(snippet, self.template)
+        for snippet in [
+            "agentChainLinksOpen:false",
+            "agentFeaturedCitationsOpen:false",
+            "agentChainLinksAll.slice(0,3)",
+            "agentFeaturedAll.slice(0,3)",
+            "agent_featuredTotalCount:agentFeaturedAll.length",
+        ]:
+            self.assertIn(snippet, self.evidence_component)
+        for binding in [
+            'aria-expanded="{{ agent_processOpen }}"',
+            'aria-expanded="{{ agent_chainLinksOpen }}"',
+            'aria-expanded="{{ agent_featuredCitationsOpen }}"',
+            'aria-expanded="{{ agent_allCitationsOpen }}"',
+            'aria-expanded="{{ agent_runDetailsOpen }}"',
+            'aria-expanded="{{ agent_capabilitiesOpen }}"',
+        ]:
+            self.assertIn(binding, self.evidence_template)
+
+    def test_25b_technical_details_is_the_unique_last_agent_module(self):
+        agent_start = self.evidence_template.index('<div data-grounded-qa="" data-agent-page=""')
+        agent_page = self.evidence_template[agent_start:]
+        hero = agent_page.index('data-agent-hero=""')
+        stats = agent_page.index('data-agent-hero-stats=""')
+        question = agent_page.index('data-agent-question=""')
+        demo = agent_page.index('data-agent-demo=""')
+        result = agent_page.index('data-agent-result=""')
+        capabilities = agent_page.index('data-agent-capabilities=""')
+        self.assertTrue(hero < stats < question < demo < result < capabilities)
+        self.assertEqual(agent_page.count('data-agent-capabilities=""'), 1)
+        self.assertEqual(agent_page.count('数据范围与技术详情'), 1)
+        for forbidden in [
+            '[data-agent-page]>[data-agent-hero]{order:',
+            '[data-agent-page]>[data-agent-hero-stats]{order:',
+            '[data-agent-page]>[data-agent-question]{order:',
+            '[data-agent-page]>[data-agent-demo]{order:',
+            '[data-agent-page]>[data-agent-result]{order:',
+        ]:
+            self.assertNotIn(forbidden, self.template)
+
+    def test_26_agent_responsive_rules_prevent_wide_mobile_layouts(self):
+        for snippet in [
+            '@media(max-width:1080px)',
+            '@media(max-width:768px)',
+            '@media(max-width:420px)',
+            '[data-agent-workflow]{grid-template-columns:1fr',
+            '[data-agent-golden-cases],[data-agent-decision-sections]{grid-template-columns:minmax(0,1fr)',
+            '[data-agent-golden-cases]{grid-template-columns:minmax(0,1fr)',
+            'overflow-wrap:anywhere',
+        ]:
+            self.assertIn(snippet, self.template)
 
 
 if __name__ == "__main__":
