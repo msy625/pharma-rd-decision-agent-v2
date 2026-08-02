@@ -1446,10 +1446,8 @@
   function loadReactUmd() {
     const w = window;
     if (w.React && w.ReactDOM) return Promise.resolve();
-    return Promise.all([
-      loadScript(REACT_URL, REACT_SRI),
-      loadScript(REACT_DOM_URL, REACT_DOM_SRI)
-    ]).then(() => void 0);
+    const reactReady = w.React ? Promise.resolve() : loadScript(REACT_URL, REACT_SRI);
+    return reactReady.then(() => w.ReactDOM ? void 0 : loadScript(REACT_DOM_URL, REACT_DOM_SRI));
   }
   function init() {
     const runtime = createRuntime(document);

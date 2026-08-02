@@ -33,6 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
 INDEX_HTML = STATIC_DIR / "index.html"
 FAVICON_SVG = STATIC_DIR / "favicon.svg"
+INDEX_HTML_CONTENT = INDEX_HTML.read_text(encoding="utf-8")
 SERVICE_NAME = "pharma-rd-decision-agent"
 LEGACY_UNAVAILABLE_REASON = "旧企业分析数据或可选依赖未配置"
 LEGACY_REQUIRED_TABLES = (
@@ -1856,10 +1857,10 @@ def ready() -> dict[str, Any]:
         ) from exc
 
 
-@app.get("/api/runtime-capabilities")
-def runtime_capabilities() -> dict[str, Any]:
+def _runtime_capabilities_payload(*, workbench_available: bool | None = None) -> dict[str, Any]:
     competition_available = _competition_core_available()
-    workbench_available = _evidence_workbench_available()
+    if workbench_available is None:
+        workbench_available = _evidence_workbench_available()
     company_profile_available = _company_evidence_profile_available()
     timeline_available = _rd_event_timeline_available()
     brief_available = _evidence_decision_brief_available()
@@ -1876,11 +1877,35 @@ def runtime_capabilities() -> dict[str, Any]:
     }
 
 
+@app.get("/api/runtime-capabilities")
+def runtime_capabilities() -> dict[str, Any]:
+    return _runtime_capabilities_payload()
+
+
+@app.get("/api/initial-state")
+def initial_state() -> dict[str, Any]:
+    try:
+        workbench = _evidence_workbench_service().build_workbench()
+        return {
+            "runtime_capabilities": _runtime_capabilities_payload(workbench_available=True),
+            "evidence_workbench": {
+                "workbench": workbench,
+                "metadata": {
+                    "data_scope": workbench.get("metadata", {}).get(
+                        "data_scope", "verified_nsclc_multi_company_sample"
+                    ),
+                },
+            },
+        }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
 @app.get("/", response_class=HTMLResponse)
 def index() -> str:
     return HTMLResponse(
-        INDEX_HTML.read_text(encoding="utf-8"),
-        headers={"Cache-Control": "no-store, max-age=0"},
+        INDEX_HTML_CONTENT,
+        headers={"Cache-Control": "public, max-age=300"},
     )
 
 

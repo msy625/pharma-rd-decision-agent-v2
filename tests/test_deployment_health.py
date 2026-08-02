@@ -153,6 +153,15 @@ class DeploymentHealthTest(unittest.TestCase):
         after = {name for name in blocked if name in sys.modules}
         self.assertEqual(after - before, set())
 
+    def test_06b_homepage_is_cached_and_uses_module_cached_html(self):
+        with patch.object(Path, "read_text", side_effect=AssertionError("must not read index per request")):
+            first = self.client.get("/")
+            second = self.client.get("/")
+        self.assertEqual(first.status_code, 200, first.text[:200])
+        self.assertEqual(second.status_code, 200, second.text[:200])
+        self.assertEqual(first.headers.get("cache-control"), "public, max-age=300")
+        self.assertEqual(first.content, second.content)
+
     def test_07_import_and_core_api_survive_missing_old_heavy_dependencies(self):
         code = r'''
 import asyncio

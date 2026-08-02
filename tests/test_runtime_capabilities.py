@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 import sys
 import unittest
 from pathlib import Path
@@ -63,6 +64,30 @@ class RuntimeCapabilitiesTest(unittest.TestCase):
         for forbidden in [str(ROOT), home_marker, "traceback", "DEEPSEEK_API_KEY", "sk-"]:
             self.assertNotIn(forbidden, text)
         json.loads(text)
+
+    def test_06_initial_state_combines_capabilities_and_default_workbench(self):
+        with patch.object(webapp_main, "_legacy_features_available", return_value=False):
+            response = self.client.get("/api/initial-state")
+        self.assertEqual(response.status_code, 200, response.text)
+        payload = response.json()
+        self.assertEqual(payload["runtime_capabilities"]["default_page"], "today")
+        self.assertFalse(payload["runtime_capabilities"]["legacy_features_available"])
+        self.assertEqual(payload["evidence_workbench"]["workbench"]["summary"]["source_count"], 39)
+        self.assertEqual(
+            payload["evidence_workbench"]["metadata"]["data_scope"],
+            "verified_nsclc_multi_company_sample",
+        )
+
+    def test_07_initial_state_keeps_existing_endpoints_unchanged(self):
+        initial = self.client.get("/api/initial-state").json()
+        capabilities = self.client.get("/api/runtime-capabilities").json()
+        workbench = self.client.get("/api/evidence/workbench").json()
+        self.assertEqual(initial["runtime_capabilities"], capabilities)
+        initial_workbench = deepcopy(initial["evidence_workbench"])
+        standalone_workbench = deepcopy(workbench)
+        initial_workbench["workbench"]["metadata"].pop("generated_at", None)
+        standalone_workbench["workbench"]["metadata"].pop("generated_at", None)
+        self.assertEqual(initial_workbench, standalone_workbench)
 
 
 if __name__ == "__main__":

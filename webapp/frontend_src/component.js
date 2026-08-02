@@ -114,7 +114,7 @@ class Component extends DCLogic {
     const tick=(t)=>{ let k=Math.min(1,(t-t0)/dur); k=1-Math.pow(1-k,3); this.setState({anim:k}); if(k<1) this._raf=requestAnimationFrame(tick); };
     this._raf=requestAnimationFrame(tick);
   }
-  componentDidMount(){ this.runCount(); this.loadRuntimeCapabilities(); }
+  componentDidMount(){ this.runCount(); this.loadInitialState(); }
 
   // ===================== 多会话 / 历史对话 =====================
   _initConvs(){
@@ -177,6 +177,29 @@ class Component extends DCLogic {
   // stale-while-revalidate：返回该槽位最近一次成功拉取的数据（即便正在切换/key 不匹配），
   // 避免切公司时回退到演示预设造成闪烁；新数据到达后会覆盖该槽位自动更新。
   _matched(slot){ const m=this._get(slot); return m ? m.data : null; }
+
+  loadInitialState(){
+    if(this.state.runtimeCapabilitiesLoading) return;
+    this.setState({runtimeCapabilitiesLoading:true,evidenceWorkbenchLoading:true,evidenceWorkbenchError:''});
+    this._api('/api/initial-state').then(d=>{
+      const caps=(d&&d.runtime_capabilities)||{};
+      const workbenchPayload=(d&&d.evidence_workbench)||{};
+      const requestedPage=caps.default_page||'today';
+      const nextPage=this._isLegacyPage(requestedPage)?(caps.evidence_workbench_available?'today':'evidence'):requestedPage;
+      this.setState({
+        runtimeCapabilities:caps,
+        runtimeCapabilitiesLoaded:true,
+        runtimeCapabilitiesLoading:false,
+        evidenceWorkbench:(workbenchPayload&&workbenchPayload.workbench)||null,
+        evidenceWorkbenchLoaded:true,
+        evidenceWorkbenchLoading:false,
+        page:nextPage,
+        legacyNotice:''
+      }, ()=>this.loadPage());
+    }).catch(()=>{
+      this.setState({runtimeCapabilitiesLoading:false,evidenceWorkbenchLoading:false}, ()=>this.loadRuntimeCapabilities());
+    });
+  }
 
   loadRuntimeCapabilities(){
     if(this.state.runtimeCapabilitiesLoading) return;

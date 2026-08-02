@@ -171,6 +171,31 @@ class FrontendOfflineAssetsTest(unittest.TestCase):
         ]:
             self.assertIn(expected, self.runtime)
 
+    def test_15_startup_scripts_are_deferred_once_in_dependency_order(self):
+        expected = [
+            "/static/vendor/react/react.production.min-18.3.1.js",
+            "/static/vendor/react-dom/react-dom.production.min-18.3.1.js",
+            "/static/dc-runtime.js",
+        ]
+        scripts = re.findall(r'<script\b[^>]*\bsrc=["\']([^"\']+)["\'][^>]*>', self.template)
+        self.assertEqual(scripts, expected)
+        for path in expected:
+            self.assertEqual(self.template.count(f'src="{path}"'), 1)
+        for tag in re.findall(r'<script\b[^>]*\bsrc=["\'][^"\']+["\'][^>]*>', self.template):
+            self.assertRegex(tag, r"\bdefer\b")
+
+    def test_16_first_screen_uses_initial_state_with_legacy_fallback(self):
+        self.assertIn("componentDidMount(){ this.runCount(); this.loadInitialState(); }", self.component)
+        self.assertEqual(self.component.count("this._api('/api/initial-state')"), 1)
+        self.assertIn("()=>this.loadRuntimeCapabilities()", self.component)
+        self.assertIn("this._api('/api/runtime-capabilities')", self.component)
+        self.assertIn("this._api('/api/evidence/workbench')", self.component)
+
+    def test_17_runtime_fallback_does_not_reload_existing_react_globals(self):
+        self.assertIn("w.React ? Promise.resolve() : loadScript(REACT_URL", self.runtime)
+        self.assertIn("reactReady.then(() => w.ReactDOM ? void 0 : loadScript(REACT_DOM_URL", self.runtime)
+        self.assertNotIn("Promise.all([\n      loadScript(REACT_URL", self.runtime)
+
 
 if __name__ == "__main__":
     unittest.main()

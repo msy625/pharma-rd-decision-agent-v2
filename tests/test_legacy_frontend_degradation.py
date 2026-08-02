@@ -29,11 +29,12 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         cls.runtime = RUNTIME.read_text(encoding="utf-8")
         cls.client = _ASGIClient(webapp_main.app)
 
-    def test_01_startup_calls_runtime_capabilities_before_old_bootstrap(self):
+    def test_01_startup_calls_initial_state_before_old_bootstrap(self):
         mount = re.search(r"componentDidMount\(\)\{([^}]+)\}", self.component).group(1)
-        self.assertIn("this.loadRuntimeCapabilities()", mount)
+        self.assertIn("this.loadInitialState()", mount)
         self.assertNotIn("this.loadBootstrap()", mount)
         self.assertNotIn("this.loadPage()", mount)
+        self.assertIn("'/api/initial-state'", self.component)
         self.assertIn("'/api/runtime-capabilities'", self.component)
 
     def test_02_light_runtime_defaults_to_real_workbench_and_skips_old_requests(self):

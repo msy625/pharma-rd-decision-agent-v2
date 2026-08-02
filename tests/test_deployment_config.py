@@ -79,9 +79,9 @@ class DeploymentConfigTest(unittest.TestCase):
     def test_08_render_health_check_path(self):
         self.assertIn("healthCheckPath: /health", _render_text())
 
-    def test_09_render_preview_plan_is_explicit(self):
+    def test_09_render_starter_plan_is_explicit(self):
         text = _render_text()
-        self.assertIn("plan: free", text)
+        self.assertIn("plan: starter", text)
         self.assertIn("region: singapore", text)
         self.assertIn("autoDeploy: false", text)
 
