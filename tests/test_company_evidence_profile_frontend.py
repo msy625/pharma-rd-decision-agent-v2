@@ -46,8 +46,45 @@ class CompanyEvidenceProfileFrontendTest(unittest.TestCase):
         self.assertIn("profile_scopeWarning", self.view)
 
     def test_05_core_metrics_and_distributions_are_rendered(self):
-        for label in ["当前来源", "已核验来源", "试验级证据链", "药物级监管链", "多来源试验链", "单来源试验链", "论文来源", "试验登记来源", "最新资料", "历史版本", "独立资料", "待确认关系", "来源类型构成", "研究状态构成"]:
+        for label in ["已核验来源", "试验级证据链", "药物级监管链", "多来源试验链", "单来源试验链", "论文来源", "试验登记来源", "最新资料", "历史版本", "独立资料", "待确认关系", "证据结构概览", "资料覆盖", "来源类型构成", "研究状态构成"]:
             self.assertIn(label, self.values + self.view)
+        self.assertIn("data-profile-structure-grid", self.view)
+        self.assertIn("data-profile-bar-track", self.view)
+        self.assertIn("barStyle", self.values)
+
+    def test_05a_profile_first_screen_uses_dedicated_visual_structures(self):
+        redesigned = self.view[
+            self.view.index('<sc-if value="{{ profile_hasData }}">') : self.view.index('<sc-if value="{{ profile_legacyDesign }}">')
+        ]
+        for marker in [
+            "data-profile-secondary-actions",
+            "data-profile-coverage-bars",
+            "data-profile-source-tags",
+            "data-profile-compact-stats",
+        ]:
+            self.assertIn(marker, redesigned)
+        self.assertNotIn("其他来源类型及数量", self.values + redesigned)
+        self.assertIn("profile_otherSourceTypes", self.values + redesigned)
+        self.assertIn("profile_hasOtherSourceTypes", self.values + redesigned)
+        self.assertIn("当前样本暂无其他来源类型", redesigned)
+        self.assertIn("grid-template-columns:minmax(0,1.35fr) minmax(240px,.9fr) minmax(240px,.9fr)", self.template)
+        self.assertIn("word-break:keep-all", self.template)
+        self.assertIn("writing-mode:horizontal-tb", self.template)
+        self.assertNotIn("min-height:36px", redesigned)
+
+    def test_05b_profile_responsive_grid_and_main_scroll_contract(self):
+        self.assertIn("[data-profile-trial-grid]{display:grid;grid-template-columns:repeat(3", self.template)
+        self.assertIn("[data-profile-trial-grid]{grid-template-columns:repeat(2", self.template)
+        self.assertIn("[data-profile-trial-grid]{grid-template-columns:minmax(0,1fr)}", self.template)
+        redesigned = self.view[
+            self.view.index('<sc-if value="{{ profile_hasData }}">') : self.view.index('<sc-if value="{{ profile_legacyDesign }}">')
+        ]
+        self.assertNotIn("max-height:430px", redesigned)
+        self.assertNotIn("overflow:auto", redesigned)
+        self.assertIn("slice(0,4)", self.values)
+        self.assertIn("profile_toggleIndependent", self.values + redesigned)
+        self.assertIn("profile_toggleUnresolved", self.values + redesigned)
+        self.assertIn("data-profile-regulatory-empty", redesigned)
 
     def test_06_trial_chain_cards_and_jump(self):
         for text in ["chain_id", "trial_id", "来源数量", "版本构成", "研究状态", "查看证据链"]:

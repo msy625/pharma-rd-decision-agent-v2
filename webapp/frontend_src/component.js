@@ -30,6 +30,7 @@ class Component extends DCLogic {
     evidenceWorkbench:null, evidenceWorkbenchLoading:false, evidenceWorkbenchLoaded:false, evidenceWorkbenchError:'',
     companyProfileCompany:'恒瑞医药', companyProfileCompanies:[], companyProfile:null,
     companyProfileLoading:false, companyProfileCompaniesLoading:false, companyProfileError:'', companyProfileAliasesOpen:false,
+    companyProfileIndependentOpen:false, companyProfileUnresolvedOpen:false,
     timelineCompany:'', timelineTrial:'', timelineDrug:'', timelineEventType:'', timelineYear:'',
     timelineIncludeAuxiliary:false, timelineData:null, timelineLoading:false, timelineLoaded:false, timelineError:'',
     timelineCompanyOptions:[], timelineTrialOptions:[], timelineDrugOptions:[], timelineEventTypeOptions:[], timelineYearOptions:[],
@@ -258,7 +259,7 @@ class Component extends DCLogic {
     });
   }
   selectCompanyEvidenceProfile(value){
-    this.setState({companyProfileCompany:value,companyProfile:null,companyProfileError:'',companyProfileAliasesOpen:false},()=>this.loadCompanyEvidenceProfile());
+    this.setState({companyProfileCompany:value,companyProfile:null,companyProfileError:'',companyProfileAliasesOpen:false,companyProfileIndependentOpen:false,companyProfileUnresolvedOpen:false},()=>this.loadCompanyEvidenceProfile());
   }
   openProfileChain(chainId){
     const cid=String(chainId||'').trim();
@@ -2146,11 +2147,20 @@ class Component extends DCLogic {
       {canonical_name:'恒瑞医药',display_name:'恒瑞医药'},
       {canonical_name:'百济神州',display_name:'百济神州 / BeOne Medicines'}
     ]).map(item=>({value:text(item.canonical_name),label:text(item.display_name||item.canonical_name)}));
-    const distributions=(items)=>Array.isArray(items)?items.map(item=>({label:text(item&&item.label),count:text(item&&item.count)})):[];
+    const distributions=(items,kind)=>{
+      const rows=Array.isArray(items)?items:[];
+      const max=Math.max(1,...rows.map(item=>Number(item&&item.count)||0));
+      return rows.map((item,index)=>{
+        const label=text(item&&item.label), count=Number(item&&item.count)||0;
+        const neutral=/unknown|未填写|不适用|暂无/i.test(String(label));
+        const colors=kind==='status'?['#6E879D','#8298AA','#9AABB9']:['var(--deep-sea)','var(--medical-teal)','#7890A5'];
+        return {label,count:text(count),barStyle:'width:'+(count/max*100).toFixed(2)+'%;background:'+(neutral?'#A8B4BF':colors[index%colors.length])};
+      });
+    };
     const trialChains=(Array.isArray(profile.trial_chains)?profile.trial_chains:[]).map(chain=>({
       chain_id:text(chain.chain_id),study_name:text(chain.study_name||chain.chain_name),trial_id:text(chain.trial_id),source_count:text(chain.source_count),
       version_text:'最新 '+text(chain.latest_count)+' · 历史 '+text(chain.historical_count)+' · 独立 '+text(chain.independent_count),
-      study_status:text(chain.study_status),onClick:()=>this.openProfileChain(chain.chain_id)
+      study_status:text(chain.study_status),statusTone:/unknown|未填写|不适用|暂无/i.test(String(chain.study_status||''))?'neutral':(/terminated|withdrawn|suspended/i.test(String(chain.study_status||''))?'muted':'confirmed'),onClick:()=>this.openProfileChain(chain.chain_id)
     }));
     const regulatoryChains=(Array.isArray(profile.regulatory_chains)?profile.regulatory_chains:[]).map(chain=>({
       chain_id:text(chain.chain_id),chain_name:text(chain.chain_name),source_count:text(chain.source_count),counting_note:text(chain.counting_note),
@@ -2158,43 +2168,88 @@ class Component extends DCLogic {
       sources:(Array.isArray(chain.sources)?chain.sources:[]).map(source=>({source_id:text(source.source_id),source_type:text(source.source_type),title:text(source.title),status_note:text(source.status_note),risk_notes:text(source.risk_notes)})),
       onClick:()=>this.openProfileChain(chain.chain_id)
     }));
-    const independent=(Array.isArray(profile.independent_sources)?profile.independent_sources:[]).map(item=>({source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),link_status:text(item.link_status),study_status:text(item.study_status)}));
-    const unresolved=(Array.isArray(profile.unresolved_links)?profile.unresolved_links:[]).map(item=>({source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),description:text(item.description),gaps:Array.isArray(item.evidence_gaps)?item.evidence_gaps.join('；'):text(item.evidence_gaps)}));
+    const independentAll=(Array.isArray(profile.independent_sources)?profile.independent_sources:[]).map(item=>{
+      const linkStatus=text(item.link_status);
+      const confirmed=/已确认|证据链|confirmed/i.test(String(item.link_status||''));
+      return {source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),link_status:linkStatus,study_status:text(item.study_status),stateLabel:confirmed?'已进入证据链':'独立资料',stateTone:confirmed?'confirmed':'independent'};
+    });
+    const unresolvedAll=(Array.isArray(profile.unresolved_links)?profile.unresolved_links:[]).map(item=>({source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),description:text(item.description),gaps:Array.isArray(item.evidence_gaps)?item.evidence_gaps.join('；'):text(item.evidence_gaps)}));
     const limitations=(Array.isArray(profile.limitations)?profile.limitations:[]).map(item=>({text:text(item)}));
     const aliases=Array.isArray(company.aliases)?company.aliases.map(alias=>({text:text(alias)})):[];
     const visibleAliases=s.companyProfileAliasesOpen?aliases:aliases.slice(0,2);
     const sourceTypeItems=Array.isArray(profile.source_type_distribution)?profile.source_type_distribution:[];
-    const otherSourceTypes=sourceTypeItems.filter(item=>!['ClinicalTrials.gov','PubMed'].includes(String(item&&item.label||''))).map(item=>text(item.label)+' '+text(item.count));
+    const otherSourceTypes=sourceTypeItems.filter(item=>!['ClinicalTrials.gov','PubMed'].includes(String(item&&item.label||''))).map(item=>({label:text(item.label),count:text(item.count)}));
     const coreMetric=(label,key,color,bg,note)=>({label,value:text(summary[key]),color,bg,note});
     const row=(label,key,note)=>({label,value:text(summary[key]),note:note||''});
     const profileGroups=[
-      {title:'证据覆盖',rows:[row('当前来源','source_count'),row('已核验来源','verified_source_count'),row('论文来源','publication_source_count'),row('试验登记来源','trial_registry_source_count'),{label:'其他来源类型构成',value:otherSourceTypes.join(' · ')||'当前样本暂无其他来源类型',note:''}]},
-      {title:'证据链结构',rows:[row('试验级证据链','trial_chain_count'),row('药物级监管链','regulatory_chain_count','不计入试验数量'),row('单来源试验链','single_source_trial_chain_count'),row('多来源试验链','multi_source_trial_chain_count')]},
-      {title:'版本与可追溯性',rows:[row('最新资料','latest_count'),row('历史版本','historical_count'),row('独立资料','independent_count'),row('待确认关系','unresolved_link_count','缺少明确一对一核验依据')]}
+      {title:'资料覆盖',note:'按当前核验样本的来源类型归纳',rows:[row('论文来源','publication_source_count'),row('试验登记来源','trial_registry_source_count')]},
+      {title:'证据链结构',note:'监管资料与试验证据分开计数',rows:[row('单来源试验链','single_source_trial_chain_count'),row('多来源试验链','multi_source_trial_chain_count'),row('药物级监管链','regulatory_chain_count','监管链不计入试验数量')]},
+      {title:'版本与可追溯性',note:'保留版本关系与未形成版本关系的资料',rows:[row('最新资料','latest_count'),row('历史版本','historical_count'),row('独立资料','independent_count')]}
+    ];
+    const publicationCount=Number(summary.publication_source_count||0);
+    const registryCount=Number(summary.trial_registry_source_count||0);
+    const primarySourceMax=Math.max(1,publicationCount,registryCount);
+    const coverageSources=[
+      {label:'论文来源',value:text(summary.publication_source_count),barStyle:'width:'+(publicationCount/primarySourceMax*100).toFixed(2)+'%;background:var(--deep-sea)'},
+      {label:'试验登记来源',value:text(summary.trial_registry_source_count),barStyle:'width:'+(registryCount/primarySourceMax*100).toFixed(2)+'%;background:var(--medical-teal)'}
+    ];
+    const compactStat=(label,key,tone,note)=>({label,value:text(summary[key]),tone,note:note||''});
+    const singleChainCount=Number(summary.single_source_trial_chain_count||0);
+    const multiSourceCount=Number(summary.multi_source_trial_chain_count||0);
+    const regulatoryCount=Number(summary.regulatory_chain_count||0);
+    const latestCount=Number(summary.latest_count||0);
+    const historicalCount=Number(summary.historical_count||0);
+    const independentCount=Number(summary.independent_count||0);
+    const chainStats=[
+      compactStat('单来源试验链','single_source_trial_chain_count',singleChainCount?'deep':'neutral'),
+      compactStat('多来源试验链','multi_source_trial_chain_count',multiSourceCount?'teal':'neutral'),
+      compactStat('药物级监管链','regulatory_chain_count',regulatoryCount?'bluegray':'neutral')
+    ];
+    const versionStats=[
+      compactStat('最新资料','latest_count',latestCount?'deep':'neutral'),
+      compactStat('历史版本','historical_count',historicalCount?'bluegray':'neutral'),
+      compactStat('独立资料','independent_count',independentCount?'bluegray':'neutral')
     ];
     const unresolvedCount=Number(summary.unresolved_link_count||0);
+    const verifiedCount=Number(summary.verified_source_count||0);
+    const trialCount=Number(summary.trial_chain_count||0);
+    const formatDate=(value)=>{
+      const raw=String(value==null?'':value).trim();
+      if(!raw) return text(value);
+      const parsed=new Date(raw);
+      if(Number.isNaN(parsed.getTime())) return text(value);
+      return new Intl.DateTimeFormat('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',hour:raw.includes('T')?'2-digit':undefined,minute:raw.includes('T')?'2-digit':undefined,hour12:false}).format(parsed);
+    };
+    const independent=s.companyProfileIndependentOpen?independentAll:independentAll.slice(0,4);
+    const unresolved=s.companyProfileUnresolvedOpen?unresolvedAll:unresolvedAll.slice(0,4);
     return {
       profile_loading:s.companyProfileLoading, profile_hasError:!!s.companyProfileError, profile_error:s.companyProfileError,
-      profile_hasData:!!company.canonical_name, profile_empty:!s.companyProfileLoading&&!s.companyProfileError&&!!s.companyProfile&&!company.canonical_name,
+      profile_hasData:!!company.canonical_name, profile_legacyDesign:false, profile_empty:!s.companyProfileLoading&&!s.companyProfileError&&!!s.companyProfile&&!company.canonical_name,
       profile_company:s.companyProfileCompany, profile_companies:companies, profile_onCompany:(e)=>this.selectCompanyEvidenceProfile(e.target.value),
       profile_reload:()=>this.loadCompanyEvidenceProfile(), profile_displayName:text(company.display_name), profile_canonicalName:text(company.canonical_name),
       profile_aliases:visibleAliases, profile_hasAliases:visibleAliases.length>0,
       profile_hasMoreAliases:aliases.length>2, profile_aliasToggleLabel:s.companyProfileAliasesOpen?'收起别名':'查看全部别名（'+aliases.length+'）',
       profile_toggleAliases:()=>this.setState({companyProfileAliasesOpen:!this.state.companyProfileAliasesOpen}),
       profile_metrics:[
-        coreMetric('已核验来源','verified_source_count','var(--pos)','var(--pos-bg)','人工核验状态'),
-        coreMetric('试验级证据链','trial_chain_count','var(--info)','var(--info-bg)','按试验去重'),
-        coreMetric('多来源证据链','multi_source_trial_chain_count','var(--brand-600)','var(--brand-50)','多来源关联结构'),
+        coreMetric('已核验来源','verified_source_count',verifiedCount?'var(--pos)':'var(--text-2)',verifiedCount?'#ECF8F3':'#F5F7F9','当前样本内人工核验'),
+        coreMetric('试验级证据链','trial_chain_count',trialCount?'#315F8A':'var(--text-2)',trialCount?'#EEF5FB':'#F5F7F9','按试验身份去重'),
+        coreMetric('多来源证据链','multi_source_trial_chain_count',multiSourceCount?'var(--medical-teal)':'var(--text-2)',multiSourceCount?'#EAF7F5':'#F5F7F9',multiSourceCount?'由多类来源共同支持':'当前样本暂无多来源链'),
         coreMetric('待确认关系','unresolved_link_count',unresolvedCount?'var(--warn)':'var(--text-2)',unresolvedCount?'var(--warn-bg)':'var(--bg-sunken)',unresolvedCount?'仍需补充明确关联依据':'当前样本无待确认关系')
       ],
       profile_groups:profileGroups,
-      profile_sourceTypes:distributions(profile.source_type_distribution), profile_studyStatuses:distributions(profile.study_status_distribution),
+      profile_coverageSources:coverageSources, profile_otherSourceTypes:otherSourceTypes, profile_hasOtherSourceTypes:otherSourceTypes.length>0,
+      profile_chainStats:chainStats, profile_versionStats:versionStats,
+      profile_sourceTypes:distributions(profile.source_type_distribution,'source'), profile_studyStatuses:distributions(profile.study_status_distribution,'status'),
       profile_trialChains:trialChains, profile_hasTrialChains:trialChains.length>0,
       profile_regulatoryChains:regulatoryChains, profile_hasRegulatoryChains:regulatoryChains.length>0,
       profile_noRegulatory:!!company.canonical_name&&!regulatoryChains.length,
-      profile_independent:independent, profile_hasIndependent:independent.length>0,
-      profile_unresolved:unresolved, profile_hasUnresolved:unresolved.length>0,
-      profile_limitations:limitations, profile_dataVersion:text(metadata.data_version), profile_verifiedAt:text(metadata.latest_verified_at), profile_generatedAt:text(metadata.generated_at),
+      profile_independent:independent, profile_hasIndependent:independentAll.length>0, profile_independentCount:independentAll.length,
+      profile_hasMoreIndependent:independentAll.length>4, profile_independentToggleLabel:s.companyProfileIndependentOpen?'收起':'查看全部'+independentAll.length+'条',
+      profile_toggleIndependent:()=>this.setState({companyProfileIndependentOpen:!this.state.companyProfileIndependentOpen}),
+      profile_unresolved:unresolved, profile_hasUnresolved:unresolvedAll.length>0, profile_unresolvedCount:unresolvedAll.length,
+      profile_hasMoreUnresolved:unresolvedAll.length>4, profile_unresolvedToggleLabel:s.companyProfileUnresolvedOpen?'收起':'查看全部'+unresolvedAll.length+'条',
+      profile_toggleUnresolved:()=>this.setState({companyProfileUnresolvedOpen:!this.state.companyProfileUnresolvedOpen}),
+      profile_limitations:limitations, profile_dataVersion:text(metadata.data_version), profile_verifiedAt:formatDate(metadata.latest_verified_at), profile_generatedAt:formatDate(metadata.generated_at),
       profile_scopeWarning:'本画像仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力或完整研发管线。',
       profile_allSources:()=>this.openProfileSources(), profile_compare:()=>this.openProfileComparison(), profile_grounded:()=>this.openProfileGroundedQa(), profile_brief:()=>this.openDecisionBrief(s.companyProfileCompany)
     };
