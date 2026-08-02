@@ -1956,8 +1956,8 @@ class Component extends DCLogic {
   }
   navItem(it){
     const active = this.state.page===it.key;
-    const style='display:flex;align-items:center;gap:11px;padding:0 12px;height:42px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;width:100%;text-align:left;border:1px solid rgba(130,181,218,.12);transition:background .12s,color .12s,border-color .12s;'+(active?'background:rgba(15,143,135,.16);color:#fff;border-color:rgba(109,222,211,.2);':'background:transparent;color:rgba(255,255,255,.72);');
-    return Object.assign({}, it, {style, iconPaths:this._paths(it.icon), onClick:()=>this.go(it.key)});
+    const style='display:flex;align-items:center;gap:11px;padding:0 12px 0 14px;height:40px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;width:100%;text-align:left;transition:background .12s,color .12s;'+(active?'background:rgba(15,143,135,.18);color:#fff;':'background:transparent;color:rgba(223,234,242,.7);');
+    return Object.assign({}, it, {activeAttr:active?'1':'0', style, iconPaths:this._paths(it.icon), onClick:()=>this.go(it.key)});
   }
 
   shellVals(){
@@ -1966,11 +1966,12 @@ class Component extends DCLogic {
     const META={today:['研发决策总览','真实证据总览'],chat:['智能问答','对话与证据'],compare:['企业证据画像','单企业核验证据'],research:['自动化研报','报告生成'],evidence:['研发证据中心','来源、证据链与企业对比'],groundedQa:['智能研发决策 Agent','输入研发问题，获得可追溯决策分析'],brief:['证据决策简报','结构化决策支持'],whitebox:['白盒溯源','可解释链路'],database:['数据底座','数据库浏览'],timeline:['研发事件时间轴','核验证据事件'],advanced:['高级分析','图谱与编排']};
     const m=META[s.page]||['',''];
     return {
-      theme:s.theme, present:this._isLegacyPage(s.page)&&s.present?'on':'off', navOpenAttr:s.navOpen?'1':'0',
+      theme:s.page==='today'?'light':s.theme, present:this._isLegacyPage(s.page)&&s.present?'on':'off', navOpenAttr:s.navOpen?'1':'0',
       navMain:nd.map(it=>this.navItem(it)),
       crumbGroup:m[0], crumbSub:m[1],
       isToday:s.page==='today', isChat:s.page==='chat', isCompare:s.page==='compare', isResearch:s.page==='research', isEvidence:s.page==='evidence'||s.page==='groundedQa', isEvidenceCenter:s.page==='evidence', isGroundedQaPage:s.page==='groundedQa', isBrief:s.page==='brief', isWhitebox:s.page==='whitebox', isDatabase:s.page==='database', isTimeline:s.page==='timeline', isAdvanced:s.page==='advanced',
       themeIconPaths: this._paths(s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']),
+      showThemeToggle:s.page!=='today',
       toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
       openNav:()=>this.setState({navOpen:true}), closeNav:()=>this.setState({navOpen:false})
     };
@@ -1999,10 +2000,14 @@ class Component extends DCLogic {
     const metric=(label,value,hint,icon)=>({label,value:this._evidenceText(value),hint,iconPaths:this._paths(icon)});
     const totalSourceCount=pick(summary,['source_count','total_sources','evidence_source_count']);
     const verifiedSourceCount=pick(summary,['verified_source_count','source_count']);
+    // 总来源与已核验来源仍分别读取接口字段，首页首项用主数字与动态说明合并呈现。
     const generatedAt=pick(metadata,['generated_at','response_time'])||pick(wb,['generated_at','response_time']);
-    // 首页指标带将“总来源、已核验来源”合并展示，数值仍分别取自接口字段。
+    const verifiedMatchesTotal=Number(verifiedSourceCount)===Number(totalSourceCount);
+    const verifiedHint=verifiedMatchesTotal
+      ?'已收录 '+this._evidenceText(totalSourceCount)+' 条，当前全部完成核验'
+      :'已收录 '+this._evidenceText(totalSourceCount)+' 条，其中 '+this._evidenceText(verifiedSourceCount)+' 条完成核验';
     const today_metrics=[
-      metric('人工核验来源',verifiedSourceCount+' / '+totalSourceCount,'条来源均已人工核验',['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
+      metric('人工核验来源',verifiedSourceCount,verifiedHint,['M9 12l2 2 4-5','M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z']),
       metric('企业主体',summary.company_count,'当前证据样本覆盖的企业数量',['M3 21h18M5 21V7l8-4v18M19 21V11l-6-4']),
       metric('试验级证据链',summary.trial_chain_count,'已建立关联的试验登记、论文与公司资料链',['M4 19.5V5a2 2 0 0 1 2-2h10l4 4v12.5a1.5 1.5 0 0 1-1.5 1.5H6a2 2 0 0 1-2-2z','M14 3v5h5']),
       metric('药物级监管链',summary.regulatory_chain_count,'独立统计的药物监管事件证据链',['M9 12l2 2 4-4','M7 4h10l2 4v12H5V8z'])
@@ -2012,7 +2017,12 @@ class Component extends DCLogic {
       '阿斯利康与百济神州当前 NSCLC 证据样本有什么差异？',
       'RATIONALE-315 当前还存在哪些证据缺口？',
       'B016 是否代表替雷利珠单抗已经获得 EMA 正式批准？'
-    ].map(question=>({question,onClick:()=>this.openGroundedQa(question)}));
+    ].map((question,index)=>({
+      question,
+      displayLabel:index===0?'阿斯利康与百济神州的NSCLC证据样本有何差异？':question,
+      number:'0'+(index+1),
+      onClick:()=>this.openGroundedQa(question)
+    }));
     const today_qualityMetrics=[
       metric('最新资料',summary.latest_count,'当前样本中标记为最新版本的资料',['M12 8v4l3 2','M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z']),
       metric('历史版本',summary.historical_count,'当前样本中保留的历史版本资料',['M3 12a9 9 0 1 0 3-6.7','M3 3v6h6']),
@@ -2032,11 +2042,16 @@ class Component extends DCLogic {
       pageQuick('查看研发事件时间轴','按真实结构化日期查看核心事件、版本演进和无日期资料。','timeline',['M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z','M12 8v4l3 2'],'查看时间轴')
     ];
     const dist=(list)=>Array.isArray(list)?list.map(x=>({label:this._evidenceText(x&&x.label),count:this._evidenceText(x&&x.count)})):[];
-    const companies=(Array.isArray(wb.companies)?wb.companies:[]).map(c=>{
+    const rawCompanies=Array.isArray(wb.companies)?wb.companies:[];
+    const sourceMax=Math.max(1,...rawCompanies.map(c=>Number(c&&c.source_count)||0));
+    const trialMax=Math.max(1,...rawCompanies.map(c=>Number(c&&c.trial_chain_count)||0));
+    const companies=rawCompanies.map(c=>{
       const version=c.version_distribution||{};
       const gaps=Array.isArray(c.evidence_gaps)?c.evidence_gaps:[];
       const drugs=Array.isArray(c.drug_names)?c.drug_names.slice(0,6).map(x=>({name:this._evidenceText(x)})):[];
       const companyName=this._evidenceText(c.company_name||c.display_name);
+      const sourceValue=Number(c.source_count)||0;
+      const trialValue=Number(c.trial_chain_count)||0;
       return {
         name:this._companyLabel(c.display_name||c.company_name),
         company_name:companyName,
@@ -2053,9 +2068,23 @@ class Component extends DCLogic {
         drugs,
         hasDrugs:drugs.length>0,
         gap_count:gaps.length,
+        source_bar_style:'width:'+(sourceValue/sourceMax*100).toFixed(2)+'%',
+        trial_bar_style:'width:'+(trialValue/trialMax*100).toFixed(2)+'%',
+        regulatory_state:Number(c.regulatory_chain_count)>0?'regulatory':'neutral',
+        unresolved_state:Number(c.unresolved_link_count)>0?'pending':'neutral',
         onClick:()=>this.setState({page:'compare',companyProfileCompany:companyName,companyProfile:null,companyProfileError:'',navOpen:false},()=>this.loadCompanyEvidenceProfilePage())
       };
     });
+    const sourceTypeRows=Array.isArray(wb.source_type_distribution)?wb.source_type_distribution:[];
+    const sourceTypeCount=(label)=>sourceTypeRows.filter(x=>String(x&&x.label||'')===label).reduce((sum,x)=>sum+(Number(x&&x.count)||0),0);
+    const pubmedCount=sourceTypeCount('PubMed');
+    const trialsCount=sourceTypeCount('ClinicalTrials.gov');
+    const otherCount=Math.max(0,(Number(totalSourceCount)||0)-pubmedCount-trialsCount);
+    const sourceComposition=[
+      {label:'PubMed',count:this._evidenceText(pubmedCount),color:'var(--deep-sea)',segmentStyle:'flex:'+pubmedCount+' 1 0;background:var(--deep-sea)'},
+      {label:'ClinicalTrials.gov',count:this._evidenceText(trialsCount),color:'var(--medical-teal)',segmentStyle:'flex:'+trialsCount+' 1 0;background:var(--medical-teal)'},
+      {label:'其他企业及监管来源',count:this._evidenceText(otherCount),color:'#8FA6B8',segmentStyle:'flex:'+otherCount+' 1 0;background:#8FA6B8'}
+    ];
     const gaps=(Array.isArray(wb.evidence_gaps)?wb.evidence_gaps:[]).slice(0,8).map(g=>({
       source_id:this._evidenceText(g&&g.source_id),
       company:this._companyLabel(g&&g.company_name),
@@ -2072,6 +2101,7 @@ class Component extends DCLogic {
     ];
     return {
       today_loading:this.state.evidenceWorkbenchLoading,
+      showLegacyHome:false,
       today_hasError:!!this.state.evidenceWorkbenchError,
       today_error:this.state.evidenceWorkbenchError,
       today_hasData:!!(wb&&wb.summary),
@@ -2083,12 +2113,17 @@ class Component extends DCLogic {
       today_quickLinks,
       today_openAgent:()=>this.openGroundedQa(),
       today_openEvidence:()=>this.setState({page:'evidence',evidenceTab:'sources',navOpen:false},()=>this.loadEvidencePage()),
+      today_openChains:()=>this.setState({page:'evidence',evidenceTab:'chains',navOpen:false},()=>this.loadEvidencePage()),
+      today_sceneTag:'NSCLC 示范场景 · '+this._evidenceText(verifiedSourceCount)+' 条人工核验来源',
+      today_totalSourceCount:this._evidenceText(totalSourceCount),
+      today_verifiedSourceCount:this._evidenceText(verifiedSourceCount),
       today_detailsOpen:this.state.workbenchDetailsOpen,
       today_toggleDetails:()=>this.setState({workbenchDetailsOpen:!this.state.workbenchDetailsOpen}),
       today_detailsToggleText:this.state.workbenchDetailsOpen?'收起详情':'展开详情',
       today_scopeBullets:scopeBullets,
       today_companies:companies,
       today_hasCompanies:companies.length>0,
+      today_sourceComposition:sourceComposition,
       today_sourceTypes:dist(wb.source_type_distribution),
       today_studyStatuses:dist(wb.study_status_distribution),
       today_gaps:gaps,
