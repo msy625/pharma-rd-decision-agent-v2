@@ -210,7 +210,7 @@ def _load_reviews(path: str | Path | None) -> dict[str, dict[str, Any]]:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="运行药研制策离线量化评测")
+    parser = argparse.ArgumentParser(description="运行药研罗盘离线量化评测")
     parser.add_argument("--output-dir", required=True, help="结果输出目录；不得位于data或config事实目录")
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST_PATH), help="pilot manifest路径")
     parser.add_argument("--cases", default=str(DEFAULT_CASES_PATH), help="pilot JSONL用例路径")

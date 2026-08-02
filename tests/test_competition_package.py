@@ -34,7 +34,7 @@ class CompetitionPackageTest(unittest.TestCase):
         self.temp_dir.cleanup()
 
     def test_release_metadata_matches_frozen_submission_scope(self):
-        self.assertEqual(self.metadata["project"], "药研制策")
+        self.assertEqual(self.metadata["project"], "药研罗盘")
         self.assertEqual(self.metadata["version"], "competition-submission-v1.0")
         self.assertEqual(self.metadata["data_version"], "sha256:330ac862f52db200")
         self.assertEqual(self.metadata["company_count"], 3)

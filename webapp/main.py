@@ -1552,7 +1552,7 @@ def fetch_industry_ranking_dashboard(company_name: str | None, report_year: int 
         conn.close()
 
 
-app = FastAPI(title="药研制策｜可信医药研发证据智能分析")
+app = FastAPI(title="药研罗盘｜医药研发可信证据决策系统")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 

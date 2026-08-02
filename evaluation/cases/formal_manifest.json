@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "benchmark_name": "药研制策国赛60题正式量化评测",
+  "benchmark_name": "药研罗盘国赛60题正式量化评测",
   "benchmark_stage": "formal",
   "case_count": 60,
   "expected_data_version": "sha256:330ac862f52db200",

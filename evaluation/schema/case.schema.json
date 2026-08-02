@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://pharma-rd-decision-agent.local/evaluation/case.schema.json",
-  "title": "药研制策离线评测用例",
+  "title": "药研罗盘离线评测用例",
   "type": "object",
   "additionalProperties": false,
   "required": [

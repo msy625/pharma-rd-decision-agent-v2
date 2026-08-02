@@ -52,7 +52,7 @@ def build_markdown_report(
 ) -> str:
     latency_by_baseline = {row["baseline"]: row for row in aggregates["latency_summary"]}
     lines = [
-        "# 药研制策离线量化评测报告",
+        "# 药研罗盘离线量化评测报告",
         "",
         ("> 本报告是12题pilot试运行结果，用于验证评测框架并暴露当前能力缺口，不是最终业务成绩。"
          if run_manifest["benchmark_stage"] == "pilot"

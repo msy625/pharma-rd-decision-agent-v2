@@ -182,7 +182,7 @@ def build_staging(output_dir: Path, *, explicit_source_commit: str | None = None
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="创建药研制策比赛源码白名单暂存目录")
+    parser = argparse.ArgumentParser(description="创建药研罗盘比赛源码白名单暂存目录")
     parser.add_argument("--output-dir", required=True, help="必须是尚不存在的目标目录")
     parser.add_argument(
         "--source-commit",

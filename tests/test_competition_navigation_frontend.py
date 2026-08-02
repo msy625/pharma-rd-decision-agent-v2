@@ -72,12 +72,13 @@ class CompetitionNavigationFrontendTest(unittest.TestCase):
             self.assertNotIn(forbidden, self.template)
 
     def test_04_brand_html_title_and_fastapi_title_are_consistent(self):
-        for expected in ["药研制策", "可信医药研发证据智能分析", "药研制策｜可信医药研发证据智能分析"]:
+        for expected in ["药研罗盘", "医药研发可信证据决策系统", "药研罗盘｜医药研发可信证据决策系统"]:
             self.assertIn(expected, self.template)
             self.assertIn(expected, self.index)
-        self.assertIn('FastAPI(title="药研制策｜可信医药研发证据智能分析")', self.main)
-        for old in ["医策智脑", "DeepInsight · 决策支持"]:
+        self.assertIn('FastAPI(title="药研罗盘｜医药研发可信证据决策系统")', self.main)
+        for old in ["药研" + "制策", "药研" + "智策", "药研罗" + "罗盘", "医策智脑", "DeepInsight · 决策支持"]:
             self.assertNotIn(old, self.template)
+            self.assertNotIn(old, self.index)
 
     def test_05_decision_agent_is_a_real_top_level_page_using_existing_key(self):
         self.assertIn("else if(p==='groundedQa') this.loadDecisionAgentCapabilities()", self.component)
