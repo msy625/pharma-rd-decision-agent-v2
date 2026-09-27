@@ -44,7 +44,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_DIR = PROJECT_ROOT / "data" / "template"
 CATALOG_PATH = PROJECT_ROOT / "config" / "direction_catalog.json"
 MANIFEST_PATH = TEMPLATE_DIR / "data_manifest.json"
-CACHE_DIR = PROJECT_ROOT / ".codex-doc-work" / "harvest_cache"
+DEFAULT_CACHE_DIR = PROJECT_ROOT / ".cache" / "direction_harvest"
 
 CTG_ENDPOINT = "https://clinicaltrials.gov/api/v2/studies"
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
@@ -193,13 +193,14 @@ def iter_phases(phase_text: str) -> list[str]:
 # HTTP with cache + retry
 # --------------------------------------------------------------------------- #
 class Fetcher:
-    def __init__(self, user_agent: str, refresh: bool) -> None:
+    def __init__(self, user_agent: str, refresh: bool, cache_dir: str | Path | None = None) -> None:
         self.user_agent = user_agent
         self.refresh = refresh
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        self.cache_dir = Path(cache_dir) if cache_dir else DEFAULT_CACHE_DIR
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
 
     def _cache_path(self, key: str) -> Path:
-        return CACHE_DIR / f"{key}.json"
+        return self.cache_dir / f"{key}.json"
 
     def get_json(self, url: str, cache_key: str, *, attempts: int = 4, pause: float = 0.6) -> dict:
         cached = self._cache_path(cache_key)
@@ -749,6 +750,10 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--pubmed-per-direction", type=int, help="max PubMed records per direction")
     parser.add_argument("--dry-run", action="store_true", help="report what would be written, write nothing")
     parser.add_argument("--refresh", action="store_true", help="ignore the local response cache")
+    parser.add_argument(
+        "--cache-dir",
+        help=f"directory for cached API responses (default: {DEFAULT_CACHE_DIR.relative_to(PROJECT_ROOT)})",
+    )
     return parser.parse_args(argv)
 
 
@@ -760,7 +765,7 @@ def main(argv: list[str] | None = None) -> int:
     pubmed_max = args.pubmed_per_direction or harvest_cfg["pubmed_retmax"]
 
     harvest_date = time.strftime("%Y-%m-%d")
-    fetcher = Fetcher(harvest_cfg["user_agent"], args.refresh)
+    fetcher = Fetcher(harvest_cfg["user_agent"], args.refresh, args.cache_dir)
 
     # derive ids for every direction first, then apply the selection filters
     for stage in catalog["stages"]:

@@ -22,6 +22,7 @@ reports_md.zip
 
 # virtualenv / runtime
 .venv/
+.cache/
 pip-install.log
 
 # deployment secrets (only the example is tracked)
