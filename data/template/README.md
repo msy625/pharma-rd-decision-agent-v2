@@ -68,6 +68,26 @@ python scripts/validate_direction_dataset.py
 `source_describes_study`、`source_describes_publication`、`source_about_org`、
 `source_about_indication`、`source_mentions_asset`。
 
+### 机构中文名
+
+ClinicalTrials.gov 的 `leadSponsor.name` 是自由文本，批量采集到的机构名以英文原样入库。
+`config/organization_names_zh.json` 维护**权威中文名对照表**，由
+`scripts/localize_organization_names.py` 应用：
+
+- `organizations.csv` 的 `display_name` 改为 `中文名（English short name）`；
+- `organization_aliases.csv` 增加一条 `language=zh`、`alias_type=display_name` 的别名；
+- `canonical_name` **保持不变**，因为它仍是 `facts`/`relations` 的连接键。
+
+只收录确实存在权威中文名的机构。**不做机器翻译，也不生成推测译名**：
+未收录的机构（多为欧美医院、大学、小型生物科技公司和合作研究组织）继续保留英文原名。
+当前 793 条批量采集机构中 86 条有中文名。网站展示与筛选使用 `display_name`，
+但中英文名都能检索（记录同时保留 `company_en`）。
+
+```bash
+python scripts/localize_organization_names.py                    # 应用对照表（幂等）
+python scripts/localize_organization_names.py --report-unmatched # 查看未收录机构
+```
+
 ## 与 `data/source_registry.csv` 的关系
 
 `data/source_registry.csv`（39 条人工核验 NSCLC 来源）是早期 `SourceRegistryService`

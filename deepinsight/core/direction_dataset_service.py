@@ -159,7 +159,17 @@ class DirectionDatasetService:
         tables = self._load_tables()
         direction_by_domain = {d["direction_id"]: d for d in self.direction_index().values()}
 
-        org_names = {row.get("organization_id", ""): row.get("canonical_name", "") for row in tables.get("organizations", [])}
+        # Prefer the curated Chinese display name; fall back to the raw sponsor
+        # name from ClinicalTrials.gov when no authoritative Chinese name exists.
+        org_names = {
+            row.get("organization_id", ""): (row.get("display_name") or row.get("canonical_name") or "")
+            for row in tables.get("organizations", [])
+        }
+        # Kept alongside the display name so search still matches the English form.
+        org_names_en = {
+            row.get("organization_id", ""): (row.get("canonical_name") or "")
+            for row in tables.get("organizations", [])
+        }
         asset_by_id = {
             row.get("asset_id", ""): (row.get("canonical_name") or row.get("generic_name") or row.get("development_code") or "")
             for row in tables.get("assets", [])
@@ -247,6 +257,7 @@ class DirectionDatasetService:
                     "title": source.get("title_original", "") or study.get("study_name", ""),
                     "study_name": study.get("study_name", ""),
                     "company": org_names.get(study.get("sponsor_org_id", ""), ""),
+                    "company_en": org_names_en.get(study.get("sponsor_org_id", ""), ""),
                     "assets": assets,
                     "phase": study.get("phase", ""),
                     "study_status": study.get("study_status", ""),
@@ -294,6 +305,7 @@ class DirectionDatasetService:
                     "title": publication.get("title_original") or source.get("title_original", ""),
                     "study_name": "",
                     "company": "",
+                    "company_en": "",
                     "assets": assets_by_source.get(source_id, []),
                     "phase": "",
                     "study_status": "",
@@ -462,7 +474,9 @@ class DirectionDatasetService:
         if study_status:
             results = [r for r in results if _contains(r["study_status"], study_status)]
         if company:
-            results = [r for r in results if _contains(r["company"], company)]
+            results = [
+                r for r in results if _contains(r["company"], company) or _contains(r.get("company_en", ""), company)
+            ]
         if text:
             needle = text
             results = [
@@ -471,6 +485,7 @@ class DirectionDatasetService:
                 if _contains(r["title"], needle)
                 or _contains(r["study_name"], needle)
                 or _contains(r["company"], needle)
+                or _contains(r.get("company_en", ""), needle)
                 or _contains("；".join(str(a) for a in r["assets"]), needle)
                 or _contains(r["registry_id"], needle)
                 or _contains(r["pmid"], needle)

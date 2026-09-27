@@ -35,6 +35,7 @@ tests/test_frontend_offline_assets.py
 tests/test_direction_dataset_service.py
 tests/test_direction_dataset_api.py
 tests/test_direction_dataset_frontend.py
+tests/test_organization_names_zh.py
 tests/test_evaluation_adapters.py
 tests/test_evaluation_baselines.py
 tests/test_evaluation_metrics.py
