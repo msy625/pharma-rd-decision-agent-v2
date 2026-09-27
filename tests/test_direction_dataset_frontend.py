@@ -373,7 +373,9 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
         note = self.direction_template.index("data-direction-scope-note")
         roadmap = self.direction_template.index("data-direction-roadmap")
         self.assertLess(note, roadmap)
-        self.assertIn("dq_verifiedCount:this._evidenceText(sum.total_sources)", self.evidence_vals)
+        # With the 双轨数据 switch on, summary.total_sources includes harvested rows,
+        # so the「N 条人工核验资料」sentence must render the verified count.
+        self.assertIn("dq_verifiedCount:this._evidenceText(sum.verified_source_count", self.evidence_vals)
         self.assertIn("dq_spectrumNote:", self.evidence_vals)
 
     def test_28_no_ranking_or_efficacy_claims_in_direction_ui(self):

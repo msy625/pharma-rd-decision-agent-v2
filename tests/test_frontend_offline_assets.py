@@ -189,7 +189,10 @@ class FrontendOfflineAssetsTest(unittest.TestCase):
         self.assertEqual(self.component.count("this._api('/api/initial-state')"), 1)
         self.assertIn("()=>this.loadRuntimeCapabilities()", self.component)
         self.assertIn("this._api('/api/runtime-capabilities')", self.component)
-        self.assertIn("this._api('/api/evidence/workbench')", self.component)
+        # The workbench call also carries the 双轨数据 scope param, so assert the
+        # endpoint rather than a fixed argument list.
+        self.assertIn("/api/evidence/workbench", self.component)
+        self.assertIn("this._api('/api/evidence/workbench', this._ihParams())", self.component)
 
     def test_17_runtime_fallback_does_not_reload_existing_react_globals(self):
         self.assertIn("w.React ? Promise.resolve() : loadScript(REACT_URL", self.runtime)

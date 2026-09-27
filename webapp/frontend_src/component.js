@@ -12,6 +12,7 @@ class Component extends DCLogic {
     evidenceLoading:false, evidenceSummaryLoading:false, evidenceDetailLoading:false,
     evidenceError:'', evidenceHasSearched:false,
     evidenceTab:'sources',
+    includeHarvested:false,
     directionRoadmap:null, directionRoadmapLoading:false, directionRoadmapError:'',
     directionStage:'', directionId:'', directionSelected:null,
     directionRecords:[], directionTotal:0, directionCount:0, directionOffset:0, directionLimit:20,
@@ -262,7 +263,7 @@ class Component extends DCLogic {
   loadDashboard(){
     if(this.state.evidenceWorkbenchLoading || this.state.evidenceWorkbenchLoaded) return;
     this.setState({evidenceWorkbenchLoading:true,evidenceWorkbenchError:'',evidenceWorkbenchLoaded:true});
-    this._api('/api/evidence/workbench').then(d=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbench:(d&&d.workbench)||null})).catch(()=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbenchError:'证据工作台加载失败，请稍后重试'}));
+    this._api('/api/evidence/workbench', this._ihParams()).then(d=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbench:(d&&d.workbench)||null})).catch(()=>this.setState({evidenceWorkbenchLoading:false,evidenceWorkbenchError:'证据工作台加载失败，请稍后重试'}));
   }
   loadCompanyEvidenceProfilePage(){
     this.loadCompanyProfileCompanies();
@@ -281,7 +282,7 @@ class Component extends DCLogic {
     this._companyProfileSeq=requestSeq;
     const name=String(this.state.companyProfileCompany||'恒瑞医药').trim();
     this.setState({companyProfileLoading:true,companyProfileError:''});
-    this._api('/api/evidence/company-profile/'+encodeURIComponent(name)).then(d=>{
+    this._api('/api/evidence/company-profile/'+encodeURIComponent(name), this._ihParams()).then(d=>{
       if(requestSeq===this._companyProfileSeq) this.setState({companyProfileLoading:false,companyProfile:(d&&d.profile)||null});
     }).catch(()=>{
       if(requestSeq===this._companyProfileSeq) this.setState({companyProfileLoading:false,companyProfile:null,companyProfileError:'企业证据画像加载失败，请稍后重试'});
@@ -369,7 +370,8 @@ class Component extends DCLogic {
     const params={
       trial_id:String(s.timelineTrial||'').trim(), drug:String(s.timelineDrug||'').trim(),
       event_type:String(s.timelineEventType||'').trim(), year:String(s.timelineYear||'').trim(),
-      include_auxiliary:!!s.timelineIncludeAuxiliary, include_undated:true
+      include_auxiliary:!!s.timelineIncludeAuxiliary, include_undated:true,
+      include_harvested:!!s.includeHarvested
     };
     this.setState({timelineLoading:true,timelineLoaded:true,timelineError:''});
     this._api(path,params).then(d=>{
@@ -502,7 +504,7 @@ class Component extends DCLogic {
   loadEvidenceSummary(){
     if(this.state.evidenceSummaryLoading) return;
     this.setState({evidenceSummaryLoading:true});
-    this._api('/api/evidence/summary').then(d=>this.setState({evidenceSummaryLoading:false,evidenceSummary:d||null})).catch(()=>this.setState({evidenceSummaryLoading:false,evidenceError:'证据统计加载失败，请稍后重试'}));
+    this._api('/api/evidence/summary', this._ihParams()).then(d=>this.setState({evidenceSummaryLoading:false,evidenceSummary:d||null})).catch(()=>this.setState({evidenceSummaryLoading:false,evidenceError:'证据统计加载失败，请稍后重试'}));
   }
   _evidencePath(kind, value){
     const v=encodeURIComponent(String(value||'').trim());
@@ -515,8 +517,8 @@ class Component extends DCLogic {
   }
   _evidenceParams(){
     const s=this.state;
-    if(s.evidenceKind==='source') return {};
-    const p={latest_only:!!s.evidenceLatestOnly, limit:Number(s.evidenceLimit)||50};
+    if(s.evidenceKind==='source') return this._ihParams();
+    const p=Object.assign({latest_only:!!s.evidenceLatestOnly, limit:Number(s.evidenceLimit)||50}, this._ihParams());
     if(s.evidenceKind==='search') p.q=String(s.evidenceQuery||'').trim();
     return p;
   }
@@ -557,6 +559,7 @@ class Component extends DCLogic {
       verified_at:this._evidenceText(item.verified_at),
       latestLabel:version.label,
       latestColor:version.color,
+      isHarvested:this._ihIsHarvested(item.verification_status),
       style:'width:100%;text-align:left;border:1px solid '+(selected?'var(--brand-300)':'var(--border)')+';background:'+(selected?'var(--brand-50)':'var(--bg-elev)')+';border-radius:12px;padding:13px 14px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:border-color .12s,background .12s',
       onClick:()=>this.loadEvidenceSource(item.source_id)
     });
@@ -575,7 +578,46 @@ class Component extends DCLogic {
     const sid=String(sourceId||'').trim();
     if(!sid) return;
     this.setState({evidenceDetailLoading:true,evidenceError:''});
-    this._api(this._evidencePath('source', sid)).then(d=>this.setState({evidenceDetailLoading:false,evidenceSelected:(d&&d.item)||null})).catch(()=>this.setState({evidenceDetailLoading:false,evidenceError:'来源详情加载失败，请稍后重试'}));
+    this._api(this._evidencePath('source', sid), this._ihParams()).then(d=>this.setState({evidenceDetailLoading:false,evidenceSelected:(d&&d.item)||null})).catch(()=>this.setState({evidenceDetailLoading:false,evidenceError:'来源详情加载失败，请稍后重试'}));
+  }
+  // ---- 双轨数据：人工核验 / 机器采集 切换（跨页面共用同一个状态键） ----
+  _ihParams(){ return {include_harvested:!!this.state.includeHarvested}; }
+  // 行级口径标记：只有机器采集行需要额外徽标，人工核验行维持原样。
+  _ihIsHarvested(value){ return String(value==null?'':value).trim().toLowerCase()==='api_harvested'; }
+  _ihCounts(){
+    const s=this.state;
+    if(!s.includeHarvested) return null;
+    const sum=s.evidenceSummary;
+    if(sum&&sum.include_harvested&&sum.verified_source_count!=null&&sum.harvested_source_count!=null){
+      return {verified:sum.verified_source_count, harvested:sum.harvested_source_count};
+    }
+    const wb=s.evidenceWorkbench||{}, wsum=wb.summary||{};
+    if(wsum.source_count!=null&&wsum.verified_source_count!=null){
+      return {verified:wsum.verified_source_count, harvested:Number(wsum.source_count)-Number(wsum.verified_source_count)};
+    }
+    return null;
+  }
+  _ihMixText(){
+    const c=this._ihCounts();
+    return c?('当前口径：人工核验（verified）'+c.verified+' 条 + 机器采集（api_harvested）'+c.harvested+' 条。'):'';
+  }
+  toggleIncludeHarvested(){
+    const next=!this.state.includeHarvested;
+    this.setState({includeHarvested:next},()=>this.reloadHarvestedScope());
+  }
+  // 切换后只重新加载当前页面已经加载过的数据，不改变页面与筛选状态。
+  reloadHarvestedScope(){
+    const s=this.state;
+    if(s.page==='today'){
+      this.setState({evidenceWorkbenchLoaded:false,evidenceWorkbenchError:''},()=>this.loadDashboard());
+      return;
+    }
+    if(s.page==='compare'){ this.loadCompanyEvidenceProfile(); return; }
+    if(s.page==='timeline'){ this.loadTimeline(); return; }
+    if(s.page==='evidence'&&s.evidenceTab==='sources'){
+      this.loadEvidenceSummary();
+      if(s.evidenceHasSearched) this.loadEvidence();
+    }
   }
   // ---- research-direction dataset (api_harvested records) ----
   _directionAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.direction_dataset_available); }
@@ -1829,6 +1871,17 @@ class Component extends DCLogic {
     const activeMode=modes.find(m=>m.key===s.evidenceKind)||modes[0];
     const countMap=sum.company_counts||sum.company_source_counts||{};
     const verified=Array.isArray(sum.verified_dates)?sum.verified_dates.join('、'):(sum.metadata&&sum.metadata.verified_dates)||'暂无';
+    // 双轨数据：ev_scopeCount 始终表示"人工核验"条数，机器采集单独用后缀/卡片呈现，
+    // 避免开关打开后把 2830 条总量误标成"人工核验资料"。
+    const harvestOn=!!s.includeHarvested;
+    const verifiedTotal=this._evidenceText(sum.verified_source_count!=null?sum.verified_source_count:sum.total_sources);
+    const harvestedTotal=this._evidenceText(sum.harvested_source_count!=null?sum.harvested_source_count:0);
+    const evScopeTiles=harvestOn
+      ? [{label:'疾病领域',value:'NSCLC + 方向批量采集'},
+         {label:'人工核验资料',value:verifiedTotal+' 条'},
+         {label:'机器采集资料',value:harvestedTotal+' 条'},
+         {label:'涉及企业',value:this._evidenceText(Object.keys(countMap).length)+' 家'}]
+      : [{label:'疾病领域',value:'NSCLC'}].concat(Object.keys(countMap).sort().map(name=>({label:'企业',value:this._companyLabel(name)+' · '+this._evidenceText(countMap[name])+' 条'}))).concat([{label:'人工核验资料',value:verifiedTotal+' 条'}]);
     const items=(s.evidenceItems||[]).map(x=>this._evidenceItemVm(x));
     const detail=s.evidenceSelected||{};
     const detailVersion=this._evidenceVersion(detail.is_latest_evidence);
@@ -2015,7 +2068,7 @@ class Component extends DCLogic {
       dq_totalStages:this._directionText(dirRoadmap.total_stages),
       dq_totalDirections:this._directionText(dirRoadmap.total_directions),
       dq_totalRecords:this._directionText(dirRoadmap.total_records),
-      dq_verifiedCount:this._evidenceText(sum.total_sources),
+      dq_verifiedCount:this._evidenceText(sum.verified_source_count!=null?sum.verified_source_count:sum.total_sources),
       dq_directionChoices:dirDirectionChoices,
       dq_stageChoices:dirStageChoices,
       dq_scopeText:dirScopeText,
@@ -2075,9 +2128,10 @@ class Component extends DCLogic {
       ev_hasError:!!s.evidenceError, ev_error:s.evidenceError,
       ev_hasSearched:s.evidenceHasSearched, ev_count:s.evidenceCount, ev_items:items, ev_hasResults:items.length>0,
       ev_empty:s.evidenceHasSearched&&!s.evidenceLoading&&!s.evidenceError&&items.length===0,
-      ev_scope:[{label:'疾病领域',value:'NSCLC'}].concat(Object.keys(countMap).sort().map(name=>({label:'企业',value:this._companyLabel(name)+' · '+this._evidenceText(countMap[name])+' 条'}))).concat([{label:'人工核验资料',value:this._evidenceText(sum.total_sources)+' 条'}]),
-      ev_scopeSummary:Object.keys(countMap).map(name=>this._companyLabel(name)).join(' · '),
-      ev_scopeCount:this._evidenceText(sum.total_sources),
+      ev_scope:evScopeTiles,
+      ev_scopeSummary:harvestOn?'人工核验 + 机器采集（两套口径）':Object.keys(countMap).map(name=>this._companyLabel(name)).join(' · '),
+      ev_scopeCount:verifiedTotal,
+      ev_scopeSuffix:harvestOn?(' + '+harvestedTotal+' 条机器采集资料'):'',
       ev_verified:verified,
       ev_detailHas:!!detail.source_id,
       ev_detailEmpty:!detail.source_id,
@@ -2085,6 +2139,7 @@ class Component extends DCLogic {
       ev_detailDesc:this._evidenceText(detail.description_zh),
       ev_detailVersionLabel:detailVersion.label,
       ev_detailVersionColor:detailVersion.color,
+      ev_detailIsHarvested:this._ihIsHarvested(detail.verification_status),
       ev_detailRisk:this._evidenceText(detail.risk_notes),
       ev_detailHasRisk:!!detail.risk_notes,
       ev_detailFields:ev_detailFields,
@@ -2293,7 +2348,22 @@ class Component extends DCLogic {
       themeIconPaths: this._paths(s.theme==='dark'?['M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z']:['M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4','M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z']),
       showThemeToggle:s.page!=='today',
       toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
-      openNav:()=>this.setState({navOpen:true}), closeNav:()=>this.setState({navOpen:false})
+      openNav:()=>this.setState({navOpen:true}), closeNav:()=>this.setState({navOpen:false}),
+      // ---- 双轨数据开关（研发决策总览 / 来源检索 / 企业证据画像 / 研发事件时间轴 共用） ----
+      ih_show:(s.page==='today')||(s.page==='compare')||(s.page==='timeline')||(s.page==='evidence'&&s.evidenceTab==='sources'),
+      ih_on:!!s.includeHarvested,
+      ih_toggle:()=>this.toggleIncludeHarvested(),
+      ih_label:'包含机器采集数据',
+      ih_badgeLabel:'机器采集',
+      ih_toggleStyle:'display:inline-flex;align-items:center;gap:8px;height:34px;border-radius:9px;padding:0 11px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid '+(s.includeHarvested?'var(--warn)':'var(--border)')+';background:'+(s.includeHarvested?'var(--warn-bg)':'var(--bg-elev)')+';color:'+(s.includeHarvested?'var(--warn)':'var(--text-2)'),
+      ih_checkboxStyle:'accent-color:var(--warn);margin:0;cursor:pointer',
+      ih_noteVisible:((s.page==='today')||(s.page==='compare')||(s.page==='timeline')||(s.page==='evidence'&&s.evidenceTab==='sources'))&&!!s.includeHarvested,
+      ih_noteTitle:'已包含机器采集数据（api_harvested，未经人工逐条复核）',
+      ih_noteText:'本页已在人工核验资料之上叠加 API 机器采集（api_harvested）记录：由公开临床试验登记库与文献接口批量抓取并结构化，未经人工逐条复核，与人工核验资料属于两套口径，不能互相替代。',
+      ih_noteBadge:'每条机器采集记录均标注「机器采集」徽标；仅「人工核验」记录可视为已人工核验资料，本页不把机器采集记录表述为人工核验。',
+      ih_noteLimit:'仅用于查看当前收录记录的数量与构成，不用于企业研发实力排名，也不支持跨试验疗效、安全性或成功率推断。',
+      ih_mixText:this._ihMixText(),
+      ih_hasMix:!!this._ihMixText()
     };
   }
 
@@ -2490,7 +2560,7 @@ class Component extends DCLogic {
     const independentAll=(Array.isArray(profile.independent_sources)?profile.independent_sources:[]).map(item=>{
       const linkStatus=text(item.link_status);
       const confirmed=/已确认|证据链|confirmed/i.test(String(item.link_status||''));
-      return {source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),link_status:linkStatus,study_status:text(item.study_status),stateLabel:confirmed?'已进入证据链':'独立资料',stateTone:confirmed?'confirmed':'independent'};
+      return {source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),link_status:linkStatus,study_status:text(item.study_status),isHarvested:this._ihIsHarvested(item.verification_status),stateLabel:confirmed?'已进入证据链':'独立资料',stateTone:confirmed?'confirmed':'independent'};
     });
     const unresolvedAll=(Array.isArray(profile.unresolved_links)?profile.unresolved_links:[]).map(item=>({source_id:text(item.source_id),source_type:text(item.source_type),title:text(item.title),description:text(item.description),gaps:Array.isArray(item.evidence_gaps)?item.evidence_gaps.join('；'):text(item.evidence_gaps)}));
     const limitations=(Array.isArray(profile.limitations)?profile.limitations:[]).map(item=>({text:text(item)}));
@@ -3151,6 +3221,7 @@ class Component extends DCLogic {
         version_status:versionLabel(event.version_status), evidence_version:clean(event.evidence_version), hasEvidenceVersion:!!clean(event.evidence_version),
         version_relation:versionRelation, hasVersionRelation:!!versionRelation, drugs, hasDrugs:drugs.length>0,
         is_auxiliary:!!event.is_auxiliary, auxiliary_label:event.is_auxiliary?'辅助更新':'核心事件',
+        isHarvested:this._ihIsHarvested(event.verification_status),
         limitations, hasLimitations:limitations.length>0, catColor:colors.c, catBg:colors.b,
         source_url:this._safeEvidenceUrl(event.source_url), hasSourceUrl:!!this._safeEvidenceUrl(event.source_url),
         openSource:()=>this.openTimelineSource(event.source_id), openChain:()=>this.openTimelineChain(event.chain_id),
@@ -3159,6 +3230,7 @@ class Component extends DCLogic {
     });
     const undated=(Array.isArray(timeline.undated_sources)?timeline.undated_sources:[]).map(item=>({
       source_id:clean(item.source_id),title:clean(item.title),source_type:clean(item.source_type),
+      isHarvested:this._ihIsHarvested(item.verification_status),
       company:clean(item.company&&item.company.display_name),trial_id:clean(item.trial_id),hasTrial:!!clean(item.trial_id),
       chain_id:clean(item.chain_id),hasChain:!!clean(item.chain_id),reason:clean(item.reason),
       openSource:()=>this.openTimelineSource(item.source_id),openChain:()=>this.openTimelineChain(item.chain_id)

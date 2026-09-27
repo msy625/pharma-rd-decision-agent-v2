@@ -38,6 +38,7 @@ tests/test_direction_dataset_frontend.py
 tests/test_organization_names_zh.py
 tests/test_individual_investigator_cleanup.py
 tests/test_include_harvested_switch.py
+tests/test_include_harvested_frontend.py
 tests/test_evaluation_adapters.py
 tests/test_evaluation_baselines.py
 tests/test_evaluation_metrics.py

@@ -219,6 +219,42 @@ class IncludeHarvestedApiTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200, response.text)
         self.assertEqual(response.json()["item"]["source_id"], "B015")
 
+    def test_27_harvested_rows_are_independent_not_latest(self):
+        """A harvested row has no version relation, so it is 独立资料, not 最新版本."""
+        service = SourceRegistryService(include_harvested=True)
+        harvested = [r for r in service.load_rows() if r["verification_status"] == HARVESTED_STATUS]
+        self.assertTrue(harvested)
+        for row in harvested[:200]:
+            with self.subTest(source_id=row["source_id"]):
+                self.assertEqual(row["is_latest_evidence"], "")
+
+    def test_28_harvested_rows_are_not_excluded_by_latest_only(self):
+        """Verified rows include historical versions; harvested rows must not be dropped."""
+        service = SourceRegistryService(include_harvested=True)
+
+        def harvested_count(rows):
+            return sum(1 for r in rows if r["verification_status"] == HARVESTED_STATUS)
+
+        everything = service.query(source_type="PubMed", normalized=False)
+        latest_only = service.query(source_type="PubMed", latest_only=True, normalized=False)
+        self.assertGreater(harvested_count(everything), 0)
+        self.assertEqual(harvested_count(latest_only), harvested_count(everything))
+
+    def test_29_company_profile_lists_harvested_rows_when_opted_in(self):
+        """The 企业证据画像 row list must actually contain harvested rows."""
+        from deepinsight.core.company_evidence_profile_service import CompanyEvidenceProfileService
+        from deepinsight.core.evidence_chain_service import EvidenceChainService
+
+        counts = {}
+        for flag in (False, True):
+            source = SourceRegistryService(include_harvested=flag)
+            profile = CompanyEvidenceProfileService(
+                source_registry_service=source,
+                evidence_chain_service=EvidenceChainService(source_registry_service=source),
+            ).build_profile("恒瑞医药")
+            counts[flag] = len(profile.get("independent_sources", []))
+        self.assertGreater(counts[True], counts[False])
+
 
 if __name__ == "__main__":
     unittest.main()

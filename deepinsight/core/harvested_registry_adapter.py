@@ -108,7 +108,11 @@ def to_legacy_row(record: dict[str, object], fieldnames: list[str]) -> dict[str,
         "official_study_id": registry_id,
         "enrollment_actual": str(record.get("enrollment", "") or ""),
         "source_last_updated": str(record.get("source_last_updated", "") or ""),
-        "is_latest_evidence": "true",
+        # Deliberately empty, not "true": the project's convention is that a row
+        # with no version relation is 独立资料 (independent). Marking harvested
+        # rows as "true" would misclassify them as 最新版本 and drop them out of
+        # the company profile's independent_sources list.
+        "is_latest_evidence": "",
         "scope_limitation": HARVESTED_SCOPE_LIMITATION,
     }
     row = {field: "" for field in fieldnames}
