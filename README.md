@@ -54,6 +54,35 @@ python scripts/validate_direction_dataset.py  # 校验方向记录数、上游�
 `GET /api/directions/roadmap`、`/api/directions/summary`、`/api/directions/filters`、`/api/directions/records`。
 `GET /api/runtime-capabilities` 通过 `direction_dataset_available` 报告该能力是否可用。
 
+### 双轨数据：人工核验主线 + 可选机器采集
+
+默认情况下，研发决策总览、研发证据中心、企业证据画像和研发事件时间轴**只使用 39 条人工核验来源**，
+与改造前完全一致。需要看全量数据时，这四个页面提供「包含机器采集数据」开关：
+
+| 接口 | 新增参数 |
+| --- | --- |
+| `/api/evidence/summary` | `include_harvested=true` |
+| `/api/evidence/workbench` | `include_harvested=true` |
+| `/api/evidence/search` | `include_harvested=true` |
+| `/api/evidence/company-profile/{name}` | `include_harvested=true` |
+| `/api/evidence/timeline`、`/api/evidence/timeline/{company}` | `include_harvested=true` |
+
+打开后，`SourceRegistryService` 会把 `data/template/` 中
+`verification_status=api_harvested` 的记录（2791 条）适配成原有 56 列格式追加到人工核验来源之后，
+人工核验行**位置与内容完全不变**（`extended[:39] == verified`，有测试保证）。
+
+边界：
+
+- 只追加 `api_harvested` 记录，人工核验来源不会被重复计入，两套口径不会混淆；
+- 每条机器采集记录在界面上标注「机器采集」，并展示与人工核验资料不可互相替代的范围声明；
+- **循证问答与决策 Agent 不接入该开关**，始终只引用人工核验来源；
+- 证据链、企业对比等依赖 `config/evidence_chains.json` 精选关系的功能，对新增记录只会显示
+  「无已配置关系」，不会推断出不存在的关系；
+- 机器采集数据不代表企业研发实力，不支持跨试验疗效排名、成功率预测或投资建议。
+
+适配层位于 `deepinsight/core/harvested_registry_adapter.py`；方向数据集缺失或损坏时会静默降级，
+只返回人工核验来源，不影响原有页面（原因记录在 `SourceRegistryService.harvested_error`）。
+
 ## 项目痛点与核心流程
 
 医药研发信息分散在试验注册平台、论文、监管机构和企业网站中，常见问题包括名称不统一、同一试验多来源重复、资料版本关系不清、监管事件与临床试验混计，以及分析结论难以追溯。

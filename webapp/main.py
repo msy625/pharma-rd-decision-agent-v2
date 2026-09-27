@@ -20,6 +20,7 @@ from deepinsight.core.direction_dataset_service import (
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.evidence_decision_brief_service import EvidenceDecisionBriefService
 from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
+from deepinsight.core.harvested_registry_adapter import HARVESTED_STATUS
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
 from deepinsight.core.grounded_qa_usage_guard import (
@@ -1584,24 +1585,24 @@ def _require_company_for_api(company_name: str | None) -> None:
         conn.close()
 
 
-def _evidence_service() -> SourceRegistryService:
-    return SourceRegistryService()
+def _evidence_service(include_harvested: bool = False) -> SourceRegistryService:
+    return SourceRegistryService(include_harvested=include_harvested)
 
 
-def _evidence_chain_service() -> EvidenceChainService:
-    return EvidenceChainService(source_registry_service=_evidence_service())
+def _evidence_chain_service(include_harvested: bool = False) -> EvidenceChainService:
+    return EvidenceChainService(source_registry_service=_evidence_service(include_harvested))
 
 
-def _company_evidence_comparison_service() -> CompanyEvidenceComparisonService:
-    source_service = _evidence_service()
+def _company_evidence_comparison_service(include_harvested: bool = False) -> CompanyEvidenceComparisonService:
+    source_service = _evidence_service(include_harvested)
     return CompanyEvidenceComparisonService(
         source_registry_service=source_service,
         evidence_chain_service=EvidenceChainService(source_registry_service=source_service),
     )
 
 
-def _company_evidence_profile_service() -> CompanyEvidenceProfileService:
-    source_service = _evidence_service()
+def _company_evidence_profile_service(include_harvested: bool = False) -> CompanyEvidenceProfileService:
+    source_service = _evidence_service(include_harvested)
     evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
     company_comparison_service = CompanyEvidenceComparisonService(
         source_registry_service=source_service,
@@ -1625,8 +1626,8 @@ def _company_evidence_profile_service() -> CompanyEvidenceProfileService:
     )
 
 
-def _rd_event_timeline_service() -> RDEventTimelineService:
-    source_service = _evidence_service()
+def _rd_event_timeline_service(include_harvested: bool = False) -> RDEventTimelineService:
+    source_service = _evidence_service(include_harvested)
     evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
     company_comparison_service = CompanyEvidenceComparisonService(
         source_registry_service=source_service,
@@ -1656,8 +1657,8 @@ def _rd_event_timeline_service() -> RDEventTimelineService:
     )
 
 
-def _evidence_workbench_service() -> EvidenceWorkbenchService:
-    source_service = _evidence_service()
+def _evidence_workbench_service(include_harvested: bool = False) -> EvidenceWorkbenchService:
+    source_service = _evidence_service(include_harvested)
     evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
     company_comparison_service = CompanyEvidenceComparisonService(
         source_registry_service=source_service,
@@ -1768,7 +1769,12 @@ def _grounded_qa_client_id(request: Request) -> str:
     return client_host
 
 
-def _evidence_metadata() -> dict[str, Any]:
+def _evidence_metadata(include_harvested: bool = False) -> dict[str, Any]:
+    if include_harvested:
+        return {
+            "data_scope": "verified_nsclc_sample_plus_harvested_directions",
+            "data_source": "source_registry.csv + data/template",
+        }
     return {
         "data_scope": "verified_nsclc_multi_company_sample",
         "data_source": "source_registry.csv",
@@ -1923,6 +1929,7 @@ def initial_state() -> dict[str, Any]:
             "runtime_capabilities": _runtime_capabilities_payload(workbench_available=True),
             "evidence_workbench": {
                 "workbench": workbench,
+                "include_harvested": False,
                 "metadata": {
                     "data_scope": workbench.get("metadata", {}).get(
                         "data_scope", "verified_nsclc_multi_company_sample"
@@ -2043,18 +2050,31 @@ def data_room_preview(name: str, limit: int = 20) -> dict[str, Any]:
 
 
 @app.get("/api/evidence/summary")
-def evidence_summary() -> dict[str, Any]:
+def evidence_summary(include_harvested: bool = False) -> dict[str, Any]:
     try:
-        service = _evidence_service()
+        service = _evidence_service(include_harvested)
         summary = service.summary()
         rows = service.load_rows()
         verified_dates = sorted({row.get("verified_at", "") for row in rows if row.get("verified_at", "")})
+        verified_count = sum(1 for row in rows if row.get("verification_status") != HARVESTED_STATUS)
+        harvested_count = len(rows) - verified_count
+        scope = (
+            f"NSCLC；{len(summary.get('company_counts', {}))}家企业；{verified_count}条人工核验来源"
+            if not include_harvested
+            else (
+                f"NSCLC + 方向批量采集；{len(summary.get('company_counts', {}))}家企业；"
+                f"{verified_count}条人工核验 + {harvested_count}条机器采集来源"
+            )
+        )
         return {
             **summary,
             "company_source_counts": summary.get("company_counts", {}),
-            "data_scope": f"NSCLC；{len(summary.get('company_counts', {}))}家企业；{summary.get('total_sources', 0)}条人工核验来源",
+            "data_scope": scope,
+            "include_harvested": include_harvested,
+            "verified_source_count": verified_count,
+            "harvested_source_count": harvested_count,
             "verified_dates": verified_dates,
-            "metadata": _evidence_metadata(),
+            "metadata": _evidence_metadata(include_harvested),
         }
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
@@ -2078,11 +2098,12 @@ def evidence_chain_summary() -> dict[str, Any]:
 
 
 @app.get("/api/evidence/workbench")
-def evidence_workbench() -> dict[str, Any]:
+def evidence_workbench(include_harvested: bool = False) -> dict[str, Any]:
     try:
-        workbench = _evidence_workbench_service().build_workbench()
+        workbench = _evidence_workbench_service(include_harvested).build_workbench()
         return {
             "workbench": workbench,
+            "include_harvested": include_harvested,
             "metadata": {
                 "data_scope": workbench.get("metadata", {}).get("data_scope", "verified_nsclc_multi_company_sample"),
             },
@@ -2187,11 +2208,12 @@ def evidence_company_profile_companies() -> dict[str, Any]:
 
 
 @app.get("/api/evidence/company-profile/{name}")
-def evidence_company_profile(name: str) -> dict[str, Any]:
+def evidence_company_profile(name: str, include_harvested: bool = False) -> dict[str, Any]:
     try:
-        profile = _company_evidence_profile_service().build_profile(name)
+        profile = _company_evidence_profile_service(include_harvested).build_profile(name)
         return {
             "profile": profile,
+            "include_harvested": include_harvested,
             "metadata": {
                 "data_scope": profile.get("metadata", {}).get(
                     "data_scope", "verified_nsclc_multi_company_sample"
@@ -2233,9 +2255,10 @@ def evidence_timeline(
     year: Annotated[int | None, Query(ge=1900, le=2100)] = None,
     include_auxiliary: Annotated[bool, Query()] = False,
     include_undated: Annotated[bool, Query()] = True,
+    include_harvested: Annotated[bool, Query()] = False,
 ) -> dict[str, Any]:
     try:
-        timeline = _rd_event_timeline_service().build_timeline(
+        timeline = _rd_event_timeline_service(include_harvested).build_timeline(
             company_name=company,
             trial_id=trial_id,
             drug_name=drug,
@@ -2246,6 +2269,7 @@ def evidence_timeline(
         )
         return {
             "timeline": timeline,
+            "include_harvested": include_harvested,
             "metadata": {
                 "data_scope": timeline.get("metadata", {}).get(
                     "data_scope", "verified_nsclc_multi_company_sample"
@@ -2265,6 +2289,7 @@ def evidence_timeline_by_company(
     year: Annotated[int | None, Query(ge=1900, le=2100)] = None,
     include_auxiliary: Annotated[bool, Query()] = False,
     include_undated: Annotated[bool, Query()] = True,
+    include_harvested: Annotated[bool, Query()] = False,
 ) -> dict[str, Any]:
     return evidence_timeline(
         company=company,
@@ -2274,6 +2299,7 @@ def evidence_timeline_by_company(
         year=year,
         include_auxiliary=include_auxiliary,
         include_undated=include_undated,
+        include_harvested=include_harvested,
     )
 
 
@@ -2596,14 +2622,17 @@ def evidence_grounded_qa(payload: GroundedQARequest, request: Request) -> dict[s
 def evidence_search(
     q: Annotated[str | None, Query()] = None,
     latest_only: Annotated[bool, Query()] = False,
+    include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
 ) -> dict[str, Any]:
     if not (q or "").strip():
         raise HTTPException(status_code=400, detail="查询参数 q 不能为空。")
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service().query(text=q.strip(), latest_only=latest_only)[:limit]
-        return _evidence_list_response({"q": q, "latest_only": latest_only, "limit": limit}, items)
+        items = _evidence_service(include_harvested).query(text=q.strip(), latest_only=latest_only)[:limit]
+        return _evidence_list_response(
+            {"q": q, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
+        )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 

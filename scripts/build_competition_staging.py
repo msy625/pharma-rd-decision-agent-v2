@@ -46,6 +46,7 @@ CORE_FILES = [
     "deepinsight/core/evidence_chain_service.py",
     "deepinsight/core/evidence_decision_brief_service.py",
     "deepinsight/core/evidence_workbench_service.py",
+    "deepinsight/core/harvested_registry_adapter.py",
     "deepinsight/core/grounded_qa_llm.py",
     "deepinsight/core/grounded_qa_service.py",
     "deepinsight/core/grounded_qa_usage_guard.py",

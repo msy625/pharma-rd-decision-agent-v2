@@ -145,19 +145,56 @@ class SourceRegistryService:
         csv_path: str | Path | None = None,
         aliases_path: str | Path | None = None,
         evidence_rules_path: str | Path | None = None,
+        include_harvested: bool = False,
     ) -> None:
         self.csv_path = Path(csv_path) if csv_path else DEFAULT_CSV_PATH
         self.aliases_path = Path(aliases_path) if aliases_path else DEFAULT_ALIASES_PATH
         self.evidence_rules_path = Path(evidence_rules_path) if evidence_rules_path else DEFAULT_EVIDENCE_RULES_PATH
+        # When True, machine-harvested direction records are appended to the
+        # human-verified rows. Default False keeps every existing caller and test
+        # on the 39 hand-verified sources.
+        self.include_harvested = bool(include_harvested)
         self._rows: list[dict[str, str]] | None = None
         self._fieldnames: list[str] | None = None
         self._alias_map: dict[str, list[str]] | None = None
         self._evidence_rules: dict[str, object] | None = None
+        self._harvested_error: str = ""
 
     def load_rows(self) -> list[dict[str, str]]:
         if self._rows is None:
-            self._fieldnames, self._rows = self._read_csv(self.csv_path)
+            self._fieldnames, verified_rows = self._read_csv(self.csv_path)
+            if self.include_harvested:
+                self._rows = list(verified_rows) + self._load_harvested_rows()
+            else:
+                self._rows = list(verified_rows)
         return list(self._rows)
+
+    def _load_harvested_rows(self) -> list[dict[str, str]]:
+        """Project machine-harvested direction records into the legacy row shape.
+
+        Failures are swallowed on purpose: a missing or malformed direction
+        dataset must not take down the verified evidence pages. The reason is
+        kept on ``harvested_error`` so callers can surface it.
+        """
+        try:
+            from deepinsight.core.direction_dataset_service import DirectionDatasetService
+            from deepinsight.core.harvested_registry_adapter import (
+                harvested_legacy_rows,
+                legacy_fieldnames,
+            )
+
+            fieldnames = self._fieldnames or legacy_fieldnames()
+            records = DirectionDatasetService().records()
+            rows = harvested_legacy_rows(records, fieldnames)
+            self._harvested_error = ""
+            return rows
+        except Exception as exc:  # pragma: no cover - defensive
+            self._harvested_error = f"{type(exc).__name__}: {exc}"
+            return []
+
+    @property
+    def harvested_error(self) -> str:
+        return self._harvested_error
 
     def load_aliases(self) -> dict[str, list[str]]:
         if self._alias_map is None:
