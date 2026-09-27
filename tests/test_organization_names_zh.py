@@ -98,22 +98,28 @@ class OrganizationNamesZhTest(unittest.TestCase):
                 self.assertIn(row["display_name"], allowed | {row["canonical_name"]})
 
     def test_08_every_localized_org_has_a_zh_alias(self):
-        localized = {
-            r["organization_id"]
+        rules = [(re.compile(r["match"]), r) for r in self.rules]
+        localized = [
+            r
             for r in self.orgs
             if r["organization_id"].startswith(HARVEST_PREFIX) and r["display_name"] != r["canonical_name"]
-        }
+        ]
+        self.assertTrue(localized)
         zh_aliases = {
             a["organization_id"]: a
             for a in self.aliases
             if a["language"] == "zh" and a["alias_type"] == "display_name"
         }
-        self.assertTrue(localized.issubset(set(zh_aliases)))
-        for org_id in localized:
-            with self.subTest(org=org_id):
-                expected = self.by_id[org_id]["display_name"].split("（")[0]
-                self.assertEqual(zh_aliases[org_id]["alias"], expected)
-                self.assertTrue(zh_aliases[org_id]["alias_id"].endswith("_ZH"))
+        for row in localized:
+            rule = next((r for rx, r in rules if rx.search(row["canonical_name"])), None)
+            alias = zh_aliases.get(row["organization_id"])
+            with self.subTest(org=row["organization_id"]):
+                self.assertIsNotNone(rule)
+                self.assertIsNotNone(alias, f"{row['organization_id']} has no zh alias")
+                # Compare against the rule, not by splitting display_name: some
+                # Chinese names legitimately contain parentheses of their own.
+                self.assertEqual(alias["alias"], rule["zh"])
+                self.assertTrue(alias["alias_id"].endswith("_ZH"))
 
     def test_09_english_alias_is_still_present(self):
         for row in self.orgs:
