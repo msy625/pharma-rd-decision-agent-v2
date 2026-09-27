@@ -1,0 +1,229 @@
+{
+  "catalog_version": "direction_catalog_v1.0",
+  "description": "研发阶段与疾病方向目录。定义 6 个研发阶段、20 个疾病方向，以及每个方向在 ClinicalTrials.gov v2 与 PubMed E-utilities 中的可复现检索式。data/template/ 中的 domains.csv 由此目录生成，采集脚本 scripts/harvest_direction_data.py 也读取本文件。",
+  "harvest": {
+    "default_target_per_direction": 150,
+    "ctg_page_size": 100,
+    "ctg_max_pages": 4,
+    "pubmed_retmax": 80,
+    "pubmed_tool": "pharma-rd-decision-agent",
+    "pubmed_email": "noreply@example.com",
+    "user_agent": "pharma-rd-decision-agent/1.0 (competition research; reproducible harvest)"
+  },
+  "stages": [
+    {
+      "stage_id": "DOM_STAGE_1",
+      "stage_index": 1,
+      "stage_name": "第 1 阶段",
+      "stage_title": "肿瘤",
+      "goal": "建立肿瘤研发竞争分析闭环",
+      "directions": [
+        {
+          "direction_id": "DOM_NSCLC",
+          "direction_key": "nsclc",
+          "name_zh": "非小细胞肺癌（NSCLC）",
+          "name_en": "Non-small cell lung cancer",
+          "ctg_condition": "non-small cell lung cancer",
+          "pubmed_term": "\"Carcinoma, Non-Small-Cell Lung\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_BREAST_CANCER",
+          "direction_key": "breast_cancer",
+          "name_zh": "乳腺癌",
+          "name_en": "Breast cancer",
+          "ctg_condition": "breast cancer",
+          "pubmed_term": "\"Breast Neoplasms\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_COLORECTAL_CANCER",
+          "direction_key": "colorectal_cancer",
+          "name_zh": "结直肠癌",
+          "name_en": "Colorectal cancer",
+          "ctg_condition": "colorectal cancer",
+          "pubmed_term": "\"Colorectal Neoplasms\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_GASTRIC_ESOPHAGEAL_CANCER",
+          "direction_key": "gastric_cancer",
+          "name_zh": "胃癌",
+          "name_en": "Gastric cancer",
+          "ctg_condition": "gastric cancer",
+          "pubmed_term": "\"Stomach Neoplasms\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_LIVER_CANCER",
+          "direction_key": "liver_cancer",
+          "name_zh": "肝癌",
+          "name_en": "Liver cancer",
+          "ctg_condition": "liver cancer",
+          "pubmed_term": "\"Liver Neoplasms\"[MeSH Terms]"
+        }
+      ]
+    },
+    {
+      "stage_id": "DOM_STAGE_2",
+      "stage_index": 2,
+      "stage_name": "第 2 阶段",
+      "stage_title": "代谢",
+      "goal": "加入代谢、长期疗效和支付价值",
+      "directions": [
+        {
+          "direction_id": "DOM_OBESITY",
+          "direction_key": "obesity",
+          "name_zh": "肥胖",
+          "name_en": "Obesity",
+          "ctg_condition": "obesity",
+          "pubmed_term": "\"Obesity\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_T2DM",
+          "direction_key": "type_2_diabetes",
+          "name_zh": "2 型糖尿病",
+          "name_en": "Type 2 diabetes mellitus",
+          "ctg_condition": "type 2 diabetes",
+          "pubmed_term": "\"Diabetes Mellitus, Type 2\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_MASH",
+          "direction_key": "mash",
+          "name_zh": "MASH",
+          "name_en": "Metabolic dysfunction-associated steatohepatitis",
+          "ctg_condition": "steatohepatitis",
+          "pubmed_term": "\"Non-alcoholic Fatty Liver Disease\"[MeSH Terms]"
+        }
+      ]
+    },
+    {
+      "stage_id": "DOM_STAGE_3",
+      "stage_index": 3,
+      "stage_name": "第 3 阶段",
+      "stage_title": "心血管",
+      "goal": "加入临床结局和真实世界长期随访",
+      "directions": [
+        {
+          "direction_id": "DOM_HEART_FAILURE",
+          "direction_key": "heart_failure",
+          "name_zh": "心衰",
+          "name_en": "Heart failure",
+          "ctg_condition": "heart failure",
+          "pubmed_term": "\"Heart Failure\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_ATHEROSCLEROSIS",
+          "direction_key": "atherosclerosis",
+          "name_zh": "动脉粥样硬化",
+          "name_en": "Atherosclerosis",
+          "ctg_condition": "atherosclerosis",
+          "pubmed_term": "\"Atherosclerosis\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_STROKE",
+          "direction_key": "stroke",
+          "name_zh": "卒中",
+          "name_en": "Stroke",
+          "ctg_condition": "stroke",
+          "pubmed_term": "\"Stroke\"[MeSH Terms]"
+        }
+      ]
+    },
+    {
+      "stage_id": "DOM_STAGE_4",
+      "stage_index": 4,
+      "stage_name": "第 4 阶段",
+      "stage_title": "免疫与呼吸",
+      "goal": "加入免疫靶点和同类竞品分析",
+      "directions": [
+        {
+          "direction_id": "DOM_ASTHMA",
+          "direction_key": "asthma",
+          "name_zh": "哮喘",
+          "name_en": "Asthma",
+          "ctg_condition": "asthma",
+          "pubmed_term": "\"Asthma\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_COPD",
+          "direction_key": "copd",
+          "name_zh": "COPD",
+          "name_en": "Chronic obstructive pulmonary disease",
+          "ctg_condition": "chronic obstructive pulmonary disease",
+          "pubmed_term": "\"Pulmonary Disease, Chronic Obstructive\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_PSORIASIS",
+          "direction_key": "psoriasis",
+          "name_zh": "银屑病",
+          "name_en": "Psoriasis",
+          "ctg_condition": "psoriasis",
+          "pubmed_term": "\"Psoriasis\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_IBD",
+          "direction_key": "ibd",
+          "name_zh": "炎症性肠病",
+          "name_en": "Inflammatory bowel disease",
+          "ctg_condition": "inflammatory bowel disease",
+          "pubmed_term": "\"Inflammatory Bowel Diseases\"[MeSH Terms]"
+        }
+      ]
+    },
+    {
+      "stage_id": "DOM_STAGE_5",
+      "stage_index": 5,
+      "stage_name": "第 5 阶段",
+      "stage_title": "罕见与遗传",
+      "goal": "加入自然史、孤儿药和特殊监管路径",
+      "directions": [
+        {
+          "direction_id": "DOM_RARE_DISEASE",
+          "direction_key": "rare_disease",
+          "name_zh": "罕见病",
+          "name_en": "Rare disease",
+          "ctg_condition": "rare disease",
+          "pubmed_term": "\"Rare Diseases\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_GENETIC_DISEASE",
+          "direction_key": "genetic_disease",
+          "name_zh": "遗传病",
+          "name_en": "Inherited genetic disease",
+          "ctg_condition": "genetic disease",
+          "pubmed_term": "\"Genetic Diseases, Inborn\"[MeSH Terms]"
+        }
+      ]
+    },
+    {
+      "stage_id": "DOM_STAGE_6",
+      "stage_index": 6,
+      "stage_name": "第 6 阶段",
+      "stage_title": "神经与感染",
+      "goal": "加入复杂终点、患者负担和公共卫生模块",
+      "directions": [
+        {
+          "direction_id": "DOM_ALZHEIMERS",
+          "direction_key": "alzheimers",
+          "name_zh": "阿尔茨海默病",
+          "name_en": "Alzheimer disease",
+          "ctg_condition": "Alzheimer disease",
+          "pubmed_term": "\"Alzheimer Disease\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_PARKINSONS",
+          "direction_key": "parkinsons",
+          "name_zh": "帕金森病",
+          "name_en": "Parkinson disease",
+          "ctg_condition": "Parkinson disease",
+          "pubmed_term": "\"Parkinson Disease\"[MeSH Terms]"
+        },
+        {
+          "direction_id": "DOM_INFECTIOUS_DISEASE",
+          "direction_key": "infectious_disease",
+          "name_zh": "感染病",
+          "name_en": "Infectious disease",
+          "ctg_condition": "infectious disease",
+          "pubmed_term": "\"Communicable Diseases\"[MeSH Terms]"
+        }
+      ]
+    }
+  ]
+}

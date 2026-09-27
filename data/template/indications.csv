@@ -8,3 +8,21 @@ IND_GASTRIC_HER2,DOM_GASTRIC_ESOPHAGEAL_CANCER,HER2阳性晚期胃癌/胃食管�
 IND_GASTRIC_GEJ_EAC,DOM_GASTRIC_ESOPHAGEAL_CANCER,晚期胃癌/胃食管结合部癌/食管腺癌,GC_GEJC_EAC_ADVANCED,腺癌,,一线,既往未接受系统治疗的晚期或转移性患者,,
 IND_OBESITY,DOM_METABOLIC,肥胖或伴体重相关并发症的超重,OBESITY_OVERWEIGHT,,,长期体重管理,成人肥胖或伴体重相关并发症的超重人群，不含糖尿病人群的主要研究,,
 IND_T2D,DOM_METABOLIC,2型糖尿病,T2D,,,二甲双胍基础治疗后,血糖控制不足的成人2型糖尿病患者,,
+IND_BREAST_CANCER,DOM_BREAST_CANCER,乳腺癌,BREAST_CANCER,,,,ClinicalTrials.gov 条件检索 “breast cancer” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_COLORECTAL_CANCER,DOM_COLORECTAL_CANCER,结直肠癌,COLORECTAL_CANCER,,,,ClinicalTrials.gov 条件检索 “colorectal cancer” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_GASTRIC_CANCER,DOM_GASTRIC_ESOPHAGEAL_CANCER,胃癌,GASTRIC_CANCER,,,,ClinicalTrials.gov 条件检索 “gastric cancer” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_LIVER_CANCER,DOM_LIVER_CANCER,肝癌,LIVER_CANCER,,,,ClinicalTrials.gov 条件检索 “liver cancer” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_TYPE_2_DIABETES,DOM_T2DM,2 型糖尿病,TYPE_2_DIABETES,,,,ClinicalTrials.gov 条件检索 “type 2 diabetes” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_MASH,DOM_MASH,MASH,MASH,,,,ClinicalTrials.gov 条件检索 “steatohepatitis” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_HEART_FAILURE,DOM_HEART_FAILURE,心衰,HEART_FAILURE,,,,ClinicalTrials.gov 条件检索 “heart failure” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_ATHEROSCLEROSIS,DOM_ATHEROSCLEROSIS,动脉粥样硬化,ATHEROSCLEROSIS,,,,ClinicalTrials.gov 条件检索 “atherosclerosis” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_STROKE,DOM_STROKE,卒中,STROKE,,,,ClinicalTrials.gov 条件检索 “stroke” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_ASTHMA,DOM_ASTHMA,哮喘,ASTHMA,,,,ClinicalTrials.gov 条件检索 “asthma” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_COPD,DOM_COPD,COPD,COPD,,,,ClinicalTrials.gov 条件检索 “chronic obstructive pulmonary disease” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_PSORIASIS,DOM_PSORIASIS,银屑病,PSORIASIS,,,,ClinicalTrials.gov 条件检索 “psoriasis” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_IBD,DOM_IBD,炎症性肠病,IBD,,,,ClinicalTrials.gov 条件检索 “inflammatory bowel disease” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_RARE_DISEASE,DOM_RARE_DISEASE,罕见病,RARE_DISEASE,,,,ClinicalTrials.gov 条件检索 “rare disease” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_GENETIC_DISEASE,DOM_GENETIC_DISEASE,遗传病,GENETIC_DISEASE,,,,ClinicalTrials.gov 条件检索 “genetic disease” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_ALZHEIMERS,DOM_ALZHEIMERS,阿尔茨海默病,ALZHEIMERS,,,,ClinicalTrials.gov 条件检索 “Alzheimer disease” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_PARKINSONS,DOM_PARKINSONS,帕金森病,PARKINSONS,,,,ClinicalTrials.gov 条件检索 “Parkinson disease” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。
+IND_INFECTIOUS_DISEASE,DOM_INFECTIOUS_DISEASE,感染病,INFECTIOUS_DISEASE,,,,ClinicalTrials.gov 条件检索 “infectious disease” 返回的注册研究人群。,,direction_harvest_v1.0；批量采集，未按人群细分人工复核。

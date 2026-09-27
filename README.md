@@ -23,6 +23,37 @@
 
 来源数不等于唯一试验数：同一试验的登记、论文和版本资料会归入同一试验级证据链；药物级监管资料单独成链，不重复计入试验数量。
 
+## 研发阶段与疾病方向数据
+
+在保留上述 39 条人工核验 NSCLC 样本口径不变的前提下，`data/template/` 按
+**6 个研发阶段 / 20 个疾病方向** 追加了可复现的公开数据批量采集：
+
+| 阶段 | 疾病方向 | 阶段目标 |
+| --- | --- | --- |
+| 第 1 阶段 | NSCLC、乳腺癌、结直肠癌、胃癌、肝癌 | 建立肿瘤研发竞争分析闭环 |
+| 第 2 阶段 | 肥胖、2 型糖尿病、MASH | 加入代谢、长期疗效和支付价值 |
+| 第 3 阶段 | 心衰、动脉粥样硬化、卒中 | 加入临床结局和真实世界长期随访 |
+| 第 4 阶段 | 哮喘、COPD、银屑病、炎症性肠病 | 加入免疫靶点和同类竞品分析 |
+| 第 5 阶段 | 罕见病、遗传病 | 加入自然史、孤儿药和特殊监管路径 |
+| 第 6 阶段 | 阿尔茨海默病、帕金森病、感染病 | 加入复杂终点、患者负担和公共卫生模块 |
+
+- 数据来源：ClinicalTrials.gov API v2 与 NCBI PubMed E-utilities 官方接口。
+- 每个方向保留 100–200 条记录（临床试验注册记录 + 期刊论文），当前合计 2800 余条。
+- 批量采集行的 `verification_status` 为 `api_harvested`，与人工核验样本的 `verified` 严格区分，
+  统一标注“未经人工逐条复核”，不参与疗效排名、成功率预测或投资建议。
+- 每一行保留上游标识（`NCT` 号 / `PMID`）与可回查的官方链接。
+
+采集与校验方式见 `data/template/README.md`：
+
+```bash
+python scripts/harvest_direction_data.py      # 幂等采集，可 --stage / --direction 限定范围
+python scripts/validate_direction_dataset.py  # 校验方向记录数、上游标识与跨表引用
+```
+
+网站侧新增 4 个只读接口，并在“研发证据中心”内提供“疾病方向”视图与研发阶段 / 疾病方向筛选：
+`GET /api/directions/roadmap`、`/api/directions/summary`、`/api/directions/filters`、`/api/directions/records`。
+`GET /api/runtime-capabilities` 通过 `direction_dataset_available` 报告该能力是否可用。
+
 ## 项目痛点与核心流程
 
 医药研发信息分散在试验注册平台、论文、监管机构和企业网站中，常见问题包括名称不统一、同一试验多来源重复、资料版本关系不清、监管事件与临床试验混计，以及分析结论难以追溯。
@@ -173,9 +204,12 @@ python scripts/build_competition_staging.py \
 
 ```bash
 .venv/bin/python scripts/validate_source_registry.py
+.venv/bin/python scripts/validate_direction_dataset.py
 .venv/bin/python -m pytest -q \
   tests/test_competition_navigation_frontend.py \
   tests/test_evidence_workbench_api.py \
+  tests/test_direction_dataset_service.py \
+  tests/test_direction_dataset_api.py \
   tests/test_rd_decision_agent_api.py \
   tests/test_evidence_decision_brief_api.py \
   tests/test_deployment_config.py
@@ -206,9 +240,13 @@ python scripts/build_competition_staging.py \
 
 系统不训练或微调医学大模型，不自动补充缺失事实，不从相似标题推断证据关系，也不把当前 3 家企业、39 条来源的样本外推为行业全貌。使用者应以监管机构、临床试验注册平台、论文原文和企业正式公告为准。
 
+方向批量采集数据（`verification_status=api_harvested`）同样不构成任何疗效或企业优劣判断：它只反映“某个方向上有哪些公开注册研究和公开论文”，记录数不表示研发实力、研发活跃度或成功率。批量采集的申办方、干预措施、靶点和权属字段未经核实，不得据此推断企业管线规模或竞争格局。
+
 ## 来源、授权与合规
 
 证据样本来自允许公开访问的 ClinicalTrials.gov、PubMed、EMA/CHMP 页面及企业官网、年报、公告和公开管线资料。项目保留来源机构、日期、链接和核验信息，仅用于研究与比赛展示；不收录隐私、商业秘密或授权不明确的非公开内容。外部资料的版权和使用条款归各来源方所有。
+
+方向批量采集数据仅通过 ClinicalTrials.gov API v2 与 NCBI PubMed E-utilities 的公开接口读取元数据（标题、注册号、状态、分期、日期、期刊、DOI 等），不抓取论文全文，不绕过任何访问控制，并在每一行保留原始链接供回查。
 
 本项目基于 [deafenken/DeepInsight-Agent](https://github.com/deafenken/DeepInsight-Agent) 二次开发，并已获得原作者授权。原项目及历史贡献归原作者和原贡献者所有，本项目团队对新增和修改部分负责。
 

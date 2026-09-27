@@ -31,6 +31,7 @@ CONFIG_AND_DATA_FILES = [
     "config/evidence_chains.json",
     "config/evidence_rules.json",
     "config/grounded_qa_rules.json",
+    "config/direction_catalog.json",
     "data/source_registry.csv",
 ]
 CORE_FILES = [
@@ -39,6 +40,7 @@ CORE_FILES = [
     "deepinsight/core/__init__.py",
     "deepinsight/core/company_evidence_comparison_service.py",
     "deepinsight/core/company_evidence_profile_service.py",
+    "deepinsight/core/direction_dataset_service.py",
     "deepinsight/core/evidence_chain_service.py",
     "deepinsight/core/evidence_decision_brief_service.py",
     "deepinsight/core/evidence_workbench_service.py",
@@ -65,16 +67,20 @@ SCRIPT_AND_DOC_FILES = [
     "scripts/README.md",
     "scripts/validate_source_registry.py",
     "scripts/query_source_registry.py",
+    "scripts/harvest_direction_data.py",
+    "scripts/validate_direction_dataset.py",
     "scripts/build_formal_evaluation_cases.py",
     "scripts/validate_competition_package.py",
     "docs/data_dictionary.md",
     "docs/project_architecture.md",
     "docs/evaluation_protocol.md",
     "docs/decision_agent_protocol.md",
+    "docs/direction_dataset_validation.md",
 ]
 TREE_DIRECTORIES = [
     "webapp/static/fonts",
     "webapp/static/vendor",
+    "data/template",
     "evaluation",
 ]
 

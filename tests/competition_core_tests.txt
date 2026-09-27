@@ -32,6 +32,9 @@ tests/test_evidence_decision_brief_service.py
 tests/test_competition_navigation_frontend.py
 tests/test_mobile_evidence_center_frontend.py
 tests/test_frontend_offline_assets.py
+tests/test_direction_dataset_service.py
+tests/test_direction_dataset_api.py
+tests/test_direction_dataset_frontend.py
 tests/test_evaluation_adapters.py
 tests/test_evaluation_baselines.py
 tests/test_evaluation_metrics.py

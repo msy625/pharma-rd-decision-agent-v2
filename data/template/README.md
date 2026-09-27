@@ -8,3 +8,69 @@
 - 证据与业务表：`facts.csv`、`relations.csv`、`regulatory_events.csv`、`market_events.csv`。
 
 旧 NSCLC 数据已规范化写入这些表；四领域种子数据已合并。后续外部采集必须向同一套表追加，并保留 `source_id` 和核验状态。
+
+## 方向批量采集（direction_harvest_v1.0）
+
+按 `config/direction_catalog.json` 定义的 **6 个研发阶段 / 20 个疾病方向**，通过官方接口批量采集：
+
+| 接口 | 用途 | 官方地址 |
+| --- | --- | --- |
+| ClinicalTrials.gov API v2 | 临床试验注册记录 | <https://clinicaltrials.gov/api/v2/studies> |
+| NCBI PubMed E-utilities | 期刊论文 | <https://eutils.ncbi.nlm.nih.gov/entrez/eutils> |
+
+```bash
+# 全部 20 个方向（默认每个方向 150 条记录）
+python scripts/harvest_direction_data.py
+
+# 只跑第 1 阶段 / 单个方向
+python scripts/harvest_direction_data.py --stage 1
+python scripts/harvest_direction_data.py --direction nsclc
+
+# 只报告不写盘
+python scripts/harvest_direction_data.py --dry-run
+```
+
+采集脚本幂等：以 `source_id` / `study_id` / `publication_id` 等主键合并，
+采集表（`sources`、`studies`、`publications`、`facts`、`relations` 等）同 id 覆盖以反映上游状态变化；
+参考表（`domains`、`indications`、`organizations`、`assets` 及别名表）为 **只写入不覆盖**，
+不会改写人工维护的既有行。
+
+### 核验口径
+
+- 批量采集行的 `verification_status` 统一为 `api_harvested`，
+  与人工核验样本的 `verified` 严格区分。
+- 每一行都保留上游标识（`NCT` 号或 `PMID`）和可直接打开的官方链接，
+  可按 `source_locator` 与 `url` 回查。
+- 批量采集行 **未经人工逐条复核**，不得用于疗效排名、成功率预测或投资建议。
+
+### 校验
+
+```bash
+python scripts/validate_direction_dataset.py
+```
+
+校验项包括：目录为 6 阶段 / 20 方向、每个方向记录数落在 100–200 之间、
+来源 URL 与上游标识一致、主键唯一、以及跨表引用可解析。
+
+### 数据字典补充
+
+`domains.csv` 中新增两类 `domain_type`：
+
+- `research_stage`：6 个研发阶段（`DOM_STAGE_1` … `DOM_STAGE_6`），`description` 记录该阶段目标。
+- `disease_research_domain`：20 个疾病方向，`parent_domain_id` 指向所属阶段。
+
+`facts.csv` 中批量采集行使用的谓词包括
+`research_direction`、`official_title`、`study_status`、`study_phase`、`lead_sponsor`、
+`enrollment_count`、`condition`、`intervention`、`start_date`、
+`publication_title`、`journal`、`publication_type`、`publication_date`、`doi`。
+
+`relations.csv` 中批量采集行使用
+`source_describes_study`、`source_describes_publication`、`source_about_org`、
+`source_about_indication`、`source_mentions_asset`。
+
+## 与 `data/source_registry.csv` 的关系
+
+`data/source_registry.csv`（39 条人工核验 NSCLC 来源）是早期 `SourceRegistryService`
+的输入格式，保留在仓库中作为兼容输入，供证据中心、证据链、企业画像、事件时间轴和循证问答使用。
+它对应的规范化记录同样存在于 `data/template/` 中。方向批量采集数据 **不写入** 该文件，
+因此人工核验的 39 条样本口径保持不变。

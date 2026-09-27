@@ -11,6 +11,7 @@ data/*
 !data/template/*.csv
 !data/template/*.json
 !data/template/*.md
+!data/source_registry.csv
 !data/raw_macro/
 !data/raw_macro/*.xlsx
 !data/archives/

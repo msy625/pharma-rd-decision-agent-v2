@@ -1,7 +1,29 @@
 domain_id,parent_domain_id,domain_name,domain_type,description,active
-DOM_NSCLC,,非小细胞肺癌（NSCLC）,disease_research_domain,当前 source_registry.csv 的完整数据范围。,true
+DOM_NSCLC,DOM_STAGE_1,非小细胞肺癌（NSCLC）,disease_research_domain,当前 source_registry.csv 的完整数据范围。,true
 DOM_ONCOLOGY,,肿瘤,therapeutic_area,肿瘤研发与治疗证据总领域,true
-DOM_BREAST_CANCER,DOM_ONCOLOGY,乳腺癌,disease_research_domain,乳腺癌精准治疗与辅助治疗研究,true
-DOM_COLORECTAL_CANCER,DOM_ONCOLOGY,结直肠癌,disease_research_domain,结直肠癌分子分型与靶向/免疫治疗研究,true
-DOM_GASTRIC_ESOPHAGEAL_CANCER,DOM_ONCOLOGY,胃癌/食管癌,disease_research_domain,胃癌、胃食管结合部癌和食管腺癌研究,true
+DOM_BREAST_CANCER,DOM_STAGE_1,乳腺癌,disease_research_domain,乳腺癌精准治疗与辅助治疗研究,true
+DOM_COLORECTAL_CANCER,DOM_STAGE_1,结直肠癌,disease_research_domain,结直肠癌分子分型与靶向/免疫治疗研究,true
+DOM_GASTRIC_ESOPHAGEAL_CANCER,DOM_STAGE_1,胃癌/食管癌,disease_research_domain,胃癌、胃食管结合部癌和食管腺癌研究,true
 DOM_METABOLIC,,肥胖/2型糖尿病,chronic_disease_domain,体重管理、血糖控制和心代谢结局研究,true
+DOM_STAGE_1,,第 1 阶段：肿瘤,research_stage,建立肿瘤研发竞争分析闭环,true
+DOM_LIVER_CANCER,DOM_STAGE_1,肝癌,disease_research_domain,第 1 阶段（肿瘤）方向；目标：建立肿瘤研发竞争分析闭环,true
+DOM_STAGE_2,,第 2 阶段：代谢,research_stage,加入代谢、长期疗效和支付价值,true
+DOM_OBESITY,DOM_STAGE_2,肥胖,disease_research_domain,第 2 阶段（代谢）方向；目标：加入代谢、长期疗效和支付价值,true
+DOM_T2DM,DOM_STAGE_2,2 型糖尿病,disease_research_domain,第 2 阶段（代谢）方向；目标：加入代谢、长期疗效和支付价值,true
+DOM_MASH,DOM_STAGE_2,MASH,disease_research_domain,第 2 阶段（代谢）方向；目标：加入代谢、长期疗效和支付价值,true
+DOM_STAGE_3,,第 3 阶段：心血管,research_stage,加入临床结局和真实世界长期随访,true
+DOM_HEART_FAILURE,DOM_STAGE_3,心衰,disease_research_domain,第 3 阶段（心血管）方向；目标：加入临床结局和真实世界长期随访,true
+DOM_ATHEROSCLEROSIS,DOM_STAGE_3,动脉粥样硬化,disease_research_domain,第 3 阶段（心血管）方向；目标：加入临床结局和真实世界长期随访,true
+DOM_STROKE,DOM_STAGE_3,卒中,disease_research_domain,第 3 阶段（心血管）方向；目标：加入临床结局和真实世界长期随访,true
+DOM_STAGE_4,,第 4 阶段：免疫与呼吸,research_stage,加入免疫靶点和同类竞品分析,true
+DOM_ASTHMA,DOM_STAGE_4,哮喘,disease_research_domain,第 4 阶段（免疫与呼吸）方向；目标：加入免疫靶点和同类竞品分析,true
+DOM_COPD,DOM_STAGE_4,COPD,disease_research_domain,第 4 阶段（免疫与呼吸）方向；目标：加入免疫靶点和同类竞品分析,true
+DOM_PSORIASIS,DOM_STAGE_4,银屑病,disease_research_domain,第 4 阶段（免疫与呼吸）方向；目标：加入免疫靶点和同类竞品分析,true
+DOM_IBD,DOM_STAGE_4,炎症性肠病,disease_research_domain,第 4 阶段（免疫与呼吸）方向；目标：加入免疫靶点和同类竞品分析,true
+DOM_STAGE_5,,第 5 阶段：罕见与遗传,research_stage,加入自然史、孤儿药和特殊监管路径,true
+DOM_RARE_DISEASE,DOM_STAGE_5,罕见病,disease_research_domain,第 5 阶段（罕见与遗传）方向；目标：加入自然史、孤儿药和特殊监管路径,true
+DOM_GENETIC_DISEASE,DOM_STAGE_5,遗传病,disease_research_domain,第 5 阶段（罕见与遗传）方向；目标：加入自然史、孤儿药和特殊监管路径,true
+DOM_STAGE_6,,第 6 阶段：神经与感染,research_stage,加入复杂终点、患者负担和公共卫生模块,true
+DOM_ALZHEIMERS,DOM_STAGE_6,阿尔茨海默病,disease_research_domain,第 6 阶段（神经与感染）方向；目标：加入复杂终点、患者负担和公共卫生模块,true
+DOM_PARKINSONS,DOM_STAGE_6,帕金森病,disease_research_domain,第 6 阶段（神经与感染）方向；目标：加入复杂终点、患者负担和公共卫生模块,true
+DOM_INFECTIOUS_DISEASE,DOM_STAGE_6,感染病,disease_research_domain,第 6 阶段（神经与感染）方向；目标：加入复杂终点、患者负担和公共卫生模块,true

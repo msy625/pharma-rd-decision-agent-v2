@@ -12,6 +12,12 @@ class Component extends DCLogic {
     evidenceLoading:false, evidenceSummaryLoading:false, evidenceDetailLoading:false,
     evidenceError:'', evidenceHasSearched:false,
     evidenceTab:'sources',
+    directionRoadmap:null, directionRoadmapLoading:false, directionRoadmapError:'',
+    directionStage:'', directionId:'', directionSelected:null,
+    directionRecords:[], directionTotal:0, directionCount:0, directionOffset:0, directionLimit:20,
+    directionHasMore:false, directionLoading:false, directionError:'',
+    directionFilterOptions:{source_type:[],phase:[],study_status:[],company:[]}, directionFiltersLoading:false,
+    directionFilters:{record_type:'',source_type:'',phase:'',study_status:'',company:'',q:''},
     chainSummary:null, chainCompany:'', chainType:'', chainItems:[], chainSelected:null, chainUnresolved:[],
     chainLoading:false, chainSummaryLoading:false, chainDetailLoading:false, chainUnresolvedLoading:false,
     chainError:'', chainLoaded:false, chainUnresolvedOpen:false, chainGraphExpanded:false,
@@ -216,7 +222,7 @@ class Component extends DCLogic {
         legacyNotice:''
       }, ()=>this.loadPage());
     }).catch(()=>{
-      const caps={competition_core_available:true,evidence_workbench_available:true,company_evidence_profile_available:true,rd_event_timeline_available:true,legacy_features_available:false,default_page:'today',legacy_unavailable_reason:'运行能力识别失败，比赛证据主链路继续使用本地服务'};
+      const caps={competition_core_available:true,evidence_workbench_available:true,company_evidence_profile_available:true,rd_event_timeline_available:true,direction_dataset_available:false,legacy_features_available:false,default_page:'today',legacy_unavailable_reason:'运行能力识别失败，比赛证据主链路继续使用本地服务'};
       this.setState({runtimeCapabilities:caps,runtimeCapabilitiesLoaded:true,runtimeCapabilitiesLoading:false,page:'today',legacyNotice:''}, ()=>this.loadDashboard());
     });
   }
@@ -486,11 +492,12 @@ class Component extends DCLogic {
   loadEvidencePage(){
     if(this.state.evidenceTab==='chains'){ this.loadEvidenceChainPage(); return; }
     if(this.state.evidenceTab==='companyCompare'){ this.loadCompanyComparisonPage(); return; }
+    if(this.state.evidenceTab==='directions'){ this.loadDirectionPage(); return; }
     this.loadEvidenceSummary();
     if(!this.state.evidenceHasSearched && !this.state.evidenceLoading) this.loadEvidence();
   }
   switchEvidenceTab(tab){
-    this.setState({page:'evidence',evidenceTab:tab,evidenceError:'',chainError:'',companyComparisonError:'',groundedError:'',navOpen:false}, ()=>this.loadEvidencePage());
+    this.setState({page:'evidence',evidenceTab:tab,evidenceError:'',chainError:'',companyComparisonError:'',groundedError:'',directionError:'',navOpen:false}, ()=>this.loadEvidencePage());
   }
   loadEvidenceSummary(){
     if(this.state.evidenceSummaryLoading) return;
@@ -570,6 +577,152 @@ class Component extends DCLogic {
     this.setState({evidenceDetailLoading:true,evidenceError:''});
     this._api(this._evidencePath('source', sid)).then(d=>this.setState({evidenceDetailLoading:false,evidenceSelected:(d&&d.item)||null})).catch(()=>this.setState({evidenceDetailLoading:false,evidenceError:'来源详情加载失败，请稍后重试'}));
   }
+  // ---- research-direction dataset (api_harvested records) ----
+  _directionAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.direction_dataset_available); }
+  _directionText(v){ return v==null||v===''?'暂无':String(v); }
+  _safeDirectionUrl(url){ const s=String(url||'').trim(); return /^https?:\/\//i.test(s)?s:''; }
+  _directionVerification(value){
+    const v=String(value==null?'':value).trim().toLowerCase();
+    if(v==='verified') return {label:'人工核验', color:'var(--pos)'};
+    if(v==='api_harvested') return {label:'机器采集', color:'var(--text-3)'};
+    return {label:this._directionText(value), color:'var(--text-3)'};
+  }
+  _directionRecordVm(item){
+    item=item||{};
+    const registry=String(item.registry_id||'').trim();
+    const pmid=String(item.pmid||'').trim();
+    const doi=String(item.doi||'').trim();
+    const journal=String(item.journal||'').trim();
+    const company=String(item.company||'').trim();
+    const assets=(Array.isArray(item.assets)?item.assets:[]).map(x=>String(x||'').trim()).filter(Boolean);
+    const verification=this._directionVerification(item.verification_status);
+    const url=this._safeDirectionUrl(item.url);
+    const registryId=/^NCT\d+$/i.test(registry)?registry:'';
+    const idLabel=registryId?'NCT':(pmid?'PMID':(doi?'DOI':''));
+    const idValue=registryId||pmid||doi;
+    const idUrl=registryId?('https://clinicaltrials.gov/study/'+encodeURIComponent(registryId)):(pmid?('https://pubmed.ncbi.nlm.nih.gov/'+encodeURIComponent(pmid)+'/'):'');
+    const dateText=String(item.publication_date||item.start_date||item.source_last_updated||'').trim();
+    const badges=[];
+    if(item.record_type==='clinical_trial'){
+      if(item.phase) badges.push({text:'分期 '+String(item.phase)});
+      if(item.study_status) badges.push({text:'状态 '+String(item.study_status)});
+    }
+    if(journal) badges.push({text:journal});
+    const title=String(item.title||'').trim();
+    const studyName=String(item.study_name||'').trim();
+    return {
+      record_id:String(item.record_id||''),
+      recordTypeLabel:item.record_type==='clinical_trial'?'临床试验':'论文',
+      title:this._directionText(title||studyName),
+      studyName,
+      hasStudyName:!!(studyName&&studyName!==title),
+      directionText:this._directionText(item.direction_name)+' · '+this._directionText(item.stage_name),
+      sponsorLabel:company?'申办方':(journal?'期刊':(assets.length?'药物':'来源')),
+      sponsorText:this._directionText(company||journal||assets.join('、')),
+      assetsText:company&&assets.length?assets.join('、'):'',
+      hasAssets:!!(company&&assets.length),
+      idLabel,
+      idValue:this._directionText(idValue),
+      hasId:!!idValue,
+      idUrl,
+      hasIdUrl:!!idUrl,
+      dateText:this._directionText(dateText),
+      badges,
+      hasBadges:badges.length>0,
+      verifyLabel:verification.label,
+      verifyColor:verification.color,
+      url,
+      hasUrl:!!url
+    };
+  }
+  loadDirectionPage(){
+    if(!this._directionAvailable()) return;
+    this.loadDirectionRoadmap();
+    this.loadDirectionFilters();
+    this.loadDirectionRecords(0);
+  }
+  loadDirectionRoadmap(){
+    if(this.state.directionRoadmapLoading) return;
+    this.setState({directionRoadmapLoading:true,directionRoadmapError:''});
+    this._api('/api/directions/roadmap').then(d=>{
+      this.setState({directionRoadmapLoading:false,directionRoadmap:(d&&Array.isArray(d.stages))?d:null});
+    }).catch(()=>this.setState({directionRoadmapLoading:false,directionRoadmap:null,directionRoadmapError:'疾病方向路线图加载失败，请稍后重试'}));
+  }
+  loadDirectionFilters(){
+    if(this.state.directionFiltersLoading) return;
+    this.setState({directionFiltersLoading:true});
+    this._api('/api/directions/filters',{direction_id:this.state.directionId||''}).then(d=>{
+      const o=(d&&d.options)||{};
+      const list=k=>(Array.isArray(o[k])?o[k]:[]).map(x=>String(x));
+      this.setState({directionFiltersLoading:false,directionFilterOptions:{source_type:list('source_type'),phase:list('phase'),study_status:list('study_status'),company:list('company')}});
+    }).catch(()=>this.setState({directionFiltersLoading:false}));
+  }
+  loadDirectionRecords(nextOffset){
+    const s=this.state, f=s.directionFilters||{};
+    const limit=Number(s.directionLimit)||20;
+    let offset=Number(nextOffset);
+    if(!isFinite(offset)||offset<0) offset=Number(s.directionOffset)||0;
+    this.setState({directionLoading:true,directionError:'',directionOffset:offset});
+    this._api('/api/directions/records',{
+      direction_id:s.directionId||'',
+      stage_id:s.directionStage||'',
+      record_type:f.record_type||'',
+      source_type:f.source_type||'',
+      phase:f.phase||'',
+      study_status:f.study_status||'',
+      company:f.company||'',
+      q:String(f.q||'').trim(),
+      limit:limit,
+      offset:offset
+    }).then(d=>{
+      const items=Array.isArray(d&&d.items)?d.items:[];
+      this.setState({directionLoading:false,directionRecords:items,directionTotal:Number(d&&d.total)||0,directionCount:Number(d&&d.count)||items.length,directionHasMore:!!(d&&d.has_more),directionSelected:(d&&d.direction)||null});
+    }).catch(()=>this.setState({directionLoading:false,directionRecords:[],directionTotal:0,directionCount:0,directionHasMore:false,directionSelected:null,directionError:'疾病方向记录加载失败，请稍后重试'}));
+  }
+  selectDirectionStage(stageId){
+    const next=String(stageId||'');
+    const value=String(this.state.directionStage||'')===next?'':next;
+    this.setState({directionStage:value,directionId:'',directionOffset:0,directionRecords:[]},()=>{ this.loadDirectionFilters(); this.loadDirectionRecords(0); });
+  }
+  selectDirection(directionId){
+    const next=String(directionId||'');
+    const value=String(this.state.directionId||'')===next?'':next;
+    this.setState({directionId:value,directionOffset:0,directionRecords:[]},()=>{ this.loadDirectionFilters(); this.loadDirectionRecords(0); });
+  }
+  directionResetScope(){ this.setState({directionStage:'',directionId:'',directionOffset:0},()=>{ this.loadDirectionFilters(); this.loadDirectionRecords(0); }); }
+  directionChoose(directionId){
+    this.setState({directionId:String(directionId||''),directionOffset:0,directionRecords:[]},()=>{ this.loadDirectionFilters(); this.loadDirectionRecords(0); });
+  }
+  directionChooseStage(stageId){
+    this.setState({directionStage:String(stageId||''),directionId:'',directionOffset:0,directionRecords:[]},()=>{ this.loadDirectionFilters(); this.loadDirectionRecords(0); });
+  }
+  directionOnFilter(key,value){
+    const next=Object.assign({},this.state.directionFilters||{});
+    next[key]=value==null?'':String(value);
+    this.setState({directionFilters:next,directionOffset:0},()=>{
+      if(this._directionAvailable()) this.loadDirectionRecords(0);
+    });
+  }
+  directionOnQuery(value){
+    const next=Object.assign({},this.state.directionFilters||{});
+    next.q=value==null?'':String(value);
+    this.setState({directionFilters:next});
+  }
+  directionOnLimit(value){
+    const limit=Number(value)||20;
+    this.setState({directionLimit:limit,directionOffset:0},()=>{ if(this._directionAvailable()) this.loadDirectionRecords(0); });
+  }
+  directionNextPage(){
+    if(!this.state.directionHasMore) return;
+    this.loadDirectionRecords((Number(this.state.directionOffset)||0)+(Number(this.state.directionLimit)||20));
+  }
+  directionPrevPage(){
+    const step=Number(this.state.directionLimit)||20;
+    const current=Number(this.state.directionOffset)||0;
+    if(current<=0) return;
+    this.loadDirectionRecords(Math.max(0,current-step));
+  }
+  directionRefresh(){ this.loadDirectionPage(); }
   loadEvidenceChainPage(){
     this.loadChainSummary();
     this.loadChains();
@@ -1769,18 +1922,147 @@ class Component extends DCLogic {
     const agentStatusTags=agentResult?[
       {text:'任务：'+(agentResult.intent?this._questionTypeLabel(agentResult.intent):'未识别'), color:agentRefused?'var(--warn)':'var(--brand-600)', bg:agentRefused?'var(--warn-bg)':'var(--brand-50)'}
     ]:[];
+    // ---- research-direction dataset (roadmap + api_harvested records) ----
+    const dirRoadmap=s.directionRoadmap||{};
+    const dirAvailable=this._directionAvailable();
+    const dirFilters=Object.assign({record_type:'',source_type:'',phase:'',study_status:'',company:'',q:''},s.directionFilters||{});
+    const dirOptions=s.directionFilterOptions||{};
+    const dirLimit=Number(s.directionLimit)||20;
+    const dirOffset=Number(s.directionOffset)||0;
+    const dirRows=(Array.isArray(dirRoadmap.stages)?dirRoadmap.stages:[]);
+    const dirStageChips=dirRows.map(stage=>{
+      const stageId=String(stage.stage_id||'');
+      const stageActive=String(s.directionStage||'')===stageId;
+      const directions=(Array.isArray(stage.directions)?stage.directions:[]).map(dir=>{
+        const dirId=String(dir.direction_id||'');
+        const selected=String(s.directionId||'')===dirId;
+        return {
+          direction_id:dirId,
+          name:this._directionText(dir.name_zh),
+          nameEn:this._directionText(dir.name_en),
+          countText:'试验 '+this._directionText(dir.trial_count)+' / 论文 '+this._directionText(dir.publication_count),
+          sourceText:'收录记录 '+this._directionText(dir.source_count)+' 条',
+          selected:selected,
+          hasNameEn:!!String(dir.name_en||'').trim(),
+          metaStyle:'font-size:10.5px;color:'+(selected?'rgba(255,255,255,.85)':'var(--text-3)'),
+          style:'width:100%;text-align:left;border:1px solid '+(selected?'var(--brand-600)':(stageActive?'var(--brand-300)':'var(--border)'))+';background:'+(selected?'var(--brand-600)':'var(--bg-sunken)')+';color:'+(selected?'#fff':'var(--text)')+';border-radius:10px;padding:9px 11px;display:flex;flex-direction:column;gap:4px;cursor:pointer',
+          onClick:()=>this.selectDirection(dirId)
+        };
+      });
+      return {
+        stage_id:stageId,
+        stage_name:this._directionText(stage.stage_name),
+        stage_title:this._directionText(stage.stage_title),
+        stageLabel:this._directionText(stage.stage_name)+'：'+this._directionText(stage.stage_title),
+        goal:this._directionText(stage.goal),
+        recordCountText:this._directionText(stage.source_count),
+        directionCountText:this._directionText(stage.direction_count),
+        directions:directions,
+        hasDirections:directions.length>0,
+        active:stageActive,
+        actionLabel:stageActive?'取消阶段筛选':'只看该阶段',
+        style:'border:1px solid '+(stageActive?'var(--brand-300)':'var(--border)')+';background:var(--bg-elev);border-radius:12px;padding:14px 15px;display:flex;flex-direction:column;gap:10px;min-width:0',
+        onSelectStage:()=>this.selectDirectionStage(stageId)
+      };
+    });
+    let dirSelected=null;
+    dirRows.forEach(stage=>{
+      (Array.isArray(stage.directions)?stage.directions:[]).forEach(dir=>{
+        if(String(dir.direction_id||'')===String(s.directionId||'')) dirSelected=Object.assign({},dir,{stage_name:stage.stage_name,stage_title:stage.stage_title});
+      });
+    });
+    const dirActiveScope=!!(s.directionStage||s.directionId);
+    const dirStageLabel=(dirStageChips.find(x=>x.stage_id===String(s.directionStage||''))||{}).stageLabel;
+    const dirScopeText=s.directionId
+      ? (this._directionText(dirSelected&&dirSelected.name_zh)+'（'+s.directionId+'）')
+      : (s.directionStage?('阶段 · '+this._directionText(dirStageLabel)):'全部疾病方向');
+    const dirItems=(Array.isArray(s.directionRecords)?s.directionRecords:[]).map(x=>this._directionRecordVm(x));
+    const dirVerifyCounts=dirRoadmap.verification_status_counts||{};
+    const dirHasVerifyCounts=
+      Object.prototype.hasOwnProperty.call(dirVerifyCounts,'verified') &&
+      Object.prototype.hasOwnProperty.call(dirVerifyCounts,'api_harvested');
+    const dirVerificationMix=dirHasVerifyCounts
+      ? ('本页当前收录记录构成：人工核验（verified）'+this._directionText(dirVerifyCounts.verified)+' 条 · 机器采集（api_harvested）'+this._directionText(dirVerifyCounts.api_harvested)+' 条。')
+      : '';
+    const dirOptionList=list=>[{value:'',label:'全部'}].concat((Array.isArray(list)?list:[]).map(x=>({value:String(x),label:String(x)})));
+    const dirDirectionChoices=[{value:'',label:'全部方向'}].concat(dirStageChips.reduce((acc,stage)=>acc.concat(stage.directions.map(d=>({value:d.direction_id,label:stage.stage_name+' · '+d.name}))),[]));
+    const dirStageChoices=[{value:'',label:'全部阶段'}].concat(dirStageChips.map(stage=>({value:stage.stage_id,label:stage.stageLabel})));
     return {
       ev_tabSourceStyle:tabStyle(s.evidenceTab==='sources'),
       ev_tabChainStyle:tabStyle(s.evidenceTab==='chains'),
       ev_tabCompanyStyle:tabStyle(s.evidenceTab==='companyCompare'),
+      ev_hasDirectionTab:dirAvailable,
+      ev_tabDirectionStyle:tabStyle(s.evidenceTab==='directions'),
       ev_tabSource:()=>this.switchEvidenceTab('sources'),
       ev_tabChain:()=>this.switchEvidenceTab('chains'),
       ev_tabCompany:()=>this.switchEvidenceTab('companyCompare'),
+      ev_tabDirection:()=>this.switchEvidenceTab('directions'),
       ev_openGrounded:()=>this.openGroundedQa(),
       ev_isSourceTab:s.page==='evidence'&&s.evidenceTab==='sources',
       ev_isChainTab:s.page==='evidence'&&s.evidenceTab==='chains',
       ev_isCompanyCompareTab:s.page==='evidence'&&s.evidenceTab==='companyCompare',
+      ev_isDirectionTab:s.page==='evidence'&&s.evidenceTab==='directions',
       ev_isGroundedTab:s.page==='groundedQa',
+      dq_available:dirAvailable,
+      dq_spectrumNote:'本页记录为 API 机器采集（api_harvested），未经人工逐条复核；与研发证据中心的人工核验资料属于两套口径。',
+      dq_hasVerificationMix:dirHasVerifyCounts,
+      dq_verificationMix:dirVerificationMix,
+      dq_roadmapLoading:s.directionRoadmapLoading,
+      dq_hasRoadmapError:!!s.directionRoadmapError,
+      dq_roadmapError:s.directionRoadmapError,
+      dq_stages:dirStageChips,
+      dq_hasStages:dirStageChips.length>0,
+      dq_totalStages:this._directionText(dirRoadmap.total_stages),
+      dq_totalDirections:this._directionText(dirRoadmap.total_directions),
+      dq_totalRecords:this._directionText(dirRoadmap.total_records),
+      dq_verifiedCount:this._evidenceText(sum.total_sources),
+      dq_directionChoices:dirDirectionChoices,
+      dq_stageChoices:dirStageChoices,
+      dq_scopeText:dirScopeText,
+      dq_activeScope:dirActiveScope,
+      dq_scopeId:s.directionId||'',
+      dq_stageId:s.directionStage||'',
+      dq_resetScope:()=>this.directionResetScope(),
+      dq_onDirection:(e)=>this.directionChoose(e.target.value),
+      dq_onStage:(e)=>this.directionChooseStage(e.target.value),
+      dq_onRecordType:(e)=>this.directionOnFilter('record_type',e.target.value),
+      dq_onPhase:(e)=>this.directionOnFilter('phase',e.target.value),
+      dq_onStatus:(e)=>this.directionOnFilter('study_status',e.target.value),
+      dq_onSourceType:(e)=>this.directionOnFilter('source_type',e.target.value),
+      dq_onCompany:(e)=>this.directionOnFilter('company',e.target.value),
+      dq_onQuery:(e)=>this.directionOnQuery(e.target.value),
+      dq_onKey:(e)=>{ if(e.key==='Enter') this.loadDirectionRecords(0); },
+      dq_onLimit:(e)=>this.directionOnLimit(e.target.value),
+      dq_search:()=>this.loadDirectionRecords(0),
+      dq_refresh:()=>this.directionRefresh(),
+      dq_recordType:dirFilters.record_type,
+      dq_phase:dirFilters.phase,
+      dq_status:dirFilters.study_status,
+      dq_sourceType:dirFilters.source_type,
+      dq_company:dirFilters.company,
+      dq_query:dirFilters.q,
+      dq_limit:String(dirLimit),
+      dq_recordTypeOptions:dirOptionList(['clinical_trial','publication']).map(x=>({value:x.value,label:x.value==='clinical_trial'?'临床试验':(x.value==='publication'?'论文':'全部')})),
+      dq_phaseOptions:dirOptionList(dirOptions.phase),
+      dq_statusOptions:dirOptionList(dirOptions.study_status),
+      dq_sourceTypeOptions:dirOptionList(dirOptions.source_type),
+      dq_companyOptions:dirOptionList(dirOptions.company),
+      dq_filtersLoading:s.directionFiltersLoading,
+      dq_loading:s.directionLoading,
+      dq_hasError:!!s.directionError,
+      dq_error:s.directionError,
+      dq_items:dirItems,
+      dq_hasItems:dirItems.length>0,
+      dq_empty:!s.directionLoading&&!s.directionError&&dirItems.length===0,
+      dq_total:this._directionText(s.directionTotal),
+      dq_count:this._directionText(dirItems.length),
+      dq_pageText:(dirItems.length?(dirOffset+1)+'-'+(dirOffset+dirItems.length):'0')+' / '+this._directionText(s.directionTotal),
+      dq_hasPrev:dirOffset>0,
+      dq_hasNext:!!s.directionHasMore,
+      dq_prev:()=>this.directionPrevPage(),
+      dq_next:()=>this.directionNextPage(),
+      dq_prevDisabled:!(dirOffset>0),
+      dq_nextDisabled:!s.directionHasMore,
       ev_modes:modes.map(m=>Object.assign({}, m, {style:'height:30px;border-radius:7px;border:0;padding:0 10px;font-size:12px;font-weight:600;cursor:pointer;'+(m.key===s.evidenceKind?'background:var(--brand-600);color:#fff':'background:transparent;color:var(--text-2)'), onClick:()=>this.setState({evidenceKind:m.key,evidenceError:''})})),
       ev_kind:s.evidenceKind, ev_kindLabel:activeMode.label, ev_query:s.evidenceQuery, ev_placeholder:activeMode.placeholder,
       ev_onQuery:(e)=>this.setState({evidenceQuery:e.target.value}),

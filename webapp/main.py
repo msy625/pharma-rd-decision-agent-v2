@@ -12,6 +12,11 @@ from pydantic import BaseModel, Field
 
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.company_evidence_profile_service import CompanyEvidenceProfileService
+from deepinsight.core.direction_dataset_service import (
+    DirectionDatasetFileNotFound,
+    DirectionDatasetService,
+    DirectionDatasetStructureError,
+)
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.evidence_decision_brief_service import EvidenceDecisionBriefService
 from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
@@ -128,6 +133,14 @@ def _evidence_decision_brief_available() -> bool:
     try:
         _evidence_decision_brief_service().build_brief("恒瑞医药")
         return True
+    except Exception:
+        return False
+
+
+def _direction_dataset_available() -> bool:
+    try:
+        service = _direction_dataset_service()
+        return bool(service.roadmap().get("total_directions"))
     except Exception:
         return False
 
@@ -1681,6 +1694,16 @@ def _evidence_decision_brief_service() -> EvidenceDecisionBriefService:
     )
 
 
+_DIRECTION_DATASET_SERVICE: DirectionDatasetService | None = None
+
+
+def _direction_dataset_service() -> DirectionDatasetService:
+    global _DIRECTION_DATASET_SERVICE
+    if _DIRECTION_DATASET_SERVICE is None:
+        _DIRECTION_DATASET_SERVICE = DirectionDatasetService()
+    return _DIRECTION_DATASET_SERVICE
+
+
 def _grounded_qa_service() -> GroundedQAService:
     source_service = _evidence_service()
     evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
@@ -1818,6 +1841,14 @@ def _handle_decision_agent_error(exc: Exception) -> HTTPException:
     return HTTPException(status_code=500, detail="决策Agent服务暂时不可用。")
 
 
+def _handle_direction_dataset_error(exc: Exception) -> HTTPException:
+    if isinstance(exc, (DirectionDatasetFileNotFound, FileNotFoundError)):
+        return HTTPException(status_code=503, detail="疾病方向数据文件不可用，请检查 data/template 是否已部署。")
+    if isinstance(exc, (DirectionDatasetStructureError, ValueError)):
+        return HTTPException(status_code=503, detail="疾病方向数据结构异常，请检查规范化数据表或方向目录配置。")
+    return HTTPException(status_code=500, detail="疾病方向数据服务暂时不可用。")
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {
@@ -1864,6 +1895,7 @@ def _runtime_capabilities_payload(*, workbench_available: bool | None = None) ->
     company_profile_available = _company_evidence_profile_available()
     timeline_available = _rd_event_timeline_available()
     brief_available = _evidence_decision_brief_available()
+    direction_dataset_available = _direction_dataset_available()
     legacy_available = _legacy_features_available()
     return {
         "competition_core_available": competition_available,
@@ -1871,6 +1903,7 @@ def _runtime_capabilities_payload(*, workbench_available: bool | None = None) ->
         "company_evidence_profile_available": company_profile_available,
         "rd_event_timeline_available": timeline_available,
         "evidence_decision_brief_available": brief_available,
+        "direction_dataset_available": direction_dataset_available,
         "legacy_features_available": legacy_available,
         "default_page": "today" if workbench_available else "evidence",
         "legacy_unavailable_reason": "" if legacy_available else LEGACY_UNAVAILABLE_REASON,
@@ -2642,6 +2675,60 @@ def evidence_source(source_id: str) -> dict[str, Any]:
         raise
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/directions/roadmap")
+def directions_roadmap() -> dict[str, Any]:
+    try:
+        return _direction_dataset_service().roadmap()
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/directions/summary")
+def directions_summary() -> dict[str, Any]:
+    try:
+        return _direction_dataset_service().summary()
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/directions/filters")
+def directions_filters(direction_id: str | None = None) -> dict[str, Any]:
+    try:
+        return {"options": _direction_dataset_service().filter_options(direction_id)}
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/directions/records")
+def directions_records(
+    direction_id: str | None = None,
+    stage_id: str | None = None,
+    record_type: str | None = None,
+    source_type: str | None = None,
+    phase: str | None = None,
+    study_status: str | None = None,
+    company: str | None = None,
+    q: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+) -> dict[str, Any]:
+    try:
+        return _direction_dataset_service().query(
+            direction_id=direction_id,
+            stage_id=stage_id,
+            record_type=record_type,
+            source_type=source_type,
+            phase=phase,
+            study_status=study_status,
+            company=company,
+            text=q,
+            limit=limit,
+            offset=offset,
+        )
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
 
 
 @app.post("/api/chat")
