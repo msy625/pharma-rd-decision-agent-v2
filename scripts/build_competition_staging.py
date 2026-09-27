@@ -33,6 +33,7 @@ CONFIG_AND_DATA_FILES = [
     "config/grounded_qa_rules.json",
     "config/direction_catalog.json",
     "config/organization_names_zh.json",
+    "config/individual_investigator_names.json",
     "data/source_registry.csv",
 ]
 CORE_FILES = [
@@ -71,6 +72,7 @@ SCRIPT_AND_DOC_FILES = [
     "scripts/harvest_direction_data.py",
     "scripts/validate_direction_dataset.py",
     "scripts/localize_organization_names.py",
+    "scripts/drop_individual_investigators.py",
     "scripts/build_formal_evaluation_cases.py",
     "scripts/validate_competition_package.py",
     "docs/data_dictionary.md",

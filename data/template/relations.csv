@@ -602,7 +602,6 @@ REL_CTG_NCT07391670_ASSET_DURVALUMAB,DOM_NSCLC,SRC_CTG_NCT07391670,source_mentio
 REL_CTG_NCT07391670_ASSET_TREMELIMUMAB,DOM_NSCLC,SRC_CTG_NCT07391670,source_mentions_asset,ASSET_HARVEST_TREMELIMUMAB,confirmed,SRC_CTG_NCT07391670,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838532_STUDY,DOM_NSCLC,SRC_CTG_NCT07838532,source_describes_study,STUDY_NCT07838532,confirmed,SRC_CTG_NCT07838532,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838532_INDICATION,DOM_NSCLC,SRC_CTG_NCT07838532,source_about_indication,IND_NSCLC,confirmed,SRC_CTG_NCT07838532,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07838532_SPONSOR,DOM_NSCLC,SRC_CTG_NCT07838532,source_about_org,ORG_HARVEST_XIN_LI,confirmed,SRC_CTG_NCT07838532,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838532_ASSET_COD,DOM_NSCLC,SRC_CTG_NCT07838532,source_mentions_asset,ASSET_HARVEST_AUMOLERTINIB_MONOTHERAPY_DEVELOPMENT_COD,confirmed,SRC_CTG_NCT07838532,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05717998_STUDY,DOM_NSCLC,SRC_CTG_NCT05717998,source_describes_study,STUDY_NCT05717998,confirmed,SRC_CTG_NCT05717998,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05717998_INDICATION,DOM_NSCLC,SRC_CTG_NCT05717998,source_about_indication,IND_NSCLC,confirmed,SRC_CTG_NCT05717998,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -772,7 +771,6 @@ REL_CTG_NCT06103864_ASSET_PACLITAXEL,DOM_BREAST_CANCER,SRC_CTG_NCT06103864,sourc
 REL_CTG_NCT06103864_ASSET_GEMCITABINE,DOM_BREAST_CANCER,SRC_CTG_NCT06103864,source_mentions_asset,ASSET_HARVEST_GEMCITABINE,confirmed,SRC_CTG_NCT06103864,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07843212_STUDY,DOM_BREAST_CANCER,SRC_CTG_NCT07843212,source_describes_study,STUDY_NCT07843212,confirmed,SRC_CTG_NCT07843212,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07843212_INDICATION,DOM_BREAST_CANCER,SRC_CTG_NCT07843212,source_about_indication,IND_BREAST_CANCER,confirmed,SRC_CTG_NCT07843212,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07843212_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT07843212,source_about_org,ORG_HARVEST_MUCAHIDE_EMINE_FIDANC_KUAS,confirmed,SRC_CTG_NCT07843212,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07842068_STUDY,DOM_BREAST_CANCER,SRC_CTG_NCT07842068,source_describes_study,STUDY_NCT07842068,confirmed,SRC_CTG_NCT07842068,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07842068_INDICATION,DOM_BREAST_CANCER,SRC_CTG_NCT07842068,source_about_indication,IND_BREAST_CANCER,confirmed,SRC_CTG_NCT07842068,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07842068_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT07842068,source_about_org,ORG_HARVEST_HELLENIC_COOPERATIVE_ONCOLOGY_GROUP,confirmed,SRC_CTG_NCT07842068,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -825,7 +823,6 @@ REL_CTG_NCT07391774_ASSET_LETROZOLE,DOM_BREAST_CANCER,SRC_CTG_NCT07391774,source
 REL_CTG_NCT07391774_ASSET_SUCCINATE,DOM_BREAST_CANCER,SRC_CTG_NCT07391774,source_mentions_asset,ASSET_HARVEST_RIBOCICLIB_SUCCINATE,confirmed,SRC_CTG_NCT07391774,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07841704_STUDY,DOM_BREAST_CANCER,SRC_CTG_NCT07841704,source_describes_study,STUDY_NCT07841704,confirmed,SRC_CTG_NCT07841704,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07841704_INDICATION,DOM_BREAST_CANCER,SRC_CTG_NCT07841704,source_about_indication,IND_BREAST_CANCER,confirmed,SRC_CTG_NCT07841704,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07841704_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT07841704,source_about_org,ORG_HARVEST_WONSHIK_HAN,confirmed,SRC_CTG_NCT07841704,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06966700_STUDY,DOM_PARKINSONS,SRC_CTG_NCT06966700,source_describes_study,STUDY_NCT06966700,confirmed,SRC_CTG_NCT06966700,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06966700_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT06966700,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT06966700,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06966700_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT06966700,source_about_org,ORG_HARVEST_MERCK_SHARP_DOHME_LLC,confirmed,SRC_CTG_NCT06966700,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -857,7 +854,6 @@ REL_CTG_NCT06377852_ASSET_RIBOCICLIB,DOM_BREAST_CANCER,SRC_CTG_NCT06377852,sourc
 REL_CTG_NCT06377852_ASSET_PALBOCICLIB,DOM_BREAST_CANCER,SRC_CTG_NCT06377852,source_mentions_asset,ASSET_HARVEST_PALBOCICLIB,confirmed,SRC_CTG_NCT06377852,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07297927_STUDY,DOM_BREAST_CANCER,SRC_CTG_NCT07297927,source_describes_study,STUDY_NCT07297927,confirmed,SRC_CTG_NCT07297927,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07297927_INDICATION,DOM_BREAST_CANCER,SRC_CTG_NCT07297927,source_about_indication,IND_BREAST_CANCER,confirmed,SRC_CTG_NCT07297927,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07297927_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT07297927,source_about_org,ORG_HARVEST_INAH_KIM,confirmed,SRC_CTG_NCT07297927,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07054190_STUDY,DOM_BREAST_CANCER,SRC_CTG_NCT07054190,source_describes_study,STUDY_NCT07054190,confirmed,SRC_CTG_NCT07054190,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07054190_INDICATION,DOM_BREAST_CANCER,SRC_CTG_NCT07054190,source_about_indication,IND_BREAST_CANCER,confirmed,SRC_CTG_NCT07054190,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07054190_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT07054190,source_about_org,ORG_HARVEST_HOFFMANN_LA_ROCHE,confirmed,SRC_CTG_NCT07054190,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -982,7 +978,6 @@ REL_CTG_NCT07408856_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT07408856,source_about_o
 REL_CTG_NCT07408856_ASSET_CAN1012,DOM_BREAST_CANCER,SRC_CTG_NCT07408856,source_mentions_asset,ASSET_HARVEST_CAN1012,confirmed,SRC_CTG_NCT07408856,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02390427_STUDY,DOM_BREAST_CANCER,SRC_CTG_NCT02390427,source_describes_study,STUDY_NCT02390427,confirmed,SRC_CTG_NCT02390427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02390427_INDICATION,DOM_BREAST_CANCER,SRC_CTG_NCT02390427,source_about_indication,IND_BREAST_CANCER,confirmed,SRC_CTG_NCT02390427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT02390427_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT02390427,source_about_org,ORG_HARVEST_NANCY_LIN_MD,confirmed,SRC_CTG_NCT02390427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02390427_ASSET_TASELISIB,DOM_BREAST_CANCER,SRC_CTG_NCT02390427,source_mentions_asset,ASSET_HARVEST_TASELISIB,confirmed,SRC_CTG_NCT02390427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02390427_ASSET_EMTANSINE,DOM_BREAST_CANCER,SRC_CTG_NCT02390427,source_mentions_asset,ASSET_HARVEST_TRASTUZUMAB_EMTANSINE,confirmed,SRC_CTG_NCT02390427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02390427_ASSET_PERTUZUMAB,DOM_BREAST_CANCER,SRC_CTG_NCT02390427,source_mentions_asset,ASSET_HARVEST_PERTUZUMAB,confirmed,SRC_CTG_NCT02390427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -1005,7 +1000,6 @@ REL_CTG_NCT03927768_INDICATION,DOM_BREAST_CANCER,SRC_CTG_NCT03927768,source_abou
 REL_CTG_NCT03927768_SPONSOR,DOM_BREAST_CANCER,SRC_CTG_NCT03927768,source_about_org,ORG_HARVEST_NYU_LANGONE_HEALTH,confirmed,SRC_CTG_NCT03927768,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07595718_STUDY,DOM_T2DM,SRC_CTG_NCT07595718,source_describes_study,STUDY_NCT07595718,confirmed,SRC_CTG_NCT07595718,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07595718_INDICATION,DOM_T2DM,SRC_CTG_NCT07595718,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT07595718,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07595718_SPONSOR,DOM_T2DM,SRC_CTG_NCT07595718,source_about_org,ORG_HARVEST_JAE_YONG_JEON_MD,confirmed,SRC_CTG_NCT07595718,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05564377_STUDY,DOM_GENETIC_DISEASE,SRC_CTG_NCT05564377,source_describes_study,STUDY_NCT05564377,confirmed,SRC_CTG_NCT05564377,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05564377_INDICATION,DOM_GENETIC_DISEASE,SRC_CTG_NCT05564377,source_about_indication,IND_GENETIC_DISEASE,confirmed,SRC_CTG_NCT05564377,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05564377_SPONSOR,DOM_GENETIC_DISEASE,SRC_CTG_NCT05564377,source_about_org,ORG_HARVEST_NATIONAL_CANCER_INSTITUTE_NCI,confirmed,SRC_CTG_NCT05564377,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -1377,10 +1371,8 @@ REL_CTG_NCT03516942_INDICATION,DOM_COLORECTAL_CANCER,SRC_CTG_NCT03516942,source_
 REL_CTG_NCT03516942_SPONSOR,DOM_COLORECTAL_CANCER,SRC_CTG_NCT03516942,source_about_org,ORG_HARVEST_ECOG_ACRIN_CANCER_RESEARCH_GROUP,confirmed,SRC_CTG_NCT03516942,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06994832_STUDY,DOM_GENETIC_DISEASE,SRC_CTG_NCT06994832,source_describes_study,STUDY_NCT06994832,confirmed,SRC_CTG_NCT06994832,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06994832_INDICATION,DOM_GENETIC_DISEASE,SRC_CTG_NCT06994832,source_about_indication,IND_GENETIC_DISEASE,confirmed,SRC_CTG_NCT06994832,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06994832_SPONSOR,DOM_GENETIC_DISEASE,SRC_CTG_NCT06994832,source_about_org,ORG_HARVEST_STEPHANIE_B_SEMINARA_MD,confirmed,SRC_CTG_NCT06994832,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06801665_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT06801665,source_describes_study,STUDY_NCT06801665,confirmed,SRC_CTG_NCT06801665,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06801665_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT06801665,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT06801665,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06801665_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT06801665,source_about_org,ORG_HARVEST_HUA_JIANG,confirmed,SRC_CTG_NCT06801665,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06801665_ASSET_XELOX,DOM_LIVER_CANCER,SRC_CTG_NCT06801665,source_mentions_asset,ASSET_HARVEST_FMT_QL1706_BEVACIZUMAB_XELOX,confirmed,SRC_CTG_NCT06801665,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838246_STUDY,DOM_GENETIC_DISEASE,SRC_CTG_NCT07838246,source_describes_study,STUDY_NCT07838246,confirmed,SRC_CTG_NCT07838246,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838246_INDICATION,DOM_GENETIC_DISEASE,SRC_CTG_NCT07838246,source_about_indication,IND_GENETIC_DISEASE,confirmed,SRC_CTG_NCT07838246,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -1426,7 +1418,6 @@ REL_CTG_NCT06805123_INDICATION,DOM_COLORECTAL_CANCER,SRC_CTG_NCT06805123,source_
 REL_CTG_NCT06805123_SPONSOR,DOM_COLORECTAL_CANCER,SRC_CTG_NCT06805123,source_about_org,ORG_HARVEST_PUSAN_NATIONAL_UNIVERSITY_HOSPITAL,confirmed,SRC_CTG_NCT06805123,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07385521_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07385521,source_describes_study,STUDY_NCT07385521,confirmed,SRC_CTG_NCT07385521,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07385521_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07385521,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07385521,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07385521_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07385521,source_about_org,ORG_HARVEST_FRANCESCO_DE_COBELLI,confirmed,SRC_CTG_NCT07385521,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07221357_STUDY,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07221357,source_describes_study,STUDY_NCT07221357,confirmed,SRC_CTG_NCT07221357,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07221357_INDICATION,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07221357,source_about_indication,IND_COLORECTAL_CANCER,confirmed,SRC_CTG_NCT07221357,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07221357_SPONSOR,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07221357,source_about_org,ORG_HARVEST_BRISTOL_MYERS_SQUIBB,confirmed,SRC_CTG_NCT07221357,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -1531,7 +1522,6 @@ REL_CTG_NCT07748377_INDICATION,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07748377,source_
 REL_CTG_NCT07748377_SPONSOR,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07748377,source_about_org,ORG_HARVEST_ICAHN_SCHOOL_OF_MEDICINE_AT_MOUNT_SINAI,confirmed,SRC_CTG_NCT07748377,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07833358_STUDY,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07833358,source_describes_study,STUDY_NCT07833358,confirmed,SRC_CTG_NCT07833358,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07833358_INDICATION,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07833358,source_about_indication,IND_COLORECTAL_CANCER,confirmed,SRC_CTG_NCT07833358,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07833358_SPONSOR,DOM_COLORECTAL_CANCER,SRC_CTG_NCT07833358,source_about_org,ORG_HARVEST_YA_FEN_FAN,confirmed,SRC_CTG_NCT07833358,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04708470_STUDY,DOM_COLORECTAL_CANCER,SRC_CTG_NCT04708470,source_describes_study,STUDY_NCT04708470,confirmed,SRC_CTG_NCT04708470,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04708470_INDICATION,DOM_COLORECTAL_CANCER,SRC_CTG_NCT04708470,source_about_indication,IND_COLORECTAL_CANCER,confirmed,SRC_CTG_NCT04708470,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04708470_SPONSOR,DOM_COLORECTAL_CANCER,SRC_CTG_NCT04708470,source_about_org,ORG_HARVEST_NATIONAL_CANCER_INSTITUTE_NCI,confirmed,SRC_CTG_NCT04708470,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2174,7 +2164,6 @@ REL_CTG_NCT07839767_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07839767,source_about
 REL_CTG_NCT07839767_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07839767,source_about_org,ORG_HARVEST_THE_UNIVERSITY_OF_HONG_KONG,confirmed,SRC_CTG_NCT07839767,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07642336_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07642336,source_describes_study,STUDY_NCT07642336,confirmed,SRC_CTG_NCT07642336,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07642336_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07642336,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07642336,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07642336_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07642336,source_about_org,ORG_HARVEST_NGUYEN_TOAN_THANG,confirmed,SRC_CTG_NCT07642336,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840092_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07840092,source_describes_study,STUDY_NCT07840092,confirmed,SRC_CTG_NCT07840092,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840092_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07840092,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07840092,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840092_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07840092,source_about_org,ORG_HARVEST_TIANJIN_MEDICAL_UNIVERSITY_CANCER_INSTIT,confirmed,SRC_CTG_NCT07840092,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2211,7 +2200,6 @@ REL_CTG_NCT07836530_ASSET_LENVATINIB,DOM_LIVER_CANCER,SRC_CTG_NCT07836530,source
 REL_CTG_NCT07836530_ASSET_SORAFENIB,DOM_LIVER_CANCER,SRC_CTG_NCT07836530,source_mentions_asset,ASSET_HARVEST_SORAFENIB,confirmed,SRC_CTG_NCT07836530,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03981497_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT03981497,source_describes_study,STUDY_NCT03981497,confirmed,SRC_CTG_NCT03981497,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03981497_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT03981497,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT03981497,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT03981497_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT03981497,source_about_org,ORG_HARVEST_FRANCESCO_DE_COBELLI,confirmed,SRC_CTG_NCT03981497,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836309_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07836309,source_describes_study,STUDY_NCT07836309,confirmed,SRC_CTG_NCT07836309,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836309_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07836309,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07836309,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836309_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07836309,source_about_org,ORG_HARVEST_ZHONGDA_HOSPITAL,confirmed,SRC_CTG_NCT07836309,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2255,7 +2243,6 @@ REL_CTG_NCT07830576_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07830576,source_about
 REL_CTG_NCT07830576_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07830576,source_about_org,ORG_HARVEST_ANHUI_PROVINCIAL_HOSPITAL,confirmed,SRC_CTG_NCT07830576,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07832006_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07832006,source_describes_study,STUDY_NCT07832006,confirmed,SRC_CTG_NCT07832006,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07832006_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07832006,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07832006,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07832006_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07832006,source_about_org,ORG_HARVEST_SHUNDA_DU,confirmed,SRC_CTG_NCT07832006,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07832006_ASSET_LENVATINIB,DOM_LIVER_CANCER,SRC_CTG_NCT07832006,source_mentions_asset,ASSET_HARVEST_LENVATINIB,confirmed,SRC_CTG_NCT07832006,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07832006_ASSET_SINTILIMAB,DOM_LIVER_CANCER,SRC_CTG_NCT07832006,source_mentions_asset,ASSET_HARVEST_SINTILIMAB,confirmed,SRC_CTG_NCT07832006,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07829926_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07829926,source_describes_study,STUDY_NCT07829926,confirmed,SRC_CTG_NCT07829926,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2271,7 +2258,6 @@ REL_CTG_NCT07793695_ASSET_M,DOM_LIVER_CANCER,SRC_CTG_NCT07793695,source_mentions
 REL_CTG_NCT07793695_ASSET_I,DOM_LIVER_CANCER,SRC_CTG_NCT07793695,source_mentions_asset,ASSET_HARVEST_STANDARD_OF_CARE_TARGETED_THERAPY_PLUS_I,confirmed,SRC_CTG_NCT07793695,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07557914_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07557914,source_describes_study,STUDY_NCT07557914,confirmed,SRC_CTG_NCT07557914,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07557914_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07557914,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07557914,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07557914_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07557914,source_about_org,ORG_HARVEST_HAIBO_SHAO,confirmed,SRC_CTG_NCT07557914,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07557914_ASSET_EPALRESTAT,DOM_LIVER_CANCER,SRC_CTG_NCT07557914,source_mentions_asset,ASSET_HARVEST_EPALRESTAT,confirmed,SRC_CTG_NCT07557914,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07557914_ASSET_TISLELIZUMAB,DOM_LIVER_CANCER,SRC_CTG_NCT07557914,source_mentions_asset,ASSET_HARVEST_DONAFENIB_TISLELIZUMAB,confirmed,SRC_CTG_NCT07557914,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06929845_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT06929845,source_describes_study,STUDY_NCT06929845,confirmed,SRC_CTG_NCT06929845,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2279,7 +2265,6 @@ REL_CTG_NCT06929845_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT06929845,source_about
 REL_CTG_NCT06929845_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT06929845,source_about_org,ORG_HARVEST_FONDAZIONE_POLICLINICO_UNIVERSITARIO_AGO,confirmed,SRC_CTG_NCT06929845,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07639138_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07639138,source_describes_study,STUDY_NCT07639138,confirmed,SRC_CTG_NCT07639138,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07639138_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07639138,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07639138,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07639138_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07639138,source_about_org,ORG_HARVEST_SHUNDA_DU,confirmed,SRC_CTG_NCT07639138,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07639138_ASSET_LENALIDOMIDE,DOM_LIVER_CANCER,SRC_CTG_NCT07639138,source_mentions_asset,ASSET_HARVEST_LENALIDOMIDE,confirmed,SRC_CTG_NCT07639138,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07639138_ASSET_THERAPY,DOM_LIVER_CANCER,SRC_CTG_NCT07639138,source_mentions_asset,ASSET_HARVEST_TARGETED_THERAPY,confirmed,SRC_CTG_NCT07639138,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07639138_ASSET_INHIBITORS,DOM_LIVER_CANCER,SRC_CTG_NCT07639138,source_mentions_asset,ASSET_HARVEST_IMMUNE_CHECKPOINT_INHIBITORS,confirmed,SRC_CTG_NCT07639138,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2372,7 +2357,6 @@ REL_CTG_NCT06007846_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT06007846,source_about_or
 REL_CTG_NCT06007846_ASSET_NAMENDA,DOM_LIVER_CANCER,SRC_CTG_NCT06007846,source_mentions_asset,ASSET_HARVEST_NAMENDA,confirmed,SRC_CTG_NCT06007846,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07820644_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT07820644,source_describes_study,STUDY_NCT07820644,confirmed,SRC_CTG_NCT07820644,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07820644_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT07820644,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT07820644,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07820644_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT07820644,source_about_org,ORG_HARVEST_CAI_QINGXIAN,confirmed,SRC_CTG_NCT07820644,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02523443_STUDY,DOM_LIVER_CANCER,SRC_CTG_NCT02523443,source_describes_study,STUDY_NCT02523443,confirmed,SRC_CTG_NCT02523443,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02523443_INDICATION,DOM_LIVER_CANCER,SRC_CTG_NCT02523443,source_about_indication,IND_LIVER_CANCER,confirmed,SRC_CTG_NCT02523443,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02523443_SPONSOR,DOM_LIVER_CANCER,SRC_CTG_NCT02523443,source_about_org,ORG_HARVEST_MEMORIAL_SLOAN_KETTERING_CANCER_CENTER,confirmed,SRC_CTG_NCT02523443,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2597,7 +2581,6 @@ REL_CTG_NCT07835360_INDICATION,DOM_T2DM,SRC_CTG_NCT07835360,source_about_indicat
 REL_CTG_NCT07835360_SPONSOR,DOM_T2DM,SRC_CTG_NCT07835360,source_about_org,ORG_HARVEST_INSTITUTO_NACIONAL_DE_CIENCIAS_MEDICAS_Y,confirmed,SRC_CTG_NCT07835360,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840274_STUDY,DOM_OBESITY,SRC_CTG_NCT07840274,source_describes_study,STUDY_NCT07840274,confirmed,SRC_CTG_NCT07840274,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840274_INDICATION,DOM_OBESITY,SRC_CTG_NCT07840274,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT07840274,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07840274_SPONSOR,DOM_OBESITY,SRC_CTG_NCT07840274,source_about_org,ORG_HARVEST_P_NAR_GO_BEL,confirmed,SRC_CTG_NCT07840274,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07792954_STUDY,DOM_OBESITY,SRC_CTG_NCT07792954,source_describes_study,STUDY_NCT07792954,confirmed,SRC_CTG_NCT07792954,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07792954_INDICATION,DOM_OBESITY,SRC_CTG_NCT07792954,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT07792954,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07792954_SPONSOR,DOM_OBESITY,SRC_CTG_NCT07792954,source_about_org,ORG_HARVEST_PFIZER,confirmed,SRC_CTG_NCT07792954,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2616,7 +2599,6 @@ REL_CTG_NCT07388537_INDICATION,DOM_OBESITY,SRC_CTG_NCT07388537,source_about_indi
 REL_CTG_NCT07388537_SPONSOR,DOM_OBESITY,SRC_CTG_NCT07388537,source_about_org,ORG_HARVEST_NATIONAL_INSTITUTE_OF_DIABETES_AND_DIGES,confirmed,SRC_CTG_NCT07388537,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07797140_STUDY,DOM_OBESITY,SRC_CTG_NCT07797140,source_describes_study,STUDY_NCT07797140,confirmed,SRC_CTG_NCT07797140,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07797140_INDICATION,DOM_OBESITY,SRC_CTG_NCT07797140,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT07797140,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07797140_SPONSOR,DOM_OBESITY,SRC_CTG_NCT07797140,source_about_org,ORG_HARVEST_AYS_E_UKBE_BAYKUT,confirmed,SRC_CTG_NCT07797140,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06690294_STUDY,DOM_OBESITY,SRC_CTG_NCT06690294,source_describes_study,STUDY_NCT06690294,confirmed,SRC_CTG_NCT06690294,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06690294_INDICATION,DOM_OBESITY,SRC_CTG_NCT06690294,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT06690294,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06690294_SPONSOR,DOM_OBESITY,SRC_CTG_NCT06690294,source_about_org,ORG_HARVEST_NATIONAL_INSTITUTE_OF_DIABETES_AND_DIGES,confirmed,SRC_CTG_NCT06690294,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2625,7 +2607,6 @@ REL_CTG_NCT07195708_INDICATION,DOM_OBESITY,SRC_CTG_NCT07195708,source_about_indi
 REL_CTG_NCT07195708_SPONSOR,DOM_OBESITY,SRC_CTG_NCT07195708,source_about_org,ORG_HARVEST_BOSTON_SCIENTIFIC_CORPORATION,confirmed,SRC_CTG_NCT07195708,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03865524_STUDY,DOM_OBESITY,SRC_CTG_NCT03865524,source_describes_study,STUDY_NCT03865524,confirmed,SRC_CTG_NCT03865524,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03865524_INDICATION,DOM_OBESITY,SRC_CTG_NCT03865524,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT03865524,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT03865524_SPONSOR,DOM_OBESITY,SRC_CTG_NCT03865524,source_about_org,ORG_HARVEST_PEDRO_JOSE_TORRIJOS_GARRIDO,confirmed,SRC_CTG_NCT03865524,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06700538_STUDY,DOM_T2DM,SRC_CTG_NCT06700538,source_describes_study,STUDY_NCT06700538,confirmed,SRC_CTG_NCT06700538,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06700538_INDICATION,DOM_T2DM,SRC_CTG_NCT06700538,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT06700538,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06700538_SPONSOR,DOM_T2DM,SRC_CTG_NCT06700538,source_about_org,ORG_HARVEST_ARROWHEAD_PHARMACEUTICALS,confirmed,SRC_CTG_NCT06700538,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2640,7 +2621,6 @@ REL_CTG_NCT07842640_ASSET_SUBCUTANEO,DOM_OBESITY,SRC_CTG_NCT07842640,source_ment
 REL_CTG_NCT07842640_ASSET_TIRZEPATIDE,DOM_OBESITY,SRC_CTG_NCT07842640,source_mentions_asset,ASSET_HARVEST_TIRZEPATIDE,confirmed,SRC_CTG_NCT07842640,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07588620_STUDY,DOM_OBESITY,SRC_CTG_NCT07588620,source_describes_study,STUDY_NCT07588620,confirmed,SRC_CTG_NCT07588620,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07588620_INDICATION,DOM_OBESITY,SRC_CTG_NCT07588620,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT07588620,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07588620_SPONSOR,DOM_OBESITY,SRC_CTG_NCT07588620,source_about_org,ORG_HARVEST_FRANCISCO_JOSE_GARCI_A_GONZA_LEZ,confirmed,SRC_CTG_NCT07588620,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07437976_STUDY,DOM_GENETIC_DISEASE,SRC_CTG_NCT07437976,source_describes_study,STUDY_NCT07437976,confirmed,SRC_CTG_NCT07437976,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07437976_INDICATION,DOM_GENETIC_DISEASE,SRC_CTG_NCT07437976,source_about_indication,IND_GENETIC_DISEASE,confirmed,SRC_CTG_NCT07437976,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07437976_SPONSOR,DOM_GENETIC_DISEASE,SRC_CTG_NCT07437976,source_about_org,ORG_HARVEST_NATIONAL_INSTITUTE_OF_ENVIRONMENTAL_HEAL,confirmed,SRC_CTG_NCT07437976,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2719,7 +2699,6 @@ REL_CTG_NCT06672549_ASSET_ORFORGLIPRON,DOM_OBESITY,SRC_CTG_NCT06672549,source_me
 REL_CTG_NCT06672549_ASSET_PLACEBO,DOM_OBESITY,SRC_CTG_NCT06672549,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT06672549,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03777215_STUDY,DOM_OBESITY,SRC_CTG_NCT03777215,source_describes_study,STUDY_NCT03777215,confirmed,SRC_CTG_NCT03777215,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03777215_INDICATION,DOM_OBESITY,SRC_CTG_NCT03777215,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT03777215,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT03777215_SPONSOR,DOM_OBESITY,SRC_CTG_NCT03777215,source_about_org,ORG_HARVEST_AMY_ARNOLD,confirmed,SRC_CTG_NCT03777215,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03777215_ASSET_7,DOM_OBESITY,SRC_CTG_NCT03777215,source_mentions_asset,ASSET_HARVEST_ANGIOTENSIN_1_7,confirmed,SRC_CTG_NCT03777215,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03777215_ASSET_SALINE,DOM_OBESITY,SRC_CTG_NCT03777215,source_mentions_asset,ASSET_HARVEST_SALINE,confirmed,SRC_CTG_NCT03777215,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06131372_STUDY,DOM_T2DM,SRC_CTG_NCT06131372,source_describes_study,STUDY_NCT06131372,confirmed,SRC_CTG_NCT06131372,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2898,7 +2877,6 @@ REL_CTG_NCT07836270_ASSET_INJECTION,DOM_OBESITY,SRC_CTG_NCT07836270,source_menti
 REL_CTG_NCT07836270_ASSET_VOLUME,DOM_OBESITY,SRC_CTG_NCT07836270,source_mentions_asset,ASSET_HARVEST_PLACEBO_WITH_MATCHING_VOLUME,confirmed,SRC_CTG_NCT07836270,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07421024_STUDY,DOM_T2DM,SRC_CTG_NCT07421024,source_describes_study,STUDY_NCT07421024,confirmed,SRC_CTG_NCT07421024,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07421024_INDICATION,DOM_T2DM,SRC_CTG_NCT07421024,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT07421024,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07421024_SPONSOR,DOM_T2DM,SRC_CTG_NCT07421024,source_about_org,ORG_HARVEST_MORTEN_HOSTRUP_PHD,confirmed,SRC_CTG_NCT07421024,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07421024_ASSET_258,DOM_T2DM,SRC_CTG_NCT07421024,source_mentions_asset,ASSET_HARVEST_ATR_258,confirmed,SRC_CTG_NCT07421024,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836088_STUDY,DOM_T2DM,SRC_CTG_NCT07836088,source_describes_study,STUDY_NCT07836088,confirmed,SRC_CTG_NCT07836088,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836088_INDICATION,DOM_T2DM,SRC_CTG_NCT07836088,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT07836088,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -2912,7 +2890,6 @@ REL_CTG_NCT07836582_INDICATION,DOM_OBESITY,SRC_CTG_NCT07836582,source_about_indi
 REL_CTG_NCT07836582_SPONSOR,DOM_OBESITY,SRC_CTG_NCT07836582,source_about_org,ORG_HARVEST_UNIVERSITE_DU_QUEBEC_EN_OUTAOUAIS,confirmed,SRC_CTG_NCT07836582,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03967860_STUDY,DOM_OBESITY,SRC_CTG_NCT03967860,source_describes_study,STUDY_NCT03967860,confirmed,SRC_CTG_NCT03967860,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03967860_INDICATION,DOM_OBESITY,SRC_CTG_NCT03967860,source_about_indication,IND_OBESITY,confirmed,SRC_CTG_NCT03967860,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT03967860_SPONSOR,DOM_OBESITY,SRC_CTG_NCT03967860,source_about_org,ORG_HARVEST_FRANCESCO_DE_COBELLI,confirmed,SRC_CTG_NCT03967860,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07518407_STUDY,DOM_T2DM,SRC_CTG_NCT07518407,source_describes_study,STUDY_NCT07518407,confirmed,SRC_CTG_NCT07518407,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07518407_INDICATION,DOM_T2DM,SRC_CTG_NCT07518407,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT07518407,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07518407_SPONSOR,DOM_T2DM,SRC_CTG_NCT07518407,source_about_org,ORG_HARVEST_UNIVERSITY_OF_SOUTH_CAROLINA,confirmed,SRC_CTG_NCT07518407,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -3059,7 +3036,6 @@ REL_CTG_NCT07668336_ASSET_ORFORGLIPRON,DOM_T2DM,SRC_CTG_NCT07668336,source_menti
 REL_CTG_NCT07668336_ASSET_DULAGLUTIDE,DOM_T2DM,SRC_CTG_NCT07668336,source_mentions_asset,ASSET_HARVEST_DULAGLUTIDE,confirmed,SRC_CTG_NCT07668336,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07063420_STUDY,DOM_T2DM,SRC_CTG_NCT07063420,source_describes_study,STUDY_NCT07063420,confirmed,SRC_CTG_NCT07063420,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07063420_INDICATION,DOM_T2DM,SRC_CTG_NCT07063420,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT07063420,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07063420_SPONSOR,DOM_T2DM,SRC_CTG_NCT07063420,source_about_org,ORG_HARVEST_DANIEL_CHERNAVVSKY_MD,confirmed,SRC_CTG_NCT07063420,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07544407_STUDY,DOM_T2DM,SRC_CTG_NCT07544407,source_describes_study,STUDY_NCT07544407,confirmed,SRC_CTG_NCT07544407,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07544407_INDICATION,DOM_T2DM,SRC_CTG_NCT07544407,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT07544407,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07544407_SPONSOR,DOM_T2DM,SRC_CTG_NCT07544407,source_about_org,ORG_HARVEST_KAISER_PERMANENTE,confirmed,SRC_CTG_NCT07544407,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -3095,7 +3071,6 @@ REL_CTG_NCT07837856_INDICATION,DOM_T2DM,SRC_CTG_NCT07837856,source_about_indicat
 REL_CTG_NCT07837856_SPONSOR,DOM_T2DM,SRC_CTG_NCT07837856,source_about_org,ORG_HARVEST_INSTITUTO_MEXICANO_DEL_SEGURO_SOCIAL,confirmed,SRC_CTG_NCT07837856,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04625751_STUDY,DOM_T2DM,SRC_CTG_NCT04625751,source_describes_study,STUDY_NCT04625751,confirmed,SRC_CTG_NCT04625751,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04625751_INDICATION,DOM_T2DM,SRC_CTG_NCT04625751,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT04625751,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT04625751_SPONSOR,DOM_T2DM,SRC_CTG_NCT04625751,source_about_org,ORG_HARVEST_HARTWIG_R_SIEBNER,confirmed,SRC_CTG_NCT04625751,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07839208_STUDY,DOM_T2DM,SRC_CTG_NCT07839208,source_describes_study,STUDY_NCT07839208,confirmed,SRC_CTG_NCT07839208,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07839208_INDICATION,DOM_T2DM,SRC_CTG_NCT07839208,source_about_indication,IND_TYPE_2_DIABETES,confirmed,SRC_CTG_NCT07839208,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07839208_SPONSOR,DOM_T2DM,SRC_CTG_NCT07839208,source_about_org,ORG_HARVEST_ASSIUT_UNIVERSITY,confirmed,SRC_CTG_NCT07839208,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -3468,7 +3443,6 @@ REL_CTG_NCT07834905_INDICATION,DOM_MASH,SRC_CTG_NCT07834905,source_about_indicat
 REL_CTG_NCT07834905_SPONSOR,DOM_MASH,SRC_CTG_NCT07834905,source_about_org,ORG_HARVEST_ASSIUT_UNIVERSITY,confirmed,SRC_CTG_NCT07834905,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06133101_STUDY,DOM_MASH,SRC_CTG_NCT06133101,source_describes_study,STUDY_NCT06133101,confirmed,SRC_CTG_NCT06133101,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06133101_INDICATION,DOM_MASH,SRC_CTG_NCT06133101,source_about_indication,IND_MASH,confirmed,SRC_CTG_NCT06133101,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06133101_SPONSOR,DOM_MASH,SRC_CTG_NCT06133101,source_about_org,ORG_HARVEST_MARIALENA_MOUZAKI,confirmed,SRC_CTG_NCT06133101,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06133101_ASSET_MILK,DOM_MASH,SRC_CTG_NCT06133101,source_mentions_asset,ASSET_HARVEST_2_FAT_COW_S_MILK,confirmed,SRC_CTG_NCT06133101,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02520609_STUDY,DOM_MASH,SRC_CTG_NCT02520609,source_describes_study,STUDY_NCT02520609,confirmed,SRC_CTG_NCT02520609,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02520609_INDICATION,DOM_MASH,SRC_CTG_NCT02520609,source_about_indication,IND_MASH,confirmed,SRC_CTG_NCT02520609,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -3644,7 +3618,6 @@ REL_CTG_NCT07803809_ASSET_3,DOM_MASH,SRC_CTG_NCT07803809,source_mentions_asset,A
 REL_CTG_NCT07803809_ASSET_PLACEBO,DOM_MASH,SRC_CTG_NCT07803809,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT07803809,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02581085_STUDY,DOM_MASH,SRC_CTG_NCT02581085,source_describes_study,STUDY_NCT02581085,confirmed,SRC_CTG_NCT02581085,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02581085_INDICATION,DOM_MASH,SRC_CTG_NCT02581085,source_about_indication,IND_MASH,confirmed,SRC_CTG_NCT02581085,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT02581085_SPONSOR,DOM_MASH,SRC_CTG_NCT02581085,source_about_org,ORG_HARVEST_CHANDAN_SEN,confirmed,SRC_CTG_NCT02581085,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02581085_ASSET_TCT,DOM_MASH,SRC_CTG_NCT02581085,source_mentions_asset,ASSET_HARVEST_TOCOTRIENOL_TCT,confirmed,SRC_CTG_NCT02581085,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04822181_STUDY,DOM_MASH,SRC_CTG_NCT04822181,source_describes_study,STUDY_NCT04822181,confirmed,SRC_CTG_NCT04822181,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04822181_INDICATION,DOM_MASH,SRC_CTG_NCT04822181,source_about_indication,IND_MASH,confirmed,SRC_CTG_NCT04822181,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -3966,7 +3939,6 @@ REL_CTG_NCT04591639_ASSET_FARXIGA,DOM_HEART_FAILURE,SRC_CTG_NCT04591639,source_m
 REL_CTG_NCT04591639_ASSET_PLACEBO,DOM_HEART_FAILURE,SRC_CTG_NCT04591639,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT04591639,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836764_STUDY,DOM_COPD,SRC_CTG_NCT07836764,source_describes_study,STUDY_NCT07836764,confirmed,SRC_CTG_NCT07836764,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836764_INDICATION,DOM_COPD,SRC_CTG_NCT07836764,source_about_indication,IND_COPD,confirmed,SRC_CTG_NCT07836764,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07836764_SPONSOR,DOM_COPD,SRC_CTG_NCT07836764,source_about_org,ORG_HARVEST_JACOB_SANDBERG,confirmed,SRC_CTG_NCT07836764,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836803_STUDY,DOM_HEART_FAILURE,SRC_CTG_NCT07836803,source_describes_study,STUDY_NCT07836803,confirmed,SRC_CTG_NCT07836803,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836803_INDICATION,DOM_HEART_FAILURE,SRC_CTG_NCT07836803,source_about_indication,IND_HEART_FAILURE,confirmed,SRC_CTG_NCT07836803,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07836803_SPONSOR,DOM_HEART_FAILURE,SRC_CTG_NCT07836803,source_about_org,ORG_HARVEST_CARDIOVISION_INTERNATIONAL_TECH_S_A_S_DE,confirmed,SRC_CTG_NCT07836803,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4092,7 +4064,6 @@ REL_CTG_NCT06052072_INDICATION,DOM_HEART_FAILURE,SRC_CTG_NCT06052072,source_abou
 REL_CTG_NCT06052072_SPONSOR,DOM_HEART_FAILURE,SRC_CTG_NCT06052072,source_about_org,ORG_HARVEST_GRADIENT_DENERVATION_TECHNOLOGIES,confirmed,SRC_CTG_NCT06052072,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04522596_STUDY,DOM_COPD,SRC_CTG_NCT04522596,source_describes_study,STUDY_NCT04522596,confirmed,SRC_CTG_NCT04522596,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04522596_INDICATION,DOM_COPD,SRC_CTG_NCT04522596,source_about_indication,IND_COPD,confirmed,SRC_CTG_NCT04522596,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT04522596_SPONSOR,DOM_COPD,SRC_CTG_NCT04522596,source_about_org,ORG_HARVEST_LUIS_PUENTE_MAESTU,confirmed,SRC_CTG_NCT04522596,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04522596_ASSET_VILANTEROL,DOM_COPD,SRC_CTG_NCT04522596,source_mentions_asset,ASSET_HARVEST_UMECLIDINIUM_VILANTEROL,confirmed,SRC_CTG_NCT04522596,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06937827_STUDY,DOM_HEART_FAILURE,SRC_CTG_NCT06937827,source_describes_study,STUDY_NCT06937827,confirmed,SRC_CTG_NCT06937827,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06937827_INDICATION,DOM_HEART_FAILURE,SRC_CTG_NCT06937827,source_about_indication,IND_HEART_FAILURE,confirmed,SRC_CTG_NCT06937827,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4159,7 +4130,6 @@ REL_CTG_NCT07821801_INDICATION,DOM_HEART_FAILURE,SRC_CTG_NCT07821801,source_abou
 REL_CTG_NCT07821801_SPONSOR,DOM_HEART_FAILURE,SRC_CTG_NCT07821801,source_about_org,ORG_HARVEST_ASSIUT_UNIVERSITY,confirmed,SRC_CTG_NCT07821801,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06260059_STUDY,DOM_HEART_FAILURE,SRC_CTG_NCT06260059,source_describes_study,STUDY_NCT06260059,confirmed,SRC_CTG_NCT06260059,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06260059_INDICATION,DOM_HEART_FAILURE,SRC_CTG_NCT06260059,source_about_indication,IND_HEART_FAILURE,confirmed,SRC_CTG_NCT06260059,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06260059_SPONSOR,DOM_HEART_FAILURE,SRC_CTG_NCT06260059,source_about_org,ORG_HARVEST_ANITA_SARAF,confirmed,SRC_CTG_NCT06260059,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06260059_ASSET_MG,DOM_HEART_FAILURE,SRC_CTG_NCT06260059,source_mentions_asset,ASSET_HARVEST_EMPAGLIFLOZIN_10_MG,confirmed,SRC_CTG_NCT06260059,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06260059_ASSET_PLACEBO,DOM_HEART_FAILURE,SRC_CTG_NCT06260059,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT06260059,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07047508_STUDY,DOM_HEART_FAILURE,SRC_CTG_NCT07047508,source_describes_study,STUDY_NCT07047508,confirmed,SRC_CTG_NCT07047508,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4192,7 +4162,6 @@ REL_CTG_NCT06812533_INDICATION,DOM_HEART_FAILURE,SRC_CTG_NCT06812533,source_abou
 REL_CTG_NCT06812533_SPONSOR,DOM_HEART_FAILURE,SRC_CTG_NCT06812533,source_about_org,ORG_HARVEST_ALLEVIANT_MEDICAL_INC,confirmed,SRC_CTG_NCT06812533,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07076615_STUDY,DOM_HEART_FAILURE,SRC_CTG_NCT07076615,source_describes_study,STUDY_NCT07076615,confirmed,SRC_CTG_NCT07076615,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07076615_INDICATION,DOM_HEART_FAILURE,SRC_CTG_NCT07076615,source_about_indication,IND_HEART_FAILURE,confirmed,SRC_CTG_NCT07076615,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07076615_SPONSOR,DOM_HEART_FAILURE,SRC_CTG_NCT07076615,source_about_org,ORG_HARVEST_MAY_MOHAMED_ABDALLA,confirmed,SRC_CTG_NCT07076615,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07076615_ASSET_DAPA,DOM_HEART_FAILURE,SRC_CTG_NCT07076615,source_mentions_asset,ASSET_HARVEST_DAPAGLIFLOZIN_DAPA,confirmed,SRC_CTG_NCT07076615,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07076615_ASSET_DIURETIC,DOM_HEART_FAILURE,SRC_CTG_NCT07076615,source_mentions_asset,ASSET_HARVEST_DIURETIC,confirmed,SRC_CTG_NCT07076615,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_PM_42800044_PUBLICATION,DOM_HEART_FAILURE,SRC_PM_42800044,source_describes_publication,PUB_42800044,confirmed,SRC_PM_42800044,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4465,10 +4434,8 @@ REL_CTG_NCT07144150_SPONSOR,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07144150,source_about
 REL_CTG_NCT07144150_ASSET_DCB,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07144150,source_mentions_asset,ASSET_HARVEST_PACLITAXEL_DCB,confirmed,SRC_CTG_NCT07144150,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07277218_STUDY,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07277218,source_describes_study,STUDY_NCT07277218,confirmed,SRC_CTG_NCT07277218,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07277218_INDICATION,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07277218,source_about_indication,IND_ATHEROSCLEROSIS,confirmed,SRC_CTG_NCT07277218,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07277218_SPONSOR,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07277218,source_about_org,ORG_HARVEST_CHUNSHUI_HE,confirmed,SRC_CTG_NCT07277218,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07819643_STUDY,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07819643,source_describes_study,STUDY_NCT07819643,confirmed,SRC_CTG_NCT07819643,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07819643_INDICATION,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07819643,source_about_indication,IND_ATHEROSCLEROSIS,confirmed,SRC_CTG_NCT07819643,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07819643_SPONSOR,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07819643,source_about_org,ORG_HARVEST_KEQIANG_ZHAO,confirmed,SRC_CTG_NCT07819643,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07819643_ASSET_1,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07819643,source_mentions_asset,ASSET_HARVEST_INTERVENTION_1,confirmed,SRC_CTG_NCT07819643,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07819643_ASSET_3,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07819643,source_mentions_asset,ASSET_HARVEST_INTERVENTION_3,confirmed,SRC_CTG_NCT07819643,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07819643_ASSET_2,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07819643,source_mentions_asset,ASSET_HARVEST_INTERVENTION_2,confirmed,SRC_CTG_NCT07819643,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4616,7 +4583,6 @@ REL_CTG_NCT07468448_ASSET_RIVAROXABAN,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07468448,so
 REL_CTG_NCT07468448_ASSET_ASA,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07468448,source_mentions_asset,ASSET_HARVEST_ASA,confirmed,SRC_CTG_NCT07468448,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07791823_STUDY,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07791823,source_describes_study,STUDY_NCT07791823,confirmed,SRC_CTG_NCT07791823,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07791823_INDICATION,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07791823,source_about_indication,IND_ATHEROSCLEROSIS,confirmed,SRC_CTG_NCT07791823,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07791823_SPONSOR,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07791823,source_about_org,ORG_HARVEST_WOO_KEUN_SEO,confirmed,SRC_CTG_NCT07791823,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07791823_ASSET_TREATMENT,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT07791823,source_mentions_asset,ASSET_HARVEST_LIPID_LOWERING_TREATMENT,confirmed,SRC_CTG_NCT07791823,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06587737_STUDY,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT06587737,source_describes_study,STUDY_NCT06587737,confirmed,SRC_CTG_NCT06587737,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06587737_INDICATION,DOM_ATHEROSCLEROSIS,SRC_CTG_NCT06587737,source_about_indication,IND_ATHEROSCLEROSIS,confirmed,SRC_CTG_NCT06587737,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4853,7 +4819,6 @@ REL_CTG_NCT07698522_INDICATION,DOM_STROKE,SRC_CTG_NCT07698522,source_about_indic
 REL_CTG_NCT07698522_SPONSOR,DOM_STROKE,SRC_CTG_NCT07698522,source_about_org,ORG_HARVEST_UNIVERSITY_OF_UTAH,confirmed,SRC_CTG_NCT07698522,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07496762_STUDY,DOM_STROKE,SRC_CTG_NCT07496762,source_describes_study,STUDY_NCT07496762,confirmed,SRC_CTG_NCT07496762,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07496762_INDICATION,DOM_STROKE,SRC_CTG_NCT07496762,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT07496762,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07496762_SPONSOR,DOM_STROKE,SRC_CTG_NCT07496762,source_about_org,ORG_HARVEST_KAILI_CHEN,confirmed,SRC_CTG_NCT07496762,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06179017_STUDY,DOM_STROKE,SRC_CTG_NCT06179017,source_describes_study,STUDY_NCT06179017,confirmed,SRC_CTG_NCT06179017,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06179017_INDICATION,DOM_STROKE,SRC_CTG_NCT06179017,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT06179017,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06179017_SPONSOR,DOM_STROKE,SRC_CTG_NCT06179017,source_about_org,ORG_HARVEST_ZHANGZHOU_MUNICIPAL_HOSPITAL,confirmed,SRC_CTG_NCT06179017,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4877,7 +4842,6 @@ REL_CTG_NCT07511543_SPONSOR,DOM_STROKE,SRC_CTG_NCT07511543,source_about_org,ORG_
 REL_CTG_NCT07511543_ASSET_SEMAGLUTIDE,DOM_STROKE,SRC_CTG_NCT07511543,source_mentions_asset,ASSET_HARVEST_SEMAGLUTIDE,confirmed,SRC_CTG_NCT07511543,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838961_STUDY,DOM_STROKE,SRC_CTG_NCT07838961,source_describes_study,STUDY_NCT07838961,confirmed,SRC_CTG_NCT07838961,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838961_INDICATION,DOM_STROKE,SRC_CTG_NCT07838961,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT07838961,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07838961_SPONSOR,DOM_STROKE,SRC_CTG_NCT07838961,source_about_org,ORG_HARVEST_GEORGE_WITTENBERG,confirmed,SRC_CTG_NCT07838961,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840040_STUDY,DOM_STROKE,SRC_CTG_NCT07840040,source_describes_study,STUDY_NCT07840040,confirmed,SRC_CTG_NCT07840040,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840040_INDICATION,DOM_STROKE,SRC_CTG_NCT07840040,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT07840040,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07840040_SPONSOR,DOM_STROKE,SRC_CTG_NCT07840040,source_about_org,ORG_HARVEST_UNIVERSITY_HOSPITAL_PILSEN,confirmed,SRC_CTG_NCT07840040,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4888,7 +4852,6 @@ REL_CTG_NCT03992404_ASSET_201,DOM_STROKE,SRC_CTG_NCT03992404,source_mentions_ass
 REL_CTG_NCT03992404_ASSET_PLACEBO,DOM_STROKE,SRC_CTG_NCT03992404,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT03992404,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05326932_STUDY,DOM_STROKE,SRC_CTG_NCT05326932,source_describes_study,STUDY_NCT05326932,confirmed,SRC_CTG_NCT05326932,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05326932_INDICATION,DOM_STROKE,SRC_CTG_NCT05326932,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT05326932,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT05326932_SPONSOR,DOM_STROKE,SRC_CTG_NCT05326932,source_about_org,ORG_HARVEST_LILI_SONG,confirmed,SRC_CTG_NCT05326932,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07656675_STUDY,DOM_STROKE,SRC_CTG_NCT07656675,source_describes_study,STUDY_NCT07656675,confirmed,SRC_CTG_NCT07656675,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07656675_INDICATION,DOM_STROKE,SRC_CTG_NCT07656675,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT07656675,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07656675_SPONSOR,DOM_STROKE,SRC_CTG_NCT07656675,source_about_org,ORG_HARVEST_SUNGKYUNKWAN_UNIVERSITY,confirmed,SRC_CTG_NCT07656675,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -4910,10 +4873,8 @@ REL_CTG_NCT05724823_INDICATION,DOM_STROKE,SRC_CTG_NCT05724823,source_about_indic
 REL_CTG_NCT05724823_SPONSOR,DOM_STROKE,SRC_CTG_NCT05724823,source_about_org,ORG_HARVEST_UNIVERSITY_OF_BRITISH_COLUMBIA,confirmed,SRC_CTG_NCT05724823,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06459427_STUDY,DOM_STROKE,SRC_CTG_NCT06459427,source_describes_study,STUDY_NCT06459427,confirmed,SRC_CTG_NCT06459427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06459427_INDICATION,DOM_STROKE,SRC_CTG_NCT06459427,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT06459427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06459427_SPONSOR,DOM_STROKE,SRC_CTG_NCT06459427,source_about_org,ORG_HARVEST_YANBING_YU,confirmed,SRC_CTG_NCT06459427,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06878066_STUDY,DOM_STROKE,SRC_CTG_NCT06878066,source_describes_study,STUDY_NCT06878066,confirmed,SRC_CTG_NCT06878066,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06878066_INDICATION,DOM_STROKE,SRC_CTG_NCT06878066,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT06878066,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06878066_SPONSOR,DOM_STROKE,SRC_CTG_NCT06878066,source_about_org,ORG_HARVEST_GURI_HAGBERG,confirmed,SRC_CTG_NCT06878066,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06878066_ASSET_THERAPY,DOM_STROKE,SRC_CTG_NCT06878066,source_mentions_asset,ASSET_HARVEST_THROMBOLYSIS_THERAPY,confirmed,SRC_CTG_NCT06878066,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07837466_STUDY,DOM_STROKE,SRC_CTG_NCT07837466,source_describes_study,STUDY_NCT07837466,confirmed,SRC_CTG_NCT07837466,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07837466_INDICATION,DOM_STROKE,SRC_CTG_NCT07837466,source_about_indication,IND_STROKE,confirmed,SRC_CTG_NCT07837466,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -5193,7 +5154,6 @@ REL_CTG_NCT04576442_INDICATION,DOM_ASTHMA,SRC_CTG_NCT04576442,source_about_indic
 REL_CTG_NCT04576442_SPONSOR,DOM_ASTHMA,SRC_CTG_NCT04576442,source_about_org,ORG_HARVEST_MONTEFIORE_MEDICAL_CENTER,confirmed,SRC_CTG_NCT04576442,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07816718_STUDY,DOM_ASTHMA,SRC_CTG_NCT07816718,source_describes_study,STUDY_NCT07816718,confirmed,SRC_CTG_NCT07816718,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07816718_INDICATION,DOM_ASTHMA,SRC_CTG_NCT07816718,source_about_indication,IND_ASTHMA,confirmed,SRC_CTG_NCT07816718,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07816718_SPONSOR,DOM_ASTHMA,SRC_CTG_NCT07816718,source_about_org,ORG_HARVEST_HANA_SERAJEDDINI,confirmed,SRC_CTG_NCT07816718,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02227394_STUDY,DOM_COPD,SRC_CTG_NCT02227394,source_describes_study,STUDY_NCT02227394,confirmed,SRC_CTG_NCT02227394,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02227394_INDICATION,DOM_COPD,SRC_CTG_NCT02227394,source_about_indication,IND_COPD,confirmed,SRC_CTG_NCT02227394,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02227394_SPONSOR,DOM_COPD,SRC_CTG_NCT02227394,source_about_org,ORG_HARVEST_ZAMBON_SPA,confirmed,SRC_CTG_NCT02227394,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -5423,7 +5383,6 @@ REL_CTG_NCT07516184_INDICATION,DOM_ASTHMA,SRC_CTG_NCT07516184,source_about_indic
 REL_CTG_NCT07516184_SPONSOR,DOM_ASTHMA,SRC_CTG_NCT07516184,source_about_org,ORG_HARVEST_ASTRAZENECA,confirmed,SRC_CTG_NCT07516184,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07396987_STUDY,DOM_ASTHMA,SRC_CTG_NCT07396987,source_describes_study,STUDY_NCT07396987,confirmed,SRC_CTG_NCT07396987,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07396987_INDICATION,DOM_ASTHMA,SRC_CTG_NCT07396987,source_about_indication,IND_ASTHMA,confirmed,SRC_CTG_NCT07396987,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07396987_SPONSOR,DOM_ASTHMA,SRC_CTG_NCT07396987,source_about_org,ORG_HARVEST_JUAN_CARLOS_CARDET,confirmed,SRC_CTG_NCT07396987,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04215783_STUDY,DOM_ASTHMA,SRC_CTG_NCT04215783,source_describes_study,STUDY_NCT04215783,confirmed,SRC_CTG_NCT04215783,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04215783_INDICATION,DOM_ASTHMA,SRC_CTG_NCT04215783,source_about_indication,IND_ASTHMA,confirmed,SRC_CTG_NCT04215783,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04215783_SPONSOR,DOM_ASTHMA,SRC_CTG_NCT04215783,source_about_org,ORG_HARVEST_UNIVERSITY_OF_WISCONSIN_MADISON,confirmed,SRC_CTG_NCT04215783,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -5637,7 +5596,6 @@ REL_CTG_NCT06473701_ASSET_CAPSULE,DOM_COPD,SRC_CTG_NCT06473701,source_mentions_a
 REL_CTG_NCT06473701_ASSET_PLACEBO,DOM_COPD,SRC_CTG_NCT06473701,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT06473701,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07815353_STUDY,DOM_COPD,SRC_CTG_NCT07815353,source_describes_study,STUDY_NCT07815353,confirmed,SRC_CTG_NCT07815353,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07815353_INDICATION,DOM_COPD,SRC_CTG_NCT07815353,source_about_indication,IND_COPD,confirmed,SRC_CTG_NCT07815353,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07815353_SPONSOR,DOM_COPD,SRC_CTG_NCT07815353,source_about_org,ORG_HARVEST_RABIA_HUSSAIN,confirmed,SRC_CTG_NCT07815353,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02669251_STUDY,DOM_COPD,SRC_CTG_NCT02669251,source_describes_study,STUDY_NCT02669251,confirmed,SRC_CTG_NCT02669251,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02669251_INDICATION,DOM_COPD,SRC_CTG_NCT02669251,source_about_indication,IND_COPD,confirmed,SRC_CTG_NCT02669251,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT02669251_SPONSOR,DOM_COPD,SRC_CTG_NCT02669251,source_about_org,ORG_HARVEST_NATIONAL_CANCER_INSTITUTE_NCI,confirmed,SRC_CTG_NCT02669251,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -5783,7 +5741,6 @@ REL_CTG_NCT06208306_ASSET_SAR440340,DOM_COPD,SRC_CTG_NCT06208306,source_mentions
 REL_CTG_NCT06208306_ASSET_PLACEBO,DOM_COPD,SRC_CTG_NCT06208306,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT06208306,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06890767_STUDY,DOM_COPD,SRC_CTG_NCT06890767,source_describes_study,STUDY_NCT06890767,confirmed,SRC_CTG_NCT06890767,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06890767_INDICATION,DOM_COPD,SRC_CTG_NCT06890767,source_about_indication,IND_COPD,confirmed,SRC_CTG_NCT06890767,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06890767_SPONSOR,DOM_COPD,SRC_CTG_NCT06890767,source_about_org,ORG_HARVEST_DAVID_RUTTENS,confirmed,SRC_CTG_NCT06890767,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07073950_STUDY,DOM_COPD,SRC_CTG_NCT07073950,source_describes_study,STUDY_NCT07073950,confirmed,SRC_CTG_NCT07073950,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07073950_INDICATION,DOM_COPD,SRC_CTG_NCT07073950,source_about_indication,IND_COPD,confirmed,SRC_CTG_NCT07073950,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07073950_SPONSOR,DOM_COPD,SRC_CTG_NCT07073950,source_about_org,ORG_HARVEST_ASTRAZENECA,confirmed,SRC_CTG_NCT07073950,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -6717,7 +6674,6 @@ REL_CTG_NCT07222189_ASSET_BALINATUNFIB,DOM_IBD,SRC_CTG_NCT07222189,source_mentio
 REL_CTG_NCT07222189_ASSET_PLACEBO,DOM_IBD,SRC_CTG_NCT07222189,source_mentions_asset,ASSET_HARVEST_BALINATUNFIB_MATCHING_PLACEBO,confirmed,SRC_CTG_NCT07222189,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07582731_STUDY,DOM_IBD,SRC_CTG_NCT07582731,source_describes_study,STUDY_NCT07582731,confirmed,SRC_CTG_NCT07582731,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07582731_INDICATION,DOM_IBD,SRC_CTG_NCT07582731,source_about_indication,IND_IBD,confirmed,SRC_CTG_NCT07582731,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07582731_SPONSOR,DOM_IBD,SRC_CTG_NCT07582731,source_about_org,ORG_HARVEST_JIE_LIANG,confirmed,SRC_CTG_NCT07582731,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04844606_STUDY,DOM_IBD,SRC_CTG_NCT04844606,source_describes_study,STUDY_NCT04844606,confirmed,SRC_CTG_NCT04844606,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04844606_INDICATION,DOM_IBD,SRC_CTG_NCT04844606,source_about_indication,IND_IBD,confirmed,SRC_CTG_NCT04844606,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04844606_SPONSOR,DOM_IBD,SRC_CTG_NCT04844606,source_about_org,ORG_HARVEST_ELI_LILLY_AND_COMPANY,confirmed,SRC_CTG_NCT04844606,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -6757,7 +6713,6 @@ REL_CTG_NCT06095128_ASSET_VEDOLIZUMAB,DOM_IBD,SRC_CTG_NCT06095128,source_mention
 REL_CTG_NCT06095128_ASSET_TOFACITINIB,DOM_IBD,SRC_CTG_NCT06095128,source_mentions_asset,ASSET_HARVEST_TOFACITINIB,confirmed,SRC_CTG_NCT06095128,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05986136_STUDY,DOM_IBD,SRC_CTG_NCT05986136,source_describes_study,STUDY_NCT05986136,confirmed,SRC_CTG_NCT05986136,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05986136_INDICATION,DOM_IBD,SRC_CTG_NCT05986136,source_about_indication,IND_IBD,confirmed,SRC_CTG_NCT05986136,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT05986136_SPONSOR,DOM_IBD,SRC_CTG_NCT05986136,source_about_org,ORG_HARVEST_MOSTAFA_BAHAA,confirmed,SRC_CTG_NCT05986136,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05986136_ASSET_MESALAMINE,DOM_IBD,SRC_CTG_NCT05986136,source_mentions_asset,ASSET_HARVEST_MESALAMINE,confirmed,SRC_CTG_NCT05986136,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05986136_ASSET_TAB,DOM_IBD,SRC_CTG_NCT05986136,source_mentions_asset,ASSET_HARVEST_DAPAGLIFLOZIN_10MG_TAB,confirmed,SRC_CTG_NCT05986136,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07513181_STUDY,DOM_IBD,SRC_CTG_NCT07513181,source_describes_study,STUDY_NCT07513181,confirmed,SRC_CTG_NCT07513181,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -7296,7 +7251,6 @@ REL_CTG_NCT07650799_INDICATION,DOM_RARE_DISEASE,SRC_CTG_NCT07650799,source_about
 REL_CTG_NCT07650799_SPONSOR,DOM_RARE_DISEASE,SRC_CTG_NCT07650799,source_about_org,ORG_HARVEST_PEKING_UNION_MEDICAL_COLLEGE_HOSPITAL,confirmed,SRC_CTG_NCT07650799,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06860672_STUDY,DOM_RARE_DISEASE,SRC_CTG_NCT06860672,source_describes_study,STUDY_NCT06860672,confirmed,SRC_CTG_NCT06860672,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06860672_INDICATION,DOM_RARE_DISEASE,SRC_CTG_NCT06860672,source_about_indication,IND_RARE_DISEASE,confirmed,SRC_CTG_NCT06860672,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06860672_SPONSOR,DOM_RARE_DISEASE,SRC_CTG_NCT06860672,source_about_org,ORG_HARVEST_YONGGUO_YU,confirmed,SRC_CTG_NCT06860672,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03264131_STUDY,DOM_RARE_DISEASE,SRC_CTG_NCT03264131,source_describes_study,STUDY_NCT03264131,confirmed,SRC_CTG_NCT03264131,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03264131_INDICATION,DOM_RARE_DISEASE,SRC_CTG_NCT03264131,source_about_indication,IND_RARE_DISEASE,confirmed,SRC_CTG_NCT03264131,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT03264131_SPONSOR,DOM_RARE_DISEASE,SRC_CTG_NCT03264131,source_about_org,ORG_HARVEST_UNC_LINEBERGER_COMPREHENSIVE_CANCER_CENT,confirmed,SRC_CTG_NCT03264131,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -7664,7 +7618,6 @@ REL_CTG_NCT07839897_INDICATION,DOM_GENETIC_DISEASE,SRC_CTG_NCT07839897,source_ab
 REL_CTG_NCT07839897_SPONSOR,DOM_GENETIC_DISEASE,SRC_CTG_NCT07839897,source_about_org,ORG_HARVEST_PIERRE_FABRE_DERMO_COSMETIQUE,confirmed,SRC_CTG_NCT07839897,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06896188_STUDY,DOM_GENETIC_DISEASE,SRC_CTG_NCT06896188,source_describes_study,STUDY_NCT06896188,confirmed,SRC_CTG_NCT06896188,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06896188_INDICATION,DOM_GENETIC_DISEASE,SRC_CTG_NCT06896188,source_about_indication,IND_GENETIC_DISEASE,confirmed,SRC_CTG_NCT06896188,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06896188_SPONSOR,DOM_GENETIC_DISEASE,SRC_CTG_NCT06896188,source_about_org,ORG_HARVEST_ANWAAR_SAEED,confirmed,SRC_CTG_NCT06896188,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06896188_ASSET_RETIFANLIMAB,DOM_GENETIC_DISEASE,SRC_CTG_NCT06896188,source_mentions_asset,ASSET_HARVEST_RETIFANLIMAB,confirmed,SRC_CTG_NCT06896188,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06896188_ASSET_CHEMOTHERAPY,DOM_GENETIC_DISEASE,SRC_CTG_NCT06896188,source_mentions_asset,ASSET_HARVEST_CHEMOTHERAPY,confirmed,SRC_CTG_NCT06896188,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06896188_ASSET_41,DOM_GENETIC_DISEASE,SRC_CTG_NCT06896188,source_mentions_asset,ASSET_HARVEST_9_ING_41,confirmed,SRC_CTG_NCT06896188,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -7952,7 +7905,6 @@ REL_CTG_NCT06585787_ASSET_KARXT,DOM_ALZHEIMERS,SRC_CTG_NCT06585787,source_mentio
 REL_CTG_NCT06585787_ASSET_PLACEBO,DOM_ALZHEIMERS,SRC_CTG_NCT06585787,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT06585787,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07835399_STUDY,DOM_ALZHEIMERS,SRC_CTG_NCT07835399,source_describes_study,STUDY_NCT07835399,confirmed,SRC_CTG_NCT07835399,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07835399_INDICATION,DOM_ALZHEIMERS,SRC_CTG_NCT07835399,source_about_indication,IND_ALZHEIMERS,confirmed,SRC_CTG_NCT07835399,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07835399_SPONSOR,DOM_ALZHEIMERS,SRC_CTG_NCT07835399,source_about_org,ORG_HARVEST_JUN_XU,confirmed,SRC_CTG_NCT07835399,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07832383_STUDY,DOM_ALZHEIMERS,SRC_CTG_NCT07832383,source_describes_study,STUDY_NCT07832383,confirmed,SRC_CTG_NCT07832383,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07832383_INDICATION,DOM_ALZHEIMERS,SRC_CTG_NCT07832383,source_about_indication,IND_ALZHEIMERS,confirmed,SRC_CTG_NCT07832383,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07832383_SPONSOR,DOM_ALZHEIMERS,SRC_CTG_NCT07832383,source_about_org,ORG_HARVEST_NEUROCRINE_BIOSCIENCES,confirmed,SRC_CTG_NCT07832383,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8334,10 +8286,8 @@ REL_CTG_NCT04626518_ASSET_LENVATINIB,DOM_PARKINSONS,SRC_CTG_NCT04626518,source_m
 REL_CTG_NCT04626518_ASSET_QUAVONLIMAB,DOM_PARKINSONS,SRC_CTG_NCT04626518,source_mentions_asset,ASSET_HARVEST_PEMBROLIZUMAB_QUAVONLIMAB,confirmed,SRC_CTG_NCT04626518,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07569133_STUDY,DOM_PARKINSONS,SRC_CTG_NCT07569133,source_describes_study,STUDY_NCT07569133,confirmed,SRC_CTG_NCT07569133,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07569133_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT07569133,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT07569133,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07569133_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT07569133,source_about_org,ORG_HARVEST_HO_WON_LEE,confirmed,SRC_CTG_NCT07569133,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07839481_STUDY,DOM_PARKINSONS,SRC_CTG_NCT07839481,source_describes_study,STUDY_NCT07839481,confirmed,SRC_CTG_NCT07839481,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07839481_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT07839481,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT07839481,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07839481_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT07839481,source_about_org,ORG_HARVEST_KYOUNGWON_BAIK,confirmed,SRC_CTG_NCT07839481,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05482126_STUDY,DOM_PARKINSONS,SRC_CTG_NCT05482126,source_describes_study,STUDY_NCT05482126,confirmed,SRC_CTG_NCT05482126,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05482126_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT05482126,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT05482126,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05482126_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT05482126,source_about_org,ORG_HARVEST_UNIVERSITY_OF_ALABAMA_AT_BIRMINGHAM,confirmed,SRC_CTG_NCT05482126,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8362,7 +8312,6 @@ REL_CTG_NCT07838636_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT07838636,source_about_i
 REL_CTG_NCT07838636_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT07838636,source_about_org,ORG_HARVEST_MEDICAL_UNIVERSITY_OF_WARSAW,confirmed,SRC_CTG_NCT07838636,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07464028_STUDY,DOM_PARKINSONS,SRC_CTG_NCT07464028,source_describes_study,STUDY_NCT07464028,confirmed,SRC_CTG_NCT07464028,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07464028_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT07464028,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT07464028,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07464028_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT07464028,source_about_org,ORG_HARVEST_NANDAKUMAR_NARAYANAN,confirmed,SRC_CTG_NCT07464028,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07464028_ASSET_MG,DOM_PARKINSONS,SRC_CTG_NCT07464028,source_mentions_asset,ASSET_HARVEST_TERAZOSIN_5_MG,confirmed,SRC_CTG_NCT07464028,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07464028_ASSET_PLACEBO,DOM_PARKINSONS,SRC_CTG_NCT07464028,source_mentions_asset,ASSET_HARVEST_PLACEBO,confirmed,SRC_CTG_NCT07464028,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07838675_STUDY,DOM_PARKINSONS,SRC_CTG_NCT07838675,source_describes_study,STUDY_NCT07838675,confirmed,SRC_CTG_NCT07838675,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8485,7 +8434,6 @@ REL_CTG_NCT01496599_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT01496599,source_about_i
 REL_CTG_NCT01496599_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT01496599,source_about_org,ORG_HARVEST_NATIONAL_INSTITUTE_OF_NEUROLOGICAL_DISOR,confirmed,SRC_CTG_NCT01496599,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07056361_STUDY,DOM_PARKINSONS,SRC_CTG_NCT07056361,source_describes_study,STUDY_NCT07056361,confirmed,SRC_CTG_NCT07056361,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07056361_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT07056361,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT07056361,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07056361_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT07056361,source_about_org,ORG_HARVEST_JORGE_GONZALEZ_MARTINEZ,confirmed,SRC_CTG_NCT07056361,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04634877_STUDY,DOM_PARKINSONS,SRC_CTG_NCT04634877,source_describes_study,STUDY_NCT04634877,confirmed,SRC_CTG_NCT04634877,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04634877_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT04634877,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT04634877,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04634877_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT04634877,source_about_org,ORG_HARVEST_MERCK_SHARP_DOHME_LLC,confirmed,SRC_CTG_NCT04634877,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8516,7 +8464,6 @@ REL_CTG_NCT06623422_ASSET_PEMETREXED,DOM_PARKINSONS,SRC_CTG_NCT06623422,source_m
 REL_CTG_NCT06623422_ASSET_GEMCITABINE,DOM_PARKINSONS,SRC_CTG_NCT06623422,source_mentions_asset,ASSET_HARVEST_GEMCITABINE,confirmed,SRC_CTG_NCT06623422,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04472130_STUDY,DOM_PARKINSONS,SRC_CTG_NCT04472130,source_describes_study,STUDY_NCT04472130,confirmed,SRC_CTG_NCT04472130,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04472130_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT04472130,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT04472130,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT04472130_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT04472130,source_about_org,ORG_HARVEST_VINCENT_MOK,confirmed,SRC_CTG_NCT04472130,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04127578_STUDY,DOM_PARKINSONS,SRC_CTG_NCT04127578,source_describes_study,STUDY_NCT04127578,confirmed,SRC_CTG_NCT04127578,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04127578_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT04127578,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT04127578,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT04127578_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT04127578,source_about_org,ORG_HARVEST_PREVAIL_THERAPEUTICS,confirmed,SRC_CTG_NCT04127578,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8595,7 +8542,6 @@ REL_CTG_NCT07002034_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT07002034,source_about_org,
 REL_CTG_NCT07002034_ASSET_INJECTION,DOM_PARKINSONS,SRC_CTG_NCT07002034,source_mentions_asset,ASSET_HARVEST_RE104_FOR_INJECTION,confirmed,SRC_CTG_NCT07002034,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06422208_STUDY,DOM_PARKINSONS,SRC_CTG_NCT06422208,source_describes_study,STUDY_NCT06422208,confirmed,SRC_CTG_NCT06422208,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06422208_INDICATION,DOM_PARKINSONS,SRC_CTG_NCT06422208,source_about_indication,IND_PARKINSONS,confirmed,SRC_CTG_NCT06422208,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06422208_SPONSOR,DOM_PARKINSONS,SRC_CTG_NCT06422208,source_about_org,ORG_HARVEST_PENELOPE_J_HALLETT_PH_D,confirmed,SRC_CTG_NCT06422208,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06422208_ASSET_NEURONS,DOM_PARKINSONS,SRC_CTG_NCT06422208,source_mentions_asset,ASSET_HARVEST_AUTOLOGOUS_MIDBRAIN_DOPAMINE_NEURONS,confirmed,SRC_CTG_NCT06422208,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_PM_42798987_PUBLICATION,DOM_PARKINSONS,SRC_PM_42798987,source_describes_publication,PUB_42798987,confirmed,SRC_PM_42798987,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_PM_42798987_INDICATION,DOM_PARKINSONS,SRC_PM_42798987,source_about_indication,IND_PARKINSONS,confirmed,SRC_PM_42798987,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8749,7 +8695,6 @@ REL_CTG_NCT04242446_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT04242446,source_ab
 REL_CTG_NCT04242446_ASSET_BIMEKIZUMAB,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT04242446,source_mentions_asset,ASSET_HARVEST_BIMEKIZUMAB,confirmed,SRC_CTG_NCT04242446,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07005921_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07005921,source_describes_study,STUDY_NCT07005921,confirmed,SRC_CTG_NCT07005921,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07005921_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07005921,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT07005921,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07005921_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07005921,source_about_org,ORG_HARVEST_JADE_CARVALHO_DA_SILVA,confirmed,SRC_CTG_NCT07005921,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07388550_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07388550,source_describes_study,STUDY_NCT07388550,confirmed,SRC_CTG_NCT07388550,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07388550_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07388550,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT07388550,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07388550_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07388550,source_about_org,ORG_HARVEST_NATIONAL_INSTITUTE_OF_NEUROLOGICAL_DISOR,confirmed,SRC_CTG_NCT07388550,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8766,7 +8711,6 @@ REL_CTG_NCT06921850_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06921850,source_ab
 REL_CTG_NCT06921850_ASSET_BIMEKIZUMAB,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06921850,source_mentions_asset,ASSET_HARVEST_BIMEKIZUMAB,confirmed,SRC_CTG_NCT06921850,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06631287_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06631287,source_describes_study,STUDY_NCT06631287,confirmed,SRC_CTG_NCT06631287,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06631287_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06631287,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT06631287,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT06631287_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06631287,source_about_org,ORG_HARVEST_WES_ELY,confirmed,SRC_CTG_NCT06631287,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06631287_ASSET_BARICITINIB,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06631287,source_mentions_asset,ASSET_HARVEST_BARICITINIB,confirmed,SRC_CTG_NCT06631287,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07237282_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07237282,source_describes_study,STUDY_NCT07237282,confirmed,SRC_CTG_NCT07237282,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07237282_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07237282,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT07237282,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8827,7 +8771,6 @@ REL_CTG_NCT00001971_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT00001971,source
 REL_CTG_NCT00001971_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT00001971,source_about_org,ORG_HARVEST_NATIONAL_INSTITUTE_OF_DIABETES_AND_DIGES,confirmed,SRC_CTG_NCT00001971,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07372131_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07372131,source_describes_study,STUDY_NCT07372131,confirmed,SRC_CTG_NCT07372131,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT07372131_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07372131,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT07372131,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT07372131_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07372131,source_about_org,ORG_HARVEST_VALERIA_CENTO,confirmed,SRC_CTG_NCT07372131,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06866405_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06866405,source_describes_study,STUDY_NCT06866405,confirmed,SRC_CTG_NCT06866405,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06866405_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06866405,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT06866405,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06866405_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06866405,source_about_org,ORG_HARVEST_PFIZER,confirmed,SRC_CTG_NCT06866405,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -8876,7 +8819,6 @@ REL_CTG_NCT07835100_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07835100,source
 REL_CTG_NCT07835100_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT07835100,source_about_org,ORG_HARVEST_BIOGAIA_AB,confirmed,SRC_CTG_NCT07835100,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05472779_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT05472779,source_describes_study,STUDY_NCT05472779,confirmed,SRC_CTG_NCT05472779,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05472779_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT05472779,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT05472779,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-REL_CTG_NCT05472779_SPONSOR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT05472779,source_about_org,ORG_HARVEST_STEPHANIE_WANG_ZUO,confirmed,SRC_CTG_NCT05472779,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT05472779_ASSET_CR,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT05472779,source_mentions_asset,ASSET_HARVEST_INTRAVAGINAL_APPLICATION_OF_ESTRADIOL_CR,confirmed,SRC_CTG_NCT05472779,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06784960_STUDY,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06784960,source_describes_study,STUDY_NCT06784960,confirmed,SRC_CTG_NCT06784960,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 REL_CTG_NCT06784960_INDICATION,DOM_INFECTIOUS_DISEASE,SRC_CTG_NCT06784960,source_about_indication,IND_INFECTIOUS_DISEASE,confirmed,SRC_CTG_NCT06784960,,,medium,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。

@@ -49,7 +49,6 @@ ORG_HARVEST_EMORY_UNIVERSITY,Emory University,Emory University,trial_sponsor,,,a
 ORG_HARVEST_KIVU_BIOSCIENCE_INC,Kivu Bioscience Inc.,Kivu Bioscience Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TOLYMPH_INC,ToLymph Inc.,ToLymph Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SHANGHAI_JEYOU_PHARMACEUTICAL_CO_LTD,"Shanghai Jeyou Pharmaceutical Co., Ltd.","Shanghai Jeyou Pharmaceutical Co., Ltd.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_XIN_LI,Xin Li,Xin Li,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_OHIO_STATE_UNIVERSITY_COMPREHENSIVE_CANC,Ohio State University Comprehensive Cancer Center,Ohio State University Comprehensive Cancer Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ALL_INDIA_INSTITUTE_OF_MEDICAL_SCIENCES,All India Institute of Medical Sciences,All India Institute of Medical Sciences,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BAYER,Bayer,拜耳（Bayer）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -69,17 +68,14 @@ ORG_HARVEST_MONTEFIORE_MEDICAL_CENTER,Montefiore Medical Center,Montefiore Medic
 ORG_HARVEST_UNIVERSITY_HEALTH_NETWORK_TORONTO,"University Health Network, Toronto","University Health Network, Toronto",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FUDAN_UNIVERSITY,Fudan University,复旦大学（Fudan University）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NORTHWESTERN_UNIVERSITY,Northwestern University,Northwestern University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_MUCAHIDE_EMINE_FIDANC_KUAS,Mucahide Emine Fidancı Kuas,Mucahide Emine Fidancı Kuas,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HELLENIC_COOPERATIVE_ONCOLOGY_GROUP,Hellenic Cooperative Oncology Group,Hellenic Cooperative Oncology Group,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_WASHINGTON_UNIVERSITY_SCHOOL_OF_MEDICINE,Washington University School of Medicine,Washington University School of Medicine,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_FLORIDA,University of Florida,University of Florida,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_DARTMOUTH_HITCHCOCK_MEDICAL_CENTER,Dartmouth-Hitchcock Medical Center,Dartmouth-Hitchcock Medical Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NANTES_UNIVERSITY_HOSPITAL,Nantes University Hospital,Nantes University Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_WONSHIK_HAN,Wonshik Han,Wonshik Han,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_EXTREMADURA,University of Extremadura,University of Extremadura,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_COLLEGE_CORK,University College Cork,University College Cork,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AMERICAN_SOCIETY_OF_CLINICAL_ONCOLOGY,American Society of Clinical Oncology,American Society of Clinical Oncology,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_INAH_KIM,Inah Kim,Inah Kim,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HOFFMANN_LA_ROCHE,Hoffmann-La Roche,罗氏（Roche）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AZIENDA_OSPEDALIERO_UNIVERSITARIA_PISANA,"Azienda Ospedaliero, Universitaria Pisana","Azienda Ospedaliero, Universitaria Pisana",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CHARITE_UNIVERSITY_BERLIN_GERMANY,"Charite University, Berlin, Germany","Charite University, Berlin, Germany",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -93,10 +89,8 @@ ORG_HARVEST_MEDSIR,MedSIR,MedSIR,trial_sponsor,,,active,direction_harvest_v1.0�
 ORG_HARVEST_BEONE_MEDICINES,BeOne Medicines,百济神州（BeOne Medicines）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_YUHAN_CORPORATION,Yuhan Corporation,柳韩洋行（Yuhan）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PROVIDENCE_HEALTH_SERVICES,Providence Health & Services,Providence Health & Services,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_NANCY_LIN_MD,"Nancy Lin, MD","Nancy Lin, MD",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_RIPHAH_INTERNATIONAL_UNIVERSITY,Riphah International University,Riphah International University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NYU_LANGONE_HEALTH,NYU Langone Health,NYU Langone Health,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_JAE_YONG_JEON_MD,"Jae Yong Jeon, MD","Jae Yong Jeon, MD",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_WASHINGTON,University of Washington,University of Washington,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CITY_OF_HOPE_MEDICAL_CENTER,City of Hope Medical Center,City of Hope Medical Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TANTA_UNIVERSITY,Tanta University,Tanta University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -120,8 +114,6 @@ ORG_HARVEST_COMPASS_THERAPEUTICS,Compass Therapeutics,Compass Therapeutics,trial
 ORG_HARVEST_DAPING_HOSPITAL_AND_THE_RESEARCH_INSTITU,Daping Hospital and the Research Institute of Surgery of the Third Military Medical University,Daping Hospital and the Research Institute of Surgery of the Third Military Medical University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INCYTE_CORPORATION,Incyte Corporation,Incyte Corporation,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ECOG_ACRIN_CANCER_RESEARCH_GROUP,ECOG-ACRIN Cancer Research Group,ECOG-ACRIN Cancer Research Group,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_STEPHANIE_B_SEMINARA_MD,"Stephanie B. Seminara, MD","Stephanie B. Seminara, MD",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_HUA_JIANG,Hua Jiang,Hua Jiang,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FONDAZIONE_IRCCS_ISTITUTO_NAZIONALE_DEI,"Fondazione IRCCS Istituto Nazionale dei Tumori, Milano","Fondazione IRCCS Istituto Nazionale dei Tumori, Milano",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_WESTMEAD_HOSPITAL,Westmead Hospital,Westmead Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_HOSPITAL_BORDEAUX,"University Hospital, Bordeaux","University Hospital, Bordeaux",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -130,7 +122,6 @@ ORG_HARVEST_BOEHRINGER_INGELHEIM,Boehringer Ingelheim,勃林格殷格翰（Boehr
 ORG_HARVEST_CHINESE_UNIVERSITY_OF_HONG_KONG,Chinese University of Hong Kong,香港中文大学（The Chinese University of Hong Kong）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NEPTUNE_MEDICAL,Neptune Medical,Neptune Medical,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PUSAN_NATIONAL_UNIVERSITY_HOSPITAL,Pusan National University Hospital,Pusan National University Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_FRANCESCO_DE_COBELLI,Francesco De Cobelli,Francesco De Cobelli,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BRISTOL_MYERS_SQUIBB,Bristol-Myers Squibb,百时美施贵宝（Bristol Myers Squibb）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_ALBERTA,University of Alberta,University of Alberta,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TATA_MEMORIAL_CENTRE,Tata Memorial Centre,Tata Memorial Centre,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -138,7 +129,6 @@ ORG_HARVEST_REVOLUTION_MEDICINES_INC,"Revolution Medicines, Inc.","Revolution Me
 ORG_HARVEST_UNION_HOSPITAL_TONGJI_MEDICAL_COLLEGE_HU,"Union Hospital, Tongji Medical College, Huazhong University of Science and Technology","华中科技大学同济医学院附属协和医院（Union Hospital, Tongji Medical College, HUST）",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INSTITUT_DU_CANCER_DE_MONTPELLIER_VAL_D,Institut du Cancer de Montpellier - Val d'Aurelle,Institut du Cancer de Montpellier - Val d'Aurelle,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_EIKON_THERAPEUTICS,Eikon Therapeutics,Eikon Therapeutics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_YA_FEN_FAN,Ya-Fen Fan,Ya-Fen Fan,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_N,"Chia Tai Tianqing Pharmaceutical Group Nanjing Shunxin Pharmaceutical Co., Ltd.",正大天晴（Chia Tai Tianqing）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_EDINBURGH,University of Edinburgh,University of Edinburgh,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FIFTH_AFFILIATED_HOSPITAL_OF_GUANGZHOU_M,Fifth Affiliated Hospital of Guangzhou Medical University,广州医科大学附属第五医院（The Fifth Affiliated Hospital of Guangzhou Medical University）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -190,7 +180,6 @@ ORG_HARVEST_SHANGHAI_EXUMA_BIOTECHNOLOGY_LTD,Shanghai Exuma Biotechnology Ltd.,S
 ORG_HARVEST_IMPERIAL_COLLEGE_LONDON,Imperial College London,Imperial College London,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_TEXAS_SOUTHWESTERN_MEDICAL,University of Texas Southwestern Medical Center,University of Texas Southwestern Medical Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THE_UNIVERSITY_OF_HONG_KONG,The University of Hong Kong,香港大学（The University of Hong Kong）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_NGUYEN_TOAN_THANG,Nguyen Toan Thang,Nguyen Toan Thang,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TIANJIN_MEDICAL_UNIVERSITY_CANCER_INSTIT,Tianjin Medical University Cancer Institute and Hospital,天津医科大学肿瘤医院（Tianjin Medical University Cancer Institute and Hospital）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CATALYM_GMBH,CatalYm GmbH,CatalYm GmbH,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_SOUTHERN_CALIFORNIA,University of Southern California,University of Southern California,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -200,8 +189,6 @@ ORG_HARVEST_PEKING_UNION_MEDICAL_COLLEGE_HOSPITAL,Peking Union Medical College H
 ORG_HARVEST_FONDAZIONE_POLICLINICO_UNIVERSITARIO_AGO,Fondazione Policlinico Universitario Agostino Gemelli IRCCS,Fondazione Policlinico Universitario Agostino Gemelli IRCCS,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_OKLAHOMA,University of Oklahoma,University of Oklahoma,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TORL_BIOTHERAPEUTICS_LLC,"TORL Biotherapeutics, LLC","TORL Biotherapeutics, LLC",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_SHUNDA_DU,Shunda Du,Shunda Du,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_HAIBO_SHAO,Haibo Shao,Haibo Shao,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_WEST_CHINA_HOSPITAL,West China Hospital,四川大学华西医院（West China Hospital）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HUNAN_CANCER_HOSPITAL,Hunan Cancer Hospital,湖南省肿瘤医院（Hunan Cancer Hospital）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_ARIZONA,University of Arizona,University of Arizona,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -215,7 +202,6 @@ ORG_HARVEST_CENTRE_HOSPITALIER_DE_L_UNIVERSITE_DE_MO,Centre hospitalier de l'Uni
 ORG_HARVEST_VA_OFFICE_OF_RESEARCH_AND_DEVELOPMENT,VA Office of Research and Development,VA Office of Research and Development,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PARDIS_NOOR_MEDICAL_IMAGING_AND_CANCER_C,Pardis Noor Medical Imaging and Cancer Center,Pardis Noor Medical Imaging and Cancer Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INOVA_HEALTH_CARE_SERVICES,Inova Health Care Services,Inova Health Care Services,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_CAI_QINGXIAN,Cai Qingxian,Cai Qingxian,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ZHEJIANG_UNIVERSITY,Zhejiang University,浙江大学（Zhejiang University）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CRINETICS_PHARMACEUTICALS_INC,Crinetics Pharmaceuticals Inc.,Crinetics Pharmaceuticals Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ROSWELL_PARK_CANCER_INSTITUTE,Roswell Park Cancer Institute,Roswell Park Cancer Institute,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -228,22 +214,17 @@ ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_C,"Chia Tai Tianqing Pharmace
 ORG_HARVEST_FUJIAN_SHENGDI_PHARMACEUTICAL_CO_LTD,"Fujian Shengdi Pharmaceutical Co., Ltd.",福建盛迪医药（Fujian Shengdi）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ARKANSAS_CHILDREN_S_HOSPITAL_RESEARCH_IN,Arkansas Children's Hospital Research Institute,Arkansas Children's Hospital Research Institute,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INSTITUTO_NACIONAL_DE_CIENCIAS_MEDICAS_Y,Instituto Nacional de Ciencias Medicas y Nutricion Salvador Zubiran,Instituto Nacional de Ciencias Medicas y Nutricion Salvador Zubiran,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_P_NAR_GO_BEL,Pınar Göbel,Pınar Göbel,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THE_FIRST_AFFILIATED_HOSPITAL_OF_CHINA_U,The First Affiliated Hospital of China University of Science and Technology (Anhui Provincial),中国科学技术大学附属第一医院（安徽省立医院）（The First Affiliated Hospital of USTC）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THE_SEVENTH_AFFILIATED_HOSPITAL_OF_SUN_Y,The Seventh Affiliated Hospital of Sun Yat-sen University,"中山大学附属第七医院（The Seventh Affiliated Hospital, Sun Yat-sen University）",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PENN_STATE_UNIVERSITY,Penn State University,Penn State University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_AYS_E_UKBE_BAYKUT,Ayşe Ukbe Baykut,Ayşe Ukbe Baykut,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_PEDRO_JOSE_TORRIJOS_GARRIDO,Pedro-José Torrijos-Garrido,Pedro-José Torrijos-Garrido,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ARROWHEAD_PHARMACEUTICALS,Arrowhead Pharmaceuticals,箭头制药（Arrowhead Pharmaceuticals）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ASCLETIS_PHARMA_CHINA_CO_LIMITED,"Ascletis Pharma (China) Co., Limited",歌礼制药（Ascletis Pharma）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_FRANCISCO_JOSE_GARCI_A_GONZA_LEZ,Francisco José García González,Francisco José García González,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NATIONAL_INSTITUTE_OF_ENVIRONMENTAL_HEAL,National Institute of Environmental Health Sciences (NIEHS),National Institute of Environmental Health Sciences (NIEHS),trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PENNINGTON_BIOMEDICAL_RESEARCH_CENTER,Pennington Biomedical Research Center,Pennington Biomedical Research Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_LEMBAS,Lembas,Lembas,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSIDAD_AUTO_NOMA_DE_CHILE,Universidad Autónoma de Chile,Universidad Autónoma de Chile,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SHANGHAI_JMT_BIO_INC,Shanghai JMT-Bio Inc.,Shanghai JMT-Bio Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THE_CLEVELAND_CLINIC,The Cleveland Clinic,The Cleveland Clinic,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_AMY_ARNOLD,Amy Arnold,Amy Arnold,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NOVO_NORDISK_A_S,Novo Nordisk A/S,诺和诺德（Novo Nordisk）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_SOUTH_ALABAMA,University of South Alabama,University of South Alabama,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THE_UNITED_BIO_TECHNOLOGY_HENGQIN_CO_LTD,"The United Bio-Technology (Hengqin) Co., Ltd.","The United Bio-Technology (Hengqin) Co., Ltd.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -264,7 +245,6 @@ ORG_HARVEST_ZEALAND_UNIVERSITY_HOSPITAL,Zealand University Hospital,Zealand Univ
 ORG_HARVEST_NATIONAL_UNIVERSITY_OF_SINGAPORE,National University of Singapore,National University of Singapore,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TC_ERCIYES_UNIVERSITY,TC Erciyes University,TC Erciyes University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HANGZHOU_SCIWIND_BIOSCIENCES_CO_LTD,"Hangzhou Sciwind Biosciences Co., Ltd.",先为达生物（Sciwind Biosciences）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_MORTEN_HOSTRUP_PHD,"Morten Hostrup, PhD","Morten Hostrup, PhD",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ZHANGZHOU_MUNICIPAL_HOSPITAL,Zhangzhou Municipal Hospital,漳州市医院（Zhangzhou Municipal Hospital）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ST_JUDE_CHILDREN_S_RESEARCH_HOSPITAL,St. Jude Children's Research Hospital,St. Jude Children's Research Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITE_DU_QUEBEC_EN_OUTAOUAIS,Universite du Quebec en Outaouais,Universite du Quebec en Outaouais,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -272,13 +252,11 @@ ORG_HARVEST_UNIVERSITY_OF_SOUTH_CAROLINA,University of South Carolina,University
 ORG_HARVEST_BAKIRKOY_DR_SADI_KONUK_RESEARCH_AND_TRAI,Bakirkoy Dr. Sadi Konuk Research and Training Hospital,Bakirkoy Dr. Sadi Konuk Research and Training Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_GENERAL_HOSPITAL_OF_SHENYANG_MILITARY_RE,General Hospital of Shenyang Military Region,北部战区总医院（原沈阳军区总医院）（General Hospital of Shenyang Military Region）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ADIPOPHARMA_LLC,AdipoPharma LLC,AdipoPharma LLC,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_DANIEL_CHERNAVVSKY_MD,"Daniel Chernavvsky, MD","Daniel Chernavvsky, MD",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_KAISER_PERMANENTE,Kaiser Permanente,Kaiser Permanente,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_KAISER_PERMANENTE,Kaiser Permanente,凯撒医疗集团（Kaiser Permanente）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BIOCON_BIOLOGICS_UK_PLC,Biocon Biologics UK PLC,百康生物（Biocon）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_HOSPITAL_SOUTHAMPTON_NHS_FOUN,University Hospital Southampton NHS Foundation Trust,University Hospital Southampton NHS Foundation Trust,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HOSPITAL_DE_CLINICAS_DE_PORTO_ALEGRE,Hospital de Clinicas de Porto Alegre,Hospital de Clinicas de Porto Alegre,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INSTITUTO_MEXICANO_DEL_SEGURO_SOCIAL,Instituto Mexicano del Seguro Social,Instituto Mexicano del Seguro Social,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_HARTWIG_R_SIEBNER,Hartwig R. Siebner,Hartwig R. Siebner,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TAN_TOCK_SENG_HOSPITAL,Tan Tock Seng Hospital,Tan Tock Seng Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ENDOGENEX_INC,"Endogenex, Inc.","Endogenex, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_DONGZHIMEN_HOSPITAL_BEIJING,"Dongzhimen Hospital, Beijing",北京中医药大学东直门医院（Dongzhimen Hospital）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -318,7 +296,6 @@ ORG_HARVEST_UNIVERSITY_OF_LAHORE,University of Lahore,University of Lahore,trial
 ORG_HARVEST_ASSISTANCE_PUBLIQUE_HOPITAUX_DE_MARSEILL,Assistance Publique Hopitaux De Marseille,Assistance Publique Hopitaux De Marseille,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BOGOMOLETS_NATIONAL_MEDICAL_UNIVERSITY,Bogomolets National Medical University,Bogomolets National Medical University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HAISCO_PHARMACEUTICAL_GROUP_CO_LTD,"Haisco Pharmaceutical Group Co., Ltd.","Haisco Pharmaceutical Group Co., Ltd.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_MARIALENA_MOUZAKI,Marialena Mouzaki,Marialena Mouzaki,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CAIRO_UNIVERSITY,Cairo University,Cairo University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MADRIGAL_PHARMACEUTICALS_INC,"Madrigal Pharmaceuticals, Inc.","Madrigal Pharmaceuticals, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BAR_PHARMACEUTICALS_S_R_L,BAR Pharmaceuticals s.r.l.,BAR Pharmaceuticals s.r.l.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -338,8 +315,7 @@ ORG_HARVEST_ECCOGENE,Eccogene,诚益生物（Eccogene）,trial_sponsor,,,active,
 ORG_HARVEST_AZIENDA_OSPEDALIERO_UNIVERSITARIA_MAGGIO,Azienda Ospedaliero Universitaria Maggiore della Carita,Azienda Ospedaliero Universitaria Maggiore della Carita,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INVENTIVA_PHARMA,Inventiva Pharma,Inventiva Pharma,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SHANGHAI_MINWEI_BIOTECHNOLOGY_CO_LTD,"Shanghai Minwei Biotechnology Co., Ltd","Shanghai Minwei Biotechnology Co., Ltd",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_CHANDAN_SEN,Chandan Sen,Chandan Sen,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_ZIEKENHUIS_OOST_LIMBURG,Ziekenhuis Oost-Limburg,Ziekenhuis Oost-Limburg,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_ZIEKENHUIS_OOST_LIMBURG,Ziekenhuis Oost-Limburg,东林堡医院（Ziekenhuis Oost-Limburg）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SUNSHINE_LAKE_PHARMA_CO_LTD,"Sunshine Lake Pharma Co., Ltd.","Sunshine Lake Pharma Co., Ltd.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_89BIO_INC,"89bio, Inc.","89bio, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_QILU_PHARMACEUTICAL_CO_LTD,"Qilu Pharmaceutical Co., Ltd.",齐鲁制药（Qilu Pharmaceutical）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -351,7 +327,7 @@ ORG_HARVEST_HIGHTIDE_THERAPEUTICS_HONG_KONG_LIMITED,HighTide Therapeutics (Hong 
 ORG_HARVEST_PHARMANEST_INC,"PharmaNest, Inc","PharmaNest, Inc",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_COLUMBIA_UNIVERSITY,Columbia University,Columbia University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FACULTY_HOSPITAL_KRALOVSKE_VINOHRADY,Faculty Hospital Kralovske Vinohrady,Faculty Hospital Kralovske Vinohrady,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_HELSE_STAVANGER_HF,Helse Stavanger HF,Helse Stavanger HF,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_HELSE_STAVANGER_HF,Helse Stavanger HF,斯塔万格健康信托（Helse Stavanger HF）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FONDAZIONE_IRCCS_CA_GRANDA_OSPEDALE_MAGG,"Fondazione IRCCS Ca' Granda, Ospedale Maggiore Policlinico","Fondazione IRCCS Ca' Granda, Ospedale Maggiore Policlinico",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HANMI_PHARMACEUTICAL_COMPANY_LIMITED,Hanmi Pharmaceutical Company Limited,韩美药品（Hanmi）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_RICHMOND_RESEARCH_INSTITUTE,Richmond Research Institute,Richmond Research Institute,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -369,7 +345,6 @@ ORG_HARVEST_AKROS_PHARMA_INC,Akros Pharma Inc.,Akros Pharma Inc.,trial_sponsor,,
 ORG_HARVEST_CYTOKINETICS,Cytokinetics,Cytokinetics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MEDTRONIC_CARDIOVASCULAR,Medtronic Cardiovascular,美敦力（Medtronic）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_HOSPITAL_MONTPELLIER,"University Hospital, Montpellier","University Hospital, Montpellier",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_JACOB_SANDBERG,Jacob Sandberg,Jacob Sandberg,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CARDIOVISION_INTERNATIONAL_TECH_S_A_S_DE,"CardioVision International Tech, S.A.S. de C.V.","CardioVision International Tech, S.A.S. de C.V.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ECHOSENS,Echosens,Echosens,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ACCELERON_PHARMA_INC_A_WHOLLY_OWNED_SUBS,"Acceleron Pharma, Inc., a wholly-owned subsidiary of Merck & Co., Inc., Rahway, NJ USA","Acceleron Pharma, Inc., a wholly-owned subsidiary of Merck & Co., Inc., Rahway, NJ USA",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -389,24 +364,21 @@ ORG_HARVEST_CSL_BEHRING,CSL Behring,杰特贝林（CSL Behring）,trial_sponsor,
 ORG_HARVEST_UNIVERSITY_OF_ILLINOIS_AT_CHICAGO,University of Illinois at Chicago,University of Illinois at Chicago,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_VANDERBILT_UNIVERSITY_MEDICAL_CENTER,Vanderbilt University Medical Center,Vanderbilt University Medical Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_GRADIENT_DENERVATION_TECHNOLOGIES,Gradient Denervation Technologies,Gradient Denervation Technologies,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_LUIS_PUENTE_MAESTU,Luis Puente Maestu,Luis Puente Maestu,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FUNDACION_PARA_LA_INVESTIGACION_BIOMEDIC,Fundacion para la Investigacion Biomedica del Hospital Universitario Ramon y Cajal,Fundacion para la Investigacion Biomedica del Hospital Universitario Ramon y Cajal,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AIN_SHAMS_UNIVERSITY,Ain Shams University,Ain Shams University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AXON_THERAPIES_INC,"Axon Therapies, Inc.","Axon Therapies, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TECHNICAL_UNIVERSITY_OF_MUNICH,Technical University of Munich,Technical University of Munich,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_MEDISCH_SPECTRUM_TWENTE,Medisch Spectrum Twente,Medisch Spectrum Twente,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_MEDISCH_SPECTRUM_TWENTE,Medisch Spectrum Twente,特温特医学中心（Medisch Spectrum Twente）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HERLEV_AND_GENTOFTE_HOSPITAL,Herlev and Gentofte Hospital,Herlev and Gentofte Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_COREWELL_HEALTH_WEST,Corewell Health West,Corewell Health West,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HEPQUANT_LLC,"HepQuant, LLC","HepQuant, LLC",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NIRSENSE_INC,NIRSense Inc.,NIRSense Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_JEAN_BENOI_T_LE_POLAIN_DE_WAROUX,Jean-Benoît Le Polain de Waroux,Jean-Benoît Le Polain de Waroux,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SAHLGRENSKA_UNIVERSITY_HOSPITAL,Sahlgrenska University Hospital,Sahlgrenska University Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_ANITA_SARAF,Anita Saraf,Anita Saraf,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PRINCE_OF_WALES_HOSPITAL_SHATIN_HONG_KON,"Prince of Wales Hospital, Shatin, Hong Kong","香港沙田威尔斯亲王医院（Prince of Wales Hospital, Hong Kong）",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ALCEA,Alcea,Alcea,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ANTERIS_TECHNOLOGIES_LTD,Anteris Technologies Ltd.,Anteris Technologies Ltd.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ALLEVIANT_MEDICAL_INC,"Alleviant Medical, Inc.","Alleviant Medical, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_MAY_MOHAMED_ABDALLA,May Mohamed Abdalla,May Mohamed Abdalla,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_XIANGYA_HOSPITAL_OF_CENTRAL_SOUTH_UNIVER,Xiangya Hospital of Central South University,中南大学湘雅医院（Xiangya Hospital of Central South University）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CYCLARITY_THERAPEUTICS_INC,"Cyclarity Therapeutics, Inc.","Cyclarity Therapeutics, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSIDADE_DO_PORTO,Universidade do Porto,Universidade do Porto,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -423,8 +395,6 @@ ORG_HARVEST_NATIONAL_INSTITUTE_OF_ARTHRITIS_AND_MUSC,National Institute of Arthr
 ORG_HARVEST_GRIGORE_T_POPA_UNIVERSITY_OF_MEDICINE_AN,Grigore T. Popa University of Medicine and Pharmacy,Grigore T. Popa University of Medicine and Pharmacy,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SEMMELWEIS_UNIVERSITY,Semmelweis University,Semmelweis University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_COOK_RESEARCH_INCORPORATED,Cook Research Incorporated,Cook Research Incorporated,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_CHUNSHUI_HE,Chunshui He,Chunshui He,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_KEQIANG_ZHAO,Keqiang Zhao,Keqiang Zhao,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_CATANIA,University of Catania,University of Catania,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FIRST_AFFILIATED_HOSPITAL_OF_ZHEJIANG_UN,First Affiliated Hospital of Zhejiang University,"浙江大学医学院附属第一医院（The First Affiliated Hospital, Zhejiang University）",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INTERVASCULAR,Intervascular,Intervascular,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -444,7 +414,6 @@ ORG_HARVEST_COLORADO_STATE_UNIVERSITY,Colorado State University,Colorado State U
 ORG_HARVEST_SAMARITAN_BIOLOGICS,Samaritan Biologics,Samaritan Biologics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SEOUL_NATIONAL_UNIVERSITY_BUNDANG_HOSPIT,Seoul National University Bundang Hospital,Seoul National University Bundang Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_POPULATION_HEALTH_RESEARCH_INSTITUTE,Population Health Research Institute,Population Health Research Institute,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_WOO_KEUN_SEO,Woo-Keun Seo,Woo-Keun Seo,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_DUKE_UNIVERSITY,Duke University,Duke University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_POITIERS_UNIVERSITY_HOSPITAL,Poitiers University Hospital,Poitiers University Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CHINA_NATIONAL_CENTER_FOR_CARDIOVASCULAR,China National Center for Cardiovascular Diseases,国家心血管病中心（China National Center for Cardiovascular Diseases）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -467,20 +436,15 @@ ORG_HARVEST_TRABZON_KANUNI_EDUCATION_AND_RESEARCH_HO,Trabzon Kanuni Education an
 ORG_HARVEST_CAPITAL_MEDICAL_UNIVERSITY,Capital Medical University,Capital Medical University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_POZNAN_UNIVERSITY_OF_PHYSICAL_EDUCATION,Poznan University of Physical Education,Poznan University of Physical Education,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_UTAH,University of Utah,University of Utah,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_KAILI_CHEN,Kaili Chen,Kaili Chen,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_GULF_MEDICAL_UNIVERSITY,Gulf Medical University,Gulf Medical University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MALIN_ELEONORA_AV_KA_K_GUSTAFSSON_MD_PHD,"Malin Eleonora av Kák Gustafsson, MD, PhD","Malin Eleonora av Kák Gustafsson, MD, PhD",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CHRISTIAN_MEDICAL_COLLEGE_AND_HOSPITAL_L,"Christian Medical College and Hospital, Ludhiana, India","Christian Medical College and Hospital, Ludhiana, India",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_GEORGE_WITTENBERG,George Wittenberg,George Wittenberg,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_HOSPITAL_PILSEN,University Hospital Pilsen,University Hospital Pilsen,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MERZ_PHARMACEUTICALS_GMBH,Merz Pharmaceuticals GmbH,Merz Pharmaceuticals GmbH,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_LILI_SONG,Lili SONG,Lili SONG,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SUNGKYUNKWAN_UNIVERSITY,Sungkyunkwan University,Sungkyunkwan University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THE_FIRST_AFFILIATED_HOSPITAL_OF_ANHUI_M,The First Affiliated Hospital of Anhui Medical University,安徽医科大学第一附属医院（The First Affiliated Hospital of AHMU）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BEIJING_TIANTAN_HOSPITAL,Beijing Tiantan Hospital,首都医科大学附属北京天坛医院（Beijing Tiantan Hospital）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_BRITISH_COLUMBIA,University of British Columbia,University of British Columbia,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_YANBING_YU,Yanbing Yu,Yanbing Yu,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_GURI_HAGBERG,Guri Hagberg,Guri Hagberg,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THIEL_ALEXANDER_M_D,"Thiel, Alexander, M.D.","Thiel, Alexander, M.D.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_EVER_SUPREME_BIO_TECHNOLOGY_CO_LTD,"Ever Supreme Bio Technology Co., Ltd.",永昕生物医药（Ever Supreme Bio）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ANKARA_ETLIK_CITY_HOSPITAL,Ankara Etlik City Hospital,Ankara Etlik City Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -499,14 +463,13 @@ ORG_HARVEST_THE_HONG_KONG_POLYTECHNIC_UNIVERSITY,The Hong Kong Polytechnic Unive
 ORG_HARVEST_UNIVERSITY_HOSPITAL_GHENT,"University Hospital, Ghent","University Hospital, Ghent",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CLINIQUE_LES_TROIS_SOLEILS,Clinique Les Trois Soleils,Clinique Les Trois Soleils,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HARRAN_UNIVERSITY,Harran University,Harran University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_UMC_UTRECHT,UMC Utrecht,UMC Utrecht,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_UMC_UTRECHT,UMC Utrecht,乌得勒支大学医学中心（UMC Utrecht）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_OSAKA_UNIVERSITY,Osaka University,Osaka University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SWISS_FEDERAL_INSTITUTE_OF_TECHNOLOGY,Swiss Federal Institute of Technology,Swiss Federal Institute of Technology,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AO_GENERIUM,AO GENERIUM,AO GENERIUM,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TECHNICAL_UNIVERSITY_OF_LISBON,Technical University of Lisbon,Technical University of Lisbon,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THE_METHODIST_HOSPITAL_RESEARCH_INSTITUT,The Methodist Hospital Research Institute,The Methodist Hospital Research Institute,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_GEISINGER_CLINIC,Geisinger Clinic,Geisinger Clinic,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_HANA_SERAJEDDINI,Hana Serajeddini,Hana Serajeddini,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ZAMBON_SPA,Zambon SpA,Zambon SpA,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_QIANFOSHAN_HOSPITAL,Qianfoshan Hospital,Qianfoshan Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TEL_AVIV_SOURASKY_MEDICAL_CENTER,Tel-Aviv Sourasky Medical Center,Tel-Aviv Sourasky Medical Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -523,7 +486,7 @@ ORG_HARVEST_UNIVERSITY_HOSPITAL_TOULOUSE,"University Hospital, Toulouse","Univer
 ORG_HARVEST_CHILDREN_S_HOSPITAL_OF_PHILADELPHIA,Children's Hospital of Philadelphia,Children's Hospital of Philadelphia,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AJU_PHARM_CO_LTD,"AJU Pharm Co., Ltd.","AJU Pharm Co., Ltd.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ANN_ROBERT_H_LURIE_CHILDREN_S_HOSPITAL_O,Ann & Robert H Lurie Children's Hospital of Chicago,Ann & Robert H Lurie Children's Hospital of Chicago,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_REGION_STOCKHOLM,Region Stockholm,Region Stockholm,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_REGION_STOCKHOLM,Region Stockholm,斯德哥尔摩省（Region Stockholm）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HOSPITAL_SAN_CARLOS_MADRID,"Hospital San Carlos, Madrid","Hospital San Carlos, Madrid",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PORTSMOUTH_HOSPITALS_NHS_TRUST,Portsmouth Hospitals NHS Trust,Portsmouth Hospitals NHS Trust,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HARVARD_PILGRIM_HEALTH_CARE,Harvard Pilgrim Health Care,Harvard Pilgrim Health Care,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -533,7 +496,6 @@ ORG_HARVEST_SHANGHAI_PULMONARY_HOSPITAL_SHANGHAI_CHI,"Shanghai Pulmonary Hospita
 ORG_HARVEST_ENDEAVOR_HEALTH,Endeavor Health,Endeavor Health,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_GO_TEBORG_UNIVERSITY,Göteborg University,Göteborg University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_LIVERPOOL_SCHOOL_OF_TROPICAL_MEDICINE,Liverpool School of Tropical Medicine,Liverpool School of Tropical Medicine,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_JUAN_CARLOS_CARDET,Juan Carlos Cardet,Juan Carlos Cardet,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITEIT_ANTWERPEN,Universiteit Antwerpen,Universiteit Antwerpen,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AHMEDABAD_UNIVERSITY,Ahmedabad University,Ahmedabad University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ZHEJIANG_PROVINCIAL_CENTER_FOR_DISEASE_C,Zhejiang Provincial Center for Disease Control and Prevention,浙江省疾病预防控制中心（Zhejiang Provincial CDC）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -546,7 +508,6 @@ ORG_HARVEST_RIGIMMUNE_INC,RIGImmune Inc.,RIGImmune Inc.,trial_sponsor,,,active,d
 ORG_HARVEST_AARHUS_UNIVERSITY_HOSPITAL,Aarhus University Hospital,Aarhus University Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UCB_BIOPHARMA_SRL,UCB Biopharma SRL,优时比（UCB）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_VEJLE_HOSPITAL,Vejle Hospital,Vejle Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_RABIA_HUSSAIN,Rabia Hussain,Rabia Hussain,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HO_PITAL_UNIVERSITAIRE_TAHER_SFAR,Hôpital Universitaire Taher Sfar,Hôpital Universitaire Taher Sfar,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_REGEND_THERAPEUTICS,Regend Therapeutics,Regend Therapeutics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_MEDICAL_CENTER_GRONINGEN,University Medical Center Groningen,University Medical Center Groningen,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -562,7 +523,6 @@ ORG_HARVEST_FEDERAL_UNIVERSITY_OF_PARAI_BA,Federal University of Paraíba,Federa
 ORG_HARVEST_PAMUKKALE_UNIVERSITY,Pamukkale University,Pamukkale University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BENI_SUEF_UNIVERSITY,Beni-Suef University,Beni-Suef University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_CALIFORNIA_SAN_DIEGO,"University of California, San Diego","University of California, San Diego",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_DAVID_RUTTENS,David Ruttens,David Ruttens,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PARAGONIX_TECHNOLOGIES,Paragonix Technologies,Paragonix Technologies,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ALANYA_ALAADDIN_KEYKUBAT_UNIVERSITY,Alanya Alaaddin Keykubat University,Alanya Alaaddin Keykubat University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PULMONX_CORPORATION,Pulmonx Corporation,Pulmonx Corporation,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -623,11 +583,9 @@ ORG_HARVEST_DISC_MEDICINE_INC,"Disc Medicine, Inc","Disc Medicine, Inc",trial_sp
 ORG_HARVEST_SIXTH_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN,"Sixth Affiliated Hospital, Sun Yat-sen University","中山大学附属第六医院（The Sixth Affiliated Hospital, Sun Yat-sen University）",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MORPHIC_THERAPEUTIC_INC_A_WHOLLY_OWNED_S,"Morphic Therapeutic, Inc. (A Wholly Owned Subsidiary of Eli Lilly and Company)","Morphic Therapeutic, Inc. (A Wholly Owned Subsidiary of Eli Lilly and Company)",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_RADBOUD_UNIVERSITY_MEDICAL_CENTER,Radboud University Medical Center,Radboud University Medical Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_JIE_LIANG,Jie Liang,Jie Liang,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FIRST_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN,"First Affiliated Hospital, Sun Yat-Sen University","中山大学附属第一医院（The First Affiliated Hospital, Sun Yat-sen University）",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_REDX_PHARMA_LTD,Redx Pharma Ltd,Redx Pharma Ltd,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_THETIS_PHARMACEUTICALS_LLC,Thetis Pharmaceuticals LLC,Thetis Pharmaceuticals LLC,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_MOSTAFA_BAHAA,Mostafa Bahaa,Mostafa Bahaa,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ATHOS_THERAPEUTICS_INC,Athos Therapeutics Inc,Athos Therapeutics Inc,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_FUNDACIO_N_DE_INVESTIGACIO_N_BIOME_DICA,Fundación de Investigación Biomédica - Hospital Universitario de La Princesa,Fundación de Investigación Biomédica - Hospital Universitario de La Princesa,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PHOENIXLAB_SRLS,PhoenixLAB srls,PhoenixLAB srls,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -664,7 +622,7 @@ ORG_HARVEST_TAIHO_ONCOLOGY_INC,"Taiho Oncology, Inc.","Taiho Oncology, Inc.",tri
 ORG_HARVEST_FRIEDREICH_S_ATAXIA_RESEARCH_ALLIANCE,Friedreich's Ataxia Research Alliance,Friedreich's Ataxia Research Alliance,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_IPSEN,Ipsen,益普生（Ipsen）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_INSTITUTE_OF_CANCER_RESEARCH_UNITED_KING,"Institute of Cancer Research, United Kingdom","Institute of Cancer Research, United Kingdom",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_VASTRA_GOTALAND_REGION,Vastra Gotaland Region,Vastra Gotaland Region,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_VASTRA_GOTALAND_REGION,Vastra Gotaland Region,西约特兰大区（Vastra Gotaland Region）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_IRCCS_POLICLINICO_S_DONATO,IRCCS Policlinico S. Donato,IRCCS Policlinico S. Donato,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SHIONOGI,Shionogi,盐野义（Shionogi）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SEOUL_NATIONAL_UNIVERSITY_HOSPITAL,Seoul National University Hospital,Seoul National University Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -676,7 +634,6 @@ ORG_HARVEST_APPENDIX_CANCER_PSEUDOMYXOMA_PERITONEI_R,Appendix Cancer Pseudomyxom
 ORG_HARVEST_CANCER_RESEARCH_UK,Cancer Research UK,Cancer Research UK,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CHILDREN_S_NATIONAL_RESEARCH_INSTITUTE,Children's National Research Institute,Children's National Research Institute,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BLOSSOMHILL_THERAPEUTICS,BlossomHill Therapeutics,BlossomHill Therapeutics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_YONGGUO_YU,Yongguo Yu,Yongguo Yu,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ARGENX,argenx,argenx,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_DYNE_THERAPEUTICS,Dyne Therapeutics,Dyne Therapeutics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ULTRAGENYX_PHARMACEUTICAL_INC,Ultragenyx Pharmaceutical Inc,Ultragenyx Pharmaceutical Inc,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -700,8 +657,7 @@ ORG_HARVEST_PRILENIA,Prilenia,Prilenia,trial_sponsor,,,active,direction_harvest_
 ORG_HARVEST_NATIONAL_INSTITUTE_ON_DRUG_ABUSE_NIDA,National Institute on Drug Abuse (NIDA),National Institute on Drug Abuse (NIDA),trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_IMMEDICA_PHARMA_AB,Immedica Pharma AB,Immedica Pharma AB,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BUNDANG_CHA_HOSPITAL,Bundang CHA Hospital,Bundang CHA Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_PIERRE_FABRE_DERMO_COSMETIQUE,Pierre Fabre Dermo Cosmetique,Pierre Fabre Dermo Cosmetique,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_ANWAAR_SAEED,Anwaar Saeed,Anwaar Saeed,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_PIERRE_FABRE_DERMO_COSMETIQUE,Pierre Fabre Dermo Cosmetique,皮尔法伯（Pierre Fabre）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIQURE_BIOPHARMA_B_V,UniQure Biopharma B.V.,UniQure Biopharma B.V.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_LUPIN_LTD,Lupin Ltd.,鲁宾（Lupin）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HOSPICES_CIVILS_DE_LYON,Hospices Civils de Lyon,Hospices Civils de Lyon,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -724,7 +680,6 @@ ORG_HARVEST_BOSTON_UNIVERSITY_CHARLES_RIVER_CAMPUS,Boston University Charles Riv
 ORG_HARVEST_ELIXIRON_IMMUNOTHERAPEUTICS_INC,Elixiron Immunotherapeutics Inc.,Elixiron Immunotherapeutics Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_DANYANG_HUICHUANG_MEDICAL_EQUIPMENT_CO_L,"Danyang Huichuang Medical Equipment Co., Ltd.",慧创医疗（Huichuang Medical）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_KARUNA_THERAPEUTICS_INC_A_BRISTOL_MYERS,"Karuna Therapeutics, Inc., a Bristol Myers Squibb company","Karuna Therapeutics, Inc., a Bristol Myers Squibb company",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_JUN_XU,Jun Xu,Jun Xu,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NEUROCRINE_BIOSCIENCES,Neurocrine Biosciences,Neurocrine Biosciences,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_EISAI_LIMITED,Eisai Limited,卫材（Eisai）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ALBERT_EINSTEIN_COLLEGE_OF_MEDICINE,Albert Einstein College of Medicine,Albert Einstein College of Medicine,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -741,17 +696,14 @@ ORG_HARVEST_STICHTING_INTERNATIONAL_REGISTRY_FOR_ALZ,Stichting International Reg
 ORG_HARVEST_CEDARS_SINAI_MEDICAL_CENTER,Cedars-Sinai Medical Center,Cedars-Sinai Medical Center,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_SUVEN_LIFE_SCIENCES_LIMITED,Suven Life Sciences Limited,Suven Life Sciences Limited,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_HOPEFUL_AGING,Hopeful Aging,Hopeful Aging,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_UNIVERSIDAD_SAN_JORGE,Universidad San Jorge,Universidad San Jorge,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_UNIVERSIDAD_SAN_JORGE,Universidad San Jorge,圣豪尔赫大学（Universidad San Jorge）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_LONGEVITY_BIOTECH_AUSTRALIA_PTY_LTD_SUBS,Longevity Biotech Australia Pty Ltd (subsidiary),Longevity Biotech Australia Pty Ltd (subsidiary),trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BIOHAVEN_THERAPEUTICS_LTD,Biohaven Therapeutics Ltd.,Biohaven Therapeutics Ltd.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_ZUYDERLAND_MEDISCH_CENTRUM,Zuyderland Medisch Centrum,Zuyderland Medisch Centrum,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_HO_WON_LEE,Ho-Won Lee,Ho-Won Lee,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_KYOUNGWON_BAIK,Kyoungwon Baik,Kyoungwon Baik,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_ZUYDERLAND_MEDISCH_CENTRUM,Zuyderland Medisch Centrum,祖伊德兰医学中心（Zuyderland Medisch Centrum）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NEWRONIKA,Newronika,Newronika,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NAVAMEDIC_AB,Navamedic AB,Navamedic AB,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_TRIDEM_BIOSCIENCE_FLEXCO,Tridem Bioscience FlexCo,Tridem Bioscience FlexCo,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_UNIVERSIDAD_REY_JUAN_CARLOS,Universidad Rey Juan Carlos,Universidad Rey Juan Carlos,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_NANDAKUMAR_NARAYANAN,Nandakumar Narayanan,Nandakumar Narayanan,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
+ORG_HARVEST_UNIVERSIDAD_REY_JUAN_CARLOS,Universidad Rey Juan Carlos,胡安卡洛斯国王大学（Universidad Rey Juan Carlos）,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_QUEEN_S_UNIVERSITY_BELFAST,"Queen's University, Belfast","Queen's University, Belfast",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_HOSPITAL_OF_FERRARA,University Hospital of Ferrara,University Hospital of Ferrara,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_CHILE,University of Chile,University of Chile,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -762,9 +714,7 @@ ORG_HARVEST_HOSPITAL_ISRAELITA_ALBERT_EINSTEIN,Hospital Israelita Albert Einstei
 ORG_HARVEST_NATIONAL_CHENG_KUNG_UNIVERSITY_HOSPITAL,National Cheng-Kung University Hospital,National Cheng-Kung University Hospital,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ANNOVIS_BIO_INC,Annovis Bio Inc.,Annovis Bio Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MICHAEL_J_FOX_FOUNDATION_FOR_PARKINSON_S,Michael J. Fox Foundation for Parkinson's Research,Michael J. Fox Foundation for Parkinson's Research,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_JORGE_GONZALEZ_MARTINEZ,Jorge Gonzalez-Martinez,Jorge Gonzalez-Martinez,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ATRIUM_THERAPEUTICS,Atrium Therapeutics,Atrium Therapeutics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_VINCENT_MOK,Vincent Mok,Vincent Mok,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_PREVAIL_THERAPEUTICS,Prevail Therapeutics,Prevail Therapeutics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_IRCCS_SAN_RAFFAELE_ROMA,IRCCS San Raffaele Roma,IRCCS San Raffaele Roma,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CND_LIFE_SCIENCES,CND Life Sciences,CND Life Sciences,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
@@ -774,21 +724,16 @@ ORG_HARVEST_THE_UNIVERSITY_OF_TEXAS_AT_DALLAS,The University of Texas at Dallas,
 ORG_HARVEST_CATHOLIC_UNIVERSITY_ITALY,"Catholic University, Italy","Catholic University, Italy",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MISSION_THERAPEUTICS,Mission Therapeutics,Mission Therapeutics,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_REUNION_NEUROSCIENCE_INC,Reunion Neuroscience Inc,Reunion Neuroscience Inc,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_PENELOPE_J_HALLETT_PH_D,"Penelope J. Hallett, Ph.D.","Penelope J. Hallett, Ph.D.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_QUAID_E_AZAM_MEDICAL_COLLEGE,Quaid-e-Azam Medical College,Quaid-e-Azam Medical College,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_JADE_CARVALHO_DA_SILVA,Jade Carvalho Da Silva,Jade Carvalho Da Silva,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_OF_WITWATERSRAND_SOUTH_AFRICA,"University of Witwatersrand, South Africa","University of Witwatersrand, South Africa",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_WES_ELY,Wes Ely,Wes Ely,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_MAKERERE_UNIVERSITY,Makerere University,Makerere University,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CENTRE_HOSPITALIER_UNIVERSITAIRE_DE_NI_M,Centre Hospitalier Universitaire de Nīmes,Centre Hospitalier Universitaire de Nīmes,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_GIGAGEN_INC,"GigaGen, Inc.","GigaGen, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_NATIONAL_INSTITUTE_ON_DEAFNESS_AND_OTHER,National Institute on Deafness and Other Communication Disorders (NIDCD),National Institute on Deafness and Other Communication Disorders (NIDCD),trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_VALERIA_CENTO,Valeria Cento,Valeria Cento,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ROYAL_COLLEGE_OF_SURGEONS_IRELAND,"Royal College of Surgeons, Ireland","Royal College of Surgeons, Ireland",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_IMMUNITYBIO_INC,"ImmunityBio, Inc.","ImmunityBio, Inc.",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_UNIVERSITY_HOSPITAL_LIMOGES,"University Hospital, Limoges","University Hospital, Limoges",trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_BIOGAIA_AB,BioGaia AB,BioGaia AB,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
-ORG_HARVEST_STEPHANIE_WANG_ZUO,Stephanie Wang Zuo,Stephanie Wang Zuo,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_ABRAMSON_CANCER_CENTER_AT_PENN_MEDICINE,Abramson Cancer Center at Penn Medicine,Abramson Cancer Center at Penn Medicine,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_AUSPERBIO_THERAPEUTICS_INC,AusperBio Therapeutics Inc.,AusperBio Therapeutics Inc.,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。
 ORG_HARVEST_CENTRE_HOSPITALIER_RE_GIONAL_METZ_THIONV,Centre Hospitalier Régional Metz-Thionville,Centre Hospitalier Régional Metz-Thionville,trial_sponsor,,,active,direction_harvest_v1.0；来自 ClinicalTrials.gov 申办方字段，未经人工复核。

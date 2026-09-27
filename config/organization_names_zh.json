@@ -212,6 +212,18 @@
     { "id": "PRINCE_OF_WALES_HK", "match": "^Prince of Wales Hospital, Shatin", "zh": "香港沙田威尔斯亲王医院", "short_en": "Prince of Wales Hospital, Hong Kong", "category": "china_institution" },
     { "id": "CHANG_GUNG", "match": "^Chang Gung Memorial Hospital", "zh": "长庚纪念医院", "short_en": "Chang Gung Memorial Hospital", "category": "china_institution" },
     { "id": "NTUH", "match": "^National Taiwan University Hospital", "zh": "台湾大学医学院附设医院", "short_en": "National Taiwan University Hospital", "category": "china_institution" },
-    { "id": "NHRI_TAIWAN", "match": "^National Health Research Institutes, Taiwan", "zh": "国家卫生研究院（台湾）", "short_en": "National Health Research Institutes, Taiwan", "category": "china_institution" }
+    { "id": "NHRI_TAIWAN", "match": "^National Health Research Institutes, Taiwan", "zh": "国家卫生研究院（台湾）", "short_en": "National Health Research Institutes, Taiwan", "category": "china_institution" },
+
+    { "id": "KAISER", "match": "^Kaiser Permanente", "zh": "凯撒医疗集团", "short_en": "Kaiser Permanente", "category": "international_institution" },
+    { "id": "PIERRE_FABRE", "match": "^Pierre Fabre", "zh": "皮尔法伯", "short_en": "Pierre Fabre", "category": "multinational_pharma" },
+    { "id": "UMC_UTRECHT", "match": "^UMC Utrecht|^Universitair Medisch Centrum Utrecht", "zh": "乌得勒支大学医学中心", "short_en": "UMC Utrecht", "category": "international_institution" },
+    { "id": "REY_JUAN_CARLOS", "match": "^Universidad Rey Juan Carlos", "zh": "胡安卡洛斯国王大学", "short_en": "Universidad Rey Juan Carlos", "category": "international_institution" },
+    { "id": "SAN_JORGE", "match": "^Universidad San Jorge", "zh": "圣豪尔赫大学", "short_en": "Universidad San Jorge", "category": "international_institution" },
+    { "id": "REGION_STOCKHOLM", "match": "^Region Stockholm", "zh": "斯德哥尔摩省", "short_en": "Region Stockholm", "category": "international_institution" },
+    { "id": "VASTRA_GOTALAND", "match": "^Vastra Gotaland Region|^Västra Götaland", "zh": "西约特兰大区", "short_en": "Vastra Gotaland Region", "category": "international_institution" },
+    { "id": "MST_TWENTE", "match": "^Medisch Spectrum Twente", "zh": "特温特医学中心", "short_en": "Medisch Spectrum Twente", "category": "international_institution" },
+    { "id": "ZIEKENHUIS_OOST_LIMBURG", "match": "^Ziekenhuis Oost-Limburg", "zh": "东林堡医院", "short_en": "Ziekenhuis Oost-Limburg", "category": "international_institution" },
+    { "id": "ZUYDERLAND", "match": "^Zuyderland Medisch Centrum", "zh": "祖伊德兰医学中心", "short_en": "Zuyderland Medisch Centrum", "category": "international_institution" },
+    { "id": "HELSE_STAVANGER", "match": "^Helse Stavanger", "zh": "斯塔万格健康信托", "short_en": "Helse Stavanger HF", "category": "international_institution" }
   ]
 }

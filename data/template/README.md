@@ -90,6 +90,28 @@ python scripts/localize_organization_names.py                    # 应用对照�
 python scripts/localize_organization_names.py --report-unmatched # 查看未收录机构
 ```
 
+### 个人研究者条目清理
+
+`leadSponsor.name` 是自由文本，部分注册研究由**个人研究者**发起，其姓名被当成机构写入
+`organizations.csv`，并出现在网站申办方筛选里。`config/individual_investigator_names.json`
+逐条列出这类姓名，由 `scripts/drop_individual_investigators.py` 清理：
+
+- 删除 `organizations.csv` 对应行及其别名；
+- 删除 `relations.csv` 中指向它们的 `source_about_org` 关系；
+- 清空 `studies.csv` 中受影响研究的 `sponsor_org_id`（研究记录本身保留）；
+- `facts.csv` 中 `predicate=lead_sponsor` 的断言**保留**，因为它如实记录了注册库的说法。
+
+使用**显式清单**而不是姓名形状启发式：启发式会把 `Kaiser Permanente`、
+`Pierre Fabre Dermo Cosmetique`、`UMC Utrecht`、`Universidad Rey Juan Carlos`、
+`Ziekenhuis Oost-Limburg` 等缺少英文机构后缀的真实机构误判为个人。
+这些机构已单独登记在配置文件的 `reviewed_real_organizations_not_in_the_list` 中，
+并有测试保证它们不会被删除。
+
+```bash
+python scripts/drop_individual_investigators.py --report  # 只列出将删除的条目
+python scripts/drop_individual_investigators.py           # 执行清理（幂等）
+```
+
 ## 与 `data/source_registry.csv` 的关系
 
 `data/source_registry.csv`（39 条人工核验 NSCLC 来源）是早期 `SourceRegistryService`
