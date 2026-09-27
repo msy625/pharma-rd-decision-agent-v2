@@ -1,0 +1,30 @@
+{
+  "schema_version": "pharma_rd_template_v0.1",
+  "dataset": "expanded_seed_v1",
+  "scope": [
+    "乳腺癌",
+    "结直肠癌",
+    "胃癌/食管癌",
+    "肥胖/2型糖尿病"
+  ],
+  "counts": {
+    "domains": 5,
+    "organizations": 8,
+    "assets": 11,
+    "indications": 8,
+    "studies": 9,
+    "publications": 9,
+    "regulatory_events": 2,
+    "sources": 20,
+    "facts": 18,
+    "relations": 39,
+    "market_events": 0
+  },
+  "limitations": [
+    "这是四个领域的代表性种子数据，不是全量医学研究数据。",
+    "ClinicalTrials.gov 直接登记页在本次网络工具中部分不可访问；相关登记来源标记为 partially_verified，研究状态不能据此视为最终确认。",
+    "研究结果使用 PubMed 摘要可支持的简要事实，不把摘要结论扩展为治疗建议或全市场排名。",
+    "尚未加入真实世界研究、支付准入、上市销售、授权合作和市场规模数据。",
+    "资产所有权和研究 sponsor 仅在来源明确或模板需要时填写，未根据品牌或常识补猜。"
+  ]
+}

@@ -1,0 +1,3 @@
+regulatory_event_id,domain_id,asset_id,indication_id,authority_org_id,jurisdiction,event_type,event_date,application_status,authorization_status,holder_org_id,source_id,notes
+REG_B015,DOM_NSCLC,ASSET_TISLELIZUMAB,IND_NSCLC,ORG_EMA,European Union,EPAR current authorisation status,2023-09-15,,欧盟正式授权,ORG_BEONE,SRC_B015,监管事件与临床试验数量分开统计。
+REG_B016,DOM_NSCLC,ASSET_TISLELIZUMAB,IND_NSCLC,ORG_EMA,European Union,CHMP positive opinion,2025-07-24,,,ORG_BEONE,SRC_B016,监管事件与临床试验数量分开统计。

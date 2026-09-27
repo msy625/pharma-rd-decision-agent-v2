@@ -1,0 +1,10 @@
+study_id,domain_id,study_type,study_name,phase,study_status,sponsor_org_id,primary_asset_id,primary_indication_id,enrollment_planned,enrollment_actual,start_date,primary_completion_date,completion_date,last_status_date,notes
+STUDY_NCT03529110,DOM_BREAST_CANCER,clinical_trial,DESTINY-Breast03,Phase 3,,ORG_DAIICHI_SANKYO,ASSET_TRAS_DERUXTECAN,IND_BREAST_HER2_MBC,,524,,,,,研究编号来自 PubMed 记录；状态待直接 ClinicalTrials.gov 核验。
+STUDY_NCT02032823,DOM_BREAST_CANCER,clinical_trial,OlympiA,Phase 3,,ORG_NCI,ASSET_OLAPARIB,IND_BREAST_GBRCA_EARLY,,1836,,,,,研究编号和人群来自 PubMed 记录；状态待直接 ClinicalTrials.gov 核验。
+STUDY_NCT02928224,DOM_COLORECTAL_CANCER,clinical_trial,BEACON CRC,Phase 3,,,ASSET_ENCORAFENIB,IND_CRC_BRAF_MCRC,,,,,,,组合治疗研究；研究状态待直接 ClinicalTrials.gov 核验。
+STUDY_NCT02060188,DOM_COLORECTAL_CANCER,clinical_trial,CheckMate 142,Phase 2,,ORG_BMS,ASSET_NIVOLUMAB,IND_CRC_MSIH_DMMR,,74,,,,,PubMed 记录报道 74 名患者的研究结果。
+STUDY_NCT03615326,DOM_GASTRIC_ESOPHAGEAL_CANCER,clinical_trial,KEYNOTE-811,Phase 3,,ORG_MSD,ASSET_PEMBROLIZUMAB,IND_GASTRIC_HER2,,,,,,,HER2阳性胃癌/胃食管结合部腺癌双重阻断研究。
+STUDY_NCT02872116,DOM_GASTRIC_ESOPHAGEAL_CANCER,clinical_trial,CheckMate 649,Phase 3,Completed,ORG_BMS,ASSET_NIVOLUMAB,IND_GASTRIC_GEJ_EAC,,,,,,2025-08-07,ClinicalTrials.gov 搜索结果显示已完成；正式记录仍需纳入数据更新流程。
+STUDY_NCT04184622,DOM_METABOLIC,clinical_trial,SURMOUNT-1,Phase 3,,ORG_LILLY,ASSET_TIRZEPATIDE,IND_OBESITY,,2539,,,,,肥胖/超重且有体重相关并发症研究；排除糖尿病的主要分析。
+STUDY_NCT03548935,DOM_METABOLIC,clinical_trial,STEP 1,Phase 3,,ORG_NOVO_NORDISK,ASSET_SEMAGLUTIDE,IND_OBESITY,,1961,,,,,成人超重/肥胖体重管理研究。
+STUDY_NCT03987919,DOM_METABOLIC,clinical_trial,SURPASS-2,Phase 3,,ORG_LILLY,ASSET_TIRZEPATIDE,IND_T2D,,1879,,,,,2型糖尿病中与每周一次司美格鲁肽直接比较。

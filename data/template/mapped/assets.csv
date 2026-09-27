@@ -1,0 +1,15 @@
+asset_id,domain_id,canonical_name,generic_name,development_code,brand_name,asset_type,modality,target,originator_org_id,owner_org_id,development_status,first_known_date,last_known_date,notes
+ASSET_CAMRELIZUMAB,DOM_NSCLC,卡瑞利珠单抗,卡瑞利珠单抗,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_APATINIB,DOM_NSCLC,阿帕替尼,阿帕替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_FAMITINIB,DOM_NSCLC,法米替尼,法米替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_TRASTUZUMAB_REZETECAN,DOM_NSCLC,瑞康曲妥珠单抗,瑞康曲妥珠单抗,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_TISLELIZUMAB,DOM_NSCLC,替雷利珠单抗,替雷利珠单抗,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_DOCETAXEL,DOM_NSCLC,多西他赛,多西他赛,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_PEMETREXED,DOM_NSCLC,培美曲塞,培美曲塞,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_CARBOPLATIN,DOM_NSCLC,卡铂,卡铂,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_CISPLATIN,DOM_NSCLC,顺铂,顺铂,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_PACLITAXEL,DOM_NSCLC,紫杉醇,紫杉醇,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_NAB_PACLITAXEL,DOM_NSCLC,白蛋白结合型紫杉醇,白蛋白结合型紫杉醇,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_OSIMERTINIB,DOM_NSCLC,奥希替尼,奥希替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_GEFITINIB,DOM_NSCLC,吉非替尼,吉非替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_ERLOTINIB,DOM_NSCLC,厄洛替尼,厄洛替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。

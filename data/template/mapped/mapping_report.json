@@ -1,0 +1,59 @@
+{
+  "schema_version": "pharma_rd_template_v0.1",
+  "input": "data/source_registry.csv + config/entity_aliases.json + config/evidence_chains.json",
+  "source_count": 39,
+  "organization_count": 4,
+  "asset_count": 14,
+  "study_count": 16,
+  "publication_count": 15,
+  "regulatory_event_count": 2,
+  "fact_count": 241,
+  "relation_count": 184,
+  "unresolved_study_sources": [
+    "H008",
+    "H009"
+  ],
+  "unmapped_terms": {
+    "BG-C0902": [
+      "B014"
+    ],
+    "BG-C0979": [
+      "B014"
+    ],
+    "BG-T187": [
+      "B014"
+    ],
+    "BGB-58067": [
+      "B014"
+    ],
+    "HER3 ADC": [
+      "H013",
+      "H015"
+    ],
+    "SHR-A2009": [
+      "H013",
+      "H015"
+    ],
+    "Tarlatamab": [
+      "B014"
+    ],
+    "含铂化疗": [
+      "B015",
+      "B016"
+    ],
+    "含铂双药化疗": [
+      "B012",
+      "B013"
+    ],
+    "铂类化疗": [
+      "B011"
+    ]
+  },
+  "market_event_count": 0,
+  "warnings": [
+    "当前数据全部属于一个 NSCLC 领域，尚未加入其他疾病领域。",
+    "没有 parent_trial_id 或明确试验编号的研究名称被保留为 unresolved，不代表已确认合并。",
+    "市场事件为空；当前来源没有足够明确的商业合作、支付或上市事件字段。",
+    "未根据来源出现频率推断药物主干、资产所有权或商业价值。"
+  ]
+}

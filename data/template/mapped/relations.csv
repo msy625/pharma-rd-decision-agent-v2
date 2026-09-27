@@ -1,0 +1,185 @@
+relation_id,domain_id,subject_id,relation_type,object_id,relation_status,source_id,valid_from,valid_to,confidence_level,scope_note
+REL_H001_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H001,source_about,ORG_HENGRUI,confirmed,SRC_H001,,,high,来源记录中的企业字段。
+REL_H001_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H001,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H001,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H001_MENTIONS_ASSET_APATINIB,DOM_NSCLC,SRC_H001,source_mentions_asset,ASSET_APATINIB,confirmed,SRC_H001,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H001_MENTIONS_ASSET_TRASTUZUMAB_REZETECAN,DOM_NSCLC,SRC_H001,source_mentions_asset,ASSET_TRASTUZUMAB_REZETECAN,confirmed,SRC_H001,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H002_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H002,source_about,ORG_HENGRUI,confirmed,SRC_H002,,,high,来源记录中的企业字段。
+REL_H002_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H002,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H002,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H002_MENTIONS_ASSET_APATINIB,DOM_NSCLC,SRC_H002,source_mentions_asset,ASSET_APATINIB,confirmed,SRC_H002,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H002_MENTIONS_ASSET_TRASTUZUMAB_REZETECAN,DOM_NSCLC,SRC_H002,source_mentions_asset,ASSET_TRASTUZUMAB_REZETECAN,confirmed,SRC_H002,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H003_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H003,source_about,ORG_HENGRUI,confirmed,SRC_H003,,,high,来源记录中的企业字段。
+REL_H003_SUPPORTS_STUDY_NCT04818333,DOM_NSCLC,SRC_H003,source_supports,STUDY_NCT04818333,confirmed,SRC_H003,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_H003_MENTIONS_ASSET_TRASTUZUMAB_REZETECAN,DOM_NSCLC,SRC_H003,source_mentions_asset,ASSET_TRASTUZUMAB_REZETECAN,confirmed,SRC_H003,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H004_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H004,source_about,ORG_HENGRUI,confirmed,SRC_H004,,,high,来源记录中的企业字段。
+REL_H004_SUPPORTS_STUDY_NCT03083041,DOM_NSCLC,SRC_H004,source_supports,STUDY_NCT03083041,confirmed,SRC_H004,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_H004_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H004,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H004,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H004_MENTIONS_ASSET_APATINIB,DOM_NSCLC,SRC_H004,source_mentions_asset,ASSET_APATINIB,confirmed,SRC_H004,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H005_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H005,source_about,ORG_HENGRUI,confirmed,SRC_H005,,,high,来源记录中的企业字段。
+REL_H005_SUPPORTS_STUDY_NCT03668496,DOM_NSCLC,SRC_H005,source_supports,STUDY_NCT03668496,confirmed,SRC_H005,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_H005_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H005,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H005,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H005_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_H005,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_H005,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H005_MENTIONS_ASSET_PACLITAXEL,DOM_NSCLC,SRC_H005,source_mentions_asset,ASSET_PACLITAXEL,confirmed,SRC_H005,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H006_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H006,source_about,ORG_HENGRUI,confirmed,SRC_H006,,,high,来源记录中的企业字段。
+REL_H006_SUPPORTS_STUDY_NCT04619433,DOM_NSCLC,SRC_H006,source_supports,STUDY_NCT04619433,confirmed,SRC_H006,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_H006_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H006,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H006_MENTIONS_ASSET_FAMITINIB,DOM_NSCLC,SRC_H006,source_mentions_asset,ASSET_FAMITINIB,confirmed,SRC_H006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H006_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_H006,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_H006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H006_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_H006,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_H006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H007_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H007,source_about,ORG_HENGRUI,confirmed,SRC_H007,,,high,来源记录中的企业字段。
+REL_H007_SUPPORTS_STUDY_NCT02364362,DOM_NSCLC,SRC_H007,source_supports,STUDY_NCT02364362,confirmed,SRC_H007,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_H007_MENTIONS_ASSET_FAMITINIB,DOM_NSCLC,SRC_H007,source_mentions_asset,ASSET_FAMITINIB,confirmed,SRC_H007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H007_MENTIONS_ASSET_DOCETAXEL,DOM_NSCLC,SRC_H007,source_mentions_asset,ASSET_DOCETAXEL,confirmed,SRC_H007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H008_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H008,source_about,ORG_HENGRUI,confirmed,SRC_H008,,,high,来源记录中的企业字段。
+REL_H008_SUPPORTS_STUDY_UNRESOLVED_CAMEL,DOM_NSCLC,SRC_H008,source_supports,STUDY_UNRESOLVED_CAMEL,unresolved,SRC_H008,,,medium,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_H008_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H008,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H008_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_H008,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_H008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H008_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_H008,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_H008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_UNRESOLVED_CAMEL_REPORTED_BY_H008,DOM_NSCLC,STUDY_UNRESOLVED_CAMEL,reported_by,PUB_H008,unresolved,SRC_H008,,,medium,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_H009_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H009,source_about,ORG_HENGRUI,confirmed,SRC_H009,,,high,来源记录中的企业字段。
+REL_H009_SUPPORTS_STUDY_UNRESOLVED_CAP_BRAIN,DOM_NSCLC,SRC_H009,source_supports,STUDY_UNRESOLVED_CAP_BRAIN,unresolved,SRC_H009,,,medium,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_H009_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H009,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H009,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H009_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_H009,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_H009,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H009_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_H009,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_H009,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_UNRESOLVED_CAP_BRAIN_REPORTED_BY_H009,DOM_NSCLC,STUDY_UNRESOLVED_CAP_BRAIN,reported_by,PUB_H009,unresolved,SRC_H009,,,medium,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_H010_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H010,source_about,ORG_HENGRUI,confirmed,SRC_H010,,,high,来源记录中的企业字段。
+REL_H010_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H010,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H010,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H011_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H011,source_about,ORG_HENGRUI,confirmed,SRC_H011,,,high,来源记录中的企业字段。
+REL_H011_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H011,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H011,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H011_MENTIONS_ASSET_APATINIB,DOM_NSCLC,SRC_H011,source_mentions_asset,ASSET_APATINIB,confirmed,SRC_H011,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H012_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H012,source_about,ORG_HENGRUI,confirmed,SRC_H012,,,high,来源记录中的企业字段。
+REL_H012_MENTIONS_ASSET_CAMRELIZUMAB,DOM_NSCLC,SRC_H012,source_mentions_asset,ASSET_CAMRELIZUMAB,confirmed,SRC_H012,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H012_MENTIONS_ASSET_FAMITINIB,DOM_NSCLC,SRC_H012,source_mentions_asset,ASSET_FAMITINIB,confirmed,SRC_H012,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H013_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H013,source_about,ORG_HENGRUI,confirmed,SRC_H013,,,high,来源记录中的企业字段。
+REL_H013_MENTIONS_ASSET_TRASTUZUMAB_REZETECAN,DOM_NSCLC,SRC_H013,source_mentions_asset,ASSET_TRASTUZUMAB_REZETECAN,confirmed,SRC_H013,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H014_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H014,source_about,ORG_HENGRUI,confirmed,SRC_H014,,,high,来源记录中的企业字段。
+REL_H014_MENTIONS_ASSET_TRASTUZUMAB_REZETECAN,DOM_NSCLC,SRC_H014,source_mentions_asset,ASSET_TRASTUZUMAB_REZETECAN,confirmed,SRC_H014,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_H015_ABOUT_ORG_HENGRUI,DOM_NSCLC,SRC_H015,source_about,ORG_HENGRUI,confirmed,SRC_H015,,,high,来源记录中的企业字段。
+REL_H015_SUPPORTS_STUDY_SHR_A2009_301,DOM_NSCLC,SRC_H015,source_supports,STUDY_SHR_A2009_301,confirmed,SRC_H015,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B001_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B001,source_about,ORG_BEONE,confirmed,SRC_B001,,,high,来源记录中的企业字段。
+REL_B002_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B002,source_about,ORG_BEONE,confirmed,SRC_B002,,,high,来源记录中的企业字段。
+REL_B002_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B002,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B002,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B003_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B003,source_about,ORG_BEONE,confirmed,SRC_B003,,,high,来源记录中的企业字段。
+REL_B003_SUPPORTS_STUDY_NCT03663205,DOM_NSCLC,SRC_B003,source_supports,STUDY_NCT03663205,confirmed,SRC_B003,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B003_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B003,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B003,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B003_MENTIONS_ASSET_CISPLATIN,DOM_NSCLC,SRC_B003,source_mentions_asset,ASSET_CISPLATIN,confirmed,SRC_B003,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B003_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B003,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B003,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B003_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_B003,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_B003,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B004_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B004,source_about,ORG_BEONE,confirmed,SRC_B004,,,high,来源记录中的企业字段。
+REL_B004_SUPPORTS_STUDY_NCT03594747,DOM_NSCLC,SRC_B004,source_supports,STUDY_NCT03594747,confirmed,SRC_B004,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B004_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B004,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B004,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B004_MENTIONS_ASSET_PACLITAXEL,DOM_NSCLC,SRC_B004,source_mentions_asset,ASSET_PACLITAXEL,confirmed,SRC_B004,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B004_MENTIONS_ASSET_NAB_PACLITAXEL,DOM_NSCLC,SRC_B004,source_mentions_asset,ASSET_NAB_PACLITAXEL,confirmed,SRC_B004,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B004_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B004,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B004,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B005_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B005,source_about,ORG_BEONE,confirmed,SRC_B005,,,high,来源记录中的企业字段。
+REL_B005_SUPPORTS_STUDY_NCT03358875,DOM_NSCLC,SRC_B005,source_supports,STUDY_NCT03358875,confirmed,SRC_B005,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B005_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B005,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B005,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B005_MENTIONS_ASSET_DOCETAXEL,DOM_NSCLC,SRC_B005,source_mentions_asset,ASSET_DOCETAXEL,confirmed,SRC_B005,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B006_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B006,source_about,ORG_BEONE,confirmed,SRC_B006,,,high,来源记录中的企业字段。
+REL_B006_SUPPORTS_STUDY_NCT03663205,DOM_NSCLC,SRC_B006,source_supports,STUDY_NCT03663205,confirmed,SRC_B006,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B006_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B006,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B006_MENTIONS_ASSET_CISPLATIN,DOM_NSCLC,SRC_B006,source_mentions_asset,ASSET_CISPLATIN,confirmed,SRC_B006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B006_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B006,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B006_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_B006,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_B006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT03663205_REPORTED_BY_B006,DOM_NSCLC,STUDY_NCT03663205,reported_by,PUB_B006,confirmed,SRC_B006,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_B007_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B007,source_about,ORG_BEONE,confirmed,SRC_B007,,,high,来源记录中的企业字段。
+REL_B007_SUPPORTS_STUDY_NCT03663205,DOM_NSCLC,SRC_B007,source_supports,STUDY_NCT03663205,confirmed,SRC_B007,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B007_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B007,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B007_MENTIONS_ASSET_CISPLATIN,DOM_NSCLC,SRC_B007,source_mentions_asset,ASSET_CISPLATIN,confirmed,SRC_B007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B007_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B007,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B007_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_B007,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_B007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT03663205_REPORTED_BY_B007,DOM_NSCLC,STUDY_NCT03663205,reported_by,PUB_B007,confirmed,SRC_B007,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_B007_SUPERSEDES_B006,DOM_NSCLC,SRC_B007,supersedes_source,SRC_B006,confirmed,SRC_B007,,,high,来自原始 supersedes_source_id 字段。
+REL_B008_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B008,source_about,ORG_BEONE,confirmed,SRC_B008,,,high,来源记录中的企业字段。
+REL_B008_SUPPORTS_STUDY_NCT03594747,DOM_NSCLC,SRC_B008,source_supports,STUDY_NCT03594747,confirmed,SRC_B008,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B008_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B008,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B008_MENTIONS_ASSET_PACLITAXEL,DOM_NSCLC,SRC_B008,source_mentions_asset,ASSET_PACLITAXEL,confirmed,SRC_B008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B008_MENTIONS_ASSET_NAB_PACLITAXEL,DOM_NSCLC,SRC_B008,source_mentions_asset,ASSET_NAB_PACLITAXEL,confirmed,SRC_B008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B008_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B008,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT03594747_REPORTED_BY_B008,DOM_NSCLC,STUDY_NCT03594747,reported_by,PUB_B008,confirmed,SRC_B008,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_B009_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B009,source_about,ORG_BEONE,confirmed,SRC_B009,,,high,来源记录中的企业字段。
+REL_B009_SUPPORTS_STUDY_NCT03594747,DOM_NSCLC,SRC_B009,source_supports,STUDY_NCT03594747,confirmed,SRC_B009,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B009_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B009,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B009,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B009_MENTIONS_ASSET_PACLITAXEL,DOM_NSCLC,SRC_B009,source_mentions_asset,ASSET_PACLITAXEL,confirmed,SRC_B009,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B009_MENTIONS_ASSET_NAB_PACLITAXEL,DOM_NSCLC,SRC_B009,source_mentions_asset,ASSET_NAB_PACLITAXEL,confirmed,SRC_B009,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B009_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B009,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B009,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT03594747_REPORTED_BY_B009,DOM_NSCLC,STUDY_NCT03594747,reported_by,PUB_B009,confirmed,SRC_B009,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_B009_SUPERSEDES_B008,DOM_NSCLC,SRC_B009,supersedes_source,SRC_B008,confirmed,SRC_B009,,,high,来自原始 supersedes_source_id 字段。
+REL_B010_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B010,source_about,ORG_BEONE,confirmed,SRC_B010,,,high,来源记录中的企业字段。
+REL_B010_SUPPORTS_STUDY_NCT03358875,DOM_NSCLC,SRC_B010,source_supports,STUDY_NCT03358875,confirmed,SRC_B010,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B010_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B010,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B010,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B010_MENTIONS_ASSET_DOCETAXEL,DOM_NSCLC,SRC_B010,source_mentions_asset,ASSET_DOCETAXEL,confirmed,SRC_B010,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT03358875_REPORTED_BY_B010,DOM_NSCLC,STUDY_NCT03358875,reported_by,PUB_B010,confirmed,SRC_B010,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_B011_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B011,source_about,ORG_BEONE,confirmed,SRC_B011,,,high,来源记录中的企业字段。
+REL_B011_SUPPORTS_STUDY_NCT04379635,DOM_NSCLC,SRC_B011,source_supports,STUDY_NCT04379635,confirmed,SRC_B011,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B011_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B011,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B011,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT04379635_REPORTED_BY_B011,DOM_NSCLC,STUDY_NCT04379635,reported_by,PUB_B011,confirmed,SRC_B011,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_B012_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B012,source_about,ORG_BEONE,confirmed,SRC_B012,,,high,来源记录中的企业字段。
+REL_B012_SUPPORTS_STUDY_NCT04379635,DOM_NSCLC,SRC_B012,source_supports,STUDY_NCT04379635,confirmed,SRC_B012,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B012_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B012,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B012,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B012_MENTIONS_ASSET_CISPLATIN,DOM_NSCLC,SRC_B012,source_mentions_asset,ASSET_CISPLATIN,confirmed,SRC_B012,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B012_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B012,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B012,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B012_MENTIONS_ASSET_PACLITAXEL,DOM_NSCLC,SRC_B012,source_mentions_asset,ASSET_PACLITAXEL,confirmed,SRC_B012,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B012_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_B012,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_B012,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B013_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B013,source_about,ORG_BEONE,confirmed,SRC_B013,,,high,来源记录中的企业字段。
+REL_B013_SUPPORTS_STUDY_NCT04379635,DOM_NSCLC,SRC_B013,source_supports,STUDY_NCT04379635,confirmed,SRC_B013,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_B013_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B013,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B013,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B014_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B014,source_about,ORG_BEONE,confirmed,SRC_B014,,,high,来源记录中的企业字段。
+REL_B015_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B015,source_about,ORG_BEONE,confirmed,SRC_B015,,,high,来源记录中的企业字段。
+REL_B015_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B015,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B015,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B015_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_B015,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_B015,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B015_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_B015,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_B015,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B015_MENTIONS_ASSET_PACLITAXEL,DOM_NSCLC,SRC_B015,source_mentions_asset,ASSET_PACLITAXEL,confirmed,SRC_B015,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_B015_MENTIONS_ASSET_NAB_PACLITAXEL,DOM_NSCLC,SRC_B015,source_mentions_asset,ASSET_NAB_PACLITAXEL,confirmed,SRC_B015,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_ASSET_TISLELIZUMAB_REG_B015,DOM_NSCLC,ASSET_TISLELIZUMAB,has_regulatory_event,REG_B015,confirmed,SRC_B015,,,high,来源明确标记为监管事件。
+REL_B016_ABOUT_ORG_BEONE,DOM_NSCLC,SRC_B016,source_about,ORG_BEONE,confirmed,SRC_B016,,,high,来源记录中的企业字段。
+REL_B016_MENTIONS_ASSET_TISLELIZUMAB,DOM_NSCLC,SRC_B016,source_mentions_asset,ASSET_TISLELIZUMAB,confirmed,SRC_B016,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_ASSET_TISLELIZUMAB_REG_B016,DOM_NSCLC,ASSET_TISLELIZUMAB,has_regulatory_event,REG_B016,confirmed,SRC_B016,,,high,来源明确标记为监管事件。
+REL_A001_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A001,source_about,ORG_ASTRAZENECA,confirmed,SRC_A001,,,high,来源记录中的企业字段。
+REL_A001_SUPPORTS_STUDY_NCT02296125,DOM_NSCLC,SRC_A001,source_supports,STUDY_NCT02296125,confirmed,SRC_A001,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A001_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A001,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A001,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A001_MENTIONS_ASSET_GEFITINIB,DOM_NSCLC,SRC_A001,source_mentions_asset,ASSET_GEFITINIB,confirmed,SRC_A001,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A001_MENTIONS_ASSET_ERLOTINIB,DOM_NSCLC,SRC_A001,source_mentions_asset,ASSET_ERLOTINIB,confirmed,SRC_A001,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A003_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A003,source_about,ORG_ASTRAZENECA,confirmed,SRC_A003,,,high,来源记录中的企业字段。
+REL_A003_SUPPORTS_STUDY_NCT02511106,DOM_NSCLC,SRC_A003,source_supports,STUDY_NCT02511106,confirmed,SRC_A003,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A003_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A003,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A003,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A005_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A005,source_about,ORG_ASTRAZENECA,confirmed,SRC_A005,,,high,来源记录中的企业字段。
+REL_A005_SUPPORTS_STUDY_NCT03521154,DOM_NSCLC,SRC_A005,source_supports,STUDY_NCT03521154,confirmed,SRC_A005,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A005_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A005,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A005,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A007_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A007,source_about,ORG_ASTRAZENECA,confirmed,SRC_A007,,,high,来源记录中的企业字段。
+REL_A007_SUPPORTS_STUDY_NCT04035486,DOM_NSCLC,SRC_A007,source_supports,STUDY_NCT04035486,confirmed,SRC_A007,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A007_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A007,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A007_MENTIONS_ASSET_PEMETREXED,DOM_NSCLC,SRC_A007,source_mentions_asset,ASSET_PEMETREXED,confirmed,SRC_A007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A007_MENTIONS_ASSET_CARBOPLATIN,DOM_NSCLC,SRC_A007,source_mentions_asset,ASSET_CARBOPLATIN,confirmed,SRC_A007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A007_MENTIONS_ASSET_CISPLATIN,DOM_NSCLC,SRC_A007,source_mentions_asset,ASSET_CISPLATIN,confirmed,SRC_A007,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_A002_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A002,source_about,ORG_ASTRAZENECA,confirmed,SRC_A002,,,high,来源记录中的企业字段。
+REL_A002_SUPPORTS_STUDY_NCT02296125,DOM_NSCLC,SRC_A002,source_supports,STUDY_NCT02296125,confirmed,SRC_A002,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A002_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A002,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A002,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT02296125_REPORTED_BY_A002,DOM_NSCLC,STUDY_NCT02296125,reported_by,PUB_A002,confirmed,SRC_A002,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_A004_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A004,source_about,ORG_ASTRAZENECA,confirmed,SRC_A004,,,high,来源记录中的企业字段。
+REL_A004_SUPPORTS_STUDY_NCT02511106,DOM_NSCLC,SRC_A004,source_supports,STUDY_NCT02511106,confirmed,SRC_A004,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A004_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A004,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A004,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT02511106_REPORTED_BY_A004,DOM_NSCLC,STUDY_NCT02511106,reported_by,PUB_A004,confirmed,SRC_A004,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_A006_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A006,source_about,ORG_ASTRAZENECA,confirmed,SRC_A006,,,high,来源记录中的企业字段。
+REL_A006_SUPPORTS_STUDY_NCT03521154,DOM_NSCLC,SRC_A006,source_supports,STUDY_NCT03521154,confirmed,SRC_A006,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A006_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A006,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A006,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT03521154_REPORTED_BY_A006,DOM_NSCLC,STUDY_NCT03521154,reported_by,PUB_A006,confirmed,SRC_A006,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_A008_ABOUT_ORG_ASTRAZENECA,DOM_NSCLC,SRC_A008,source_about,ORG_ASTRAZENECA,confirmed,SRC_A008,,,high,来源记录中的企业字段。
+REL_A008_SUPPORTS_STUDY_NCT04035486,DOM_NSCLC,SRC_A008,source_supports,STUDY_NCT04035486,confirmed,SRC_A008,,,high,研究编号明确或由 parent_trial_id 建立；仅凭研究名称的记录标记为 unresolved。
+REL_A008_MENTIONS_ASSET_OSIMERTINIB,DOM_NSCLC,SRC_A008,source_mentions_asset,ASSET_OSIMERTINIB,confirmed,SRC_A008,,,high,来源明确列出该名称；不代表该名称一定是主要干预。
+REL_STUDY_NCT04035486_REPORTED_BY_A008,DOM_NSCLC,STUDY_NCT04035486,reported_by,PUB_A008,confirmed,SRC_A008,,,high,无 parent_trial_id 时仅按研究名称暂存，未强制合并。
+REL_STUDY_NCT04818333_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_NCT04818333,sponsored_by,ORG_HENGRUI,confirmed,SRC_H003,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT03083041_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_NCT03083041,sponsored_by,ORG_HENGRUI,confirmed,SRC_H004,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT03668496_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_NCT03668496,sponsored_by,ORG_HENGRUI,confirmed,SRC_H005,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT04619433_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_NCT04619433,sponsored_by,ORG_HENGRUI,confirmed,SRC_H006,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT02364362_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_NCT02364362,sponsored_by,ORG_HENGRUI,confirmed,SRC_H007,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_UNRESOLVED_CAMEL_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_UNRESOLVED_CAMEL,sponsored_by,ORG_HENGRUI,confirmed,SRC_H008,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_UNRESOLVED_CAP_BRAIN_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_UNRESOLVED_CAP_BRAIN,sponsored_by,ORG_HENGRUI,confirmed,SRC_H009,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_SHR_A2009_301_SPONSORED_BY_ORG_HENGRUI,DOM_NSCLC,STUDY_SHR_A2009_301,sponsored_by,ORG_HENGRUI,confirmed,SRC_H015,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT03663205_SPONSORED_BY_ORG_BEONE,DOM_NSCLC,STUDY_NCT03663205,sponsored_by,ORG_BEONE,confirmed,SRC_B003,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT03594747_SPONSORED_BY_ORG_BEONE,DOM_NSCLC,STUDY_NCT03594747,sponsored_by,ORG_BEONE,confirmed,SRC_B004,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT03358875_SPONSORED_BY_ORG_BEONE,DOM_NSCLC,STUDY_NCT03358875,sponsored_by,ORG_BEONE,confirmed,SRC_B005,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT04379635_SPONSORED_BY_ORG_BEONE,DOM_NSCLC,STUDY_NCT04379635,sponsored_by,ORG_BEONE,confirmed,SRC_B011,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT02296125_SPONSORED_BY_ORG_ASTRAZENECA,DOM_NSCLC,STUDY_NCT02296125,sponsored_by,ORG_ASTRAZENECA,confirmed,SRC_A001,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT02511106_SPONSORED_BY_ORG_ASTRAZENECA,DOM_NSCLC,STUDY_NCT02511106,sponsored_by,ORG_ASTRAZENECA,confirmed,SRC_A003,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT03521154_SPONSORED_BY_ORG_ASTRAZENECA,DOM_NSCLC,STUDY_NCT03521154,sponsored_by,ORG_ASTRAZENECA,confirmed,SRC_A005,,,high,来源记录中的企业字段；未扩展为资产所有权。
+REL_STUDY_NCT04035486_SPONSORED_BY_ORG_ASTRAZENECA,DOM_NSCLC,STUDY_NCT04035486,sponsored_by,ORG_ASTRAZENECA,confirmed,SRC_A007,,,high,来源记录中的企业字段；未扩展为资产所有权。

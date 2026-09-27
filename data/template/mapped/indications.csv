@@ -1,0 +1,2 @@
+indication_id,domain_id,disease_name,disease_code,histology,biomarker,treatment_line,population_description,geography,notes
+IND_NSCLC,DOM_NSCLC,非小细胞肺癌（NSCLC）,NSCLC,,,,当前来源中涉及的 NSCLC 人群；具体限制保存在 facts.csv。,,不把所有 NSCLC 来源泛化为同一治疗人群。

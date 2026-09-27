@@ -12,6 +12,17 @@ data/*
 !data/raw_macro/*.xlsx
 !data/archives/
 !data/archives/*.zip
+!data/template/
+!data/template/mapped/
+!data/template/expanded_seed/
+!data/template/*.csv
+!data/template/*.json
+!data/template/*.md
+!data/template/mapped/*.csv
+!data/template/mapped/*.json
+!data/template/expanded_seed/*.csv
+!data/template/expanded_seed/*.json
+!data/template/expanded_seed/*.md
 data/archives/final_md_full.zip
 reports_md/
 reports_md.zip

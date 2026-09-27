@@ -1,0 +1,9 @@
+organization_id,canonical_name,display_name,organization_type,country_or_region,website,status,notes
+ORG_DAIICHI_SANKYO,Daiichi Sankyo,第一三共（Daiichi Sankyo）,pharmaceutical_company,Japan,,active,DESTINY-Breast03 来源中的研究资助方之一。
+ORG_ASTRAZENECA,AstraZeneca,阿斯利康（AstraZeneca）,pharmaceutical_company,United Kingdom,,active,现有仓库已有该企业；本批次用于乳腺癌研究关联。
+ORG_NCI,National Cancer Institute,美国国家癌症研究所（NCI）,research_institution,United States,,active,OlympiA PubMed 来源中的资助方。
+ORG_BMS,Bristol Myers Squibb,百时美施贵宝（Bristol Myers Squibb）,pharmaceutical_company,United States,,active,CheckMate 142/649 资料中的研究方或资助方。
+ORG_MSD,Merck Sharp & Dohme,默沙东（Merck Sharp & Dohme）,pharmaceutical_company,United States,,active,KEYNOTE-811 研究相关企业。
+ORG_LILLY,Eli Lilly and Company,礼来（Eli Lilly and Company）,pharmaceutical_company,United States,,active,SURMOUNT-1 与 SURPASS-2 来源中的研究方。
+ORG_NOVO_NORDISK,Novo Nordisk,诺和诺德（Novo Nordisk）,pharmaceutical_company,Denmark,,active,STEP 1 来源中的研究方。
+ORG_FDA,U.S. Food and Drug Administration,美国食品药品监督管理局（FDA）,regulatory_authority,United States,,active,FDA 标签或批准资料来源。

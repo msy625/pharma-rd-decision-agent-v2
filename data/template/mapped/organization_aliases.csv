@@ -1,0 +1,6 @@
+alias_id,organization_id,alias,language,alias_type,valid_from,valid_to,source_id,notes
+ALIAS_ORG_HENGRUI_UNSPECIFIED,ORG_HENGRUI,恒瑞医药,zh,display_name,,,H015,来源原文名称或当前登记名称。
+ALIAS_ORG_BEONE_UNSPECIFIED,ORG_BEONE,百济神州,zh,display_name,,,B016,来源原文名称或当前登记名称。
+ALIAS_ORG_BEONE_BEIGENE,ORG_BEONE,BeiGene,en,former_name,,,B016,来源原文名称或当前登记名称。
+ALIAS_ORG_ASTRAZENECA_UNSPECIFIED,ORG_ASTRAZENECA,阿斯利康,zh,display_name,,,A008,来源原文名称或当前登记名称。
+ALIAS_ORG_EMA_EMA,ORG_EMA,EMA,en,abbreviation,,,B015,监管来源中的机构简称。
