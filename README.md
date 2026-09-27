@@ -175,6 +175,22 @@ PORT=8000 make web-deploy
 
 `/health` 只检查进程存活；`/ready` 检查比赛核心数据是否可读，并返回数据版本和来源数。`render.yaml` 设置 `GROUNDED_QA_LLM_ENABLED=true`，但 `DEEPSEEK_API_KEY` 仍必须在 Render 控制台以环境变量手动配置。未配置密钥时 `auto` 自动回退本地分析；不得将真实密钥写入仓库。模型调用继续受每客户端、全局和并发限制保护。
 
+`render.yaml` 中 `autoDeploy: false`，推送不会自动触发部署，需要在控制台执行 Manual Deploy，或改为开启 Auto-Deploy。
+
+⚠️ **不要用 `/ready` 的 `data_version` 判断部署是否生效。** 该值只哈希
+`data/source_registry.csv`、`config/evidence_chains.json`、`config/evidence_rules.json`、
+`config/grounded_qa_rules.json`，不含 `data/template/`；且它是比赛冻结标识
+（见 `RELEASE_METADATA.template.json`），不能改其语义。
+新增的研发方向功能请用能力位与接口判断：
+
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" <站点>/api/directions/roadmap   # 生效后为 200
+curl -s <站点>/api/runtime-capabilities                                  # 生效后含 direction_dataset_available: true
+```
+
+详见 `docs/direction_dataset_validation.md`。轻量部署依赖清单无需为方向功能调整
+（已用只装 `requirements-deploy.txt` 的干净环境实测通过）。
+
 ## 测试与校验
 
 比赛精简源码包可安装独立测试依赖并运行离线核心验证入口：

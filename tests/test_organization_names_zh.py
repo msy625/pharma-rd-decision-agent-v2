@@ -188,5 +188,29 @@ class OrganizationNamesZhTest(unittest.TestCase):
                 self.assertFalse(any("\u4e00" <= ch <= "\u9fff" for ch in row["display_name"]))
 
 
+    def test_17_zh_alias_follows_its_english_alias(self):
+        """Chinese rows must sit next to their English pair, not be buried at the end.
+
+        Appending them made the CSV preview on GitHub (and the first screenful of
+        the file) show English only, which is not what a reviewer expects.
+        """
+        positions = {row["alias_id"]: index for index, row in enumerate(self.aliases)}
+        checked = 0
+        for row in self.orgs:
+            if not row["organization_id"].startswith(HARVEST_PREFIX):
+                continue
+            canonical_id = f"ALIAS_{row['organization_id']}_CANONICAL"
+            zh_id = f"ALIAS_{row['organization_id']}_ZH"
+            if zh_id in positions and canonical_id in positions:
+                with self.subTest(org=row["organization_id"]):
+                    self.assertEqual(
+                        positions[zh_id],
+                        positions[canonical_id] + 1,
+                        f"{zh_id} is not adjacent to {canonical_id}",
+                    )
+                checked += 1
+        self.assertGreater(checked, 100)
+
+
 if __name__ == "__main__":
     unittest.main()

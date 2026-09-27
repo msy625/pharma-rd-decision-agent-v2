@@ -135,17 +135,53 @@ def main(argv: list[str] | None = None) -> int:
 
     changed = 0
     if matched:
-        merged_aliases = aliases + new_aliases
         _, current_orgs = read_table(ORG_TABLE)
         if orgs != current_orgs:
             write_table(ORG_TABLE, org_fields, orgs)
             changed += 1
+
+        # Collect every managed zh alias (already present or newly built) and
+        # re-emit it next to its English counterpart.
+        managed_ids = {f"ALIAS_{org_id}_ZH" for org_id, _c, _z in matched}
+        by_org: dict[str, dict[str, str]] = {}
+        for row in aliases:
+            if row.get("alias_id") in managed_ids:
+                by_org[row["organization_id"]] = row
+        for row in new_aliases:
+            by_org.setdefault(row["organization_id"], row)
+
+        base = [row for row in aliases if row.get("alias_id") not in managed_ids]
+        merged_aliases = interleave_zh_aliases(base, list(by_org.values()))
         if merged_aliases != aliases:
             write_table(ALIAS_TABLE, alias_fields, merged_aliases)
             changed += 1
 
     print(f"\nfiles written: {changed}")
     return 0
+
+
+def interleave_zh_aliases(
+    aliases: list[dict[str, str]], new_aliases: list[dict[str, str]]
+) -> list[dict[str, str]]:
+    """Place each Chinese alias directly after its English canonical alias.
+
+    Appending them at the end would bury 150+ Chinese rows under ~750 English
+    ones, so the CSV preview on GitHub (and anyone skimming the file) still sees
+    only English. Interleaving keeps the English/Chinese pair together.
+    """
+    pending = {row["organization_id"]: row for row in new_aliases}
+    emitted: set[str] = set()
+    result: list[dict[str, str]] = []
+    for row in aliases:
+        result.append(row)
+        org_id = row.get("organization_id", "")
+        if row.get("alias_type") == "canonical_or_code" and org_id in pending and org_id not in emitted:
+            result.append(pending[org_id])
+            emitted.add(org_id)
+    for org_id, row in pending.items():
+        if org_id not in emitted:
+            result.append(row)
+    return result
 
 
 if __name__ == "__main__":

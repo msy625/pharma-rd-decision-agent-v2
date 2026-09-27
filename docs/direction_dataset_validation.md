@@ -227,3 +227,44 @@ PYTHONUTF8=1 python -m pytest -q     # 740 passed, 5906 subtests passed
 | 控制台 | **0 条 console error、0 条 page exception** |
 
 截图仅用于本次验收，未纳入仓库。
+
+### 部署到 Render 时如何确认是否生效
+
+`render.yaml` 中 `autoDeploy: false`，因此推送 GitHub **不会**触发 Render 重新部署，
+需要在控制台执行一次 Manual Deploy，或改为开启 Auto-Deploy。
+
+⚠️ **不要用 `GET /ready` 的 `data_version` 判断部署是否生效。**
+`GroundedQAService.data_version()` 只对以下文件取哈希：
+
+```text
+data/source_registry.csv, config/evidence_chains.json,
+config/evidence_rules.json, config/grounded_qa_rules.json
+```
+
+`data/template/` **不参与**该哈希；而且这个值是比赛冻结标识
+（`RELEASE_METADATA.template.json`、`tests/test_competition_package.py`、
+`scripts/validate_competition_package.py` 均固定为 `sha256:330ac862f52db200`），
+不能为了反映方向数据而修改其语义。因此本功能上线前后 `data_version` 完全相同。
+
+应改用新增的能力位与接口判断：
+
+```bash
+# 生效后应由 404 变为 200
+curl -s -o /dev/null -w "%{http_code}\n" <站点>/api/directions/roadmap
+
+# 生效后应出现 "direction_dataset_available": true
+curl -s <站点>/api/runtime-capabilities
+```
+
+部署前已用**只安装 `requirements-deploy.txt`** 的干净环境（不含 torch / chromadb /
+pandas / sentence-transformers）完整启动并验证：`/health`、`/ready`、
+`direction_dataset_available`、`/api/directions/roadmap`（6 阶段 / 20 方向 / 2832 条）、
+`/api/directions/records`、`/api/directions/filters`、`/`（934157 字节，含全部方向标记）
+以及既有 `/api/evidence/summary`（39 条人工核验）全部通过，
+说明轻量部署依赖清单无需调整。
+
+比赛精简包也已实测可构建（`--source-commit` 预览模式，254 个文件），
+`config/direction_catalog.json`、`config/organization_names_zh.json`、
+`config/individual_investigator_names.json`、`direction_dataset_service.py`、
+三个方向脚本与 `data/template/` 均已包含在内；
+`scripts/validate_competition_package.py` 全绿（656 passed）。
