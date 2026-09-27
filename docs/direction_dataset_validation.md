@@ -182,6 +182,58 @@ wrote publications.csv: 1176 -> 1176 rows (+0)
 python webapp/frontend_src/build.py
 ```
 
+## 双轨数据接入验证
+
+### 目标
+
+让研发决策总览、研发证据中心、企业证据画像和研发事件时间轴能够看到全量数据，
+同时**不破坏**「人工核验 vs 机器采集」的区分，也不改变默认行为。
+
+### 实现
+
+`SourceRegistryService` 新增 `include_harvested`（默认 `False`）。
+打开时由 `deepinsight/core/harvested_registry_adapter.py` 把 `data/template/` 中
+`verification_status=api_harvested` 的记录投射成原有 56 列格式，追加在人工核验来源之后，
+下游服务（证据链、企业对比、企业画像、事件时间轴、工作台、检索）无需改动。
+
+只投射 `api_harvested` 记录：41 条 verified 来源已在 `source_registry.csv` 中，不能重复计入。
+
+### 实测结果（真实 uvicorn）
+
+| 检查 | OFF（默认） | ON（`include_harvested=true`） |
+| --- | ---: | ---: |
+| `/api/evidence/summary` `total_sources` | 39 | 2830 |
+| `verified_source_count` | 39 | 39 |
+| `harvested_source_count` | 0 | 2791 |
+| `metadata.data_source` | `source_registry.csv` | `source_registry.csv + data/template` |
+| 检索 `Pembrolizumab` 命中数 | 0 | 45 |
+
+`/api/evidence/workbench`、`/api/evidence/company-profile/{name}`、
+`/api/evidence/timeline` 均接受该参数并回显 `include_harvested`。
+
+样本记录（ON，检索「辉瑞」）：
+
+```text
+SRC_CTG_NCT03460977  api_harvested  辉瑞（Pfizer）  https://clinicaltrials.gov/study/NCT03460977
+```
+
+### 不变量与测试
+
+- `extended[:39] == verified`：人工核验行的位置与内容完全不变；
+- 机器采集行的列集合与人工核验行一致，`registry_id` 为 NCT、`pmid` 为纯数字；
+- 机器采集行的 `notes` 含 `api_harvested` 与「未经人工逐条复核」；
+- 方向数据集缺失或损坏时静默降级为仅人工核验来源（原因记录在 `harvested_error`）；
+- **循证问答与决策 Agent 不接入该开关**，始终只引用人工核验来源（有测试断言）。
+
+`tests/test_include_harvested_switch.py` 共 18 项，覆盖上述全部不变量与接口行为。
+
+### 边界
+
+- 证据链、企业对比等依赖 `config/evidence_chains.json` 精选关系的功能，
+  对新增记录只显示「无已配置关系」，不会推断出不存在的关系；
+- 机器采集记录在界面上标注「机器采集」并展示范围声明，
+  不代表企业研发实力，不支持跨试验疗效排名、成功率预测或投资建议。
+
 ## 本机环境注意事项
 
 宿主机默认区域设置为 GBK 时，`tests/test_source_registry_query.py::test_json_output_is_valid`

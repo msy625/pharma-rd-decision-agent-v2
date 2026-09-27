@@ -2641,12 +2641,15 @@ def evidence_search(
 def evidence_by_company(
     name: str,
     latest_only: Annotated[bool, Query()] = False,
+    include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service().query(company=name, latest_only=latest_only)[:limit]
-        return _evidence_list_response({"company": name, "latest_only": latest_only, "limit": limit}, items)
+        items = _evidence_service(include_harvested).query(company=name, latest_only=latest_only)[:limit]
+        return _evidence_list_response(
+            {"company": name, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
+        )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
@@ -2655,12 +2658,15 @@ def evidence_by_company(
 def evidence_by_drug(
     name: str,
     latest_only: Annotated[bool, Query()] = False,
+    include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service().query(drug=name, latest_only=latest_only)[:limit]
-        return _evidence_list_response({"drug": name, "latest_only": latest_only, "limit": limit}, items)
+        items = _evidence_service(include_harvested).query(drug=name, latest_only=latest_only)[:limit]
+        return _evidence_list_response(
+            {"drug": name, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
+        )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
@@ -2669,12 +2675,16 @@ def evidence_by_drug(
 def evidence_by_trial(
     trial_id: str,
     latest_only: Annotated[bool, Query()] = False,
+    include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service().related_evidence(trial_id, latest_only=latest_only)[:limit]
-        return _evidence_list_response({"trial_id": trial_id, "latest_only": latest_only, "limit": limit}, items)
+        items = _evidence_service(include_harvested).related_evidence(trial_id, latest_only=latest_only)[:limit]
+        return _evidence_list_response(
+            {"trial_id": trial_id, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit},
+            items,
+        )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
@@ -2683,23 +2693,27 @@ def evidence_by_trial(
 def evidence_by_study(
     name: str,
     latest_only: Annotated[bool, Query()] = False,
+    include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service().query(study_name=name, latest_only=latest_only)[:limit]
-        return _evidence_list_response({"study_name": name, "latest_only": latest_only, "limit": limit}, items)
+        items = _evidence_service(include_harvested).query(study_name=name, latest_only=latest_only)[:limit]
+        return _evidence_list_response(
+            {"study_name": name, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit},
+            items,
+        )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
 
 @app.get("/api/evidence/source/{source_id}")
-def evidence_source(source_id: str) -> dict[str, Any]:
+def evidence_source(source_id: str, include_harvested: bool = False) -> dict[str, Any]:
     try:
-        item = _evidence_service().get_by_source_id(source_id)
+        item = _evidence_service(include_harvested).get_by_source_id(source_id)
         if item is None:
             raise HTTPException(status_code=404, detail=f"未找到资料来源：{source_id}")
-        return {"item": item}
+        return {"item": item, "include_harvested": include_harvested}
     except HTTPException:
         raise
     except Exception as exc:

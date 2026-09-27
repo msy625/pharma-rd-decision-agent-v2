@@ -161,6 +161,64 @@ class IncludeHarvestedApiTest(unittest.TestCase):
         signature = inspect.signature(webapp_main._grounded_qa_service)
         self.assertNotIn("include_harvested", signature.parameters)
 
+    # ------------------------------------------------------------------ #
+    # The five lookup endpoints behind 来源检索 must honour the switch too,
+    # otherwise the toggle silently does nothing for those query modes.
+    # ------------------------------------------------------------------ #
+    def _count(self, path: str) -> int:
+        return self.get_json(path)["count"]
+
+    def test_19_company_lookup_honours_the_switch(self):
+        off = self._count("/api/evidence/company/%E6%81%92%E7%91%9E%E5%8C%BB%E8%8D%AF")
+        on = self._count("/api/evidence/company/%E6%81%92%E7%91%9E%E5%8C%BB%E8%8D%AF?include_harvested=true")
+        self.assertGreaterEqual(on, off)
+        self.assertGreater(on, off, "company lookup ignored include_harvested")
+
+    def test_20_drug_lookup_honours_the_switch(self):
+        off = self._count("/api/evidence/drug/%E5%8D%A1%E7%91%9E%E5%88%A9%E7%8F%A0%E5%8D%95%E6%8A%97")
+        on = self._count("/api/evidence/drug/%E5%8D%A1%E7%91%9E%E5%88%A9%E7%8F%A0%E5%8D%95%E6%8A%97?include_harvested=true")
+        self.assertGreaterEqual(on, off)
+
+    def test_21_trial_lookup_honours_the_switch(self):
+        off = self._count("/api/evidence/trial/NCT04379635")
+        on = self._count("/api/evidence/trial/NCT04379635?include_harvested=true")
+        self.assertGreaterEqual(on, off)
+
+    def test_22_study_lookup_honours_the_switch(self):
+        off = self._count("/api/evidence/study/CameL")
+        on = self._count("/api/evidence/study/CameL?include_harvested=true")
+        self.assertGreaterEqual(on, off)
+
+    def test_23_harvested_records_accept_the_flag_in_the_query_echo(self):
+        payload = self.get_json("/api/evidence/company/%E6%81%92%E7%91%9E%E5%8C%BB%E8%8D%AF?include_harvested=true")
+        self.assertTrue(payload["query"]["include_harvested"])
+
+    def test_24_source_detail_resolves_harvested_ids_with_the_switch(self):
+        """Every harvested row is clickable in the UI, so its detail must resolve."""
+        listed = self.get_json("/api/evidence/search?q=Pembrolizumab&include_harvested=true")
+        harvested = [i for i in listed["items"] if i["verification_status"] == HARVESTED_STATUS]
+        self.assertTrue(harvested)
+        source_id = harvested[0]["source_id"]
+
+        response = self.client.get(f"/api/evidence/source/{source_id}?include_harvested=true")
+        self.assertEqual(response.status_code, 200, response.text)
+        item = response.json()["item"]
+        self.assertEqual(item["source_id"], source_id)
+        self.assertEqual(item["verification_status"], HARVESTED_STATUS)
+        self.assertTrue(item["source_url"].startswith("http"))
+
+    def test_25_source_detail_for_harvested_id_is_404_without_the_switch(self):
+        """Documents the contract: harvested ids are only visible when opted in."""
+        listed = self.get_json("/api/evidence/search?q=Pembrolizumab&include_harvested=true")
+        source_id = next(i for i in listed["items"] if i["verification_status"] == HARVESTED_STATUS)["source_id"]
+        response = self.client.get(f"/api/evidence/source/{source_id}")
+        self.assertEqual(response.status_code, 404)
+
+    def test_26_verified_source_detail_still_works_by_default(self):
+        response = self.client.get("/api/evidence/source/B015")
+        self.assertEqual(response.status_code, 200, response.text)
+        self.assertEqual(response.json()["item"]["source_id"], "B015")
+
 
 if __name__ == "__main__":
     unittest.main()
