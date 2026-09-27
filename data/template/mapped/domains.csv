@@ -1,2 +1,0 @@
-domain_id,parent_domain_id,domain_name,domain_type,description,active
-DOM_NSCLC,,非小细胞肺癌（NSCLC）,disease_research_domain,当前 source_registry.csv 的完整数据范围。,true

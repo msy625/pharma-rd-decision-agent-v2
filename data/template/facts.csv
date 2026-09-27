@@ -1,1 +1,260 @@
 fact_id,domain_id,subject_id,predicate,object_id,object_value,value_type,unit,event_date,valid_from,valid_to,source_id,verification_status,confidence_level,scope_note
+FACT_H001_POPULATION,DOM_NSCLC,SRC_H001,population,,肺癌相关研究布局,source_assertion,,,,,SRC_H001,verified,high,
+FACT_H001_INTERVENTION,DOM_NSCLC,SRC_H001,intervention,,企业官网页面涉及肺癌领域研究布局及相关药物信息,source_assertion,,,,,SRC_H001,verified,high,
+FACT_H002_POPULATION,DOM_NSCLC,SRC_H002,population,,公司研发投入和创新药管线背景,source_assertion,,,,,SRC_H002,verified,high,
+FACT_H002_INTERVENTION,DOM_NSCLC,SRC_H002,intervention,,年度报告用于确认公司研发投入、创新药布局和管线背景,source_assertion,,,,,SRC_H002,verified,high,
+FACT_H003_STUDY_STATUS,DOM_NSCLC,STUDY_NCT04818333,study_status,,Unknown,source_assertion,,,,,SRC_H003,verified,high,
+FACT_H003_STUDY_PHASE,DOM_NSCLC,STUDY_NCT04818333,study_phase,,Phase 1/2,source_assertion,,,,,SRC_H003,verified,high,
+FACT_H003_POPULATION,DOM_NSCLC,STUDY_NCT04818333,population,,HER2 表达、扩增或突变的晚期非小细胞肺癌患者,source_assertion,,,,,SRC_H003,verified,high,
+FACT_H003_INTERVENTION,DOM_NSCLC,STUDY_NCT04818333,intervention,,SHR-A1811 注射剂,source_assertion,,,,,SRC_H003,verified,high,
+FACT_H003_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT04818333,biomarker_requirements,,HER2 表达、扩增或突变,source_assertion,,,,,SRC_H003,verified,high,
+FACT_H004_STUDY_STATUS,DOM_NSCLC,STUDY_NCT03083041,study_status,,Completed,source_assertion,,,,,SRC_H004,verified,high,
+FACT_H004_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03083041,study_phase,,Phase 2,source_assertion,,,,,SRC_H004,verified,high,
+FACT_H004_POPULATION,DOM_NSCLC,STUDY_NCT03083041,population,,晚期非小细胞肺癌患者,source_assertion,,,,,SRC_H004,verified,high,
+FACT_H004_INTERVENTION,DOM_NSCLC,STUDY_NCT03083041,intervention,,SHR-1210 联合阿帕替尼,source_assertion,,,,,SRC_H004,verified,high,
+FACT_H005_STUDY_STATUS,DOM_NSCLC,STUDY_NCT03668496,study_status,,Unknown,source_assertion,,,,,SRC_H005,verified,high,
+FACT_H005_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03668496,study_phase,,Phase 3,source_assertion,,,,,SRC_H005,verified,high,
+FACT_H005_POPULATION,DOM_NSCLC,STUDY_NCT03668496,population,,IV 期鳞状非小细胞肺癌患者,source_assertion,,,,,SRC_H005,verified,high,
+FACT_H005_INTERVENTION,DOM_NSCLC,STUDY_NCT03668496,intervention,,SHR-1210 联合卡铂和紫杉醇,source_assertion,,,,,SRC_H005,verified,high,
+FACT_H005_COMPARATOR,DOM_NSCLC,STUDY_NCT03668496,comparator,,安慰剂联合卡铂和紫杉醇,source_assertion,,,,,SRC_H005,verified,high,
+FACT_H006_STUDY_STATUS,DOM_NSCLC,STUDY_NCT04619433,study_status,,Terminated,source_assertion,,,,,SRC_H006,verified,high,
+FACT_H006_STUDY_PHASE,DOM_NSCLC,STUDY_NCT04619433,study_phase,,Phase 3,source_assertion,,,,,SRC_H006,verified,high,
+FACT_H006_POPULATION,DOM_NSCLC,STUDY_NCT04619433,population,,非鳞状非小细胞肺癌患者,source_assertion,,,,,SRC_H006,verified,high,
+FACT_H006_INTERVENTION,DOM_NSCLC,STUDY_NCT04619433,intervention,,SHR-1210 联合法米替尼加培美曲塞和卡铂,source_assertion,,,,,SRC_H006,verified,high,
+FACT_H006_COMPARATOR,DOM_NSCLC,STUDY_NCT04619433,comparator,,SHR-1210 联合安慰剂加培美曲塞和卡铂,source_assertion,,,,,SRC_H006,verified,high,
+FACT_H006_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT04619433,biomarker_requirements,,EGFR mutation and ALK rearrangement status must be negative,source_assertion,,,,,SRC_H006,verified,high,
+FACT_H007_STUDY_STATUS,DOM_NSCLC,STUDY_NCT02364362,study_status,,Completed,source_assertion,,,,,SRC_H007,verified,high,
+FACT_H007_STUDY_PHASE,DOM_NSCLC,STUDY_NCT02364362,study_phase,,Phase 1,source_assertion,,,,,SRC_H007,verified,high,
+FACT_H007_POPULATION,DOM_NSCLC,STUDY_NCT02364362,population,,晚期非鳞状非小细胞肺癌患者,source_assertion,,,,,SRC_H007,verified,high,
+FACT_H007_INTERVENTION,DOM_NSCLC,STUDY_NCT02364362,intervention,,法米替尼联合多西他赛,source_assertion,,,,,SRC_H007,verified,high,
+FACT_H007_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT02364362,regimen_detail,,法米替尼 15/20/25 mg qd 联合多西他赛 60 mg/m²,source_assertion,,,,,SRC_H007,verified,high,
+FACT_H008_STUDY_PHASE,DOM_NSCLC,STUDY_UNRESOLVED_CAMEL,study_phase,,Phase 3,source_assertion,,,,,SRC_H008,verified,high,
+FACT_H008_POPULATION,DOM_NSCLC,STUDY_UNRESOLVED_CAMEL,population,,晚期非鳞状非小细胞肺癌患者,source_assertion,,,,,SRC_H008,verified,high,
+FACT_H008_INTERVENTION,DOM_NSCLC,STUDY_UNRESOLVED_CAMEL,intervention,,卡瑞利珠单抗联合卡铂和培美曲塞一线治疗,source_assertion,,,,,SRC_H008,verified,high,
+FACT_H009_STUDY_PHASE,DOM_NSCLC,STUDY_UNRESOLVED_CAP_BRAIN,study_phase,,Phase 2,source_assertion,,,,,SRC_H009,verified,high,
+FACT_H009_POPULATION,DOM_NSCLC,STUDY_UNRESOLVED_CAP_BRAIN,population,,非小细胞肺癌脑转移人群,source_assertion,,,,,SRC_H009,verified,high,
+FACT_H009_INTERVENTION,DOM_NSCLC,STUDY_UNRESOLVED_CAP_BRAIN,intervention,,卡瑞利珠单抗联合培美曲塞和卡铂,source_assertion,,,,,SRC_H009,verified,high,
+FACT_H009_REGIMEN_DETAIL,DOM_NSCLC,STUDY_UNRESOLVED_CAP_BRAIN,regimen_detail,,卡瑞利珠单抗联合培美曲塞和卡铂,source_assertion,,,,,SRC_H009,verified,high,
+FACT_H010_STUDY_PHASE,DOM_NSCLC,SRC_H010,study_phase,,Phase 2,source_assertion,,,,,SRC_H010,verified,high,
+FACT_H010_POPULATION,DOM_NSCLC,SRC_H010,population,,经治晚期或转移性非小细胞肺癌患者，不同 PD-L1 表达队列,source_assertion,,,,,SRC_H010,verified,high,
+FACT_H010_INTERVENTION,DOM_NSCLC,SRC_H010,intervention,,卡瑞利珠单抗单药,source_assertion,,,,,SRC_H010,verified,high,
+FACT_H010_BIOMARKER_REQUIREMENTS,DOM_NSCLC,SRC_H010,biomarker_requirements,,不同 PD-L1 表达队列,source_assertion,,,,,SRC_H010,verified,high,
+FACT_H011_STUDY_PHASE,DOM_NSCLC,SRC_H011,study_phase,,Phase 1b/2,source_assertion,,,,,SRC_H011,verified,high,
+FACT_H011_POPULATION,DOM_NSCLC,SRC_H011,population,,携带 EGFR 或 ALK 异常的非小细胞肺癌患者,source_assertion,,,,,SRC_H011,verified,high,
+FACT_H011_INTERVENTION,DOM_NSCLC,SRC_H011,intervention,,卡瑞利珠单抗联合阿帕替尼,source_assertion,,,,,SRC_H011,verified,high,
+FACT_H011_BIOMARKER_REQUIREMENTS,DOM_NSCLC,SRC_H011,biomarker_requirements,,携带 EGFR 或 ALK 异常,source_assertion,,,,,SRC_H011,verified,high,
+FACT_H012_STUDY_PHASE,DOM_NSCLC,SRC_H012,study_phase,,Phase 2,source_assertion,,,,,SRC_H012,verified,high,
+FACT_H012_POPULATION,DOM_NSCLC,SRC_H012,population,,经治局部晚期或转移性非小细胞肺癌患者,source_assertion,,,,,SRC_H012,verified,high,
+FACT_H012_INTERVENTION,DOM_NSCLC,SRC_H012,intervention,,卡瑞利珠单抗联合法米替尼,source_assertion,,,,,SRC_H012,verified,high,
+FACT_H013_TERM_SHR_A2009,DOM_NSCLC,SRC_H013,mentions_unmapped_term,,SHR-A2009,raw_source_term,,2026年1月,,,SRC_H013,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_H013_TERM_HER3_ADC,DOM_NSCLC,SRC_H013,mentions_unmapped_term,,HER3 ADC,raw_source_term,,2026年1月,,,SRC_H013,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_H013_STUDY_PHASE,DOM_NSCLC,SRC_H013,study_phase,,文件未明确,source_assertion,,2026年1月,,,SRC_H013,verified,high,
+FACT_H013_POPULATION,DOM_NSCLC,SRC_H013,population,,投资者演示材料页码 20、28、29、30 涉及 NSCLC、SHR-A1811、SHR-A2009 等关键词,source_assertion,,2026年1月,,,SRC_H013,verified,high,
+FACT_H014_STUDY_STATUS,DOM_NSCLC,SRC_H014,study_status,,药品注册获批事件,source_assertion,,2025年5月29日,,,SRC_H014,verified,high,
+FACT_H014_POPULATION,DOM_NSCLC,SRC_H014,population,,存在 HER2（ERBB2）激活突变、既往接受过至少一种系统治疗的不可切除局部晚期或转移性非小细胞肺癌成人患者,source_assertion,,2025年5月29日,,,SRC_H014,verified,high,
+FACT_H014_INTERVENTION,DOM_NSCLC,SRC_H014,intervention,,瑞康曲妥珠单抗获得药品注册批准,source_assertion,,2025年5月29日,,,SRC_H014,verified,high,
+FACT_H014_BIOMARKER_REQUIREMENTS,DOM_NSCLC,SRC_H014,biomarker_requirements,,HER2（ERBB2）激活突变,source_assertion,,2025年5月29日,,,SRC_H014,verified,high,
+FACT_H015_TERM_SHR_A2009,DOM_NSCLC,SRC_H015,mentions_unmapped_term,,SHR-A2009,raw_source_term,,,,,SRC_H015,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_H015_TERM_HER3_ADC,DOM_NSCLC,SRC_H015,mentions_unmapped_term,,HER3 ADC,raw_source_term,,,,,SRC_H015,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_H015_STUDY_STATUS,DOM_NSCLC,STUDY_SHR_A2009_301,study_status,,III期研究期中分析达到主要终点,source_assertion,,,,,SRC_H015,verified,high,
+FACT_H015_STUDY_PHASE,DOM_NSCLC,STUDY_SHR_A2009_301,study_phase,,III期,source_assertion,,,,,SRC_H015,verified,high,
+FACT_H015_POPULATION,DOM_NSCLC,STUDY_SHR_A2009_301,population,,EGFR 突变晚期非小细胞肺癌患者,source_assertion,,,,,SRC_H015,verified,high,
+FACT_H015_INTERVENTION,DOM_NSCLC,STUDY_SHR_A2009_301,intervention,,SHR-A2009 治疗 EGFR 突变晚期非小细胞肺癌,source_assertion,,,,,SRC_H015,verified,high,
+FACT_H015_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_SHR_A2009_301,biomarker_requirements,,EGFR 突变,source_assertion,,,,,SRC_H015,verified,high,
+FACT_B001_POPULATION,DOM_NSCLC,SRC_B001,population,,企业临床试验入口与名称映射确认,source_assertion,,,,,SRC_B001,verified,high,
+FACT_B001_INTERVENTION,DOM_NSCLC,SRC_B001,intervention,,页面包含肺癌临床试验检索入口,source_assertion,,,,,SRC_B001,verified,high,
+FACT_B002_POPULATION,DOM_NSCLC,SRC_B002,population,,年度报告中的 NSCLC 和替雷利珠单抗相关信息,source_assertion,,2026年4月14日,,,SRC_B002,verified,high,
+FACT_B002_INTERVENTION,DOM_NSCLC,SRC_B002,intervention,,年报用于确认公司背景、药物信息和相关页码,source_assertion,,2026年4月14日,,,SRC_B002,verified,high,
+FACT_B002_BIOMARKER_REQUIREMENTS,DOM_NSCLC,SRC_B002,biomarker_requirements,,BGB-A317 未检索到,source_assertion,,2026年4月14日,,,SRC_B002,verified,high,
+FACT_B003_STUDY_STATUS,DOM_NSCLC,STUDY_NCT03663205,study_status,,Completed,source_assertion,,,,,SRC_B003,verified,high,
+FACT_B003_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03663205,study_phase,,Phase 3,source_assertion,,,,,SRC_B003,verified,high,
+FACT_B003_POPULATION,DOM_NSCLC,STUDY_NCT03663205,population,,晚期非鳞状 NSCLC 一线治疗患者,source_assertion,,,,,SRC_B003,verified,high,
+FACT_B003_INTERVENTION,DOM_NSCLC,STUDY_NCT03663205,intervention,,替雷利珠单抗联合顺铂或卡铂及培美曲塞,source_assertion,,,,,SRC_B003,verified,high,
+FACT_B003_COMPARATOR,DOM_NSCLC,STUDY_NCT03663205,comparator,,顺铂或卡铂联合培美曲塞,source_assertion,,,,,SRC_B003,verified,high,
+FACT_B003_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03663205,regimen_detail,,试验组：替雷利珠单抗 200 mg；顺铂 75 mg/m² 或卡铂 AUC 5；培美曲塞 500 mg/m²；对照组：相同铂类药物和培美曲塞 500 mg/m²；每 3 周一次，化疗 4-6 周期,source_assertion,,,,,SRC_B003,verified,high,
+FACT_B003_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT03663205,biomarker_requirements,,排除 EGFR 敏感突变或 ALK 基因易位患者,source_assertion,,,,,SRC_B003,verified,high,
+FACT_B004_STUDY_STATUS,DOM_NSCLC,STUDY_NCT03594747,study_status,,Completed,source_assertion,,,,,SRC_B004,verified,high,
+FACT_B004_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03594747,study_phase,,Phase 3,source_assertion,,,,,SRC_B004,verified,high,
+FACT_B004_POPULATION,DOM_NSCLC,STUDY_NCT03594747,population,,晚期鳞状 NSCLC 一线治疗患者,source_assertion,,,,,SRC_B004,verified,high,
+FACT_B004_INTERVENTION,DOM_NSCLC,STUDY_NCT03594747,intervention,,替雷利珠单抗联合紫杉醇和卡铂；替雷利珠单抗联合白蛋白结合型紫杉醇和卡铂,source_assertion,,,,,SRC_B004,verified,high,
+FACT_B004_COMPARATOR,DOM_NSCLC,STUDY_NCT03594747,comparator,,紫杉醇联合卡铂,source_assertion,,,,,SRC_B004,verified,high,
+FACT_B004_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03594747,regimen_detail,,试验方案一：替雷利珠单抗＋紫杉醇＋卡铂；试验方案二：替雷利珠单抗＋白蛋白结合型紫杉醇＋卡铂；对照组：紫杉醇＋卡铂；化疗 4-6 周期,source_assertion,,,,,SRC_B004,verified,high,
+FACT_B004_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT03594747,biomarker_requirements,,排除 EGFR 敏感突变或 ALK 基因易位患者,source_assertion,,,,,SRC_B004,verified,high,
+FACT_B005_STUDY_STATUS,DOM_NSCLC,STUDY_NCT03358875,study_status,,Completed,source_assertion,,,,,SRC_B005,verified,high,
+FACT_B005_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03358875,study_phase,,Phase 3,source_assertion,,,,,SRC_B005,verified,high,
+FACT_B005_POPULATION,DOM_NSCLC,STUDY_NCT03358875,population,,既往接受过治疗的局部晚期或转移性非小细胞肺癌患者，包含鳞状和非鳞状 NSCLC,source_assertion,,,,,SRC_B005,verified,high,
+FACT_B005_INTERVENTION,DOM_NSCLC,STUDY_NCT03358875,intervention,,替雷利珠单抗 200 mg，每 3 周一次,source_assertion,,,,,SRC_B005,verified,high,
+FACT_B005_COMPARATOR,DOM_NSCLC,STUDY_NCT03358875,comparator,,多西他赛 75 mg/m²，每 3 周一次,source_assertion,,,,,SRC_B005,verified,high,
+FACT_B005_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03358875,regimen_detail,,试验组：替雷利珠单抗 200 mg，每 3 周一次；对照组：多西他赛 75 mg/m²，每 3 周一次；至少接受过一种含铂治疗方案，既往系统治疗不超过两线,source_assertion,,,,,SRC_B005,verified,high,
+FACT_B005_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT03358875,biomarker_requirements,,排除 EGFR 敏感突变患者；排除 ALK 融合患者；非鳞状患者须提供无 EGFR 敏感突变的证据,source_assertion,,,,,SRC_B005,verified,high,
+FACT_B006_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03663205,study_phase,,Phase 3,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_POPULATION,DOM_NSCLC,STUDY_NCT03663205,population,,晚期非鳞状 NSCLC 一线患者,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_INTERVENTION,DOM_NSCLC,STUDY_NCT03663205,intervention,,替雷利珠单抗联合铂类和培美曲塞,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_COMPARATOR,DOM_NSCLC,STUDY_NCT03663205,comparator,,铂类联合培美曲塞,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03663205,regimen_detail,,试验组：替雷利珠单抗＋铂类＋培美曲塞；对照组：铂类＋培美曲塞。,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_PRIMARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT03663205,primary_endpoints,,独立评审委员会评估的无进展生存期（PFS）,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT03663205,analysis_stage,,中期分析/首次主要结果,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT03663205,evidence_version,,interim,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B006_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT03663205,is_latest_evidence,,false,source_assertion,,2021-05-23,,,SRC_B006,verified,high,
+FACT_B007_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03663205,study_phase,,Phase 3,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_POPULATION,DOM_NSCLC,STUDY_NCT03663205,population,,局部晚期或转移性非鳞状 NSCLC 一线患者,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_INTERVENTION,DOM_NSCLC,STUDY_NCT03663205,intervention,,替雷利珠单抗联合化疗,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_COMPARATOR,DOM_NSCLC,STUDY_NCT03663205,comparator,,化疗,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03663205,regimen_detail,,B006 的后续最终分析版本；具体方案与 RATIONALE-304 试验一致。,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_PRIMARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT03663205,primary_endpoints,,独立评审委员会评估的 PFS,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT03663205,analysis_stage,,最终分析,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT03663205,evidence_version,,final,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B007_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT03663205,is_latest_evidence,,true,source_assertion,,2024-09-25,,,SRC_B007,verified,high,
+FACT_B008_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03594747,study_phase,,Phase 3,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_POPULATION,DOM_NSCLC,STUDY_NCT03594747,population,,晚期鳞状 NSCLC 一线患者,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_INTERVENTION,DOM_NSCLC,STUDY_NCT03594747,intervention,,替雷利珠单抗联合紫杉醇和卡铂；替雷利珠单抗联合白蛋白结合型紫杉醇和卡铂,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_COMPARATOR,DOM_NSCLC,STUDY_NCT03594747,comparator,,紫杉醇联合卡铂,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03594747,regimen_detail,,试验方案一：替雷利珠单抗＋紫杉醇＋卡铂；试验方案二：替雷利珠单抗＋白蛋白结合型紫杉醇＋卡铂；对照组：紫杉醇＋卡铂。,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_PRIMARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT03594747,primary_endpoints,,独立评审委员会评估的 PFS,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT03594747,analysis_stage,,中期分析,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT03594747,evidence_version,,interim,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B008_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT03594747,is_latest_evidence,,false,source_assertion,,2021 May 1,,,SRC_B008,verified,high,
+FACT_B009_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03594747,study_phase,,Phase 3,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_POPULATION,DOM_NSCLC,STUDY_NCT03594747,population,,晚期鳞状 NSCLC 一线患者,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_INTERVENTION,DOM_NSCLC,STUDY_NCT03594747,intervention,,替雷利珠单抗联合化疗,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_COMPARATOR,DOM_NSCLC,STUDY_NCT03594747,comparator,,化疗,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03594747,regimen_detail,,B008 的后续最终分析版本；具体方案与 RATIONALE-307 试验一致。,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_PRIMARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT03594747,primary_endpoints,,独立评审委员会评估的 PFS,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_SECONDARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT03594747,secondary_endpoints,,总生存期（OS）,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT03594747,analysis_stage,,最终分析,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT03594747,evidence_version,,final,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B009_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT03594747,is_latest_evidence,,true,source_assertion,,2024-09-25,,,SRC_B009,verified,high,
+FACT_B010_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03358875,study_phase,,Phase 3,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_POPULATION,DOM_NSCLC,STUDY_NCT03358875,population,,既往接受过治疗的晚期鳞状或非鳞状 NSCLC 患者,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_INTERVENTION,DOM_NSCLC,STUDY_NCT03358875,intervention,,替雷利珠单抗,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_COMPARATOR,DOM_NSCLC,STUDY_NCT03358875,comparator,,多西他赛,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT03358875,regimen_detail,,预设中期分析与最终分析合并报告；不能简单标记为仅中期分析或仅最终分析。,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT03358875,biomarker_requirements,,PD-L1 肿瘤细胞表达 ≥25% 人群用于共同主要终点之一,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_PRIMARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT03358875,primary_endpoints,,意向治疗人群的 OS；PD-L1 肿瘤细胞表达 ≥25% 人群的 OS,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT03358875,analysis_stage,,预设中期分析与最终分析合并报告,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT03358875,evidence_version,,interim_and_final_combined,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B010_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT03358875,is_latest_evidence,,true,source_assertion,,2022-09-29,,,SRC_B010,verified,high,
+FACT_B011_TERM_UNSPECIFIED,DOM_NSCLC,SRC_B011,mentions_unmapped_term,,铂类化疗,raw_source_term,,2024-11-21,,,SRC_B011,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B011_STUDY_PHASE,DOM_NSCLC,STUDY_NCT04379635,study_phase,,Phase 3,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_POPULATION,DOM_NSCLC,STUDY_NCT04379635,population,,可切除 II-IIIA 期鳞状或非鳞状 NSCLC 患者,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_INTERVENTION,DOM_NSCLC,STUDY_NCT04379635,intervention,,新辅助替雷利珠单抗或安慰剂联合含铂双药化疗，随后手术，再接受辅助替雷利珠单抗或安慰剂,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_COMPARATOR,DOM_NSCLC,STUDY_NCT04379635,comparator,,安慰剂联合含铂双药化疗，随后手术，再接受辅助安慰剂,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT04379635,regimen_detail,,治疗流程：1. 新辅助替雷利珠单抗或安慰剂＋含铂双药化疗；2. 手术；3. 辅助替雷利珠单抗或安慰剂。,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_PRIMARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT04379635,primary_endpoints,,主要病理缓解率（MPR）；无事件生存期（EFS）,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT04379635,analysis_stage,,中期分析,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT04379635,evidence_version,,interim,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B011_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT04379635,is_latest_evidence,,true,source_assertion,,2024-11-21,,,SRC_B011,verified,high,
+FACT_B012_TERM_UNSPECIFIED,DOM_NSCLC,SRC_B012,mentions_unmapped_term,,含铂双药化疗,raw_source_term,,,,,SRC_B012,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B012_STUDY_STATUS,DOM_NSCLC,STUDY_NCT04379635,study_status,,"Active, not recruiting",source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_STUDY_PHASE,DOM_NSCLC,STUDY_NCT04379635,study_phase,,Phase 3,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_POPULATION,DOM_NSCLC,STUDY_NCT04379635,population,,可切除 II-IIIA 期 NSCLC 患者,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_INTERVENTION,DOM_NSCLC,STUDY_NCT04379635,intervention,,新辅助替雷利珠单抗或安慰剂＋含铂双药化疗，随后手术，再接受辅助替雷利珠单抗或安慰剂,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_COMPARATOR,DOM_NSCLC,STUDY_NCT04379635,comparator,,安慰剂联合含铂双药化疗，随后手术，再接受辅助安慰剂,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT04379635,regimen_detail,,治疗流程：1. 新辅助替雷利珠单抗或安慰剂＋含铂双药化疗；2. 手术；3. 辅助替雷利珠单抗或安慰剂。,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT04379635,biomarker_requirements,,排除已知 EGFR 敏感突变患者；排除 ALK 融合患者,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_PRIMARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT04379635,primary_endpoints,,主要病理缓解率（MPR）；盲态独立中央评审的无事件生存期（EFS）,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B012_SECONDARY_ENDPOINTS,DOM_NSCLC,STUDY_NCT04379635,secondary_endpoints,,OS；pCR；ORR；DFS；研究者评估 EFS；TEAE；HRQoL,source_assertion,,,,,SRC_B012,verified,high,
+FACT_B013_TERM_UNSPECIFIED,DOM_NSCLC,SRC_B013,mentions_unmapped_term,,含铂双药化疗,raw_source_term,,,,,SRC_B013,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B013_STUDY_STATUS,DOM_NSCLC,STUDY_NCT04379635,study_status,,"Active, not recruiting",source_assertion,,,,,SRC_B013,verified,high,
+FACT_B013_STUDY_PHASE,DOM_NSCLC,STUDY_NCT04379635,study_phase,,Phase 3,source_assertion,,,,,SRC_B013,verified,high,
+FACT_B013_POPULATION,DOM_NSCLC,STUDY_NCT04379635,population,,可切除 II-IIIA 期 NSCLC 患者,source_assertion,,,,,SRC_B013,verified,high,
+FACT_B013_INTERVENTION,DOM_NSCLC,STUDY_NCT04379635,intervention,,新辅助替雷利珠单抗或安慰剂＋含铂双药化疗，随后手术，再接受辅助替雷利珠单抗或安慰剂,source_assertion,,,,,SRC_B013,verified,high,
+FACT_B013_COMPARATOR,DOM_NSCLC,STUDY_NCT04379635,comparator,,安慰剂联合含铂双药化疗，随后手术，再接受辅助安慰剂,source_assertion,,,,,SRC_B013,verified,high,
+FACT_B013_REGIMEN_DETAIL,DOM_NSCLC,STUDY_NCT04379635,regimen_detail,,公司官方试验页面，指向 NCT04379635 / BGB-A317-315 / CTR20200821。,source_assertion,,,,,SRC_B013,verified,high,
+FACT_B014_TERM_BG_C0979,DOM_NSCLC,SRC_B014,mentions_unmapped_term,,BG-C0979,raw_source_term,,2026-05-01,,,SRC_B014,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B014_TERM_BG_T187,DOM_NSCLC,SRC_B014,mentions_unmapped_term,,BG-T187,raw_source_term,,2026-05-01,,,SRC_B014,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B014_TERM_BG_C0902,DOM_NSCLC,SRC_B014,mentions_unmapped_term,,BG-C0902,raw_source_term,,2026-05-01,,,SRC_B014,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B014_TERM_BGB_58067,DOM_NSCLC,SRC_B014,mentions_unmapped_term,,BGB-58067,raw_source_term,,2026-05-01,,,SRC_B014,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B014_TERM_TARLATAMAB,DOM_NSCLC,SRC_B014,mentions_unmapped_term,,Tarlatamab,raw_source_term,,2026-05-01,,,SRC_B014,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B014_STUDY_STATUS,DOM_NSCLC,SRC_B014,study_status,,当前活跃管线快照,source_assertion,,2026-05-01,,,SRC_B014,verified,high,管线 PDF 只有 1 页；疾病领域主要依靠颜色区分；SCLC 项目不计入 NSCLC 比较数据
+FACT_B014_POPULATION,DOM_NSCLC,SRC_B014,population,,公司当前活跃管线快照中的肺癌项目；本项目不将 SCLC 项目计入 NSCLC 比较数据,source_assertion,,2026-05-01,,,SRC_B014,verified,high,管线 PDF 只有 1 页；疾病领域主要依靠颜色区分；SCLC 项目不计入 NSCLC 比较数据
+FACT_B014_INTERVENTION,DOM_NSCLC,SRC_B014,intervention,,当前标记为肺癌的项目包括 BG-C0979、BG-T187、BG-C0902、BGB-58067、Tarlatamab 多项 SCLC 研究,source_assertion,,2026-05-01,,,SRC_B014,verified,high,管线 PDF 只有 1 页；疾病领域主要依靠颜色区分；SCLC 项目不计入 NSCLC 比较数据
+FACT_B014_REGIMEN_DETAIL,DOM_NSCLC,SRC_B014,regimen_detail,,管线 PDF 只有 1 页；疾病领域主要依靠颜色区分。检索结果：NSCLC 未检索到；BGB-A317 未检索到；315 未检索到；RATIONALE-315 未列出。,source_assertion,,2026-05-01,,,SRC_B014,verified,high,管线 PDF 只有 1 页；疾病领域主要依靠颜色区分；SCLC 项目不计入 NSCLC 比较数据
+FACT_B014_SCOPE_LIMITATION,DOM_NSCLC,SRC_B014,scope_limitation,,管线 PDF 只有 1 页；疾病领域主要依靠颜色区分；SCLC 项目不计入 NSCLC 比较数据,source_assertion,,2026-05-01,,,SRC_B014,verified,high,管线 PDF 只有 1 页；疾病领域主要依靠颜色区分；SCLC 项目不计入 NSCLC 比较数据
+FACT_B015_TERM_UNSPECIFIED,DOM_NSCLC,SRC_B015,mentions_unmapped_term,,含铂化疗,raw_source_term,,2023-09-15,,,SRC_B015,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B015_POPULATION,DOM_NSCLC,SRC_B015,population,,NSCLC 适应症包括非鳞状一线 PD-L1 ≥50% 且 EGFR/ALK 阴性人群、鳞状一线人群、既往含铂治疗后局部晚期或转移性人群、可切除高复发风险人群,source_assertion,,2023-09-15,,,SRC_B015,verified,high,
+FACT_B015_INTERVENTION,DOM_NSCLC,SRC_B015,intervention,,替雷利珠单抗联合培美曲塞及含铂化疗；替雷利珠单抗联合卡铂及紫杉醇或白蛋白结合型紫杉醇；替雷利珠单抗单药；含铂化疗联合替雷利珠单抗新辅助治疗并术后替雷利珠单抗单药辅助治疗,source_assertion,,2023-09-15,,,SRC_B015,verified,high,
+FACT_B015_REGIMEN_DETAIL,DOM_NSCLC,SRC_B015,regimen_detail,,当前 NSCLC 适应症分为非鳞状一线、鳞状一线、既往治疗局部晚期或转移性、可切除高复发风险四类，不合并为一个笼统描述。,source_assertion,,2023-09-15,,,SRC_B015,verified,high,
+FACT_B015_BIOMARKER_REQUIREMENTS,DOM_NSCLC,SRC_B015,biomarker_requirements,,非鳞状一线：PD-L1 肿瘤细胞表达 ≥50%，EGFR 和 ALK 阴性；既往治疗：EGFR 突变或 ALK 阳性患者还应接受相应靶向治疗,source_assertion,,2023-09-15,,,SRC_B015,verified,high,
+FACT_B016_TERM_UNSPECIFIED,DOM_NSCLC,SRC_B016,mentions_unmapped_term,,含铂化疗,raw_source_term,,2025-07-24,,,SRC_B016,verified,high,当前实体别名配置未覆盖；待人工判断是资产、治疗组合还是平台术语。
+FACT_B016_POPULATION,DOM_NSCLC,SRC_B016,population,,可切除、高复发风险 NSCLC 人群,source_assertion,,2025-07-24,,,SRC_B016,verified,high,
+FACT_B016_INTERVENTION,DOM_NSCLC,SRC_B016,intervention,,替雷利珠单抗联合含铂化疗作为新辅助治疗；手术后替雷利珠单抗单药作为辅助治疗,source_assertion,,2025-07-24,,,SRC_B016,verified,high,
+FACT_B016_REGIMEN_DETAIL,DOM_NSCLC,SRC_B016,regimen_detail,,监管事件类型为 CHMP positive opinion；方案与 RATIONALE-315 治疗流程相符。,source_assertion,,2025-07-24,,,SRC_B016,verified,high,
+FACT_A001_STUDY_STATUS,DOM_NSCLC,STUDY_NCT02296125,study_status,,Completed,source_assertion,,,,,SRC_A001,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A001_STUDY_PHASE,DOM_NSCLC,STUDY_NCT02296125,study_phase,,Phase 3,source_assertion,,,,,SRC_A001,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A001_POPULATION,DOM_NSCLC,STUDY_NCT02296125,population,,既往未接受系统治疗的 EGFR 突变局部晚期或转移性 NSCLC,source_assertion,,,,,SRC_A001,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A001_INTERVENTION,DOM_NSCLC,STUDY_NCT02296125,intervention,,奥希替尼（AZD9291）,source_assertion,,,,,SRC_A001,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A001_COMPARATOR,DOM_NSCLC,STUDY_NCT02296125,comparator,,吉非替尼或厄洛替尼,source_assertion,,,,,SRC_A001,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A001_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT02296125,biomarker_requirements,,EGFR 突变,source_assertion,,,,,SRC_A001,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A001_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT02296125,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,,,,SRC_A001,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A003_STUDY_STATUS,DOM_NSCLC,STUDY_NCT02511106,study_status,,"Active, not recruiting",source_assertion,,,,,SRC_A003,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A003_STUDY_PHASE,DOM_NSCLC,STUDY_NCT02511106,study_phase,,Phase 3,source_assertion,,,,,SRC_A003,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A003_POPULATION,DOM_NSCLC,STUDY_NCT02511106,population,,完全切除后的 EGFR 突变 IB-IIIA 期 NSCLC,source_assertion,,,,,SRC_A003,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A003_INTERVENTION,DOM_NSCLC,STUDY_NCT02511106,intervention,,奥希替尼（AZD9291）,source_assertion,,,,,SRC_A003,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A003_COMPARATOR,DOM_NSCLC,STUDY_NCT02511106,comparator,,安慰剂,source_assertion,,,,,SRC_A003,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A003_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT02511106,biomarker_requirements,,EGFR 突变,source_assertion,,,,,SRC_A003,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A003_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT02511106,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,,,,SRC_A003,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A005_STUDY_STATUS,DOM_NSCLC,STUDY_NCT03521154,study_status,,"Active, not recruiting",source_assertion,,,,,SRC_A005,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A005_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03521154,study_phase,,Phase 3,source_assertion,,,,,SRC_A005,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A005_POPULATION,DOM_NSCLC,STUDY_NCT03521154,population,,放化疗后未进展的不可切除 III 期 EGFR 突变 NSCLC,source_assertion,,,,,SRC_A005,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A005_INTERVENTION,DOM_NSCLC,STUDY_NCT03521154,intervention,,奥希替尼,source_assertion,,,,,SRC_A005,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A005_COMPARATOR,DOM_NSCLC,STUDY_NCT03521154,comparator,,安慰剂,source_assertion,,,,,SRC_A005,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A005_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT03521154,biomarker_requirements,,EGFR 突变,source_assertion,,,,,SRC_A005,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A005_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT03521154,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,,,,SRC_A005,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A007_STUDY_STATUS,DOM_NSCLC,STUDY_NCT04035486,study_status,,"Active, not recruiting",source_assertion,,,,,SRC_A007,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A007_STUDY_PHASE,DOM_NSCLC,STUDY_NCT04035486,study_phase,,Phase 3,source_assertion,,,,,SRC_A007,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A007_POPULATION,DOM_NSCLC,STUDY_NCT04035486,population,,既往未接受系统治疗的 EGFR 突变局部晚期或转移性 NSCLC,source_assertion,,,,,SRC_A007,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A007_INTERVENTION,DOM_NSCLC,STUDY_NCT04035486,intervention,,奥希替尼联合培美曲塞及卡铂或顺铂,source_assertion,,,,,SRC_A007,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A007_COMPARATOR,DOM_NSCLC,STUDY_NCT04035486,comparator,,奥希替尼单药,source_assertion,,,,,SRC_A007,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A007_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT04035486,biomarker_requirements,,EGFR 突变,source_assertion,,,,,SRC_A007,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A007_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT04035486,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,,,,SRC_A007,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_STUDY_PHASE,DOM_NSCLC,STUDY_NCT02296125,study_phase,,Phase 3,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_POPULATION,DOM_NSCLC,STUDY_NCT02296125,population,,EGFR 突变 NSCLC 研究人群；具体分期与治疗场景以原文为准,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_INTERVENTION,DOM_NSCLC,STUDY_NCT02296125,intervention,,奥希替尼,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT02296125,biomarker_requirements,,EGFR 突变,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT02296125,analysis_stage,,主要分析或总生存分析,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT02296125,evidence_version,,当前收录版本,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT02296125,is_latest_evidence,,true,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A002_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT02296125,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,2020-01-02,,,SRC_A002,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_STUDY_PHASE,DOM_NSCLC,STUDY_NCT02511106,study_phase,,Phase 3,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_POPULATION,DOM_NSCLC,STUDY_NCT02511106,population,,EGFR 突变 NSCLC 研究人群；具体分期与治疗场景以原文为准,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_INTERVENTION,DOM_NSCLC,STUDY_NCT02511106,intervention,,奥希替尼,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT02511106,biomarker_requirements,,EGFR 突变,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT02511106,analysis_stage,,主要分析或总生存分析,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT02511106,evidence_version,,当前收录版本,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT02511106,is_latest_evidence,,true,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A004_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT02511106,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,2023-07-13,,,SRC_A004,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_STUDY_PHASE,DOM_NSCLC,STUDY_NCT03521154,study_phase,,Phase 3,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_POPULATION,DOM_NSCLC,STUDY_NCT03521154,population,,EGFR 突变 NSCLC 研究人群；具体分期与治疗场景以原文为准,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_INTERVENTION,DOM_NSCLC,STUDY_NCT03521154,intervention,,奥希替尼,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT03521154,biomarker_requirements,,EGFR 突变,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT03521154,analysis_stage,,主要分析或总生存分析,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT03521154,evidence_version,,当前收录版本,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT03521154,is_latest_evidence,,true,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A006_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT03521154,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,2024-08-15,,,SRC_A006,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_STUDY_PHASE,DOM_NSCLC,STUDY_NCT04035486,study_phase,,Phase 3,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_POPULATION,DOM_NSCLC,STUDY_NCT04035486,population,,EGFR 突变 NSCLC 研究人群；具体分期与治疗场景以原文为准,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_INTERVENTION,DOM_NSCLC,STUDY_NCT04035486,intervention,,奥希替尼,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_BIOMARKER_REQUIREMENTS,DOM_NSCLC,STUDY_NCT04035486,biomarker_requirements,,EGFR 突变,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_ANALYSIS_STAGE,DOM_NSCLC,STUDY_NCT04035486,analysis_stage,,主要分析或总生存分析,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_EVIDENCE_VERSION,DOM_NSCLC,STUDY_NCT04035486,evidence_version,,当前收录版本,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_IS_LATEST_EVIDENCE,DOM_NSCLC,STUDY_NCT04035486,is_latest_evidence,,true,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_A008_SCOPE_LIMITATION,DOM_NSCLC,STUDY_NCT04035486,scope_limitation,,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。,source_assertion,,2023-11-23,,,SRC_A008,verified,high,仅代表当前收录的公开 NSCLC 证据样本，不代表企业全部研发管线。
+FACT_DB03_POP,DOM_BREAST_CANCER,STUDY_NCT03529110,population,,HER2阳性转移性乳腺癌，既往接受曲妥珠单抗和紫杉类治疗,source_assertion,,,,,SRC_BR_DB03_PUB,verified,high,
+FACT_DB03_ENDPOINT,DOM_BREAST_CANCER,STUDY_NCT03529110,primary_and_key_secondary_endpoints,,独立评审委员会评估的PFS；OS为关键次要终点,source_assertion,,,,,SRC_BR_DB03_PUB,verified,high,
+FACT_OLYMPIA_POP,DOM_BREAST_CANCER,STUDY_NCT02032823,population,,高风险HER2阴性早期乳腺癌且存在germline BRCA1/2致病或可能致病变异,source_assertion,,,,,SRC_BR_OLYMPIA_PUB,verified,high,
+FACT_OLYMPIA_ENDPOINT,DOM_BREAST_CANCER,STUDY_NCT02032823,endpoints,,侵袭性无病生存、远处无病生存和总生存,source_assertion,,,,,SRC_BR_OLYMPIA_PUB,verified,high,
+FACT_BEACON_POP,DOM_COLORECTAL_CANCER,STUDY_NCT02928224,population,,既往治疗后的BRAF V600E突变转移性结直肠癌,source_assertion,,,,,SRC_CRC_BEACON_PUB,verified,high,
+FACT_BEACON_RESULT,DOM_COLORECTAL_CANCER,STUDY_NCT02928224,evidence_summary,,encorafenib加cetuximab联合或不联合binimetinib相较对照改善总生存，并延缓生活质量恶化,source_assertion,,,,,SRC_CRC_BEACON_PUB,verified,high,
+FACT_CM142_POP,DOM_COLORECTAL_CANCER,STUDY_NCT02060188,population,,dMMR/MSI-H转移性结直肠癌,source_assertion,,,,,SRC_CRC_CM142_PUB,verified,high,
+FACT_CM142_RESULT,DOM_COLORECTAL_CANCER,STUDY_NCT02060188,evidence_summary,,纳武利尤单抗研究报告客观缓解和持续疾病控制结果,source_assertion,,,,,SRC_CRC_CM142_PUB,verified,high,
+FACT_KEYNOTE811_POP,DOM_GASTRIC_ESOPHAGEAL_CANCER,STUDY_NCT03615326,population,,不可切除或转移性HER2阳性胃癌或胃食管结合部腺癌,source_assertion,,,,,SRC_GC_KEYNOTE811_PUB,verified,high,
+FACT_KEYNOTE811_INTERVENTION,DOM_GASTRIC_ESOPHAGEAL_CANCER,STUDY_NCT03615326,intervention,,pembrolizumab加trastuzumab和化疗,source_assertion,,,,,SRC_GC_KEYNOTE811_PUB,verified,high,
+FACT_CM649_POP,DOM_GASTRIC_ESOPHAGEAL_CANCER,STUDY_NCT02872116,population,,晚期胃癌、胃食管结合部癌或食管腺癌,source_assertion,,,,,SRC_GC_CM649_PUB,verified,high,
+FACT_CM649_RESULT,DOM_GASTRIC_ESOPHAGEAL_CANCER,STUDY_NCT02872116,evidence_summary,,纳武利尤单抗联合化疗相较化疗继续显示OS、PFS和ORR改善,source_assertion,,,,,SRC_GC_CM649_PUB,verified,high,
+FACT_SURMOUNT_POP,DOM_METABOLIC,STUDY_NCT04184622,population,,肥胖或伴体重相关并发症的超重成人，主要研究排除糖尿病,source_assertion,,,,,SRC_MET_SURMOUNT1_PUB,verified,high,
+FACT_SURMOUNT_RESULT,DOM_METABOLIC,STUDY_NCT04184622,evidence_summary,,176周替尔泊肽治疗与较低体重变化及较低2型糖尿病进展风险相关,source_assertion,,,,,SRC_MET_SURMOUNT1_PUB,verified,high,
+FACT_STEP1_POP,DOM_METABOLIC,STUDY_NCT03548935,population,,超重或肥胖成人，配合生活方式干预,source_assertion,,,,,SRC_MET_STEP1_PUB,verified,high,
+FACT_STEP1_RESULT,DOM_METABOLIC,STUDY_NCT03548935,evidence_summary,,68周每周一次司美格鲁肽带来具有临床意义的体重下降，并改善心代谢风险因素,source_assertion,,,,,SRC_MET_STEP1_PUB,verified,high,
+FACT_SURPASS2_POP,DOM_METABOLIC,STUDY_NCT03987919,population,,二甲双胍基础治疗后血糖控制不足的2型糖尿病患者,source_assertion,,,,,SRC_MET_SURPASS2_PUB,verified,high,
+FACT_SURPASS2_RESULT,DOM_METABOLIC,STUDY_NCT03987919,evidence_summary,,替尔泊肽在40周HbA1c变化和体重下降方面优于每周一次司美格鲁肽，胃肠道不良事件常见但多为轻中度,source_assertion,,,,,SRC_MET_SURPASS2_PUB,verified,high,

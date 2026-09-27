@@ -1,5 +1,0 @@
-organization_id,canonical_name,display_name,organization_type,country_or_region,website,status,notes
-ORG_HENGRUI,恒瑞医药,恒瑞医药,pharmaceutical_company,,,active,从当前 source_registry.csv 映射；未补充外部事实。
-ORG_BEONE,BeOne Medicines,百济神州（BeOne Medicines，原BeiGene）,pharmaceutical_company,,,active,从当前 source_registry.csv 映射；未补充外部事实。
-ORG_ASTRAZENECA,AstraZeneca,阿斯利康（AstraZeneca）,pharmaceutical_company,,,active,从当前 source_registry.csv 映射；未补充外部事实。
-ORG_EMA,European Medicines Agency,European Medicines Agency（EMA）,regulatory_authority,European Union,,active,由 B015/B016 的监管机构字段映射。

@@ -1,1 +1,26 @@
 study_identifier_id,study_id,identifier_type,identifier_value,is_primary,source_id,notes
+SID_H003_NCT04818333,STUDY_NCT04818333,NCT,NCT04818333,true,SRC_H003,从 source_registry.csv 的 registry_id 映射。
+SID_H004_NCT03083041,STUDY_NCT03083041,NCT,NCT03083041,true,SRC_H004,从 source_registry.csv 的 registry_id 映射。
+SID_H005_NCT03668496,STUDY_NCT03668496,NCT,NCT03668496,true,SRC_H005,从 source_registry.csv 的 registry_id 映射。
+SID_H006_NCT04619433,STUDY_NCT04619433,NCT,NCT04619433,true,SRC_H006,从 source_registry.csv 的 registry_id 映射。
+SID_H007_NCT02364362,STUDY_NCT02364362,NCT,NCT02364362,true,SRC_H007,从 source_registry.csv 的 registry_id 映射。
+SID_H015_SHR_A2009_301,STUDY_SHR_A2009_301,OTHER,SHR-A2009-301,false,SRC_H015,从 source_registry.csv 的 registry_id 映射。
+SID_B003_NCT03663205,STUDY_NCT03663205,NCT,NCT03663205,true,SRC_B003,从 source_registry.csv 的 registry_id 映射。
+SID_B004_NCT03594747,STUDY_NCT03594747,NCT,NCT03594747,true,SRC_B004,从 source_registry.csv 的 registry_id 映射。
+SID_B005_NCT03358875,STUDY_NCT03358875,NCT,NCT03358875,true,SRC_B005,从 source_registry.csv 的 registry_id 映射。
+SID_B012_NCT04379635,STUDY_NCT04379635,NCT,NCT04379635,true,SRC_B012,从 source_registry.csv 的 registry_id 映射。
+SID_A001_NCT02296125,STUDY_NCT02296125,NCT,NCT02296125,true,SRC_A001,从 source_registry.csv 的 registry_id 映射。
+SID_A003_NCT02511106,STUDY_NCT02511106,NCT,NCT02511106,true,SRC_A003,从 source_registry.csv 的 registry_id 映射。
+SID_A005_NCT03521154,STUDY_NCT03521154,NCT,NCT03521154,true,SRC_A005,从 source_registry.csv 的 registry_id 映射。
+SID_A007_NCT04035486,STUDY_NCT04035486,NCT,NCT04035486,true,SRC_A007,从 source_registry.csv 的 registry_id 映射。
+SID_CHAIN_STUDY_NCT04379635_BGB_A317_315,STUDY_NCT04379635,OTHER,BGB-A317-315,false,SRC_B012,从 config/evidence_chains.json 的同一证据链编号映射。
+SID_CHAIN_STUDY_NCT04379635_CTR20200821,STUDY_NCT04379635,OTHER,CTR20200821,false,SRC_B012,从 config/evidence_chains.json 的同一证据链编号映射。
+SID_NCT03529110,STUDY_NCT03529110,NCT,NCT03529110,true,SRC_BR_DB03_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT02032823,STUDY_NCT02032823,NCT,NCT02032823,true,SRC_BR_OLYMPIA_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT02928224,STUDY_NCT02928224,NCT,NCT02928224,true,SRC_CRC_BEACON_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT02060188,STUDY_NCT02060188,NCT,NCT02060188,true,SRC_CRC_CM142_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT03615326,STUDY_NCT03615326,NCT,NCT03615326,true,SRC_GC_KEYNOTE811_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT02872116,STUDY_NCT02872116,NCT,NCT02872116,true,SRC_GC_CM649_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT04184622,STUDY_NCT04184622,NCT,NCT04184622,true,SRC_MET_SURMOUNT1_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT03548935,STUDY_NCT03548935,NCT,NCT03548935,true,SRC_MET_STEP1_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。
+SID_NCT03987919,STUDY_NCT03987919,NCT,NCT03987919,true,SRC_MET_SURPASS2_PUB,ClinicalTrials.gov 编号；由 PubMed 或 ClinicalTrials.gov 来源核对。

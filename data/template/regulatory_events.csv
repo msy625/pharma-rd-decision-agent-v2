@@ -1,1 +1,5 @@
 regulatory_event_id,domain_id,asset_id,indication_id,authority_org_id,jurisdiction,event_type,event_date,application_status,authorization_status,holder_org_id,source_id,notes
+REG_B015,DOM_NSCLC,ASSET_TISLELIZUMAB,IND_NSCLC,ORG_EMA,European Union,EPAR current authorisation status,2023-09-15,,欧盟正式授权,ORG_BEONE,SRC_B015,监管事件与临床试验数量分开统计。
+REG_B016,DOM_NSCLC,ASSET_TISLELIZUMAB,IND_NSCLC,ORG_EMA,European Union,CHMP positive opinion,2025-07-24,,,ORG_BEONE,SRC_B016,监管事件与临床试验数量分开统计。
+REG_MET_MOUNJARO_T2D,DOM_METABOLIC,ASSET_TIRZEPATIDE,IND_T2D,ORG_FDA,United States,current_label,,approved,FDA label for glycemic control in type 2 diabetes,ORG_LILLY,SRC_MET_MOUNJARO_FDA,以当前 FDA 标签为准；不从标签外推肥胖适应症。
+REG_MET_WEGOVY_OBESITY,DOM_METABOLIC,ASSET_SEMAGLUTIDE,IND_OBESITY,ORG_FDA,United States,approval_background,2021-06-04,approved,FDA chronic weight management approval background,ORG_NOVO_NORDISK,SRC_MET_WEGOVY_FDA,批准背景来自 FDA 审评/批准资料；当前适应症以最新标签为准。

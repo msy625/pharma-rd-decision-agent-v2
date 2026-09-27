@@ -1,1 +1,26 @@
 asset_id,domain_id,canonical_name,generic_name,development_code,brand_name,asset_type,modality,target,originator_org_id,owner_org_id,development_status,first_known_date,last_known_date,notes
+ASSET_CAMRELIZUMAB,DOM_NSCLC,卡瑞利珠单抗,卡瑞利珠单抗,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_APATINIB,DOM_NSCLC,阿帕替尼,阿帕替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_FAMITINIB,DOM_NSCLC,法米替尼,法米替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_TRASTUZUMAB_REZETECAN,DOM_NSCLC,瑞康曲妥珠单抗,瑞康曲妥珠单抗,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_TISLELIZUMAB,DOM_NSCLC,替雷利珠单抗,替雷利珠单抗,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_DOCETAXEL,DOM_NSCLC,多西他赛,多西他赛,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_PEMETREXED,DOM_NSCLC,培美曲塞,培美曲塞,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_CARBOPLATIN,DOM_NSCLC,卡铂,卡铂,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_CISPLATIN,DOM_NSCLC,顺铂,顺铂,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_PACLITAXEL,DOM_NSCLC,紫杉醇,紫杉醇,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_NAB_PACLITAXEL,DOM_NSCLC,白蛋白结合型紫杉醇,白蛋白结合型紫杉醇,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_OSIMERTINIB,DOM_NSCLC,奥希替尼,奥希替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_GEFITINIB,DOM_NSCLC,吉非替尼,吉非替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_ERLOTINIB,DOM_NSCLC,厄洛替尼,厄洛替尼,,,drug_or_biologic,,,,,,,,来自现有 config/entity_aliases.json；未额外推断资产权属。
+ASSET_TRAS_DERUXTECAN,DOM_BREAST_CANCER,trastuzumab deruxtecan,trastuzumab deruxtecan,DS-8201,Enhertu,antibody_drug_conjugate,ADC,HER2,ORG_DAIICHI_SANKYO,ORG_DAIICHI_SANKYO,approved_and_researched,,,DESTINY-Breast03干预资产。
+ASSET_TRAS_EMTANSINE,DOM_BREAST_CANCER,ado-trastuzumab emtansine,ado-trastuzumab emtansine,T-DM1,Kadcyla,antibody_drug_conjugate,ADC,HER2,,,approved,,,DESTINY-Breast03对照资产；企业权属待单独核验。
+ASSET_OLAPARIB,DOM_BREAST_CANCER,olaparib,olaparib,AZD2281,Lynparza,small_molecule,PARP inhibitor,PARP1/2,ORG_ASTRAZENECA,ORG_ASTRAZENECA,approved_and_researched,,,OlympiA干预资产。
+ASSET_NIVOLUMAB,DOM_COLORECTAL_CANCER,nivolumab,nivolumab,BMS-936558,Opdivo,monoclonal_antibody,PD-1 inhibitor,PD-1,ORG_BMS,ORG_BMS,approved_and_researched,,,CheckMate 142/649 研究资产。
+ASSET_IPILIMUMAB,DOM_COLORECTAL_CANCER,ipilimumab,ipilimumab,BMS-734016,Yervoy,monoclonal_antibody,CTLA-4 inhibitor,CTLA-4,ORG_BMS,ORG_BMS,approved_and_researched,,,CheckMate 142 组合治疗资产。
+ASSET_ENCORAFENIB,DOM_COLORECTAL_CANCER,encorafenib,encorafenib,LGX818,Braftovi,small_molecule,BRAF inhibitor,BRAF V600E,,,approved_and_researched,,,BEACON CRC组合治疗资产。
+ASSET_CETUXIMAB,DOM_COLORECTAL_CANCER,cetuximab,cetuximab,IMC-C225,Erbitux,monoclonal_antibody,EGFR inhibitor,EGFR,,,approved_and_researched,,,BEACON CRC组合治疗资产。
+ASSET_BINIMETINIB,DOM_COLORECTAL_CANCER,binimetinib,binimetinib,MEK162,Mektovi,small_molecule,MEK inhibitor,MEK1/2,,,approved_and_researched,,,BEACON CRC组合治疗资产。
+ASSET_PEMBROLIZUMAB,DOM_GASTRIC_ESOPHAGEAL_CANCER,pembrolizumab,pembrolizumab,MK-3475,Keytruda,monoclonal_antibody,PD-1 inhibitor,PD-1,ORG_MSD,ORG_MSD,approved_and_researched,,,KEYNOTE-811组合治疗资产。
+ASSET_TIRZEPATIDE,DOM_METABOLIC,tirzepatide,tirzepatide,LY3298176,Mounjaro/Zepbound,peptide,GIP/GLP-1 receptor agonist,GIPR/GLP-1R,ORG_LILLY,ORG_LILLY,approved_and_researched,,,SURMOUNT-1、SURPASS-2和FDA Mounjaro标签。
+ASSET_SEMAGLUTIDE,DOM_METABOLIC,semaglutide,semaglutide,,Wegovy/Ozempic,peptide,GLP-1 receptor agonist,GLP-1R,ORG_NOVO_NORDISK,ORG_NOVO_NORDISK,approved_and_researched,,,STEP 1、SURPASS-2对照和FDA Wegovy资料。

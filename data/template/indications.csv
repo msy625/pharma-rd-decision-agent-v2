@@ -1,1 +1,10 @@
 indication_id,domain_id,disease_name,disease_code,histology,biomarker,treatment_line,population_description,geography,notes
+IND_NSCLC,DOM_NSCLC,非小细胞肺癌（NSCLC）,NSCLC,,,,当前来源中涉及的 NSCLC 人群；具体限制保存在 facts.csv。,,不把所有 NSCLC 来源泛化为同一治疗人群。
+IND_BREAST_HER2_MBC,DOM_BREAST_CANCER,HER2阳性转移性乳腺癌,BREAST_HER2_MBC,,HER2阳性,既往曲妥珠单抗和紫杉类治疗后,不可切除或转移性HER2阳性乳腺癌,,
+IND_BREAST_GBRCA_EARLY,DOM_BREAST_CANCER,高风险HER2阴性早期乳腺癌,BREAST_HER2NEG_EARLY,,germline BRCA1/2 pathogenic variant,辅助治疗,完成局部治疗及新辅助或辅助化疗后的高风险患者,,
+IND_CRC_BRAF_MCRC,DOM_COLORECTAL_CANCER,BRAF V600E突变转移性结直肠癌,CRC_BRAF_V600E_MCRC,,BRAF V600E,既往系统治疗后,既往治疗后的转移性结直肠癌,,
+IND_CRC_MSIH_DMMR,DOM_COLORECTAL_CANCER,dMMR/MSI-H转移性结直肠癌,CRC_DMMR_MSIH_MCRC,,dMMR/MSI-H,既往治疗后或一线,DNA错配修复缺陷或微卫星高度不稳定的转移性结直肠癌,,
+IND_GASTRIC_HER2,DOM_GASTRIC_ESOPHAGEAL_CANCER,HER2阳性晚期胃癌/胃食管结合部腺癌,GASTRIC_HER2_ADVANCED,腺癌,HER2阳性,一线,不可切除或转移性胃癌或胃食管结合部腺癌,,
+IND_GASTRIC_GEJ_EAC,DOM_GASTRIC_ESOPHAGEAL_CANCER,晚期胃癌/胃食管结合部癌/食管腺癌,GC_GEJC_EAC_ADVANCED,腺癌,,一线,既往未接受系统治疗的晚期或转移性患者,,
+IND_OBESITY,DOM_METABOLIC,肥胖或伴体重相关并发症的超重,OBESITY_OVERWEIGHT,,,长期体重管理,成人肥胖或伴体重相关并发症的超重人群，不含糖尿病人群的主要研究,,
+IND_T2D,DOM_METABOLIC,2型糖尿病,T2D,,,二甲双胍基础治疗后,血糖控制不足的成人2型糖尿病患者,,

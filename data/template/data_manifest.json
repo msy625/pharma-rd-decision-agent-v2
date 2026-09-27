@@ -1,49 +1,32 @@
 {
   "schema_version": "pharma_rd_template_v0.1",
-  "purpose": "多领域医药研发决策数据模板",
-  "status": "template_only",
-  "default_domain_scope": "待配置",
-  "id_rules": {
-    "domain": "DOM_<slug>",
-    "organization": "ORG_<slug>",
-    "asset": "ASSET_<slug>",
-    "indication": "IND_<slug>",
-    "study": "STUDY_<identifier_or_slug>",
-    "publication": "PUB_<slug>",
-    "regulatory_event": "REG_<slug>",
-    "market_event": "MKT_<slug>",
-    "source": "SRC_<slug>",
-    "fact": "FACT_<slug>",
-    "relation": "REL_<slug>"
-  },
-  "entity_types": [
-    "domain",
-    "organization",
-    "asset",
-    "indication",
-    "study",
-    "publication",
-    "regulatory_event",
-    "market_event",
-    "source",
-    "fact"
+  "dataset": "canonical_data_v1",
+  "created_at": "2026-09-27",
+  "layout": "All canonical normalized tables live directly in data/template/; no mapped, seed, or harvest subdirectories.",
+  "inputs": [
+    "legacy mapped data",
+    "four-domain reviewed seed data"
   ],
-  "relation_statuses": ["confirmed", "probable", "unresolved", "rejected"],
-  "verification_statuses": ["verified", "partially_verified", "pending", "invalid"],
-  "files": [
-    "domains.csv",
-    "organizations.csv",
-    "organization_aliases.csv",
-    "assets.csv",
-    "asset_aliases.csv",
-    "indications.csv",
-    "studies.csv",
-    "study_identifiers.csv",
-    "publications.csv",
-    "regulatory_events.csv",
-    "market_events.csv",
-    "sources.csv",
-    "facts.csv",
-    "relations.csv"
+  "counts": {
+    "domains": 6,
+    "organizations": 11,
+    "organization_aliases": 5,
+    "assets": 25,
+    "asset_aliases": 36,
+    "indications": 9,
+    "studies": 25,
+    "study_identifiers": 25,
+    "publications": 24,
+    "regulatory_events": 4,
+    "market_events": 0,
+    "sources": 59,
+    "facts": 259,
+    "relations": 223
+  },
+  "merge_conflicts_retained_from_legacy": [],
+  "limitations": [
+    "ClinicalTrials.gov and PubMed bulk-harvest data are not yet present because the network was unavailable.",
+    "Legacy data covers NSCLC; the seed data covers four additional domains and is not a complete research corpus.",
+    "No market events are included without independently verifiable commercial sources."
   ]
 }
