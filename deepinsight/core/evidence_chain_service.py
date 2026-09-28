@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Iterable
 
 from deepinsight.core.source_registry_service import (
+    NormalizedSourceRegistryService,
     PROJECT_ROOT,
     SourceRegistryFileNotFound,
     SourceRegistryService,
@@ -19,6 +20,7 @@ from deepinsight.core.source_registry_service import (
     contains,
     norm,
 )
+from deepinsight.core.normalized_evidence_chain_projection import NormalizedEvidenceChainProjection
 
 
 DEFAULT_CHAIN_CONFIG_PATH = PROJECT_ROOT / "config" / "evidence_chains.json"
@@ -28,17 +30,21 @@ INDEPENDENT_ROLES = {"company_document", "independent_evidence"}
 
 
 class EvidenceChainService:
-    """Build evidence-chain responses from config plus source registry rows."""
+    """Build manual chains plus explicit normalized-table projections."""
 
     def __init__(
         self,
         *,
         chain_config_path: str | Path | None = None,
         source_registry_service: SourceRegistryService | None = None,
+        normalized_projection: NormalizedEvidenceChainProjection | None = None,
     ) -> None:
         self.chain_config_path = Path(chain_config_path) if chain_config_path else DEFAULT_CHAIN_CONFIG_PATH
         self.source_registry_service = source_registry_service or SourceRegistryService()
+        self.normalized_projection = normalized_projection or NormalizedEvidenceChainProjection()
+        self.enable_normalized_projection = isinstance(self.source_registry_service, NormalizedSourceRegistryService)
         self._chain_config: dict[str, object] | None = None
+        self._normalized_projected_chain_cache: list[dict[str, object]] | None = None
 
     def load_chain_config(self) -> dict[str, object]:
         if self._chain_config is None:
@@ -48,22 +54,20 @@ class EvidenceChainService:
     def list_chains(self, company: str | None = None, chain_type: str | None = None) -> list[dict[str, object]]:
         chains = []
         company_terms = self.source_registry_service.expand_company_terms(company) if company else []
-        for chain_config in self._configured_chains():
-            if company_terms and not any(
-                contains(chain_config.get("company_name"), term) for term in company_terms
-            ):
+        for chain in self._all_chains():
+            if company_terms and not self._matches_company(chain, company_terms):
                 continue
-            if chain_type and chain_config.get("chain_type") != chain_type:
+            if chain_type and chain.get("chain_type") != chain_type:
                 continue
-            chains.append(self._build_chain(chain_config))
+            chains.append(chain)
         return chains
 
     def get_chain(self, chain_id: str) -> dict[str, object]:
         if not chain_id:
             return {}
-        for chain_config in self._configured_chains():
-            if chain_config.get("chain_id") == chain_id:
-                return self._build_chain(chain_config)
+        for chain in self._all_chains():
+            if chain.get("chain_id") == chain_id:
+                return chain
         return {}
 
     def get_trial_chain(self, trial_id: str) -> dict[str, object]:
@@ -76,6 +80,10 @@ class EvidenceChainService:
             trial_ids = [norm(item) for item in chain_config.get("trial_ids", [])]
             if trial_id_key in trial_ids:
                 return self._build_chain(chain_config)
+        if self.enable_normalized_projection:
+            for chain in self._projected_chains(chain_type="trial"):
+                if trial_id_key in {norm(item) for item in chain.get("trial_ids", [])}:
+                    return chain
         return {}
 
     def get_drug_regulatory_chain(self, drug_name: str) -> dict[str, object]:
@@ -89,7 +97,17 @@ class EvidenceChainService:
             chain_drugs = [norm(item) for item in chain_config.get("drug_names", [])]
             if any(term in chain_drugs for term in terms):
                 return self._build_chain(chain_config)
+        if self.enable_normalized_projection:
+            for chain in self._projected_chains(chain_type="regulatory"):
+                if any(term in {norm(item) for item in chain.get("drug_names", [])} for term in terms):
+                    return chain
         return {}
+
+    def organization_coverage(self, identifier: str) -> dict[str, object]:
+        """Return only explicit organization-study/source coverage for website data."""
+        if not self.enable_normalized_projection:
+            return {}
+        return self.normalized_projection.organization_coverage(identifier)
 
     def get_unresolved_links(self) -> list[dict[str, object]]:
         source_map = self._source_map()
@@ -125,6 +143,43 @@ class EvidenceChainService:
     def _configured_chains(self) -> list[dict[str, object]]:
         chains = self.load_chain_config().get("chains", [])
         return [chain for chain in chains if isinstance(chain, dict)]
+
+    def _all_chains(self) -> list[dict[str, object]]:
+        manual = [self._build_chain(chain) for chain in self._configured_chains()]
+        if not self.enable_normalized_projection:
+            return manual
+        return manual + self._projected_chains()
+
+    def _projected_chains(self, chain_type: str | None = None) -> list[dict[str, object]]:
+        if self._normalized_projected_chain_cache is None:
+            projected = self.normalized_projection.study_chains() + self.normalized_projection.regulatory_chains()
+            manual_trials = {
+                norm(trial_id)
+                for chain in self._configured_chains() if chain.get("chain_type") == "trial"
+                for trial_id in chain.get("trial_ids", [])
+            }
+            manual_drugs = {
+                norm(drug)
+                for chain in self._configured_chains() if chain.get("chain_type") == "regulatory"
+                for drug in chain.get("drug_names", [])
+            }
+            self._normalized_projected_chain_cache = [
+                self._build_projected_chain(chain)
+                for chain in projected
+                if not (
+                    chain["chain_type"] == "trial"
+                    and any(norm(item) in manual_trials for item in chain.get("trial_ids", []))
+                )
+                and not (
+                    chain["chain_type"] == "regulatory"
+                    and any(norm(item) in manual_drugs for item in chain.get("drug_names", []))
+                )
+            ]
+        return [chain for chain in self._normalized_projected_chain_cache if not chain_type or chain["chain_type"] == chain_type]
+
+    def _matches_company(self, chain: dict[str, object], terms: list[str]) -> bool:
+        values = [chain.get("company_name", ""), chain.get("company_display_name", "")]
+        return any(contains(value, term) for value in values for term in terms)
 
     def _source_map(self) -> dict[str, dict[str, str]]:
         return {row.get("source_id", ""): row for row in self.source_registry_service.load_rows()}
@@ -167,7 +222,52 @@ class EvidenceChainService:
             "evidence_gaps": list(chain_config.get("evidence_gaps", [])),
             "risk_notes": list(chain_config.get("risk_notes", [])),
             "source_count": len(evidence_items),
+            "chain_origin": "manual_config",
+            "projection_status": "formed",
+            "manual_override": True,
         }
+
+    def _build_projected_chain(self, projected: dict[str, object]) -> dict[str, object]:
+        evidence_items = [
+            self._normalize_with_role(row, self._projected_role(row))
+            for row in projected.get("evidence_rows", []) if isinstance(row, dict)
+        ]
+        return {
+            "chain_id": projected["chain_id"],
+            "chain_name": projected["chain_name"],
+            "chain_type": projected["chain_type"],
+            "chain_origin": "template_projection",
+            "projection_status": projected["projection_status"],
+            "relation_level": projected["relation_level"],
+            "company_name": projected.get("company_name", ""),
+            "company_display_name": projected.get("company_display_name", ""),
+            "drug_names": projected.get("drug_names", []),
+            "trial_ids": projected.get("trial_ids", []),
+            "related_trial_ids": [],
+            "study_names": projected.get("study_names", []),
+            "study_status": projected.get("study_status", ""),
+            "evidence_items": evidence_items,
+            "latest_items": [item for item in evidence_items if item.get("version_status") == "latest"],
+            "historical_items": [item for item in evidence_items if item.get("version_status") == "historical"],
+            "independent_items": [item for item in evidence_items if item.get("version_status") == "independent"],
+            "regulatory_items": evidence_items if projected["chain_type"] == "regulatory" else [],
+            "related_regulatory_items": [],
+            "regulatory_events": projected.get("regulatory_events", []),
+            "evidence_gaps": projected.get("evidence_gaps", []),
+            "risk_notes": projected.get("risk_notes", []),
+            "source_count": len(evidence_items),
+        }
+
+    @staticmethod
+    def _projected_role(row: dict[str, str]) -> str:
+        source_type = norm(row.get("source_type", ""))
+        if "clinicaltrials" in source_type:
+            return "trial_registry"
+        if "pubmed" in source_type:
+            return "publication"
+        if "regulatory" in source_type or "ema" in source_type or "fda" in source_type:
+            return "regulatory_authorisation"
+        return "independent_evidence"
 
     def _normalize_with_role(self, row: dict[str, str], role: str) -> dict[str, str]:
         normalized = self.source_registry_service.normalize_row(row)

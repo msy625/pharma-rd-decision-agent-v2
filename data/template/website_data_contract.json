@@ -1,0 +1,82 @@
+{
+  "contract_version": "website_data_contract_v1",
+  "dataset": "website_curated_normalized_v1",
+  "baseline_date": "2026-09-28",
+  "root_data_directory": "data/template",
+  "display_policy": {
+    "default_scope": "all rows in the curated normalized dataset",
+    "source_eligibility": [
+      "valid http(s) URL",
+      "declared verification_status",
+      "at least one explicit confirmed relation",
+      "no unresolved relation for that source"
+    ],
+    "excluded_from_display": [
+      "sources without explicit relations",
+      "sources with unresolved relations",
+      "sources without a valid upstream URL"
+    ]
+  },
+  "verification_statuses": {
+    "verified": {
+      "label_zh": "人工核验",
+      "website_allowed": true,
+      "meaning": "The retained source was manually reviewed within the project scope."
+    },
+    "partially_verified": {
+      "label_zh": "部分核验",
+      "website_allowed": true,
+      "meaning": "Only the declared fields and relations may be shown; missing fields must remain explicit gaps."
+    },
+    "api_harvested": {
+      "label_zh": "机器采集",
+      "website_allowed": true,
+      "meaning": "Official-source harvesting was not an individual human review. It must not support efficacy ranking, success prediction, or investment advice."
+    }
+  },
+  "prohibited_inferences": [
+    "Do not infer a relation from similar names, titles, organizations, or drugs.",
+    "Do not turn source or study counts into organization strength, quality, ranking, or success probability.",
+    "Do not compare efficacy or safety across studies unless an explicit supported comparison dataset is added."
+  ],
+  "expected_counts": {
+    "domains": 27,
+    "organizations": 225,
+    "assets": 695,
+    "indications": 27,
+    "studies": 968,
+    "publications": 401,
+    "sources": 1370,
+    "organization_aliases": 384,
+    "asset_aliases": 709,
+    "study_identifiers": 968,
+    "regulatory_events": 4,
+    "market_events": 0,
+    "facts": 10349,
+    "relations": 5015
+  },
+  "expected_source_status_counts": {
+    "verified": 48,
+    "api_harvested": 1322
+  },
+  "expected_relation_status_counts": {
+    "confirmed": 5015
+  },
+  "table_sha256": {
+    "asset_aliases.csv": "9fa7f232da4ffdb74b0139b60ac94baaa7cdc93bd79a78d1b32a44c5e2ccac19",
+    "assets.csv": "806a37b06c5569b6c84a93e1aea694852f17365cf54271f5ea902cb9f322e2e8",
+    "domains.csv": "42e44a7735232e051728eaa65fdbea525850f6db320d7cd4c3a940243a3a82ac",
+    "facts.csv": "8cb907399c9d0a998efdc6ebcad81f43c5a12ecd449e115794d9203fc1da15cd",
+    "indications.csv": "3e97c0f5e0b0c89d5d67ad894a5cb1849852b5a0031090933af12b9aa5d98cb5",
+    "market_events.csv": "c136c315d66091d0b52d7a7ff84799147ed31fd8218004285d215a7ca2f82d0a",
+    "organization_aliases.csv": "fda07d9df9635a9be9948207c7143d584403b5cea86125fe0f57b3eb59d9c5f1",
+    "organizations.csv": "1069f757de18cf3726845f7698444c549ecd4bfa6f306e22e56bd90bfb91f92e",
+    "publications.csv": "b3d4cf0e7071fcfa3b508af6c877cdc7fae1e7316fcf78c81e6c4e36ea43727e",
+    "regulatory_events.csv": "f13660e6620bb0cd75bdd7a0bac88388f0e3403b071630cd66a565f96fe12998",
+    "relations.csv": "d4b226550e530e5978e5a558efe16e1682fdf0d22ba9d69df8d2a74810dbab3a",
+    "sources.csv": "f6190fd1f12d907473af04dcec8a3e6a3498f618ef8a9ec20ecaef76666f74cf",
+    "studies.csv": "7f403585db0480814a093ee26fbc3f00281ae20606b6fb7acb3cf3cc27b08632",
+    "study_identifiers.csv": "707d3c7e0923daf67291f4c735e1928edd1f5cc28fdfd5f221151e60a8546741"
+  },
+  "change_control": "Any data refresh must deliberately update data_manifest.json and this contract after passing curation, referential-integrity, and review checks."
+}

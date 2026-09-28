@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
+WEBSITE_TOTAL = json.loads((ROOT / "data" / "template" / "data_manifest.json").read_text(encoding="utf-8"))["counts"]["sources"]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -25,11 +26,11 @@ class EvidenceWorkbenchApiTest(unittest.TestCase):
         response = self.client.get("/api/evidence/workbench")
         self.assertEqual(response.status_code, 200, response.text)
         payload = response.json()
-        self.assertEqual(payload["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
+        self.assertEqual(payload["metadata"]["data_scope"], "eligible_normalized_research_evidence")
         self.assertIn("workbench", payload)
         workbench = payload["workbench"]
-        self.assertEqual(workbench["summary"]["source_count"], 39)
-        self.assertEqual(workbench["summary"]["company_count"], 3)
+        self.assertEqual(workbench["summary"]["source_count"], WEBSITE_TOTAL)
+        self.assertGreater(workbench["summary"]["company_count"], 100)
         self.assertIn("companies", workbench)
         self.assertIn("source_type_distribution", workbench)
         self.assertIn("study_status_distribution", workbench)

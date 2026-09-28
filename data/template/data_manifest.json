@@ -1,33 +1,34 @@
 {
   "schema_version": "pharma_rd_template_v0.1",
-  "dataset": "canonical_data_v1+direction_harvest_v1",
-  "created_at": "2026-09-27",
+  "dataset": "website_curated_normalized_v1",
+  "created_at": "2026-09-28",
   "layout": "All canonical normalized tables live directly in data/template/; no mapped, seed, or harvest subdirectories.",
   "inputs": [
     "legacy mapped data",
     "four-domain reviewed seed data"
   ],
   "counts": {
-    "domains": 28,
-    "organizations": 804,
-    "organization_aliases": 798,
-    "assets": 1158,
-    "asset_aliases": 1169,
+    "domains": 27,
+    "organizations": 225,
+    "assets": 695,
     "indications": 27,
-    "studies": 1664,
-    "study_identifiers": 1664,
-    "publications": 1176,
+    "studies": 968,
+    "publications": 401,
+    "sources": 1370,
+    "organization_aliases": 384,
+    "asset_aliases": 709,
+    "study_identifiers": 968,
     "regulatory_events": 4,
     "market_events": 0,
-    "sources": 2850,
-    "facts": 20720,
-    "relations": 9238
+    "facts": 10349,
+    "relations": 5015
   },
   "merge_conflicts_retained_from_legacy": [],
   "limitations": [
-    "Legacy data covers NSCLC; the seed data covers four additional domains and is not a complete research corpus.",
-    "No market events are included without independently verifiable commercial sources.",
-    "方向批量采集数据由 ClinicalTrials.gov v2 与 PubMed E-utilities 生成，verification_status=api_harvested，未经人工逐条复核；不能替代人工核验样本。"
+    "Website root dataset is a curated subset of the prior normalized corpus.",
+    "Sources with no confirmed relation or any unresolved relation are excluded from website display.",
+    "Organizations prioritize existing Chinese display names, then observed source and study connectivity.",
+    "api_harvested records remain unreviewed and are not evidence of efficacy, success probability, or investment value."
   ],
   "direction_harvest": {
     "harvest_version": "direction_harvest_v1.0",
@@ -35,5 +36,18 @@
     "catalog": "config/direction_catalog.json",
     "generator": "scripts/harvest_direction_data.py",
     "verification_status": "api_harvested"
+  },
+  "curation": {
+    "source_target_range": [
+      1200,
+      1500
+    ],
+    "organization_target_range": [
+      200,
+      300
+    ],
+    "organization_target": 225,
+    "publication_per_direction": 20,
+    "eligibility": "valid source URL, declared verification status, and only confirmed explicit relations"
   }
 }

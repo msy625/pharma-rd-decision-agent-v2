@@ -1,6 +1,5 @@
 domain_id,parent_domain_id,domain_name,domain_type,description,active
 DOM_NSCLC,DOM_STAGE_1,非小细胞肺癌（NSCLC）,disease_research_domain,当前 source_registry.csv 的完整数据范围。,true
-DOM_ONCOLOGY,,肿瘤,therapeutic_area,肿瘤研发与治疗证据总领域,true
 DOM_BREAST_CANCER,DOM_STAGE_1,乳腺癌,disease_research_domain,乳腺癌精准治疗与辅助治疗研究,true
 DOM_COLORECTAL_CANCER,DOM_STAGE_1,结直肠癌,disease_research_domain,结直肠癌分子分型与靶向/免疫治疗研究,true
 DOM_GASTRIC_ESOPHAGEAL_CANCER,DOM_STAGE_1,胃癌/食管癌,disease_research_domain,胃癌、胃食管结合部癌和食管腺癌研究,true

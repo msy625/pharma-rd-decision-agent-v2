@@ -10,6 +10,7 @@ import anyio.to_thread
 
 
 ROOT = Path(__file__).resolve().parents[1]
+WEBSITE_TOTAL = json.loads((ROOT / "data" / "template" / "data_manifest.json").read_text(encoding="utf-8"))["counts"]["sources"]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -103,21 +104,22 @@ class EvidenceApiHttpTest(unittest.TestCase):
         self.assertEqual(response.status_code, expected_status, response.text)
         return response.json()
 
-    def test_01_summary_total_is_39(self):
+    def test_01_summary_uses_eligible_normalized_total(self):
         payload = self.get_json("/api/evidence/summary")
-        self.assertEqual(payload["total_sources"], 39)
+        self.assertEqual(payload["total_sources"], WEBSITE_TOTAL)
+        self.assertEqual(payload["metadata"]["data_backend"], "normalized_template")
 
     def test_02_company_hengrui_returns_15(self):
         payload = self.get_json("/api/evidence/company/恒瑞医药")
         self.assertEqual(payload["count"], 15)
 
-    def test_03_company_beigene_cn_returns_16(self):
+    def test_03_company_beigene_cn_returns_normalized_records(self):
         payload = self.get_json("/api/evidence/company/百济神州")
-        self.assertEqual(payload["count"], 16)
+        self.assertEqual(payload["count"], 19)
 
-    def test_04_company_beone_medicines_returns_16(self):
+    def test_04_company_beone_medicines_returns_normalized_records(self):
         payload = self.get_json("/api/evidence/company/BeOne%20Medicines")
-        self.assertEqual(payload["count"], 16)
+        self.assertEqual(payload["count"], 19)
 
     def test_05_drug_shr_1210_returns_camrelizumab_sources(self):
         payload = self.get_json("/api/evidence/drug/SHR-1210")

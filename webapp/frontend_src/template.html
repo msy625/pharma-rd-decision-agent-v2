@@ -4063,7 +4063,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
       </sc-for>
     </nav>
     <div style="margin:12px;padding:13px 12px;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.68);font-size:11px;line-height:1.7">
-      <div style="display:flex;align-items:center;gap:7px;color:#8BE1C3;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:#38B589"></span>数据已人工核验</div>
+      <div style="display:flex;align-items:center;gap:7px;color:#8BE1C3;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:#38B589"></span>规范化证据数据</div>
       <div style="margin-top:3px;color:rgba(255,255,255,.42)">数据版本：{{ today_dataVersionShort }}</div>
     </div>
   </aside>
@@ -4440,142 +4440,25 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
         </div>
       </sc-if>
 
-      <sc-if value="{{ isLegacyCompare }}">
-        <div style="animation:fadeUp .5s var(--ease-out) both">
-          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
-            <div>
-              <h1 style="font-size:21px;font-weight:600;letter-spacing:-.02em;margin:0 0 3px">{{ cmp_title }}</h1>
-              <div style="font-size:12.5px;color:var(--text-3)">单家全景画像，或与同业对手做多指标横向对比</div>
-            </div>
-            <div style="display:flex;background:var(--bg-sunken);border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px">
-              <button onclick="{{ cmp_setProfile }}" style="{{ cmp_tabProfileStyle }}">公司画像</button>
-              <button onclick="{{ cmp_setCompare }}" style="{{ cmp_tabCompareStyle }}">对比矩阵</button>
-            </div>
-          </div>
-
-          <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;margin-bottom:20px">
-            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:14px 16px;display:flex;align-items:center;gap:13px">
-              <div style="width:42px;height:42px;border-radius:11px;background:var(--brand-600);color:#fff;font-size:18px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none">{{ cmp_initialA }}</div>
-              <div style="flex:1;min-width:0">
-                <div style="font-size:10.5px;color:var(--text-3);margin-bottom:3px">主公司</div>
-                <select id="profile-company-select" name="profile_company" aria-label="公司画像企业" value="{{ cmp_company }}" onchange="{{ cmp_onCompany }}" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;font-weight:500;padding:0 8px">
-                  <sc-for list="{{ cmp_companies }}" as="c"><option value="{{ c }}">{{ c }}</option></sc-for>
-                </select>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--text-3);font-family:var(--font-mono);width:34px;height:34px;border-radius:50%;background:var(--bg-sunken);align-self:center">VS</div>
-            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:14px 16px;display:flex;align-items:center;gap:13px">
-              <div style="width:42px;height:42px;border-radius:11px;background:var(--series-2);color:#fff;font-size:18px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none">{{ cmp_initialB }}</div>
-              <div style="flex:1;min-width:0">
-                <div style="font-size:10.5px;color:var(--text-3);margin-bottom:3px">对比公司</div>
-                <select id="profile-compare-company-select" name="profile_compare_company" aria-label="公司画像对比企业" value="{{ cmp_other }}" onchange="{{ cmp_onOther }}" style="width:100%;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);font-size:13.5px;font-weight:500;padding:0 8px">
-                  <sc-for list="{{ cmp_otherOptions }}" as="o"><option value="{{ o.v }}">{{ o.t }}</option></sc-for>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <sc-if value="{{ cmp_isProfile }}">
-            <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px">
-              <sc-for list="{{ cmp_overview }}" as="o" hint-placeholder-count="5">
-                <div style="flex:1;min-width:130px;background:var(--bg-elev);border:1px solid var(--border);border-radius:11px;padding:11px 14px">
-                  <div style="font-size:11px;color:var(--text-3);margin-bottom:3px">{{ o.label }}</div>
-                  <div style="font-size:15px;font-weight:600">{{ o.value }}</div>
-                </div>
-              </sc-for>
-            </div>
-
-            <div data-grid4="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px">
-              <sc-for list="{{ cmp_metrics }}" as="m" hint-placeholder-count="6">
-                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:15px 16px">
-                  <div style="font-size:12px;color:var(--text-3);margin-bottom:6px">{{ m.label }}</div>
-                  <div style="font-size:21px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-bottom:4px">{{ m.value }}</div>
-                  <div style="font-size:11.5px;color:var(--text-2)">{{ m.meta }}</div>
-                </div>
-              </sc-for>
-            </div>
-
-            <div data-cols="" style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px">
-                <div style="font-size:13.5px;font-weight:600;margin-bottom:2px">营收 · 利润 · 研发趋势</div>
-                <div style="font-size:11.5px;color:var(--text-3);margin-bottom:8px">2020–2024 · 单位 亿元</div>
-                <dc-import name="LineChart" labels="{{ cmp_trendLabels }}" series="{{ cmp_trendSeries }}" height="{{ 230 }}" area="{{ false }}" hint-size="100%,250px"></dc-import>
-              </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px">
-                <div style="font-size:13.5px;font-weight:600;margin-bottom:2px">销售毛利率</div>
-                <div style="font-size:11.5px;color:var(--text-3);margin-bottom:8px">单位 %</div>
-                <dc-import name="LineChart" labels="{{ cmp_gmLabels }}" series="{{ cmp_gmSeries }}" height="{{ 230 }}" hint-size="100%,250px"></dc-import>
-              </div>
-            </div>
-
-            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px">
-              <div style="font-size:13.5px;font-weight:600;margin-bottom:2px">专利活跃度</div>
-              <div style="font-size:11.5px;color:var(--text-3);margin-bottom:8px">按申请年度 · 发明专利 vs 实用新型</div>
-              <dc-import name="BarChart" labels="{{ cmp_patLabels }}" series="{{ cmp_patSeries }}" height="{{ 230 }}" hint-size="100%,250px"></dc-import>
-            </div>
-
-            <div data-grid4="" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px 18px">
-                <div style="font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:var(--neg)"></span>风险维度</div>
-                <sc-for list="{{ cmp_riskCards }}" as="c"><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px"><span style="color:var(--text-2)">{{ c.label }}</span><span style="font-weight:600;font-variant-numeric:tabular-nums">{{ c.value }}</span></div></sc-for>
-              </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px 18px">
-                <div style="font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:var(--series-2)"></span>创新维度</div>
-                <sc-for list="{{ cmp_innovCards }}" as="c"><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px"><span style="color:var(--text-2)">{{ c.label }}</span><span style="font-weight:600;font-variant-numeric:tabular-nums">{{ c.value }}</span></div></sc-for>
-              </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px 18px">
-                <div style="font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;border-radius:50%;background:var(--series-4)"></span>股权图谱</div>
-                <sc-for list="{{ cmp_equityCards }}" as="c"><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px"><span style="color:var(--text-2)">{{ c.label }}</span><span style="font-weight:600;font-variant-numeric:tabular-nums">{{ c.value }}</span></div></sc-for>
-              </div>
-            </div>
-          </sc-if>
-
-          <sc-if value="{{ cmp_isCompare }}">
-            <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
-              <span style="font-size:11.5px;font-weight:500;background:var(--brand-50);color:var(--brand-600);border-radius:999px;padding:4px 12px">{{ cmp_compSummary }}</span>
-            </div>
-            <div data-cols="" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;overflow:hidden">
-                <table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr>
-                    <th style="text-align:left;padding:11px 14px;background:var(--bg-sunken);font-size:11px;font-weight:600;color:var(--text-3)">指标</th>
-                    <th style="text-align:right;padding:11px 14px;background:var(--bg-sunken);font-size:11px;font-weight:600;color:var(--brand-600)">{{ cmp_company }}</th>
-                    <th style="text-align:right;padding:11px 14px;background:var(--bg-sunken);font-size:11px;font-weight:600;color:var(--series-2)">{{ cmp_other }}</th>
-                    <th style="text-align:center;padding:11px 14px;background:var(--bg-sunken);font-size:11px;font-weight:600;color:var(--text-3)">领先</th>
-                  </tr></thead><tbody><sc-for list="{{ cmp_rows }}" as="r" hint-placeholder-count="6"><tr>
-                        <td style="padding:11px 14px;border-top:1px solid var(--border);color:var(--text-2)">{{ r.metric }}</td>
-                        <td style="padding:11px 14px;border-top:1px solid var(--border);text-align:right;font-variant-numeric:tabular-nums;font-weight:{{ r.leftWin }};color:{{ r.leftColor }}">{{ r.left }}</td>
-                        <td style="padding:11px 14px;border-top:1px solid var(--border);text-align:right;font-variant-numeric:tabular-nums;color:{{ r.rightColor }}">{{ r.right }}</td>
-                        <td style="padding:11px 14px;border-top:1px solid var(--border);text-align:center"><span style="font-size:11px;font-weight:500;color:var(--brand-600);background:var(--brand-50);border-radius:999px;padding:2px 9px">{{ r.winner }}</span></td>
-                      </tr></sc-for></tbody></table>
-              </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:18px">
-                <div style="font-size:13.5px;font-weight:600;margin-bottom:2px">核心指标对比</div>
-                <div style="font-size:11.5px;color:var(--text-3);margin-bottom:10px">单位 亿元</div>
-                <dc-import name="BarChart" labels="{{ cmp_barLabels }}" series="{{ cmp_barSeries }}" height="{{ 250 }}" hint-size="100%,270px"></dc-import>
-              </div>
-            </div>
-          </sc-if>
-        </div>
-      </sc-if>
 
       <sc-if value="{{ isCompare }}">
         <div style="display:flex;flex-direction:column;gap:20px">
           <div data-profile-hero="">
             <div style="max-width:800px">
-              <h1 style="font-size:24px;font-weight:780;letter-spacing:-.025em;margin:0 0 7px">企业证据画像</h1>
+              <h1 style="font-size:24px;font-weight:780;letter-spacing:-.025em;margin:0 0 7px">机构研发画像</h1>
               <p style="font-size:13px;line-height:1.65;color:rgba(255,255,255,.86);margin:0">{{ profile_scopeWarning }}</p>
             </div>
             <div data-profile-selector="">
-              <label for="company-evidence-profile-select">选择企业</label>
+              <label for="company-evidence-profile-select">选择机构（覆盖全部规范化机构）</label>
               <select id="company-evidence-profile-select" name="company_evidence_profile" value="{{ profile_company }}" onchange="{{ profile_onCompany }}">
                 <sc-for list="{{ profile_companies }}" as="c"><option value="{{ c.value }}" style="color:#111827">{{ c.label }}</option></sc-for>
               </select>
             </div>
           </div>
 
-          <sc-if value="{{ profile_loading }}"><div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:18px;color:var(--text-3)">正在加载企业证据画像...</div></sc-if>
+          <sc-if value="{{ profile_loading }}"><div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:13px;padding:18px;color:var(--text-3)">正在加载机构研发画像...</div></sc-if>
           <sc-if value="{{ profile_hasError }}"><div style="background:var(--neg-bg);border:1px solid var(--border);border-radius:13px;padding:16px;color:var(--neg);display:flex;justify-content:space-between;gap:12px;align-items:center"><span>{{ profile_error }}</span><button onclick="{{ profile_reload }}" style="height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text);padding:0 11px">重新加载</button></div></sc-if>
-          <sc-if value="{{ profile_empty }}"><div style="background:var(--bg-elev);border:1px dashed var(--border);border-radius:13px;padding:20px;text-align:center;color:var(--text-3)">当前数据不足，未在当前核验样本中找到该企业。</div></sc-if>
+          <sc-if value="{{ profile_empty }}"><div style="background:var(--bg-elev);border:1px dashed var(--border);border-radius:13px;padding:20px;text-align:center;color:var(--text-3)">当前仅有实体或研究关联，尚不足以形成完整画像。</div></sc-if>
 
           <sc-if value="{{ profile_hasData }}">
             <div data-company-profile="">
@@ -4583,13 +4466,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                 <div style="min-width:0">
                   <div style="font-size:24px;font-weight:780;letter-spacing:-.025em;line-height:1.25">{{ profile_displayName }}</div>
                   <div style="font-size:13px;color:var(--text-2);margin-top:5px">归一主体：{{ profile_canonicalName }}</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:9px;font-size:12px;color:var(--text-2)"><span>机构类型：{{ profile_orgType }}</span><span>国家/地区：{{ profile_region }}</span><span>官网：{{ profile_website }}</span><span>覆盖状态：{{ profile_coverageStatus }}</span></div>
                   <sc-if value="{{ profile_hasAliases }}"><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:11px"><sc-for list="{{ profile_aliases }}" as="a"><span style="font-size:12px;color:#587086;background:#EEF3F6;border-radius:999px;padding:4px 9px">{{ a.text }}</span></sc-for></div></sc-if>
                   <sc-if value="{{ profile_hasMoreAliases }}"><button onclick="{{ profile_toggleAliases }}" style="margin-top:8px;border:0;background:transparent;color:var(--medical-teal);font-size:12px;font-weight:750;padding:0;cursor:pointer">{{ profile_aliasToggleLabel }}</button></sc-if>
                 </div>
                 <div data-profile-actions="">
                   <button data-action="primary" onclick="{{ profile_grounded }}">进入智能决策 Agent</button>
                   <div data-profile-secondary-actions="">
-                    <button data-action="text" onclick="{{ profile_compare }}">打开企业对比</button>
+                    <button data-action="text" onclick="{{ profile_allSources }}">查看机构来源</button>
                     <button data-action="text" onclick="{{ profile_allSources }}">查看全部来源</button>
                     <button data-action="text" onclick="{{ profile_brief }}">生成决策简报</button>
                   </div>
@@ -4601,8 +4485,8 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               </section>
 
               <section data-profile-structure="">
-                <div style="font-size:17px;font-weight:780;color:var(--deep-sea)">证据结构概览</div>
-                <div style="font-size:12px;color:var(--text-3);margin-top:4px">覆盖类型、证据链结构与版本关系按当前核验样本动态汇总</div>
+                <div style="font-size:17px;font-weight:780;color:var(--deep-sea)">机构数据覆盖</div>
+                <div style="font-size:12px;color:var(--text-3);margin-top:4px">来源、申办研究、疾病方向、药物实体与证据关系按规范化数据动态汇总</div>
                 <div data-profile-structure-grid="">
                   <div data-profile-structure-column="">
                     <div data-profile-structure-title="" style="font-size:14px;font-weight:750;color:var(--deep-sea)">资料覆盖</div>
@@ -4631,7 +4515,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               </section>
 
               <section data-profile-trials="">
-                <div style="margin-bottom:16px"><div style="font-size:17px;font-weight:780;color:var(--deep-sea)">试验级证据链</div><div style="font-size:12px;color:var(--text-3);line-height:1.55;margin-top:4px">论文、登记和公司页面按已确认试验关系聚合，不重复计为多项试验。</div></div>
+                <div style="margin-bottom:16px"><div style="font-size:17px;font-weight:780;color:var(--deep-sea)">研究列表与证据链</div><div style="font-size:12px;color:var(--text-3);line-height:1.55;margin-top:4px">阶段、状态、登记号、适应症和日期仅按已确认研究关系展示。</div></div>
                 <sc-if value="{{ !profile_hasTrialChains }}"><div style="font-size:13px;color:var(--text-3);background:#F4F7F9;border-radius:10px;padding:14px">当前样本未收录可确认的试验级证据链。</div></sc-if>
                 <div data-profile-trial-grid=""><sc-for list="{{ profile_trialChains }}" as="ch"><article data-profile-trial-card=""><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><span style="font-family:var(--font-mono);font-size:11px;font-weight:750;color:var(--medical-teal);background:#E8F4F2;border-radius:6px;padding:3px 7px;overflow-wrap:anywhere">{{ ch.trial_id }}</span><span data-profile-status="{{ ch.statusTone }}">{{ ch.study_status }}</span></div><div data-profile-trial-title="" title="{{ ch.study_name }}">{{ ch.study_name }}</div><div style="font-family:var(--font-mono);font-size:11px;color:var(--text-3);overflow-wrap:anywhere">{{ ch.chain_id }}</div><dl style="display:grid;grid-template-columns:82px minmax(0,1fr);gap:7px 9px;margin:2px 0 0;font-size:12.5px;line-height:1.5"><dt style="color:var(--text-3)">来源数量</dt><dd style="margin:0;font-variant-numeric:tabular-nums">{{ ch.source_count }}</dd><dt style="color:var(--text-3)">版本构成</dt><dd style="margin:0">{{ ch.version_text }}</dd><dt style="color:var(--text-3)">研究状态</dt><dd style="margin:0">{{ ch.study_status }}</dd></dl><button data-profile-trial-link="" onclick="{{ ch.onClick }}">查看证据链&nbsp; →</button></article></sc-for></div>
               </section>
@@ -4650,98 +4534,6 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             </div>
           </sc-if>
 
-          <sc-if value="{{ profile_legacyDesign }}">
-            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:15px 17px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap">
-              <div>
-                <div style="font-size:21px;font-weight:750;letter-spacing:-.02em;margin-bottom:4px">{{ profile_displayName }}</div>
-                <div style="font-size:12px;color:var(--text-3)">归一主体：{{ profile_canonicalName }}</div>
-                <sc-if value="{{ profile_hasAliases }}"><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px"><sc-for list="{{ profile_aliases }}" as="a"><span style="font-size:11px;color:var(--text-2);background:var(--bg-sunken);border:1px solid var(--border);border-radius:999px;padding:3px 8px">{{ a.text }}</span></sc-for></div></sc-if>
-                <sc-if value="{{ profile_hasMoreAliases }}"><button onclick="{{ profile_toggleAliases }}" style="margin-top:7px;border:0;background:transparent;color:var(--brand-600);font-size:11px;font-weight:700;padding:0;cursor:pointer">{{ profile_aliasToggleLabel }}</button></sc-if>
-              </div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <button onclick="{{ profile_allSources }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">查看全部来源</button>
-                <button onclick="{{ profile_compare }}" style="height:34px;border-radius:9px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">打开企业对比</button>
-                <button onclick="{{ profile_grounded }}" style="height:34px;border-radius:9px;border:0;background:var(--brand-600);color:#fff;font-size:12px;font-weight:700;padding:0 12px">进入智能决策 Agent</button>
-                <button onclick="{{ profile_brief }}" style="height:34px;border-radius:9px;border:1px solid var(--brand-600);background:var(--bg-elev);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 12px">生成决策简报</button>
-              </div>
-            </div>
-
-            <div data-grid4="" data-profile-core-metrics="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px">
-              <sc-for list="{{ profile_metrics }}" as="m" hint-placeholder-count="4">
-                <div style="background:{{ m.bg }};border:1px solid var(--border);border-radius:11px;padding:13px 14px">
-                  <div style="font-size:11px;color:var(--text-3);margin-bottom:5px">{{ m.label }}</div>
-                  <div style="font-size:23px;font-weight:750;color:{{ m.color }};font-variant-numeric:tabular-nums;line-height:1.1;margin-bottom:5px">{{ m.value }}</div>
-                  <div style="font-size:10.8px;color:var(--text-3);line-height:1.45">{{ m.note }}</div>
-                </div>
-              </sc-for>
-            </div>
-
-            <div data-profile-info-groups="" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
-              <sc-for list="{{ profile_groups }}" as="group">
-                <section style="background:var(--bg-elev);border:1px solid var(--border);border-radius:11px;padding:14px 15px;min-width:0">
-                  <div style="font-size:13px;font-weight:750;color:var(--brand-800);margin-bottom:8px">{{ group.title }}</div>
-                  <dl style="margin:0;display:flex;flex-direction:column"><sc-for list="{{ group.rows }}" as="r"><div style="display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,1.2fr);gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:11.5px;line-height:1.45"><dt style="color:var(--text-3)">{{ r.label }}</dt><dd style="margin:0;text-align:right;color:var(--text);font-weight:700;overflow-wrap:anywhere">{{ r.value }}<sc-if value="{{ r.note }}"><div style="font-size:9.8px;font-weight:500;color:var(--text-3);margin-top:2px">{{ r.note }}</div></sc-if></dd></div></sc-for></dl>
-                </section>
-              </sc-for>
-            </div>
-
-            <div data-cols="" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:11px;padding:14px 15px">
-                <div style="font-size:13px;font-weight:750;margin-bottom:9px">来源类型构成</div>
-                <div style="display:flex;flex-direction:column"><sc-for list="{{ profile_sourceTypes }}" as="d"><div style="display:flex;justify-content:space-between;gap:12px;font-size:11.8px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">{{ d.label }}</span><span style="font-weight:700">{{ d.count }}</span></div></sc-for></div>
-              </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:11px;padding:14px 15px">
-                <div style="font-size:13px;font-weight:750;margin-bottom:9px">研究状态构成</div>
-                <div style="display:flex;flex-direction:column"><sc-for list="{{ profile_studyStatuses }}" as="d"><div style="display:flex;justify-content:space-between;gap:12px;font-size:11.8px;padding:6px 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-2)">{{ d.label }}</span><span style="font-weight:700">{{ d.count }}</span></div></sc-for></div>
-              </div>
-            </div>
-
-            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:17px">
-              <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:12px"><div><div style="font-size:15px;font-weight:750">试验证据链</div><div style="font-size:11.5px;color:var(--text-3);margin-top:3px">论文、登记和公司页面按已确认试验关系聚合，不重复计为多项试验。</div></div></div>
-              <sc-if value="{{ !profile_hasTrialChains }}"><div style="font-size:12.5px;color:var(--text-3);background:var(--bg-sunken);border-radius:10px;padding:13px">当前样本未收录可确认的试验级证据链。</div></sc-if>
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:11px">
-                <sc-for list="{{ profile_trialChains }}" as="ch">
-                  <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px">
-                    <div style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--brand-600);overflow-wrap:anywhere">{{ ch.chain_id }}</div>
-                    <div style="font-size:13.5px;font-weight:750;line-height:1.45">{{ ch.study_name }}</div>
-                    <div style="display:grid;grid-template-columns:86px 1fr;gap:5px 8px;font-size:11.8px"><span style="color:var(--text-3)">trial_id</span><span>{{ ch.trial_id }}</span><span style="color:var(--text-3)">来源数量</span><span>{{ ch.source_count }}</span><span style="color:var(--text-3)">版本构成</span><span>{{ ch.version_text }}</span><span style="color:var(--text-3)">研究状态</span><span>{{ ch.study_status }}</span></div>
-                    <button onclick="{{ ch.onClick }}" style="height:31px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--brand-600);font-size:12px;font-weight:700;margin-top:auto">查看证据链</button>
-                  </div>
-                </sc-for>
-              </div>
-            </div>
-
-            <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:17px">
-              <div style="font-size:15px;font-weight:750;margin-bottom:4px">药物级监管链</div>
-              <div style="font-size:11.5px;color:var(--text-3);margin-bottom:12px">监管资料与试验级证据分开计数，药物级监管链不计入临床试验数量，也不将监管背景追加为临床试验来源。B015正式授权；B016 CHMP积极意见，非最终批准。</div>
-              <sc-if value="{{ profile_noRegulatory }}"><div style="font-size:12.5px;color:var(--text-3);background:var(--bg-sunken);border:1px dashed var(--border);border-radius:10px;padding:14px">当前样本未收录独立监管链；该表述不代表企业没有监管进展。</div></sc-if>
-              <sc-for list="{{ profile_regulatoryChains }}" as="ch">
-                <div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:12px;padding:14px;margin-top:10px">
-                  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px"><div><div style="font-family:var(--font-mono);font-size:11px;color:var(--brand-600);font-weight:700">{{ ch.chain_id }}</div><div style="font-size:13.5px;font-weight:750;margin-top:3px">{{ ch.chain_name }}</div></div><button onclick="{{ ch.onClick }}" style="height:31px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--brand-600);font-size:12px;font-weight:700;padding:0 11px">查看证据链</button></div>
-                  <div style="font-size:11.8px;color:var(--text-2);margin-bottom:9px">{{ ch.counting_note }} 关联试验背景：{{ ch.related_trials }}</div>
-                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px"><sc-for list="{{ ch.sources }}" as="src"><div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:10px;padding:11px"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:5px"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ src.source_id }}</span><span style="font-size:10.8px;color:var(--text-3)">{{ src.status_note }}</span></div><div style="font-size:12.5px;font-weight:700;line-height:1.45;margin-bottom:5px">{{ src.title }}</div><div style="font-size:11px;color:var(--text-3);margin-bottom:5px">{{ src.source_type }}</div><div style="font-size:11.5px;color:var(--text-2);line-height:1.55">{{ src.risk_notes }}</div></div></sc-for></div>
-                </div>
-              </sc-for>
-            </div>
-
-            <div data-cols="" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;min-width:0">
-                <div style="font-size:14px;font-weight:750;margin-bottom:4px">独立资料</div><div style="font-size:11.5px;color:var(--text-3);margin-bottom:11px">指当前没有新旧版本关系的资料；仍可能已进入证据链或处于待确认状态。</div>
-                <sc-if value="{{ !profile_hasIndependent }}"><div style="font-size:12px;color:var(--text-3)">当前没有可展示的独立资料。</div></sc-if>
-                <div style="display:flex;flex-direction:column;gap:8px;max-height:430px;overflow:auto"><sc-for list="{{ profile_independent }}" as="src"><div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:10px 11px"><div style="display:flex;justify-content:space-between;gap:8px"><span style="display:inline-flex;align-items:center;gap:6px;min-width:0"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ src.source_id }}</span><sc-if value="{{ src.isHarvested }}"><span data-include-harvested-row-badge="" style="font-size:10.5px;font-weight:800;color:var(--warn);background:var(--warn-bg);border:1px solid var(--warn);border-radius:6px;padding:1px 7px;white-space:nowrap">{{ ih_badgeLabel }}</span></sc-if></span><span style="font-size:10.8px;color:var(--text-3)">{{ src.link_status }}</span></div><div style="font-size:12.3px;font-weight:650;line-height:1.45;margin:4px 0">{{ src.title }}</div><div style="font-size:10.8px;color:var(--text-3)">{{ src.source_type }} · {{ src.study_status }}</div></div></sc-for></div>
-              </div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px;min-width:0">
-                <div style="font-size:14px;font-weight:750;margin-bottom:4px">待确认关系</div><div style="font-size:11.5px;color:var(--text-3);margin-bottom:11px">仅展示人工配置中仍缺少明确一对一依据的关系。</div>
-                <sc-if value="{{ !profile_hasUnresolved }}"><div style="font-size:12px;color:var(--text-3);background:var(--bg-sunken);border-radius:10px;padding:12px">当前样本没有待确认关系。</div></sc-if>
-                <div style="display:flex;flex-direction:column;gap:8px;max-height:430px;overflow:auto"><sc-for list="{{ profile_unresolved }}" as="u"><div style="border:1px solid var(--border);background:var(--bg-sunken);border-radius:10px;padding:10px 11px"><div style="display:flex;justify-content:space-between;gap:8px"><span style="font-family:var(--font-mono);font-size:11px;font-weight:800;color:var(--brand-600)">{{ u.source_id }}</span><span style="font-size:10.8px;color:var(--text-3)">{{ u.source_type }}</span></div><div style="font-size:12.3px;font-weight:650;line-height:1.45;margin:4px 0">{{ u.title }}</div><div style="font-size:11.5px;color:var(--text-2);line-height:1.55">{{ u.description }}</div><div style="font-size:11px;color:var(--text-3);line-height:1.5;margin-top:4px">缺口：{{ u.gaps }}</div></div></sc-for></div>
-              </div>
-            </div>
-
-            <div data-cols="" style="display:grid;grid-template-columns:1fr 1.5fr;gap:14px">
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px"><div style="font-size:14px;font-weight:750;margin-bottom:10px">数据元信息</div><div style="display:grid;grid-template-columns:100px 1fr;gap:7px 9px;font-size:11.8px"><span style="color:var(--text-3)">数据版本</span><span style="font-family:var(--font-mono);overflow-wrap:anywhere">{{ profile_dataVersion }}</span><span style="color:var(--text-3)">核验日期</span><span>{{ profile_verifiedAt }}</span><span style="color:var(--text-3)">生成时间</span><span style="font-family:var(--font-mono);overflow-wrap:anywhere">{{ profile_generatedAt }}</span></div></div>
-              <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:16px"><div style="font-size:14px;font-weight:750;margin-bottom:10px">限制说明</div><div style="display:flex;flex-direction:column;gap:7px"><sc-for list="{{ profile_limitations }}" as="l"><div style="display:flex;gap:8px;font-size:11.8px;line-height:1.6;color:var(--text-2)"><span style="color:var(--brand-600)">•</span><span>{{ l.text }}</span></div></sc-for></div></div>
-            </div>
-          </sc-if>
         </div>
       </sc-if>
 
@@ -4957,9 +4749,10 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
       <sc-if value="{{ isBrief }}">
         <div data-decision-brief="" style="animation:fadeUp .45s var(--ease-out) both;display:flex;flex-direction:column;gap:16px;max-width:1120px;margin:0 auto">
           <div data-brief-toolbar="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:14px">
-            <div><div style="font-size:22px;font-weight:700">证据决策简报</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">当前事实、证据充分性、风险缺口与下一步证据方向</div></div>
+            <div><div style="font-size:22px;font-weight:700">{{ brief_typeLabel }}</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">当前事实、证据充分性、关系缺口与下一步证据方向</div></div>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-              <select aria-label="简报企业" value="{{ brief_company }}" onchange="{{ brief_onCompany }}" style="height:36px;min-width:210px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text);padding:0 10px"><sc-for list="{{ brief_companies }}" as="c"><option value="{{ c.value }}">{{ c.label }}</option></sc-for></select>
+              <button onclick="{{ brief_reload }}" style="height:36px;border:1px solid var(--brand-600);border-radius:8px;background:var(--brand-600);color:#fff;padding:0 11px">机构研发画像</button><button onclick="{{ brief_direction }}" style="height:36px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text-2);padding:0 11px">疾病方向证据</button><sc-if value="{{ brief_isDirection }}"><select aria-label="选择疾病方向" value="{{ brief_directionId }}" onchange="{{ brief_onDirection }}" style="height:36px;min-width:180px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text);padding:0 10px"><sc-for list="{{ brief_directionsOptions }}" as="d"><option value="{{ d.value }}">{{ d.label }}</option></sc-for></select></sc-if>
+              <sc-if value="{{ !brief_isDirection }}"><select aria-label="机构研发画像简报机构" value="{{ brief_company }}" onchange="{{ brief_onCompany }}" style="height:36px;min-width:210px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text);padding:0 10px"><sc-for list="{{ brief_companies }}" as="c"><option value="{{ c.value }}">{{ c.label }}</option></sc-for></select></sc-if>
               <button onclick="{{ brief_reload }}" style="height:36px;border:1px solid var(--border);border-radius:8px;background:var(--bg-elev);color:var(--text-2);padding:0 13px">刷新</button>
               <button onclick="{{ brief_print }}" style="height:36px;border:0;border-radius:8px;background:var(--brand-600);color:#fff;padding:0 14px;font-weight:700">打印 / PDF</button>
             </div>
@@ -4971,14 +4764,14 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             <article data-brief-paper="" style="background:var(--bg-elev);border:1px solid var(--border);padding:30px 34px;display:flex;flex-direction:column;gap:28px">
               <header><div style="font-size:11px;color:var(--brand-600);font-weight:700">研发证据决策支持</div><h1 style="font-size:27px;line-height:1.25;margin:7px 0 8px;letter-spacing:0">{{ brief_title }}</h1><div style="font-size:12px;color:var(--text-3)">{{ brief_scope }} · 药物：{{ brief_drugs }}</div></header>
               <section><h2 style="font-size:16px;margin:0 0 12px">1. 执行摘要</h2><div style="display:flex;flex-direction:column;gap:9px"><sc-for list="{{ brief_summary }}" as="x"><div style="border-left:3px solid var(--brand-400);padding:8px 12px;background:var(--bg-sunken)"><div style="display:flex;justify-content:space-between;gap:10px"><span style="font-size:13px;line-height:1.65">{{ x.text }}</span><span style="font-size:10px;color:var(--brand-600);white-space:nowrap">{{ x.status }}</span></div><div style="font-size:10.5px;color:var(--text-3);margin-top:5px">来源 {{ x.sources }} · 证据链 {{ x.chains }}</div></div></sc-for></div></section>
-              <section><h2 style="font-size:16px;margin:0 0 12px">2. 企业与数据概况</h2><div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px"><sc-for list="{{ brief_metrics }}" as="m"><div style="border-top:2px solid var(--brand-400);background:var(--bg-sunken);padding:12px"><div style="font-size:11px;color:var(--text-3)">{{ m.label }}</div><div style="font-size:22px;font-weight:700;margin-top:4px">{{ m.value }}</div></div></sc-for></div></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">2. 机构 / 疾病方向数据概况</h2><div data-grid4="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px"><sc-for list="{{ brief_metrics }}" as="m"><div style="border-top:2px solid var(--brand-400);background:var(--bg-sunken);padding:12px"><div style="font-size:11px;color:var(--text-3)">{{ m.label }}</div><div style="font-size:22px;font-weight:700;margin-top:4px">{{ m.value }}</div></div></sc-for></div></section>
               <section><h2 style="font-size:16px;margin:0 0 12px">3. 核心临床试验证据</h2><sc-if value="{{ brief_hasChains }}"><div style="display:flex;flex-direction:column;border-top:1px solid var(--border)"><sc-for list="{{ brief_chains }}" as="c"><button onclick="{{ c.onClick }}" style="display:grid;grid-template-columns:1.4fr .9fr .6fr;gap:12px;text-align:left;border:0;border-bottom:1px solid var(--border);background:transparent;padding:13px 4px;color:var(--text)"><span><b>{{ c.chain_name }}</b><small style="display:block;color:var(--text-3);margin-top:4px">{{ c.source_ids }}</small></span><span style="font-size:12px">{{ c.status }}<small style="display:block;color:var(--text-3);margin-top:4px">{{ c.version }}</small></span><span style="font-size:12px;color:var(--brand-600)">{{ c.source_count }} 条来源</span></button></sc-for></div></sc-if></section>
               <section><h2 style="font-size:16px;margin:0 0 12px">4. 证据版本演进与研发时间轴</h2><sc-if value="{{ brief_hasEvents }}"><div style="display:flex;flex-direction:column;gap:0"><sc-for list="{{ brief_events }}" as="e"><button onclick="{{ e.onClick }}" style="display:grid;grid-template-columns:110px 120px 1fr 70px;gap:10px;border:0;border-bottom:1px solid var(--border);background:transparent;text-align:left;padding:10px 3px;color:var(--text);font-size:12px"><b style="font-family:var(--font-mono)">{{ e.date }}</b><span style="color:var(--text-3)">{{ e.event_type }}</span><span>{{ e.title }}</span><span style="color:var(--brand-600)">{{ e.source_id }}</span></button></sc-for></div></sc-if></section>
               <section><h2 style="font-size:16px;margin:0 0 12px">5. 监管状态与时间口径</h2><sc-if value="{{ brief_hasRegulatory }}"><sc-for list="{{ brief_regulatory }}" as="r"><button onclick="{{ r.onClick }}" style="width:100%;text-align:left;border:1px solid var(--border);background:var(--bg-sunken);padding:12px;color:var(--text);margin-bottom:8px"><b>{{ r.chain_name }}</b><div style="font-size:11px;color:var(--text-3);margin-top:5px">{{ r.source_ids }} · {{ r.note }}</div></button></sc-for></sc-if><sc-if value="{{ brief_hasRegulatory }}"></sc-if></section>
               <section><h2 style="font-size:16px;margin:0 0 12px">6. 证据强度及来源构成</h2><p style="font-size:12px;color:var(--text-2);line-height:1.65">{{ brief_strengthNote }}</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:18px"><div><b style="font-size:12px">来源类型</b><sc-for list="{{ brief_sourceTypes }}" as="d"><div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:7px 0;font-size:12px"><span>{{ d.label }}</span><b>{{ d.count }}</b></div></sc-for></div><div><b style="font-size:12px">版本构成</b><sc-for list="{{ brief_versions }}" as="d"><div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:7px 0;font-size:12px"><span>{{ d.label }}</span><b>{{ d.count }}</b></div></sc-for></div></div></section>
               <section><h2 style="font-size:16px;margin:0 0 12px">7. 证据缺口与待确认关系</h2><sc-if value="{{ brief_hasGaps }}"><sc-for list="{{ brief_gaps }}" as="g"><div style="border-left:3px solid var(--warn);padding:9px 12px;background:var(--warn-bg);margin-bottom:8px"><b style="font-size:12px">{{ g.source_id }} · {{ g.title }}</b><div style="font-size:12px;line-height:1.6;margin-top:4px">{{ g.description }} {{ g.gaps }}</div></div></sc-for></sc-if><sc-if value="{{ brief_hasGaps }}"></sc-if></section>
               <section style="display:grid;grid-template-columns:1fr 1fr;gap:24px"><div><h2 style="font-size:16px;margin:0 0 12px">8. 风险与限制</h2><sc-for list="{{ brief_limitations }}" as="x"><p style="font-size:12px;line-height:1.6;margin:0 0 7px">· {{ x.text }}</p></sc-for></div><div><h2 style="font-size:16px;margin:0 0 12px">9. 下一步证据方向</h2><sc-for list="{{ brief_directions }}" as="x"><p style="font-size:12px;line-height:1.6;margin:0 0 7px"><b>{{ x.priority }}</b> · {{ x.direction }}</p></sc-for></div></section>
-              <section><h2 style="font-size:16px;margin:0 0 12px">10. 引用来源及证据链</h2><sc-if value="{{ brief_hasCitations }}"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px"><sc-for list="{{ brief_citations }}" as="c"><button onclick="{{ c.onClick }}" style="text-align:left;border:0;border-bottom:1px solid var(--border);background:transparent;padding:8px 2px;color:var(--text)"><b style="font-size:11px;color:var(--brand-600)">{{ c.source_id }}</b><div style="font-size:11.5px;line-height:1.45;margin-top:3px">{{ c.title }}</div><small style="color:var(--text-3)">{{ c.source_type }} · 核验 {{ c.verified_at }}</small></button></sc-for></div></sc-if></section>
+              <section><h2 style="font-size:16px;margin:0 0 12px">10. 引用来源及证据链</h2><sc-if value="{{ brief_hasCitations }}"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px"><sc-for list="{{ brief_citations }}" as="c"><div style="text-align:left;border-bottom:1px solid var(--border);padding:8px 2px;color:var(--text)"><button onclick="{{ c.onClick }}" style="text-align:left;border:0;background:transparent;padding:0;color:var(--text)"><b style="font-size:11px;color:var(--brand-600)">{{ c.source_id }}</b><div style="font-size:11.5px;line-height:1.45;margin-top:3px">{{ c.title }}</div><small style="color:var(--text-3)">{{ c.source_type }} · 核验 {{ c.verified_at }}</small></button><sc-if value="{{ c.hasSourceUrl }}"><a href="{{ c.source_url }}" target="_blank" rel="noopener noreferrer" style="display:block;font-size:10.5px;color:var(--brand-600);overflow-wrap:anywhere;margin-top:4px">打开原始来源</a></sc-if></div></sc-for></div></sc-if></section>
               <section style="border-top:1px solid var(--border);padding-top:18px"><h2 style="font-size:16px;margin:0 0 12px">11. 禁止推断</h2><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ brief_prohibited }}" as="x"><span style="font-size:11px;border:1px solid var(--neg);color:var(--neg);padding:4px 8px">{{ x.text }}</span></sc-for></div></section>
               <footer style="border-top:1px solid var(--border);padding-top:15px;font-size:10.5px;color:var(--text-3);line-height:1.7">数据版本 {{ brief_dataVersion }} · 最近核验 {{ brief_verifiedAt }} · 生成时间 {{ brief_generatedAt }}<br>{{ brief_verificationScope }}</footer>
             </article>
@@ -4992,12 +4785,13 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
               <div>
                 <div style="font-size:21px;font-weight:600;letter-spacing:-.01em">研发证据中心</div>
-                <div style="font-size:12.5px;color:var(--text-3);margin-top:4px">NSCLC · {{ ev_scopeSummary }} · {{ ev_scopeCount }} 条人工核验资料{{ ev_scopeSuffix }}</div>
+                <div style="font-size:12.5px;color:var(--text-3);margin-top:4px">{{ ev_scopeSummary }} · {{ ev_scopeCount }} 条可展示资料{{ ev_scopeSuffix }}</div>
               </div>
               <div data-evidence-center-tabs="" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
                 <button onclick="{{ ev_tabSource }}" style="{{ ev_tabSourceStyle }}">来源检索</button>
+                <button onclick="{{ ev_tabNormalized }}" style="{{ ev_tabNormalizedStyle }}">规范化数据</button>
                 <button onclick="{{ ev_tabChain }}" style="{{ ev_tabChainStyle }}">证据链</button>
-                <button onclick="{{ ev_tabCompany }}" style="{{ ev_tabCompanyStyle }}">企业对比</button>
+                <button onclick="{{ ev_tabCompany }}" style="{{ ev_tabCompanyStyle }}">机构对比</button>
                 <sc-if value="{{ ev_hasDirectionTab }}"><button data-evidence-direction-tab="" onclick="{{ ev_tabDirection }}" style="{{ ev_tabDirectionStyle }}">疾病方向</button></sc-if>
                 <sc-if value="{{ !ev_hasDirectionTab }}"><span data-direction-tab-note="" style="font-size:11px;color:var(--text-3);max-width:220px;line-height:1.5">疾病方向数据集未部署，已隐藏「疾病方向」页签。</span></sc-if>
                 <button onclick="{{ ev_openGrounded }}" style="height:34px;border-radius:9px;border:1px solid var(--brand-600);background:var(--brand-600);color:#fff;font-size:13px;font-weight:700;padding:0 14px">进入智能决策 Agent</button>
@@ -5099,6 +4893,33 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
             </div>
           </sc-if>
 
+          <sc-if value="{{ ev_isNormalizedTab }}">
+            <section style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                <div><div style="font-size:14px;font-weight:700">规范化数据浏览</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">直接读取 <code>/api/normalized/*</code>：仅展示已进入网站根数据集的来源及其显式事实和关系。</div></div>
+                <button onclick="{{ norm_refreshCatalog }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elev);color:var(--text-2);padding:0 12px">刷新目录</button>
+              </div>
+              <div data-evidence-metrics="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px"><div style="font-size:11px;color:var(--text-3)">来源</div><b style="font-size:19px">{{ norm_sourceCount }}</b></div>
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px"><div style="font-size:11px;color:var(--text-3)">机构</div><b style="font-size:19px">{{ norm_orgCount }}</b></div>
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px"><div style="font-size:11px;color:var(--text-3)">研究</div><b style="font-size:19px">{{ norm_studyCount }}</b></div>
+                <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px"><div style="font-size:11px;color:var(--text-3)">药物实体</div><b style="font-size:19px">{{ norm_assetCount }}</b></div>
+              </div>
+              <div data-evidence-toolbar="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+                <input aria-label="规范化数据关键词" value="{{ norm_query }}" oninput="{{ norm_onQuery }}" onkeydown="{{ norm_onKey }}" placeholder="来源 ID、机构、药物、登记号、研究名或标题" style="flex:1;min-width:250px;height:36px;border:1px solid var(--border);border-radius:8px;background:var(--bg-sunken);padding:0 10px;color:var(--text)">
+                <select aria-label="疾病方向" value="{{ norm_domain }}" onchange="{{ norm_onDomain }}" style="height:36px;border:1px solid var(--border);border-radius:8px;background:var(--bg-sunken);padding:0 10px;color:var(--text)"><sc-for list="{{ norm_domains }}" as="d"><option value="{{ d.value }}">{{ d.label }}</option></sc-for></select>
+                <button onclick="{{ norm_search }}" style="height:36px;border:0;border-radius:8px;background:var(--brand-600);color:#fff;font-weight:700;padding:0 15px">检索</button>
+                <sc-if value="{{ norm_loading }}"><span style="font-size:12px;color:var(--brand-600)">加载中…</span></sc-if>
+                <sc-if value="{{ norm_catalogLoading }}"><span style="font-size:12px;color:var(--brand-600)">目录加载中…</span></sc-if>
+                <sc-if value="{{ norm_hasError }}"><span style="font-size:12px;color:var(--neg)">{{ norm_error }}</span></sc-if>
+              </div>
+              <div data-evidence="" style="display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:16px;align-items:start">
+                <div data-evidence-results="" style="display:flex;flex-direction:column;gap:9px"><sc-if value="{{ norm_empty }}"><div style="padding:24px;border:1px dashed var(--border);border-radius:10px;color:var(--text-3)">未找到符合条件的规范化来源。</div></sc-if><sc-for list="{{ norm_items }}" as="it"><button data-evidence-card="" onclick="{{ it.onClick }}" style="text-align:left;border:1px solid var(--border);background:var(--bg-elev);border-radius:11px;padding:12px;color:var(--text)"><div style="display:flex;justify-content:space-between;gap:8px"><b style="font-family:var(--font-mono);font-size:11px;color:var(--brand-600)">{{ it.source_id }}</b><span style="font-size:11px;color:var(--text-3)">{{ it.verification_status }}</span></div><div style="font-size:13px;font-weight:650;line-height:1.45;margin:5px 0">{{ it.title }}</div><div style="font-size:11.5px;color:var(--text-3)">{{ it.companyLabel }} · {{ it.study_name }} · {{ it.source_type }}</div></button></sc-for></div>
+                <aside data-evidence-detail="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:16px"><sc-if value="{{ !norm_hasSelected }}"><div style="color:var(--text-3);font-size:12px">选择一条来源后查看其明确事实和关系。</div></sc-if><sc-if value="{{ norm_hasSelected }}"><div style="font-family:var(--font-mono);font-size:11px;color:var(--brand-600)">{{ norm_selected.source_id }}</div><div style="font-size:14px;font-weight:700;line-height:1.5;margin:6px 0 12px">{{ norm_selectedTitle }}</div><div style="font-size:12px;color:var(--text-2);line-height:1.7">机构：{{ norm_selected.company_display_name }}<br>药物：{{ norm_selected.drug_names }}<br>研究：{{ norm_selected.study_name }}<br>核验：{{ norm_selected.verification_status }}</div><sc-if value="{{ norm_hasFacts }}"><div style="margin-top:14px;font-size:12px;font-weight:700">明确事实</div><sc-for list="{{ norm_facts }}" as="f"><div style="font-size:11.5px;border-top:1px solid var(--border);padding:7px 0"><span style="color:var(--text-3)">{{ f.label }}</span><br>{{ f.value }}</div></sc-for></sc-if><sc-if value="{{ norm_hasRelations }}"><div style="margin-top:14px;font-size:12px;font-weight:700">明确关系</div><sc-for list="{{ norm_relations }}" as="r"><div style="font-size:11.5px;border-top:1px solid var(--border);padding:7px 0"><span style="color:var(--text-3)">{{ r.type }}</span><br>{{ r.target }} · {{ r.status }}</div></sc-for></sc-if><sc-if value="{{ norm_hasSelectedUrl }}"><a href="{{ norm_selectedUrl }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;margin-top:14px;color:var(--brand-700);font-size:12px">打开原始来源 ↗</a></sc-if></sc-if></aside>
+              </div>
+            </section>
+          </sc-if>
+
           <sc-if value="{{ ev_isChainTab }}">
             <div data-evidence-metrics="" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
               <div style="background:var(--bg-elev);border:1px solid var(--border);border-radius:12px;padding:14px 15px"><div style="font-size:11px;color:var(--text-3);margin-bottom:5px">总证据链</div><div style="font-size:18px;font-weight:700;color:var(--text)">{{ chain_total }}</div></div>
@@ -5197,12 +5018,12 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                   <button data-evidence-card="" onclick="{{ c.onClick }}" style="{{ c.style }}" style-hover="border-color:var(--brand-300)">
                     <div data-evidence-card-head="" style="display:flex;align-items:center;justify-content:space-between;gap:10px">
                       <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.35">{{ c.chain_name }}</div>
-                      <span style="font-size:10.5px;font-weight:700;color:var(--brand-600);background:var(--brand-50);border-radius:999px;padding:2px 8px;white-space:nowrap">{{ c.typeLabel }}</span>
+                      <span style="font-size:10.5px;font-weight:700;color:var(--brand-600);background:var(--brand-50);border-radius:999px;padding:2px 8px;white-space:nowrap">{{ c.typeLabel }} · {{ c.projectionLabel }}</span>
                     </div>
                     <div data-evidence-card-fields="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;font-size:11.5px;color:var(--text-3)">
                       <span>企业：{{ c.company_name }}</span><span>资料数：{{ c.source_count }}</span>
                       <span>药物：{{ c.drugText }}</span><sc-if value="{{ c.hasStudyStatus }}"><span>状态：{{ c.study_status }}</span></sc-if>
-                      <span>编号：{{ c.trialText }}</span><span>{{ c.versionCounts }}</span>
+                      <span>编号：{{ c.trialText }}</span><span>{{ c.chainOrigin }}</span>
                     </div>
                     <div style="font-size:11.5px;color:var(--warn);background:var(--warn-bg);border-radius:8px;padding:7px 9px">{{ c.gapText }}</div>
                   </button>
@@ -5220,6 +5041,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                     <div data-evidence-detail-fields="" style="display:grid;grid-template-columns:88px 1fr;gap:6px 10px;font-size:12px">
                       <span style="color:var(--text-3)">企业</span><span>{{ chain_detail.company_name }}</span>
                       <span style="color:var(--text-3)">药物</span><span>{{ chain_detail.drugText }}</span>
+                      <span style="color:var(--text-3)">链路状态</span><span>{{ chain_detail.projectionLabel }} · {{ chain_detail.chainOrigin }}</span>
                       <span style="color:var(--text-3)">试验编号</span><span>{{ chain_detail.trialText }}</span>
                       <span style="color:var(--text-3)">研究名称</span><span>{{ chain_detail.studyNames }}</span>
                       <span style="color:var(--text-3)">研究状态</span><span>{{ chain_detail.study_status }}</span>
@@ -5300,30 +5122,29 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
               <div style="border:1px solid var(--brand-300);background:var(--brand-50);border-radius:14px;padding:15px 16px;display:flex;flex-direction:column;gap:8px">
                 <div style="font-size:14px;font-weight:800;color:var(--brand-700);line-height:1.45">{{ cmp_scopeText }}</div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--text-2)">
-                  <span style="border:1px solid var(--border);background:var(--bg-elev);border-radius:999px;padding:3px 9px">数据范围：当前 {{ ev_scopeCount }} 条已核验 NSCLC 资料{{ ev_scopeSuffix }}</span>
+                  <span style="border:1px solid var(--border);background:var(--bg-elev);border-radius:999px;padding:3px 9px">数据范围：当前 {{ ev_scopeCount }} 条规范化资料{{ ev_scopeSuffix }}</span>
                   <span style="border:1px solid var(--border);background:var(--bg-elev);border-radius:999px;padding:3px 9px">对比对象：{{ cmp_objects }}</span>
                   <span style="border:1px solid var(--border);background:var(--bg-elev);border-radius:999px;padding:3px 9px">不包含疗效排名、成功率预测或投资建议</span>
                 </div>
               </div>
 
               <div data-evidence-toolbar="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-                <label for="evidence-compare-company-a-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">左侧企业
+                <label for="evidence-compare-company-a-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">左侧机构
                   <select id="evidence-compare-company-a-select" name="evidence_compare_company_a" value="{{ cmp_companyA }}" onchange="{{ cmp_onCompanyA }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                     <sc-for list="{{ cmp_companyOptions }}" as="co"><option value="{{ co.value }}">{{ co.label }}</option></sc-for>
                   </select>
                 </label>
-                <button onclick="{{ cmp_swap }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:12.5px;font-weight:600;padding:0 13px">交换企业</button>
-                <label for="evidence-compare-company-b-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">右侧企业
+                <button onclick="{{ cmp_swap }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:12.5px;font-weight:600;padding:0 13px">交换机构</button>
+                <label for="evidence-compare-company-b-select" style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-2)">右侧机构
                   <select id="evidence-compare-company-b-select" name="evidence_compare_company_b" value="{{ cmp_companyB }}" onchange="{{ cmp_onCompanyB }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 10px">
                     <sc-for list="{{ cmp_companyOptions }}" as="co"><option value="{{ co.value }}">{{ co.label }}</option></sc-for>
                   </select>
                 </label>
                 <button onclick="{{ cmp_refresh }}" style="height:34px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text-2);font-size:12.5px;font-weight:600;padding:0 13px">刷新</button>
-                <sc-if value="{{ cmp_loading }}"><span style="font-size:12px;color:var(--brand-600)">企业证据对比加载中</span></sc-if>
-                <sc-if value="{{ cmp_rulesLoading }}"><span style="font-size:12px;color:var(--brand-600)">解释规则加载中</span></sc-if>
-                <sc-if value="{{ cmp_sameCompany }}"><span style="font-size:12px;color:var(--warn);background:var(--warn-bg);border-radius:999px;padding:3px 10px">请选择两个不同企业后再比较</span></sc-if>
+                <sc-if value="{{ cmp_loading }}"><span style="font-size:12px;color:var(--brand-600)">机构对比加载中</span></sc-if>
+                <sc-if value="{{ cmp_sameCompany }}"><span style="font-size:12px;color:var(--warn);background:var(--warn-bg);border-radius:999px;padding:3px 10px">请选择两个不同机构后再比较</span></sc-if>
                 <sc-if value="{{ cmp_hasError }}"><span style="font-size:12px;color:var(--neg);background:var(--neg-bg);border-radius:999px;padding:3px 10px">{{ cmp_error }}</span></sc-if>
-                <sc-if value="{{ cmp_empty }}"><span style="font-size:12px;color:var(--text-2)">空结果：当前数据不足，未找到可展示的企业证据对比</span></sc-if>
+                <sc-if value="{{ cmp_empty }}"><span style="font-size:12px;color:var(--text-2)">空结果：当前数据不足，未找到可展示的机构对比</span></sc-if>
               </div>
 
               <sc-if value="{{ cmp_hasMatrix }}">
@@ -5479,7 +5300,7 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
                   <div style="font-size:12px;line-height:1.7;color:var(--text-2)">本页「疾病方向」记录为 <b>API 机器采集（api_harvested）</b>：由公开临床试验登记库与文献接口批量抓取并结构化，<b>未经人工逐条复核</b>，与研发证据中心的 {{ dq_verifiedCount }} 条人工核验资料属于两套口径，不能互相替代。</div>
                   <div style="font-size:12px;line-height:1.7;color:var(--text-2)">每条记录均标注核验状态：<b>api_harvested＝机器采集</b>、<b>verified＝人工核验</b>；仅 verified 记录可视为人工核验资料，本页不把机器采集记录表述为人工核验。</div>
                   <sc-if value="{{ dq_hasVerificationMix }}"><div data-direction-verification-mix="" style="font-size:12px;line-height:1.7;color:var(--text-2)">{{ dq_verificationMix }}</div></sc-if>
-                  <div style="font-size:12px;line-height:1.7;color:var(--text-2)">本页仅呈现当前收录记录的数量与构成，<b>不用于企业研发实力排名</b>，也不支持跨试验疗效、安全性或成功率推断。</div>
+                  <div style="font-size:12px;line-height:1.7;color:var(--text-2)">本页仅呈现规范化机构可比字段的数量与构成，<b>不输出排名或评分</b>，也不支持跨试验疗效、安全性或成功率推断。</div>
                 </div>
 
                 <section data-direction-roadmap="" style="display:flex;flex-direction:column;gap:12px">
@@ -5890,16 +5711,16 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);-webkit
           <div style="background:linear-gradient(135deg,var(--brand-800),var(--brand-600));color:#fff;border-radius:16px;padding:20px 22px;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap">
             <div style="max-width:760px">
               <div style="font-size:22px;font-weight:800;letter-spacing:-.02em">研发事件时间轴</div>
-              <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,.78);margin-top:5px">按真实结构化日期展示论文分析、公司披露和监管事件。核验日期、响应生成时间与页面更新时间均不作为研发事件日期。</div>
+              <div style="font-size:13px;line-height:1.65;color:rgba(255,255,255,.78);margin-top:5px">按真实结构化日期展示研究、论文和监管事件。核验日期、响应生成时间与页面更新时间均不作为研发事件日期。</div>
             </div>
             <div style="display:flex;gap:8px"><button onclick="{{ tl_brief }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.5);background:#fff;color:var(--brand-700);font-size:12.5px;font-weight:700;padding:0 13px">生成决策简报</button><button onclick="{{ tl_reload }}" style="height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:700;padding:0 13px">刷新时间轴</button></div>
           </div>
 
           <div data-timeline-filters="" style="background:var(--bg-elev);border:1px solid var(--border);border-radius:14px;padding:15px;display:grid;grid-template-columns:repeat(5,minmax(132px,1fr));gap:11px;align-items:end">
-            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">企业
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">机构
               <select id="timeline-company-select" name="timeline_company" value="{{ tl_company }}" onchange="{{ tl_onCompany }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_companyOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
             </label>
-            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">试验
+            <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">研究
               <select id="timeline-trial-select" name="timeline_trial" value="{{ tl_trial }}" onchange="{{ tl_onTrial }}" style="height:36px;border-radius:8px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);font-size:12.5px;padding:0 9px"><sc-for list="{{ tl_trialOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></select>
             </label>
             <label style="display:flex;flex-direction:column;gap:5px;font-size:11.5px;color:var(--text-3)">药物

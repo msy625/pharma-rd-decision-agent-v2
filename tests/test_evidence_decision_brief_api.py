@@ -1,4 +1,7 @@
 import unittest
+import pytest
+
+pytestmark = pytest.mark.compatibility
 
 from tests.test_deployment_health import _ASGIClient
 from webapp.main import app

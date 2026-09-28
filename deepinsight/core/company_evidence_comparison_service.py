@@ -13,9 +13,9 @@ from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.source_registry_service import SourceRegistryService, norm
 
 
-DATA_SCOPE = "verified_nsclc_multi_company_sample"
-INTERPRETATION_SCOPE = "current_verified_sample_only"
-SCOPE_WARNING = "以下结果仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力。"
+DATA_SCOPE = "normalized_research_evidence"
+INTERPRETATION_SCOPE = "eligible_normalized_records_only"
+SCOPE_WARNING = "以下结果仅反映规范化数据表中具有明确关系、可回查链接和核验状态的当前收录资料，不代表企业整体研发实力或完整研发管线。"
 
 COMPANY_SUBJECTS = [
     {
@@ -99,7 +99,18 @@ class CompanyEvidenceComparisonService:
         )
 
     def available_companies(self) -> list[dict[str, object]]:
-        return [dict(subject) for subject in COMPANY_SUBJECTS]
+        """List every organization represented by eligible website source rows."""
+        subjects: dict[str, dict[str, object]] = {}
+        for row in self.source_registry_service.load_rows():
+            name = str(row.get("company_cn") or row.get("company") or "").strip()
+            if not name:
+                continue
+            key = norm(name).strip()
+            subjects.setdefault(
+                key,
+                {"company_name": name, "display_name": name, "aliases": [name]},
+            )
+        return [subjects[key] for key in sorted(subjects)]
 
     def normalize_company(self, company_name: str) -> dict[str, object]:
         subject = self._resolve_company(company_name)
@@ -158,7 +169,7 @@ class CompanyEvidenceComparisonService:
             "partially_comparable_dimensions": list(PARTIALLY_COMPARABLE_DIMENSIONS),
             "comparison_notes": list(COMPARISON_NOTES),
             "prohibited_conclusions": list(PROHIBITED_CONCLUSIONS),
-            "generated_from": ["SourceRegistryService", "EvidenceChainService", "evidence_chains.json", "source_registry.csv"],
+            "generated_from": ["NormalizedSourceRegistryService", "TemplateDataRepository", "EvidenceChainService", "evidence_chains.json"],
             "data_scope": DATA_SCOPE,
             "interpretation_scope": INTERPRETATION_SCOPE,
         }
@@ -244,6 +255,10 @@ class CompanyEvidenceComparisonService:
         if not key:
             return None
         for subject in COMPANY_SUBJECTS:
+            aliases = [norm(alias) for alias in subject["aliases"]]
+            if key in aliases or any(key in alias or alias in key for alias in aliases):
+                return subject
+        for subject in self.available_companies():
             aliases = [norm(alias) for alias in subject["aliases"]]
             if key in aliases or any(key in alias or alias in key for alias in aliases):
                 return subject

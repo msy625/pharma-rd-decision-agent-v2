@@ -1,4 +1,3 @@
-import re
 import unittest
 from pathlib import Path
 
@@ -9,128 +8,35 @@ TEMPLATE = ROOT / "webapp" / "frontend_src" / "template.html"
 STATIC_INDEX = ROOT / "webapp" / "static" / "index.html"
 
 
-class CompanyEvidenceProfileFrontendTest(unittest.TestCase):
+class InstitutionProfileFrontendTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.component = COMPONENT.read_text(encoding="utf-8")
         cls.template = TEMPLATE.read_text(encoding="utf-8")
         cls.index = STATIC_INDEX.read_text(encoding="utf-8")
-        cls.loader = cls.component[
-            cls.component.index("  loadCompanyEvidenceProfilePage(){") : cls.component.index("  loadProfile(){")
-        ]
-        cls.values = cls.component[
-            cls.component.index("  companyProfileVals(){") : cls.component.index("  // ---- chat ----")
-        ]
-        cls.view = cls.template[
-            cls.template.index('<sc-if value="{{ isCompare }}">') : cls.template.index('<sc-if value="{{ isWhitebox }}">')
-        ]
 
-    def test_01_main_navigation_is_company_evidence_profile(self):
-        self.assertIn("label:'企业证据画像'", self.component)
-        self.assertIn("compare:['企业证据画像','单企业核验证据']", self.component)
+    def test_institution_profile_uses_normalized_institution_routes(self):
+        self.assertIn("/api/evidence/institution-profile-institutions", self.component)
+        self.assertIn("/api/evidence/institution-profile/", self.component)
+        self.assertIn("机构研发画像", self.component)
+        self.assertIn("institution-profile", self.index)
+        for retired_path in ["/api/evidence/company-profile-companies", "/api/evidence/company-profile/"]:
+            self.assertNotIn(retired_path, self.component)
 
-    def test_02_profile_only_loads_new_profile_endpoints(self):
-        self.assertIn("'/api/evidence/company-profile-companies'", self.loader)
-        self.assertIn("'/api/evidence/company-profile/'+encodeURIComponent(name)", self.loader)
-        for path in ["'/api/profile'", "'/api/compare'", "'/api/dashboard'"]:
-            self.assertNotIn(path, self.loader)
+    def test_profile_shows_organization_coverage_and_gaps(self):
+        for term in ["机构数据覆盖", "申办研究数", "药物实体", "关系缺口", "尚不足以形成完整画像"]:
+            self.assertIn(term, self.component + self.template)
+        self.assertIn("profile_groups", self.component)
+        self.assertIn("profile_limitations", self.component)
 
-    def test_03_default_and_switchable_companies(self):
-        self.assertIn("companyProfileCompany:'恒瑞医药'", self.component)
-        self.assertIn("百济神州 / BeOne Medicines", self.values)
-        self.assertIn("profile_onCompany", self.values + self.view)
+    def test_profile_navigation_links_to_current_evidence_features(self):
+        for path in ["evidenceTab:'sources'", "evidenceTab:'companyCompare'", "page:'groundedQa'"]:
+            self.assertIn(path, self.component)
+        self.assertIn("机构对比", self.template)
+        self.assertIn("智能决策 Agent", self.template)
 
-    def test_04_scope_warning_is_prominent(self):
-        warning = "本画像仅反映当前收录并核验的NSCLC证据样本，不代表企业整体研发实力或完整研发管线。"
-        self.assertIn(warning, self.values)
-        self.assertIn("profile_scopeWarning", self.view)
-
-    def test_05_core_metrics_and_distributions_are_rendered(self):
-        for label in ["已核验来源", "试验级证据链", "药物级监管链", "多来源试验链", "单来源试验链", "论文来源", "试验登记来源", "最新资料", "历史版本", "独立资料", "待确认关系", "证据结构概览", "资料覆盖", "来源类型构成", "研究状态构成"]:
-            self.assertIn(label, self.values + self.view)
-        self.assertIn("data-profile-structure-grid", self.view)
-        self.assertIn("data-profile-bar-track", self.view)
-        self.assertIn("barStyle", self.values)
-
-    def test_05a_profile_first_screen_uses_dedicated_visual_structures(self):
-        redesigned = self.view[
-            self.view.index('<sc-if value="{{ profile_hasData }}">') : self.view.index('<sc-if value="{{ profile_legacyDesign }}">')
-        ]
-        for marker in [
-            "data-profile-secondary-actions",
-            "data-profile-coverage-bars",
-            "data-profile-source-tags",
-            "data-profile-compact-stats",
-        ]:
-            self.assertIn(marker, redesigned)
-        self.assertNotIn("其他来源类型及数量", self.values + redesigned)
-        self.assertIn("profile_otherSourceTypes", self.values + redesigned)
-        self.assertIn("profile_hasOtherSourceTypes", self.values + redesigned)
-        self.assertIn("当前样本暂无其他来源类型", redesigned)
-        self.assertIn("grid-template-columns:minmax(0,1.35fr) minmax(240px,.9fr) minmax(240px,.9fr)", self.template)
-        self.assertIn("word-break:keep-all", self.template)
-        self.assertIn("writing-mode:horizontal-tb", self.template)
-        self.assertNotIn("min-height:36px", redesigned)
-
-    def test_05b_profile_responsive_grid_and_main_scroll_contract(self):
-        self.assertIn("[data-profile-trial-grid]{display:grid;grid-template-columns:repeat(3", self.template)
-        self.assertIn("[data-profile-trial-grid]{grid-template-columns:repeat(2", self.template)
-        self.assertIn("[data-profile-trial-grid]{grid-template-columns:minmax(0,1fr)}", self.template)
-        redesigned = self.view[
-            self.view.index('<sc-if value="{{ profile_hasData }}">') : self.view.index('<sc-if value="{{ profile_legacyDesign }}">')
-        ]
-        self.assertNotIn("max-height:430px", redesigned)
-        self.assertNotIn("overflow:auto", redesigned)
-        self.assertIn("slice(0,4)", self.values)
-        self.assertIn("profile_toggleIndependent", self.values + redesigned)
-        self.assertIn("profile_toggleUnresolved", self.values + redesigned)
-        self.assertIn("data-profile-regulatory-empty", redesigned)
-
-    def test_06_trial_chain_cards_and_jump(self):
-        for text in ["chain_id", "trial_id", "来源数量", "版本构成", "研究状态", "查看证据链"]:
-            self.assertIn(text, self.values + self.view)
-        jump = self.component[
-            self.component.index("  openProfileChain(chainId){") : self.component.index("  openProfileSources(){")
-        ]
-        self.assertIn("page:'evidence'", jump)
-        self.assertIn("evidenceTab:'chains'", jump)
-        self.assertIn("this.loadChainDetail(cid)", jump)
-
-    def test_07_regulatory_language_is_conservative(self):
-        for text in ["正式授权", "CHMP积极意见，非最终批准", "不计入临床试验数量", "关联试验背景"]:
-            self.assertIn(text, self.values + self.view)
-        self.assertIn("当前样本未收录独立监管链；该表述不代表企业没有监管进展。", self.view)
-
-    def test_08_quick_entries_reuse_existing_evidence_tabs(self):
-        for label in ["查看全部来源", "打开企业对比", "进入智能决策 Agent"]:
-            self.assertIn(label, self.view)
-        for tab in ["evidenceTab:'sources'", "evidenceTab:'companyCompare'"]:
-            self.assertIn(tab, self.loader)
-        self.assertIn("this.openGroundedQa('请基于当前已核验证据样本说明 '+company", self.loader)
-        self.assertIn("page:'groundedQa'", self.loader)
-
-    def test_09_metadata_limitations_and_empty_states(self):
-        for text in ["数据版本", "核验日期", "生成时间", "限制说明", "正在加载企业证据画像", "当前数据不足", "重新加载"]:
-            self.assertIn(text, self.view)
-
-    def test_10_new_profile_path_has_no_old_scoring_language(self):
-        combined = self.loader + self.values + self.view
-        for forbidden in ["雷达评分", "winner", "领先", "营业收入", "归母净利润", "风险分", "Math.random", "innerHTML", "eval(", "MOCK"]:
-            self.assertNotIn(forbidden, combined)
-
-    def test_11_old_profile_is_not_in_current_render_path(self):
-        self.assertIn('<sc-if value="{{ isLegacyCompare }}">', self.template)
-        self.assertNotIn("isLegacyCompare:", self.component)
-        load_page = re.search(r"loadPage\(\)\{(?P<body>.*?)\n  \}", self.component, re.S).group("body")
-        self.assertIn("p==='compare') this.loadCompanyEvidenceProfilePage()", load_page)
-        self.assertNotIn("this.loadProfile(); this.loadCompare();", load_page)
-        render_values = self.component[
-            self.component.index("  renderVals(){") : self.component.index("\n  }\n}", self.component.index("  renderVals(){"))
-        ]
-        self.assertNotIn("this.compareVals()", render_values)
-
-    def test_12_build_artifact_matches_source(self):
-        self.assertEqual(self.template.replace("/*__COMPONENT__*/", self.component), self.index)
+    def test_static_artifact_matches_frontend_sources(self):
+        self.assertEqual(self.index, self.template.replace("/*__COMPONENT__*/", self.component))
 
 
 if __name__ == "__main__":

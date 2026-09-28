@@ -1,7 +1,10 @@
 import re
 import sys
 import unittest
+import pytest
 from pathlib import Path
+
+pytestmark = pytest.mark.compatibility
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -56,8 +59,8 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         timeline_start = self.component.index("  loadTimeline(){")
         timeline_body = self.component[timeline_start:self.component.index("  loadWhitebox(){", timeline_start)]
         self.assertNotIn("!this._legacyAvailable()", timeline_body)
-        self.assertIn("'/api/evidence/timeline'", timeline_body)
-        self.assertNotIn("'/api/timeline'", timeline_body)
+        self.assertIn("'/api/evidence/institution-timeline'", timeline_body)
+        self.assertNotIn("'/api/evidence/timeline'", timeline_body)
 
     def test_03_legacy_notice_state_is_not_rendered_in_competition_shell(self):
         self.assertIn("legacyNotice", self.component)
@@ -80,18 +83,19 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
 
     def test_06_competition_navigation_and_remaining_legacy_api_code_are_retained(self):
         nav = self.component[self.component.index("  navDef(){") : self.component.index("  navItem(it){")]
-        for text in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "智能决策 Agent"]:
+        for text in ["研发决策总览", "机构研发画像", "研发事件时间轴", "研发证据中心", "智能决策 Agent"]:
             self.assertIn(text, nav)
         for text in ["智能问答", "自动化研报", "白盒溯源", "数据库浏览", "高级分析"]:
             self.assertNotIn(text, nav)
         self.assertNotIn("label:'公司画像 · 对比'", self.component)
-        self.assertIn('<sc-if value="{{ isLegacyCompare }}">', self.template)
+        self.assertNotIn('value="{{ isLegacyCompare }}"', self.template)
         for path in ["/api/bootstrap", "/api/profile", "/api/compare"]:
             self.assertIn(path, self.component)
         self.assertNotIn("'/api/timeline'", self.component)
         main = Path(ROOT / "webapp" / "main.py").read_text(encoding="utf-8")
         self.assertIn("@app.get(\"/api/dashboard\")", main)
         self.assertIn("@app.get(\"/api/timeline\")", main)
+        self.assertIn("@app.get(\"/api/evidence/institution-timeline\")", main)
         self.assertIn("@app.get(\"/api/evidence/timeline\")", main)
 
     def test_07_svg_templates_do_not_pass_raw_bindings_to_sensitive_attrs(self):
@@ -125,8 +129,8 @@ class LegacyFrontendDegradationTest(unittest.TestCase):
         ]:
             self.assertIn(expected, self.runtime)
 
-    def test_11_evidence_three_tabs_and_top_level_grounded_qa_exist(self):
-        for label in ["来源检索", "证据链", "企业对比", "进入智能决策 Agent"]:
+    def test_11_current_evidence_tabs_and_top_level_grounded_qa_exist(self):
+        for label in ["来源检索", "规范化数据", "证据链", "机构对比", "进入智能决策 Agent"]:
             self.assertIn(label, self.template)
             self.assertIn(label, self.index)
         self.assertIn("label:'智能决策 Agent'", self.component)

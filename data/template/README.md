@@ -7,7 +7,9 @@
 - 研究表：`studies.csv`、`study_identifiers.csv`、`publications.csv`。
 - 证据与业务表：`facts.csv`、`relations.csv`、`regulatory_events.csv`、`market_events.csv`。
 
-旧 NSCLC 数据已规范化写入这些表；四领域种子数据已合并。后续外部采集必须向同一套表追加，并保留 `source_id` 和核验状态。
+当前目录保存网站的根数据集：从原规范化语料中选出 1,370 条可展示来源和 225 家机构。入选来源必须有有效 URL、核验状态和明确已确认关系；无关系或含未解决关系的来源不进入网站展示。后续外部采集需先经过同一准入规则，才可加入这些表。
+
+`website_data_contract.json` 是当前网站数据基线：固化表计数、来源核验状态构成、关系状态构成与每张 CSV 的 SHA-256 指纹。任何数据更新都必须同步更新该契约和 `data_manifest.json`，并重新通过离线校验；不能用来源数量推断机构实力、疗效、成功率或投资结论。
 
 ## 方向批量采集（direction_harvest_v1.0）
 
@@ -49,8 +51,7 @@ python scripts/harvest_direction_data.py --dry-run
 python scripts/validate_direction_dataset.py
 ```
 
-校验项包括：目录为 6 阶段 / 20 方向、每个方向记录数落在 100–200 之间、
-来源 URL 与上游标识一致、主键唯一、以及跨表引用可解析。
+校验项包括：目录为 6 阶段 / 20 方向、全库来源数在 1200–1500、机构数在 200–300、每个方向记录数落在 40–110 之间、来源 URL 与上游标识一致、主键唯一、以及跨表引用可解析。
 
 ### 数据字典补充
 
@@ -114,7 +115,4 @@ python scripts/drop_individual_investigators.py           # 执行清理（幂�
 
 ## 与 `data/source_registry.csv` 的关系
 
-`data/source_registry.csv`（39 条人工核验 NSCLC 来源）是早期 `SourceRegistryService`
-的输入格式，保留在仓库中作为兼容输入，供证据中心、证据链、企业画像、事件时间轴和循证问答使用。
-它对应的规范化记录同样存在于 `data/template/` 中。方向批量采集数据 **不写入** 该文件，
-因此人工核验的 39 条样本口径保持不变。
+`data/source_registry.csv` 是历史兼容资料，不是网站或 FastAPI 的运行时输入。证据中心、企业画像、对比、时间轴和循证问答均从本目录的规范化表投影数据；历史文件仅供追溯旧版本和兼容工具使用。

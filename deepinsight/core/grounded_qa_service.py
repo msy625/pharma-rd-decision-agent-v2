@@ -477,8 +477,13 @@ class GroundedQAService:
 
     def data_version(self) -> str:
         digest = hashlib.sha256()
+        # The website now queries the normalized template, so its fingerprint
+        # must change when any canonical table changes. Keeping only the retired
+        # CSV here would report a stale version after a template refresh.
+        from deepinsight.core.template_data_repository import DEFAULT_TEMPLATE_DIR, TABLE_REQUIRED_FIELDS
+
         for path in [
-            DEFAULT_CSV_PATH,
+            *(DEFAULT_TEMPLATE_DIR / f"{name}.csv" for name in sorted(TABLE_REQUIRED_FIELDS)),
             DEFAULT_CHAIN_CONFIG_PATH,
             DEFAULT_EVIDENCE_RULES_PATH,
             self.rules_path,

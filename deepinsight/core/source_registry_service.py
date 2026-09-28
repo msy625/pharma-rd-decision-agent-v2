@@ -410,6 +410,42 @@ class SourceRegistryService:
         return data
 
 
+class NormalizedSourceRegistryService(SourceRegistryService):
+    """Expose eligible normalized-template rows through the existing query contract.
+
+    Keeping the established ``SourceRegistryService`` methods means the evidence
+    workbench, profile, comparison and timeline services can move together without
+    duplicating query or alias logic. The legacy CSV is intentionally never read.
+    """
+
+    def __init__(
+        self,
+        *,
+        aliases_path: str | Path | None = None,
+        evidence_rules_path: str | Path | None = None,
+        include_harvested: bool = True,
+    ) -> None:
+        super().__init__(
+            aliases_path=aliases_path,
+            evidence_rules_path=evidence_rules_path,
+            include_harvested=include_harvested,
+        )
+        from deepinsight.core.template_data_repository import TemplateDataRepository
+
+        self.repository = TemplateDataRepository()
+
+    def load_rows(self) -> list[dict[str, str]]:
+        if self._rows is None:
+            try:
+                self._rows = self.repository.source_rows(domain_id=None)
+            except Exception as exc:
+                raise SourceRegistryStructureError(
+                    f"Normalized template cannot be projected into website rows: {exc}"
+                ) from exc
+            self._fieldnames = sorted({key for row in self._rows for key in row})
+        return [dict(row) for row in self._rows]
+
+
 def expand_drug_terms(term: str, aliases: dict[str, list[str]]) -> list[str]:
     term_key = norm(term)
     if not term_key:

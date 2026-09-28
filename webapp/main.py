@@ -30,10 +30,21 @@ from deepinsight.core.grounded_qa_usage_guard import (
     grounded_qa_usage_config_from_env,
 )
 from deepinsight.core.industry_taxonomy import infer_industry_name
+from deepinsight.core.normalized_data_service import NormalizedDataService
+from deepinsight.core.normalized_institution_profile_service import NormalizedInstitutionProfileService
+from deepinsight.core.normalized_institution_comparison_service import NormalizedInstitutionComparisonService
+from deepinsight.core.normalized_institution_timeline_service import NormalizedInstitutionTimelineService
+from deepinsight.core.normalized_institution_brief_service import NormalizedInstitutionBriefService
+from deepinsight.core.normalized_research_agent_service import NormalizedResearchAgentService
 from deepinsight.core.rd_decision_agent_service import RDDecisionAgentService
 from deepinsight.core.rd_event_timeline_service import RDEventTimelineService
 from deepinsight.config import DB_PATH as DEFAULT_DB_PATH
-from deepinsight.core.source_registry_service import SourceRegistryFileNotFound, SourceRegistryService, SourceRegistryStructureError
+from deepinsight.core.source_registry_service import (
+    NormalizedSourceRegistryService,
+    SourceRegistryFileNotFound,
+    SourceRegistryService,
+    SourceRegistryStructureError,
+)
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
@@ -1585,8 +1596,55 @@ def _require_company_for_api(company_name: str | None) -> None:
         conn.close()
 
 
+_NORMALIZED_EVIDENCE_SERVICE: NormalizedSourceRegistryService | None = None
+_NORMALIZED_INSTITUTION_PROFILE_SERVICE: NormalizedInstitutionProfileService | None = None
+_NORMALIZED_INSTITUTION_COMPARISON_SERVICE: NormalizedInstitutionComparisonService | None = None
+_NORMALIZED_INSTITUTION_TIMELINE_SERVICE: NormalizedInstitutionTimelineService | None = None
+_NORMALIZED_INSTITUTION_BRIEF_SERVICE: NormalizedInstitutionBriefService | None = None
+
+
 def _evidence_service(include_harvested: bool = False) -> SourceRegistryService:
-    return SourceRegistryService(include_harvested=include_harvested)
+    # ``include_harvested`` remains an accepted compatibility parameter for old
+    # bookmarks, but the normalized template is now the default complete dataset.
+    global _NORMALIZED_EVIDENCE_SERVICE
+    if _NORMALIZED_EVIDENCE_SERVICE is None:
+        _NORMALIZED_EVIDENCE_SERVICE = NormalizedSourceRegistryService(include_harvested=True)
+    return _NORMALIZED_EVIDENCE_SERVICE
+
+
+def _normalized_data_service() -> NormalizedDataService:
+    return NormalizedDataService()
+
+
+def _normalized_institution_profile_service() -> NormalizedInstitutionProfileService:
+    global _NORMALIZED_INSTITUTION_PROFILE_SERVICE
+    if _NORMALIZED_INSTITUTION_PROFILE_SERVICE is None:
+        source_service = _evidence_service(include_harvested=True)
+        _NORMALIZED_INSTITUTION_PROFILE_SERVICE = NormalizedInstitutionProfileService(
+            chain_service=EvidenceChainService(source_registry_service=source_service)
+        )
+    return _NORMALIZED_INSTITUTION_PROFILE_SERVICE
+
+
+def _normalized_institution_comparison_service() -> NormalizedInstitutionComparisonService:
+    global _NORMALIZED_INSTITUTION_COMPARISON_SERVICE
+    if _NORMALIZED_INSTITUTION_COMPARISON_SERVICE is None:
+        _NORMALIZED_INSTITUTION_COMPARISON_SERVICE = NormalizedInstitutionComparisonService(_normalized_institution_profile_service())
+    return _NORMALIZED_INSTITUTION_COMPARISON_SERVICE
+
+
+def _normalized_institution_timeline_service() -> NormalizedInstitutionTimelineService:
+    global _NORMALIZED_INSTITUTION_TIMELINE_SERVICE
+    if _NORMALIZED_INSTITUTION_TIMELINE_SERVICE is None:
+        _NORMALIZED_INSTITUTION_TIMELINE_SERVICE = NormalizedInstitutionTimelineService()
+    return _NORMALIZED_INSTITUTION_TIMELINE_SERVICE
+
+
+def _normalized_institution_brief_service() -> NormalizedInstitutionBriefService:
+    global _NORMALIZED_INSTITUTION_BRIEF_SERVICE
+    if _NORMALIZED_INSTITUTION_BRIEF_SERVICE is None:
+        _NORMALIZED_INSTITUTION_BRIEF_SERVICE = NormalizedInstitutionBriefService()
+    return _NORMALIZED_INSTITUTION_BRIEF_SERVICE
 
 
 def _evidence_chain_service(include_harvested: bool = False) -> EvidenceChainService:
@@ -1718,35 +1776,16 @@ def _grounded_qa_service() -> GroundedQAService:
     )
 
 
-def _rd_decision_agent_service() -> RDDecisionAgentService:
+def _normalized_research_agent_service() -> NormalizedResearchAgentService:
     source_service = _evidence_service()
-    evidence_chain_service = EvidenceChainService(source_registry_service=source_service)
-    company_comparison_service = CompanyEvidenceComparisonService(
-        source_registry_service=source_service,
-        evidence_chain_service=evidence_chain_service,
+    return NormalizedResearchAgentService(
+        source_service=source_service,
+        chain_service=EvidenceChainService(source_registry_service=source_service),
     )
-    company_profile_service = CompanyEvidenceProfileService(
-        source_registry_service=source_service,
-        evidence_chain_service=evidence_chain_service,
-        company_comparison_service=company_comparison_service,
-    )
-    grounded_qa_service = GroundedQAService(
-        source_registry_service=source_service,
-        evidence_chain_service=evidence_chain_service,
-        company_comparison_service=company_comparison_service,
-    )
-    return RDDecisionAgentService(
-        source_registry_service=source_service,
-        evidence_chain_service=evidence_chain_service,
-        company_comparison_service=company_comparison_service,
-        company_profile_service=company_profile_service,
-        rd_event_timeline_service=RDEventTimelineService(
-            source_registry_service=source_service,
-            evidence_chain_service=evidence_chain_service,
-            company_evidence_profile_service=company_profile_service,
-        ),
-        grounded_qa_service=grounded_qa_service,
-    )
+
+
+def _rd_decision_agent_service() -> NormalizedResearchAgentService:
+    return _normalized_research_agent_service()
 
 
 _GROUNDED_QA_USAGE_GUARD: GroundedQAUsageGuard | None = None
@@ -1770,28 +1809,27 @@ def _grounded_qa_client_id(request: Request) -> str:
 
 
 def _evidence_metadata(include_harvested: bool = False) -> dict[str, Any]:
-    if include_harvested:
-        return {
-            "data_scope": "verified_nsclc_sample_plus_harvested_directions",
-            "data_source": "source_registry.csv + data/template",
-        }
     return {
-        "data_scope": "verified_nsclc_multi_company_sample",
-        "data_source": "source_registry.csv",
+        "data_scope": "eligible_normalized_research_evidence",
+        "data_source": "data/template/*.csv",
+        "data_backend": "normalized_template",
+        "legacy_parameter_ignored": "include_harvested",
     }
 
 
 def _evidence_chain_metadata() -> dict[str, Any]:
     return {
-        "data_scope": "verified_nsclc_multi_company_sample",
-        "relationship_source": "evidence_chains.json",
+        "data_scope": "eligible_normalized_research_evidence",
+        "relationship_source": "data/template/relations.csv + evidence_chains.json manual overrides",
+        "data_backend": "normalized_template_projection",
+        "projection_statuses": ["formed", "single_source", "relationship_insufficient"],
     }
 
 
 def _company_evidence_comparison_metadata() -> dict[str, Any]:
     return {
-        "data_scope": "verified_nsclc_multi_company_sample",
-        "interpretation_scope": "current_verified_sample_only",
+        **_evidence_metadata(),
+        "interpretation_scope": "eligible_normalized_records_only",
     }
 
 
@@ -1907,8 +1945,14 @@ def _runtime_capabilities_payload(*, workbench_available: bool | None = None) ->
         "competition_core_available": competition_available,
         "evidence_workbench_available": workbench_available,
         "company_evidence_profile_available": company_profile_available,
+        "institution_research_profile_available": True,
+        "institution_comparison_available": True,
         "rd_event_timeline_available": timeline_available,
+        "normalized_institution_timeline_available": True,
         "evidence_decision_brief_available": brief_available,
+        "normalized_institution_brief_available": True,
+        "normalized_research_agent_available": True,
+        "normalized_data_available": True,
         "direction_dataset_available": direction_dataset_available,
         "legacy_features_available": legacy_available,
         "default_page": "today" if workbench_available else "evidence",
@@ -1929,7 +1973,7 @@ def initial_state() -> dict[str, Any]:
             "runtime_capabilities": _runtime_capabilities_payload(workbench_available=True),
             "evidence_workbench": {
                 "workbench": workbench,
-                "include_harvested": False,
+                "include_harvested": True,
                 "metadata": {
                     "data_scope": workbench.get("metadata", {}).get(
                         "data_scope", "verified_nsclc_multi_company_sample"
@@ -2059,18 +2103,14 @@ def evidence_summary(include_harvested: bool = False) -> dict[str, Any]:
         verified_count = sum(1 for row in rows if row.get("verification_status") != HARVESTED_STATUS)
         harvested_count = len(rows) - verified_count
         scope = (
-            f"NSCLC；{len(summary.get('company_counts', {}))}家企业；{verified_count}条人工核验来源"
-            if not include_harvested
-            else (
-                f"NSCLC + 方向批量采集；{len(summary.get('company_counts', {}))}家企业；"
-                f"{verified_count}条人工核验 + {harvested_count}条机器采集来源"
-            )
+            f"规范化研发证据；{len(summary.get('company_counts', {}))}家机构；"
+            f"{verified_count}条人工/部分核验 + {harvested_count}条机器采集来源"
         )
         return {
             **summary,
             "company_source_counts": summary.get("company_counts", {}),
             "data_scope": scope,
-            "include_harvested": include_harvested,
+            "include_harvested": True,
             "verified_source_count": verified_count,
             "harvested_source_count": harvested_count,
             "verified_dates": verified_dates,
@@ -2103,10 +2143,8 @@ def evidence_workbench(include_harvested: bool = False) -> dict[str, Any]:
         workbench = _evidence_workbench_service(include_harvested).build_workbench()
         return {
             "workbench": workbench,
-            "include_harvested": include_harvested,
-            "metadata": {
-                "data_scope": workbench.get("metadata", {}).get("data_scope", "verified_nsclc_multi_company_sample"),
-            },
+            "include_harvested": True,
+            "metadata": _evidence_metadata(),
         }
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
@@ -2146,7 +2184,7 @@ def evidence_trial_chain(trial_id: str) -> dict[str, Any]:
         item = _evidence_chain_service().get_trial_chain(trial_id)
         if not item:
             raise HTTPException(status_code=404, detail=f"未找到试验证据链：{trial_id}")
-        return {"item": item}
+        return {"item": item, "metadata": _evidence_chain_metadata()}
     except HTTPException:
         raise
     except Exception as exc:
@@ -2156,7 +2194,7 @@ def evidence_trial_chain(trial_id: str) -> dict[str, Any]:
 @app.get("/api/evidence/drug/{name}/regulatory-chain")
 def evidence_drug_regulatory_chain(name: str) -> dict[str, Any]:
     try:
-        return {"item": _evidence_chain_service().get_drug_regulatory_chain(name)}
+        return {"item": _evidence_chain_service().get_drug_regulatory_chain(name), "metadata": _evidence_chain_metadata()}
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
@@ -2166,6 +2204,20 @@ def evidence_unresolved_links() -> dict[str, Any]:
     try:
         items = _evidence_chain_service().get_unresolved_links()
         return _evidence_chain_list_response({"relation_level": "unresolved"}, items)
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/organization-coverage/{identifier}")
+def evidence_organization_coverage(identifier: str) -> dict[str, Any]:
+    """Explicit source/study coverage for one normalized organization."""
+    try:
+        item = _evidence_chain_service().organization_coverage(identifier)
+        if not item:
+            raise HTTPException(status_code=404, detail="未找到机构或该机构没有规范化覆盖数据。")
+        return {"item": item, "metadata": _evidence_chain_metadata()}
+    except HTTPException:
+        raise
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
@@ -2213,13 +2265,80 @@ def evidence_company_profile(name: str, include_harvested: bool = False) -> dict
         profile = _company_evidence_profile_service(include_harvested).build_profile(name)
         return {
             "profile": profile,
-            "include_harvested": include_harvested,
-            "metadata": {
-                "data_scope": profile.get("metadata", {}).get(
-                    "data_scope", "verified_nsclc_multi_company_sample"
-                )
-            },
+            "include_harvested": True,
+            "metadata": _evidence_metadata(),
         }
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/institution-profile-institutions")
+def evidence_institution_profile_institutions() -> dict[str, Any]:
+    """Return every normalized institution, including entity-only records."""
+    try:
+        items = _normalized_institution_profile_service().available_institutions()
+        return {"count": len(items), "items": items, "metadata": {"data_scope": "all_normalized_organizations"}}
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/institution-profile/{identifier}")
+def evidence_institution_profile(identifier: str) -> dict[str, Any]:
+    try:
+        profile = _normalized_institution_profile_service().build_profile(identifier)
+        if not profile.get("institution", {}).get("organization_id"):
+            raise HTTPException(status_code=404, detail="未找到该机构。")
+        return {"profile": profile, "metadata": {"data_scope": "all_normalized_organizations"}}
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/institution-comparison")
+def evidence_institution_comparison(institution_a: str = "恒瑞医药", institution_b: str = "阿斯利康") -> dict[str, Any]:
+    try:
+        return {"comparison": _normalized_institution_comparison_service().compare(institution_a, institution_b)}
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/institution-timeline")
+def evidence_institution_timeline(institution: str | None = None, trial_id: str | None = None, event_type: str | None = None, year: str | None = None) -> dict[str, Any]:
+    try:
+        timeline = _normalized_institution_timeline_service().build_timeline(institution=institution, trial_id=trial_id, event_type=event_type, year=year)
+        return {"timeline": timeline}
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/institution-brief/{identifier}")
+def evidence_institution_brief(identifier: str) -> dict[str, Any]:
+    try:
+        return {"brief": _normalized_institution_brief_service().build_institution_brief(identifier)}
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/direction-brief/{domain_id}")
+def evidence_direction_brief(domain_id: str) -> dict[str, Any]:
+    try:
+        return {"brief": _normalized_institution_brief_service().build_direction_brief(domain_id)}
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except Exception as exc:
+        raise _handle_source_registry_error(exc) from exc
+
+
+@app.get("/api/evidence/direction-briefs")
+def evidence_direction_briefs() -> dict[str, Any]:
+    try:
+        items = _normalized_institution_brief_service().available_directions()
+        return {"items": items, "count": len(items)}
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
 
@@ -2269,12 +2388,8 @@ def evidence_timeline(
         )
         return {
             "timeline": timeline,
-            "include_harvested": include_harvested,
-            "metadata": {
-                "data_scope": timeline.get("metadata", {}).get(
-                    "data_scope", "verified_nsclc_multi_company_sample"
-                )
-            },
+            "include_harvested": True,
+            "metadata": _evidence_metadata(),
         }
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
@@ -2500,7 +2615,7 @@ def evidence_decision_agent(payload: RDDecisionAgentRequest, request: Request) -
         result = service.run(question, generation_mode=generation_mode)
         if result.get("error"):
             return result
-        if generation_mode == "auto":
+        if generation_mode == "auto" and not getattr(service, "normalized_only", False):
             result = _decision_agent_auto_result(service, result, question, request)
         return result
     except Exception as exc:
@@ -2527,7 +2642,7 @@ def _grounded_qa_payload(result: dict[str, Any], generation_mode: str) -> dict[s
     return {
         "result": result,
         "metadata": {
-            "data_scope": "verified_nsclc_multi_company_sample",
+            "data_scope": "eligible_normalized_research_evidence",
             "generation_mode_requested": generation_mode,
             "generation_mode_used": generation_mode_used,
             "llm_used": llm_used,
@@ -2569,51 +2684,8 @@ def evidence_grounded_qa(payload: GroundedQARequest, request: Request) -> dict[s
     if generation_mode not in {"auto", "local"}:
         raise HTTPException(status_code=400, detail="generation_mode 只允许 auto 或 local。")
     try:
-        service = _grounded_qa_service()
-        llm_settings = grounded_llm_settings()
-        qtype = service.classify_question(question)
-        safety = service.check_safety(question)
-        if not safety["allowed"]:
-            return _grounded_qa_payload(service.answer_question(question, model_name="safe-policy"), generation_mode)
-
-        packet = service.build_evidence_packet(question, qtype)
-        if not packet.get("allowed_source_ids"):
-            return _grounded_qa_payload(_grounded_local_response(service, question, packet), generation_mode)
-
-        if generation_mode == "local":
-            return _grounded_qa_payload(_grounded_local_response(service, question, packet), generation_mode)
-
-        usage_config = grounded_qa_usage_config_from_env()
-        if not usage_config.llm_enabled:
-            result = _grounded_local_response(
-                service,
-                question,
-                packet,
-                "DeepSeek智能生成当前未启用，本地循证摘要仍可使用。",
-            )
-            return _grounded_qa_payload(result, generation_mode)
-        if not llm_settings["configured"]:
-            result = _grounded_local_response(
-                service,
-                question,
-                packet,
-                "DeepSeek API Key 未配置，已使用本地循证摘要。",
-            )
-            return _grounded_qa_payload(result, generation_mode)
-
-        guard = _grounded_qa_usage_guard()
-        decision = guard.acquire(_grounded_qa_client_id(request))
-        if not decision.allowed:
-            return _grounded_qa_limit_response(decision)
-        try:
-            result = service.answer_question(
-                question,
-                model_name=llm_settings["model"],
-                use_configured_llm=True,
-            )
-        finally:
-            guard.release(decision)
-        return _grounded_qa_payload(result, generation_mode)
+        normalized_agent = _normalized_research_agent_service()
+        return _grounded_qa_payload(normalized_agent.answer_question(question), generation_mode)
     except Exception as exc:
         raise _handle_grounded_qa_error(exc) from exc
 
@@ -2770,6 +2842,73 @@ def directions_records(
             limit=limit,
             offset=offset,
         )
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/normalized/catalog")
+def normalized_catalog() -> dict[str, Any]:
+    """Browse the canonical normalized dataset without the legacy CSV adapter."""
+    try:
+        return _normalized_data_service().catalog()
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/normalized/sources")
+def normalized_sources(
+    q: str = "",
+    domain_id: str = "",
+    limit: Annotated[int, Query(ge=1, le=100)] = 50,
+) -> dict[str, Any]:
+    try:
+        return _normalized_data_service().search_sources(query=q, domain_id=domain_id, limit=limit)
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+def _normalized_detail_or_404(item: dict[str, Any], label: str) -> dict[str, Any]:
+    if not item:
+        raise HTTPException(status_code=404, detail=f"未找到规范化{label}。")
+    return item
+
+
+@app.get("/api/normalized/sources/{source_id}")
+def normalized_source_detail(source_id: str) -> dict[str, Any]:
+    try:
+        return _normalized_detail_or_404(_normalized_data_service().source_detail(source_id), "来源")
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/normalized/organizations/{identifier}")
+def normalized_organization_detail(identifier: str) -> dict[str, Any]:
+    try:
+        return _normalized_detail_or_404(_normalized_data_service().organization_detail(identifier), "机构")
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/normalized/assets/{identifier}")
+def normalized_asset_detail(identifier: str) -> dict[str, Any]:
+    try:
+        return _normalized_detail_or_404(_normalized_data_service().asset_detail(identifier), "药物")
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise _handle_direction_dataset_error(exc) from exc
+
+
+@app.get("/api/normalized/studies/{identifier}")
+def normalized_study_detail(identifier: str) -> dict[str, Any]:
+    try:
+        return _normalized_detail_or_404(_normalized_data_service().study_detail(identifier), "研究")
+    except HTTPException:
+        raise
     except Exception as exc:
         raise _handle_direction_dataset_error(exc) from exc
 

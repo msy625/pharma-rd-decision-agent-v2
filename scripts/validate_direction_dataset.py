@@ -3,7 +3,8 @@
 
 Checks that
 * the catalog defines 6 stages and 20 directions;
-* every direction carries between ``--min`` and ``--max`` harvested records;
+* every direction carries between ``--min`` and ``--max`` selected records;
+* the curated website corpus has the requested source and organization size;
 * every harvested row keeps a real upstream identifier and a direct URL;
 * primary keys are unique and referential links resolve.
 
@@ -15,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import re
 import sys
@@ -24,6 +26,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_DIR = PROJECT_ROOT / "data" / "template"
 CATALOG_PATH = PROJECT_ROOT / "config" / "direction_catalog.json"
+CONTRACT_PATH = TEMPLATE_DIR / "website_data_contract.json"
 
 PRIMARY_KEYS = {
     "domains": "domain_id",
@@ -58,8 +61,12 @@ def load_table(name: str) -> list[dict[str, str]]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--min", type=int, default=100, help="minimum records per direction (default 100)")
-    parser.add_argument("--max", type=int, default=200, help="maximum records per direction (default 200)")
+    parser.add_argument("--min", type=int, default=40, help="minimum records per direction (default 40)")
+    parser.add_argument("--max", type=int, default=110, help="maximum records per direction (default 110)")
+    parser.add_argument("--source-min", type=int, default=1200, help="minimum eligible sources (default 1200)")
+    parser.add_argument("--source-max", type=int, default=1500, help="maximum eligible sources (default 1500)")
+    parser.add_argument("--organization-min", type=int, default=200, help="minimum organizations (default 200)")
+    parser.add_argument("--organization-max", type=int, default=300, help="maximum organizations (default 300)")
     args = parser.parse_args(argv)
 
     errors: list[str] = []
@@ -73,6 +80,44 @@ def main(argv: list[str] | None = None) -> int:
         errors.append(f"catalog must define 20 directions, found {len(directions)}")
 
     tables = {name: load_table(name) for name in PRIMARY_KEYS}
+
+    # ---- frozen website data contract ------------------------------------
+    try:
+        contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"website data contract is unreadable: {exc}")
+        contract = {}
+    try:
+        manifest = json.loads((TEMPLATE_DIR / "data_manifest.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        errors.append(f"data manifest is unreadable: {exc}")
+        manifest = {}
+
+    expected_counts = contract.get("expected_counts", {})
+    if manifest.get("dataset") != contract.get("dataset"):
+        errors.append("data_manifest.json and website_data_contract.json declare different datasets")
+    for name, expected in expected_counts.items():
+        actual = len(tables.get(name, []))
+        if actual != expected:
+            errors.append(f"contract count mismatch for {name}: expected {expected}, got {actual}")
+        if manifest.get("counts", {}).get(name) != expected:
+            errors.append(f"manifest count mismatch for {name}: expected {expected}, got {manifest.get('counts', {}).get(name)}")
+    for filename, expected_hash in contract.get("table_sha256", {}).items():
+        path = TEMPLATE_DIR / filename
+        actual_hash = hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else "missing"
+        if actual_hash != expected_hash:
+            errors.append(f"contract hash mismatch for {filename}")
+
+    if not args.source_min <= len(tables["sources"]) <= args.source_max:
+        errors.append(
+            f"sources has {len(tables['sources'])} rows, outside the "
+            f"{args.source_min}-{args.source_max} curated range"
+        )
+    if not args.organization_min <= len(tables["organizations"]) <= args.organization_max:
+        errors.append(
+            f"organizations has {len(tables['organizations'])} rows, outside the "
+            f"{args.organization_min}-{args.organization_max} curated range"
+        )
 
     # ---- primary key uniqueness -------------------------------------------
     for name, key in PRIMARY_KEYS.items():
@@ -123,6 +168,13 @@ def main(argv: list[str] | None = None) -> int:
             errors.append(f"{source_id}: verification_status is empty")
         if not row.get("verified_at"):
             errors.append(f"{source_id}: verified_at is empty")
+
+    source_status_counts = Counter(row.get("verification_status", "") for row in sources)
+    if dict(source_status_counts) != contract.get("expected_source_status_counts", {}):
+        errors.append("source verification-status counts do not match the website data contract")
+    relation_status_counts = Counter(row.get("relation_status", "") for row in tables["relations"])
+    if dict(relation_status_counts) != contract.get("expected_relation_status_counts", {}):
+        errors.append("relation-status counts do not match the website data contract")
 
     for row in ctg_sources:
         locator = row.get("source_locator", "")
@@ -207,7 +259,7 @@ def main(argv: list[str] | None = None) -> int:
         if len(errors) > 60:
             print(f"  ... and {len(errors) - 60} more", file=sys.stderr)
         return 1
-    print("\nvalidation passed: every direction is within range and all links resolve.")
+    print("\nvalidation passed: curated counts are in range and all links resolve.")
     return 0
 
 

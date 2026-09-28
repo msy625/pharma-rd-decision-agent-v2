@@ -10,23 +10,22 @@
 
 ## 当前展示范围
 
-当前代码、本地数据与线上只读 API 使用同一份 NSCLC 样本口径：
+当前代码和本地只读 API 以 `data/template/` 的规范化网站数据集为唯一根数据：
 
 | 范围 | 当前值 |
 | --- | ---: |
-| 企业 | 3 家：恒瑞医药、百济神州 / BeOne Medicines、阿斯利康 / AstraZeneca |
-| 人工核验证据来源 | 39 条 |
-| 试验级证据链 | 14 条 |
-| 药物级监管链 | 1 条 |
+| 机构 | 225 家（优先保留已有中文显示名） |
+| 可展示来源 | 1,370 条 |
+| 研究 | 968 项 |
+| 论文 | 401 篇 |
 
-39 条来源由 `data/source_registry.csv` 管理；证据关系由 `config/evidence_chains.json` 明确配置。当前数据版本由文件内容动态计算，运行 `GET /ready` 或 `GET /api/evidence/workbench` 可查看，不在 README 中写死易过期的更新时间或响应生成时间。
+来源、实体、研究和明确关系均由 `data/template/*.csv` 管理；无有效 URL、没有明确关系或含未解决关系的来源不会进入网站数据集。当前数据版本由文件内容动态计算，运行 `GET /ready` 或 `GET /api/evidence/workbench` 可查看。
 
 来源数不等于唯一试验数：同一试验的登记、论文和版本资料会归入同一试验级证据链；药物级监管资料单独成链，不重复计入试验数量。
 
 ## 研发阶段与疾病方向数据
 
-在保留上述 39 条人工核验 NSCLC 样本口径不变的前提下，`data/template/` 按
-**6 个研发阶段 / 20 个疾病方向** 追加了可复现的公开数据批量采集：
+`data/template/` 覆盖 **6 个研发阶段 / 20 个疾病方向**；网站使用其中经过可展示性筛选的规范化数据：
 
 | 阶段 | 疾病方向 | 阶段目标 |
 | --- | --- | --- |
@@ -38,7 +37,7 @@
 | 第 6 阶段 | 阿尔茨海默病、帕金森病、感染病 | 加入复杂终点、患者负担和公共卫生模块 |
 
 - 数据来源：ClinicalTrials.gov API v2 与 NCBI PubMed E-utilities 官方接口。
-- 每个方向保留 100–200 条记录（临床试验注册记录 + 期刊论文），当前合计 2800 余条。
+- 每个方向保留 40–110 条研究和论文记录；全库保持 1200–1500 条来源、200–300 家机构。
 - 批量采集行的 `verification_status` 为 `api_harvested`，与人工核验样本的 `verified` 严格区分，
   统一标注“未经人工逐条复核”，不参与疗效排名、成功率预测或投资建议。
 - 每一行保留上游标识（`NCT` 号 / `PMID`）与可回查的官方链接。
@@ -54,34 +53,10 @@ python scripts/validate_direction_dataset.py  # 校验方向记录数、上游�
 `GET /api/directions/roadmap`、`/api/directions/summary`、`/api/directions/filters`、`/api/directions/records`。
 `GET /api/runtime-capabilities` 通过 `direction_dataset_available` 报告该能力是否可用。
 
-### 双轨数据：人工核验主线 + 可选机器采集
+### 网站数据准入规则
 
-默认情况下，研发决策总览、研发证据中心、企业证据画像和研发事件时间轴**只使用 39 条人工核验来源**，
-与改造前完全一致。需要看全量数据时，这四个页面提供「包含机器采集数据」开关：
-
-| 接口 | 新增参数 |
-| --- | --- |
-| `/api/evidence/summary` | `include_harvested=true` |
-| `/api/evidence/workbench` | `include_harvested=true` |
-| `/api/evidence/search` | `include_harvested=true` |
-| `/api/evidence/company-profile/{name}` | `include_harvested=true` |
-| `/api/evidence/timeline`、`/api/evidence/timeline/{company}` | `include_harvested=true` |
-
-打开后，`SourceRegistryService` 会把 `data/template/` 中
-`verification_status=api_harvested` 的记录（2791 条）适配成原有 56 列格式追加到人工核验来源之后，
-人工核验行**位置与内容完全不变**（`extended[:39] == verified`，有测试保证）。
-
-边界：
-
-- 只追加 `api_harvested` 记录，人工核验来源不会被重复计入，两套口径不会混淆；
-- 每条机器采集记录在界面上标注「机器采集」，并展示与人工核验资料不可互相替代的范围声明；
-- **循证问答与决策 Agent 不接入该开关**，始终只引用人工核验来源；
-- 证据链、企业对比等依赖 `config/evidence_chains.json` 精选关系的功能，对新增记录只会显示
-  「无已配置关系」，不会推断出不存在的关系；
-- 机器采集数据不代表企业研发实力，不支持跨试验疗效排名、成功率预测或投资建议。
-
-适配层位于 `deepinsight/core/harvested_registry_adapter.py`；方向数据集缺失或损坏时会静默降级，
-只返回人工核验来源，不影响原有页面（原因记录在 `SourceRegistryService.harvested_error`）。
+网站默认展示全部 1,370 条入选的规范化来源，不再以 `source_registry.csv` 作为运行时输入。
+入选来源必须具有有效 URL、明确核验状态，并且仅含已确认的显式关系；存在未解决关系或缺少关系的来源被排除。`api_harvested` 表示未逐条人工复核，不能据此进行疗效排名、成功率预测或投资建议。
 
 ## 项目痛点与核心流程
 
@@ -134,7 +109,7 @@ FastAPI：健康检查、能力识别、证据查询、Agent、简报 API
               ↓
 领域服务：来源登记、证据链、企业画像、时间轴、工作台、决策 Agent
               ↓
-data/source_registry.csv + config/*.json
+data/template/*.csv
               ↓（auto 模式可选调用）
 DeepSeek OpenAI-compatible API
 ```
