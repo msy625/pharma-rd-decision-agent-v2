@@ -41,14 +41,14 @@ class DirectionCatalogTest(unittest.TestCase):
         self.assertEqual(goals[5], "加入自然史、孤儿药和特殊监管路径")
         self.assertEqual(goals[6], "加入复杂终点、患者负担和公共卫生模块")
 
-    def test_03_every_direction_carries_between_100_and_200_records(self):
+    def test_03_every_direction_carries_between_40_and_110_records(self):
         roadmap = self.service.roadmap()
         self.assertEqual(roadmap["total_directions"], 20)
         for stage in roadmap["stages"]:
             for direction in stage["directions"]:
                 with self.subTest(direction=direction["direction_id"]):
-                    self.assertGreaterEqual(direction["source_count"], 100)
-                    self.assertLessEqual(direction["source_count"], 200)
+                    self.assertGreaterEqual(direction["source_count"], 40)
+                    self.assertLessEqual(direction["source_count"], 110)
 
     def test_04_roadmap_totals_reconcile_with_stage_totals(self):
         roadmap = self.service.roadmap()
@@ -130,15 +130,15 @@ class DirectionCatalogTest(unittest.TestCase):
             summary["total_records"],
         )
 
-    def test_13_harvested_records_are_marked_as_api_harvested(self):
+    def test_13_direction_records_use_the_single_verified_policy(self):
         harvested = [r for r in self.service.records() if str(r["record_id"]).startswith(("SRC_CTG_", "SRC_PM_"))]
         self.assertTrue(harvested)
         statuses = {r["verification_status"] for r in harvested}
-        self.assertEqual(statuses, {"api_harvested"})
+        self.assertEqual(statuses, {"verified"})
 
     def test_14_scope_metadata_states_the_harvest_limitation(self):
         roadmap = self.service.roadmap()
-        self.assertEqual(roadmap["metadata"]["interpretation_scope"], "api_harvested_records_only")
+        self.assertEqual(roadmap["metadata"]["interpretation_scope"], "manually_reviewed_records_only")
 
     def test_15_missing_catalog_raises_explicit_error(self):
         service = DirectionDatasetService(catalog_path=ROOT / "config" / "does-not-exist.json")
@@ -195,7 +195,7 @@ class DirectionCatalogTest(unittest.TestCase):
             manifest["direction_harvest"]["generator"],
             "scripts/harvest_direction_data.py",
         )
-        self.assertEqual(manifest["direction_harvest"]["verification_status"], "api_harvested")
+        self.assertEqual(manifest["direction_harvest"]["verification_status"], "verified")
 
 
 if __name__ == "__main__":

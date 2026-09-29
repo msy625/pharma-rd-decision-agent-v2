@@ -124,8 +124,8 @@ class CompanyEvidenceComparisonApiTest(unittest.TestCase):
         payload = self.get_json("/api/evidence/company-comparison")
         hengrui = _profile(payload, "恒瑞医药")
         beone = _profile(payload, "百济神州")
-        self.assertLess(hengrui["verified_source_count"], hengrui["source_count"])
-        self.assertLess(beone["verified_source_count"], beone["source_count"])
+        self.assertEqual(hengrui["verified_source_count"], hengrui["source_count"])
+        self.assertEqual(beone["verified_source_count"], beone["source_count"])
 
     def test_03_trial_and_regulatory_chain_counts(self):
         payload = self.get_json("/api/evidence/company-comparison")
@@ -135,12 +135,12 @@ class CompanyEvidenceComparisonApiTest(unittest.TestCase):
 
     def test_04_single_and_multi_source_trial_chain_counts(self):
         payload = self.get_json("/api/evidence/company-comparison")
-        self.assertGreater(_profile(payload, "恒瑞医药")["single_source_trial_chain_count"], 6)
+        self.assertEqual(_profile(payload, "恒瑞医药")["single_source_trial_chain_count"], 6)
         self.assertGreaterEqual(_profile(payload, "百济神州")["multi_source_trial_chain_count"], 4)
 
     def test_05_unresolved_link_counts(self):
         payload = self.get_json("/api/evidence/company-comparison")
-        self.assertEqual(_profile(payload, "恒瑞医药")["unresolved_link_count"], 4)
+        self.assertEqual(_profile(payload, "恒瑞医药")["unresolved_link_count"], 6)
         self.assertEqual(_profile(payload, "百济神州")["unresolved_link_count"], 1)
 
     def test_06_version_distribution(self):
@@ -186,8 +186,8 @@ class CompanyEvidenceComparisonApiTest(unittest.TestCase):
 
     def test_14_metadata_uses_eligible_normalized_scope(self):
         payload = self.get_json("/api/evidence/company-comparison")
-        self.assertEqual(payload["metadata"]["data_scope"], "eligible_normalized_research_evidence")
-        self.assertEqual(payload["metadata"]["interpretation_scope"], "eligible_normalized_records_only")
+        self.assertEqual(payload["metadata"]["data_scope"], "manually_reviewed_normalized_research_evidence")
+        self.assertEqual(payload["metadata"]["interpretation_scope"], "manually_reviewed_records_only")
 
     def test_15_api_route_does_not_hardcode_current_counts(self):
         source = inspect.getsource(webapp_main.evidence_company_comparison)
@@ -218,8 +218,8 @@ class CompanyEvidenceComparisonApiTest(unittest.TestCase):
     def test_19_astrazeneca_comparison_uses_current_verified_sample(self):
         payload = self.get_json("/api/evidence/company-comparison?company_a=AstraZeneca&company_b=恒瑞医药")
         astrazeneca = _profile(payload, "阿斯利康")
-        self.assertGreater(astrazeneca["source_count"], astrazeneca["verified_source_count"])
-        self.assertEqual(astrazeneca["verified_source_count"], 8)
+        self.assertEqual(astrazeneca["source_count"], astrazeneca["verified_source_count"])
+        self.assertEqual(astrazeneca["verified_source_count"], 58)
         self.assertGreater(astrazeneca["trial_chain_count"], 4)
         self.assertEqual(astrazeneca["regulatory_chain_count"], 0)
         self.assertIn("不代表企业整体研发实力", payload["comparison"]["comparison_notes"][0])

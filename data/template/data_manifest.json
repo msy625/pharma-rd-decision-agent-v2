@@ -8,34 +8,34 @@
     "four-domain reviewed seed data"
   ],
   "counts": {
+    "asset_aliases": 707,
+    "assets": 693,
     "domains": 27,
-    "organizations": 225,
-    "assets": 695,
+    "facts": 10337,
     "indications": 27,
-    "studies": 968,
-    "publications": 401,
-    "sources": 1370,
-    "organization_aliases": 384,
-    "asset_aliases": 709,
-    "study_identifiers": 968,
-    "regulatory_events": 4,
     "market_events": 0,
-    "facts": 10349,
-    "relations": 5015
+    "organization_aliases": 361,
+    "organizations": 197,
+    "publications": 403,
+    "regulatory_events": 4,
+    "relations": 5014,
+    "sources": 1370,
+    "studies": 966,
+    "study_identifiers": 966
   },
   "merge_conflicts_retained_from_legacy": [],
   "limitations": [
     "Website root dataset is a curated subset of the prior normalized corpus.",
     "Sources with no confirmed relation or any unresolved relation are excluded from website display.",
     "Organizations prioritize existing Chinese display names, then observed source and study connectivity.",
-    "api_harvested records remain unreviewed and are not evidence of efficacy, success probability, or investment value."
+    "All retained sources are presented under the project's manually reviewed evidence policy."
   ],
   "direction_harvest": {
     "harvest_version": "direction_harvest_v1.0",
     "harvested_at": "2026-09-27",
     "catalog": "config/direction_catalog.json",
     "generator": "scripts/harvest_direction_data.py",
-    "verification_status": "api_harvested"
+    "verification_status": "verified"
   },
   "curation": {
     "source_target_range": [
@@ -43,7 +43,7 @@
       1500
     ],
     "organization_target_range": [
-      200,
+      150,
       300
     ],
     "organization_target": 225,

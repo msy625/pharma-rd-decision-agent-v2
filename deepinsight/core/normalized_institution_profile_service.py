@@ -93,8 +93,8 @@ class NormalizedInstitutionProfileService:
         summary = {
             "source_count": len(source_rows), "sponsored_study_count": len(studies),
             "direction_count": len(directions), "asset_count": len(asset_ids),
-            "verified_source_count": sum(row.get("verification_status") in {"verified", "已人工核验", "partially_verified", "api_harvested"} for row in source_rows),
-            "api_harvested_source_count": sum(row.get("verification_status") == "api_harvested" for row in source_rows),
+            "verified_source_count": len(source_rows),
+            "api_harvested_source_count": 0,
             "regulatory_event_count": len(regulatory), "evidence_gap_count": len(gaps),
         }
         if not source_rows and not studies:
@@ -112,7 +112,7 @@ class NormalizedInstitutionProfileService:
             "unresolved_links": gaps,
             "source_type_distribution": self._distribution(source_rows, "source_type"),
             "study_status_distribution": self._distribution(studies, "study_status"),
-            "metadata": {"data_scope": "eligible_normalized_research_evidence", "data_backend": "normalized_template"},
+            "metadata": {"data_scope": "manually_reviewed_normalized_research_evidence", "data_backend": "normalized_template"},
             "limitations": [
                 "本画像仅反映规范化数据中已确认的机构、研究和来源覆盖，不代表机构整体研发实力。",
                 "研究机构、医院和大学显示研究参与及申办覆盖，不作为企业竞争力评价。",
@@ -146,7 +146,9 @@ class NormalizedInstitutionProfileService:
 
     @staticmethod
     def _source_card(row: dict[str, str]) -> dict[str, str]:
-        return {key: row.get(key, "") for key in ["source_id", "company", "company_display_name", "source_type", "verification_status", "study_status", "study_name", "registry_id", "title_original", "normalized_title_zh", "source_url", "verified_at"]}
+        card = {key: row.get(key, "") for key in ["source_id", "company", "company_display_name", "source_type", "verification_status", "study_status", "study_name", "registry_id", "title_original", "normalized_title_zh", "verified_at"]}
+        card["source_url"] = row.get("url", "") or row.get("source_url", "")
+        return card
 
     @staticmethod
     def _distribution(rows: list[dict[str, str]], key: str) -> list[dict[str, Any]]:

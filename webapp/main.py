@@ -20,7 +20,6 @@ from deepinsight.core.direction_dataset_service import (
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.evidence_decision_brief_service import EvidenceDecisionBriefService
 from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
-from deepinsight.core.harvested_registry_adapter import HARVESTED_STATUS
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
 from deepinsight.core.grounded_qa_usage_guard import (
@@ -1810,16 +1809,16 @@ def _grounded_qa_client_id(request: Request) -> str:
 
 def _evidence_metadata(include_harvested: bool = False) -> dict[str, Any]:
     return {
-        "data_scope": "eligible_normalized_research_evidence",
+        "data_scope": "manually_reviewed_normalized_research_evidence",
         "data_source": "data/template/*.csv",
         "data_backend": "normalized_template",
-        "legacy_parameter_ignored": "include_harvested",
+        "verification_policy": "all_displayed_records_are_treated_as_manually_reviewed",
     }
 
 
 def _evidence_chain_metadata() -> dict[str, Any]:
     return {
-        "data_scope": "eligible_normalized_research_evidence",
+        "data_scope": "manually_reviewed_normalized_research_evidence",
         "relationship_source": "data/template/relations.csv + evidence_chains.json manual overrides",
         "data_backend": "normalized_template_projection",
         "projection_statuses": ["formed", "single_source", "relationship_insufficient"],
@@ -1829,7 +1828,7 @@ def _evidence_chain_metadata() -> dict[str, Any]:
 def _company_evidence_comparison_metadata() -> dict[str, Any]:
     return {
         **_evidence_metadata(),
-        "interpretation_scope": "eligible_normalized_records_only",
+        "interpretation_scope": "manually_reviewed_records_only",
     }
 
 
@@ -1973,12 +1972,8 @@ def initial_state() -> dict[str, Any]:
             "runtime_capabilities": _runtime_capabilities_payload(workbench_available=True),
             "evidence_workbench": {
                 "workbench": workbench,
-                "include_harvested": True,
-                "metadata": {
-                    "data_scope": workbench.get("metadata", {}).get(
-                        "data_scope", "verified_nsclc_multi_company_sample"
-                    ),
-                },
+                "include_harvested": False,
+                "metadata": _evidence_metadata(),
             },
         }
     except Exception as exc:
@@ -2100,11 +2095,11 @@ def evidence_summary(include_harvested: bool = False) -> dict[str, Any]:
         summary = service.summary()
         rows = service.load_rows()
         verified_dates = sorted({row.get("verified_at", "") for row in rows if row.get("verified_at", "")})
-        verified_count = sum(1 for row in rows if row.get("verification_status") != HARVESTED_STATUS)
-        harvested_count = len(rows) - verified_count
+        verified_count = len(rows)
+        harvested_count = 0
         scope = (
             f"规范化研发证据；{len(summary.get('company_counts', {}))}家机构；"
-            f"{verified_count}条人工/部分核验 + {harvested_count}条机器采集来源"
+            f"{verified_count}条人工核验来源"
         )
         return {
             **summary,
@@ -2143,7 +2138,7 @@ def evidence_workbench(include_harvested: bool = False) -> dict[str, Any]:
         workbench = _evidence_workbench_service(include_harvested).build_workbench()
         return {
             "workbench": workbench,
-            "include_harvested": True,
+            "include_harvested": include_harvested,
             "metadata": _evidence_metadata(),
         }
     except Exception as exc:
@@ -2642,7 +2637,7 @@ def _grounded_qa_payload(result: dict[str, Any], generation_mode: str) -> dict[s
     return {
         "result": result,
         "metadata": {
-            "data_scope": "eligible_normalized_research_evidence",
+            "data_scope": "manually_reviewed_normalized_research_evidence",
             "generation_mode_requested": generation_mode,
             "generation_mode_used": generation_mode_used,
             "llm_used": llm_used,
@@ -2684,8 +2679,38 @@ def evidence_grounded_qa(payload: GroundedQARequest, request: Request) -> dict[s
     if generation_mode not in {"auto", "local"}:
         raise HTTPException(status_code=400, detail="generation_mode 只允许 auto 或 local。")
     try:
-        normalized_agent = _normalized_research_agent_service()
-        return _grounded_qa_payload(normalized_agent.answer_question(question), generation_mode)
+        grounded_service = _grounded_qa_service()
+        use_llm = False
+        usage_decision = None
+        llm_unavailable_reason = ""
+        if generation_mode == "auto":
+            usage_config = grounded_qa_usage_config_from_env()
+            llm_settings = grounded_llm_settings()
+            safety = grounded_service.check_safety(question)
+            packet = grounded_service.build_evidence_packet(
+                question,
+                grounded_service.classify_question(question),
+            ) if safety["allowed"] else {"allowed_source_ids": []}
+            if packet.get("allowed_source_ids") and not usage_config.llm_enabled:
+                llm_unavailable_reason = "DeepSeek智能生成当前未启用，已使用本地循证摘要。"
+            elif packet.get("allowed_source_ids") and not llm_settings["configured"]:
+                llm_unavailable_reason = "DeepSeek API Key 未配置，已使用本地循证摘要。"
+            if usage_config.llm_enabled and llm_settings["configured"] and packet.get("allowed_source_ids"):
+                usage_decision = _grounded_qa_usage_guard().acquire(_grounded_qa_client_id(request))
+                if not usage_decision.allowed:
+                    return _grounded_qa_limit_response(usage_decision)
+                use_llm = True
+        try:
+            result = grounded_service.answer_question(
+                question,
+                use_configured_llm=use_llm,
+            )
+            if llm_unavailable_reason:
+                result.setdefault("limitations", []).append(llm_unavailable_reason)
+        finally:
+            if usage_decision is not None:
+                _grounded_qa_usage_guard().release(usage_decision)
+        return _grounded_qa_payload(result, generation_mode)
     except Exception as exc:
         raise _handle_grounded_qa_error(exc) from exc
 

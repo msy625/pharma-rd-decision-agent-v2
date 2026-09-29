@@ -28,7 +28,7 @@ class NormalizedResearchAgentService:
     def capabilities(self) -> dict[str, Any]:
         return {
             "local_mode_available": True, "auto_mode_available": False, "llm_mode_available": False,
-            "supported_generation_modes": ["local"], "data_scope": "eligible_normalized_research_evidence",
+            "supported_generation_modes": ["local"], "data_scope": "manually_reviewed_normalized_research_evidence",
             "layers": {
                 "source_retrieval": "返回 source_id、原始 URL 与核验状态。",
                 "relationship_reasoning": "仅依据新版证据链投影和确认关系回答多来源、缺口与监管关联。",

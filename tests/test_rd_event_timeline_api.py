@@ -33,7 +33,7 @@ class RDEventTimelineApiTest(unittest.TestCase):
         self.assertGreater(summary["dated_source_count"], 500)
         self.assertGreater(summary["core_event_count"], 500)
         self.assertGreater(summary["undated_source_count"], 0)
-        self.assertEqual(payload["metadata"]["data_scope"], "eligible_normalized_research_evidence")
+        self.assertEqual(payload["metadata"]["data_scope"], "manually_reviewed_normalized_research_evidence")
 
     def test_02_company_path_supports_chinese_and_english_aliases(self):
         hengrui = self.client.get("/api/evidence/timeline/%E6%81%92%E7%91%9E%E5%8C%BB%E8%8D%AF")

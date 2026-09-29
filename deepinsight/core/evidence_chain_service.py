@@ -15,7 +15,7 @@ from deepinsight.core.source_registry_service import (
     NormalizedSourceRegistryService,
     PROJECT_ROOT,
     SourceRegistryFileNotFound,
-    SourceRegistryService,
+    SourceRegistryService, NormalizedSourceRegistryService,
     SourceRegistryStructureError,
     contains,
     norm,
@@ -40,7 +40,7 @@ class EvidenceChainService:
         normalized_projection: NormalizedEvidenceChainProjection | None = None,
     ) -> None:
         self.chain_config_path = Path(chain_config_path) if chain_config_path else DEFAULT_CHAIN_CONFIG_PATH
-        self.source_registry_service = source_registry_service or SourceRegistryService()
+        self.source_registry_service = source_registry_service or NormalizedSourceRegistryService()
         self.normalized_projection = normalized_projection or NormalizedEvidenceChainProjection()
         self.enable_normalized_projection = isinstance(self.source_registry_service, NormalizedSourceRegistryService)
         self._chain_config: dict[str, object] | None = None

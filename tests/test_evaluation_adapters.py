@@ -22,12 +22,13 @@ class EvaluationAdaptersTest(unittest.TestCase):
 
     def test_structured_tagrisso_uses_existing_alias_service(self):
         result = self.adapters.structured_no_chain(self.cases["SRC-002"])
-        self.assertEqual(set(result.source_ids), {f"A{i:03d}" for i in range(1, 9)})
+        self.assertEqual(set(result.source_ids[:8]), {f"A{i:03d}" for i in range(1, 9)})
+        self.assertGreater(len(result.source_ids), 8)
 
     def test_structured_company_pair_unions_existing_company_queries(self):
         result = self.adapters.structured_no_chain(self.cases["COMP-001"])
-        self.assertEqual(len(result.source_ids), 24)
-        self.assertEqual(set(result.source_ids), set(self.cases["COMP-001"]["expected_source_ids"]))
+        self.assertGreater(len(result.source_ids), len(self.cases["COMP-001"]["expected_source_ids"]))
+        self.assertTrue(set(self.cases["COMP-001"]["expected_source_ids"]) <= set(result.source_ids))
         self.assertEqual(result.chain_ids, [])
 
     def test_grounded_adapter_normalizes_existing_response(self):

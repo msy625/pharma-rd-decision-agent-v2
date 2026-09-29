@@ -20,7 +20,9 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CSV_PATH = PROJECT_ROOT / "data" / "source_registry.csv"
 
-HARVESTED_STATUS = "api_harvested"
+# Kept only so legacy callers can import the symbol. Current website rows use
+# ``verified`` and never enter this compatibility projection.
+HARVESTED_STATUS = "__legacy_api_harvested__"
 
 TRIAL_SOURCE_TYPE = "ClinicalTrials.gov"
 PUBLICATION_SOURCE_TYPE = "PubMed"

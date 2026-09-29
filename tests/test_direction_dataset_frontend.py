@@ -72,9 +72,9 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
         self.assertIn("data-evidence-direction-tab", tabs)
         self.assertIn(DIRECTION_TAB, tabs)
         # the three pre-existing tabs must survive, and in order
-        order = [tabs.index("来源检索"), tabs.index("证据链"), tabs.index("企业对比"), tabs.index(DIRECTION_TAB)]
+        order = [tabs.index("来源检索"), tabs.index("证据链"), tabs.index("机构对比"), tabs.index(DIRECTION_TAB)]
         self.assertEqual(order, sorted(order))
-        for label in ["来源检索", "证据链", "企业对比", "进入智能决策 Agent"]:
+        for label in ["来源检索", "证据链", "机构对比", "进入智能决策 Agent"]:
             self.assertIn(label, tabs)
 
     def test_02_direction_tab_is_gated_by_evidence_tab_state(self):
@@ -338,49 +338,26 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
 
     def test_25_verification_status_per_record_is_surfaced(self):
         self.assertIn("_directionVerification(value)", self.direction_component)
-        self.assertIn("if(v==='verified') return {label:'人工核验', color:'var(--pos)'}", self.direction_component)
-        self.assertIn("if(v==='api_harvested') return {label:'机器采集', color:'var(--text-3)'}", self.direction_component)
+        self.assertIn("return {label:'人工核验', color:'var(--pos)'}", self.direction_component)
         self.assertIn("verifyLabel:verification.label", self.direction_component)
         self.assertIn("{{ r.verifyLabel }}", self.direction_template)
 
     # ------------------------------------------------------------------ #
-    # scope disclaimer
+    # The user-facing direction tab intentionally has no global scope/risk card.
     # ------------------------------------------------------------------ #
-    def test_26_scope_disclaimer_states_machine_harvested_scope(self):
-        self.assertIn("data-direction-scope-note", self.direction_template)
-        for text in [
-            "API 机器采集（api_harvested）",
-            "未经人工逐条复核",
-            "api_harvested＝机器采集",
-            "verified＝人工核验",
-            "条人工核验资料属于两套口径",
-            "不用于企业研发实力排名",
-            "不支持跨试验疗效、安全性或成功率推断",
-        ]:
-            self.assertIn(text, self.direction_template)
-        self.assertIn("{{ dq_verifiedCount }}", self.direction_template)
+    def test_26_global_scope_disclaimer_is_not_rendered(self):
+        self.assertNotIn("data-direction-scope-note", self.direction_template)
+        self.assertNotIn("data-direction-verification-mix", self.direction_template)
 
-    def test_26b_disclaimer_reports_the_dataset_verification_mix(self):
-        self.assertIn("data-direction-verification-mix", self.direction_template)
-        self.assertIn("{{ dq_verificationMix }}", self.direction_template)
-        self.assertIn("dq_verificationMix:dirVerificationMix", self.evidence_vals)
-        self.assertIn("dirRoadmap.verification_status_counts", self.evidence_vals)
-        self.assertIn("人工核验（verified）", self.evidence_vals)
-        self.assertIn("机器采集（api_harvested）", self.evidence_vals)
+    def test_26b_global_verification_mix_is_not_rendered(self):
+        self.assertNotIn("dq_verificationMix", self.direction_template)
+        self.assertNotIn("{{ dq_verificationMix }}", self.direction_template)
 
-    def test_27_disclaimer_is_not_conditional_on_having_records(self):
-        # rendered for the whole tab, before the roadmap/records blocks
-        note = self.direction_template.index("data-direction-scope-note")
-        roadmap = self.direction_template.index("data-direction-roadmap")
-        self.assertLess(note, roadmap)
-        # With the 双轨数据 switch on, summary.total_sources includes harvested rows,
-        # so the「N 条人工核验资料」sentence must render the verified count.
-        self.assertIn("dq_verifiedCount:this._evidenceText(sum.verified_source_count", self.evidence_vals)
-        self.assertIn("dq_spectrumNote:", self.evidence_vals)
+    def test_27_record_area_has_no_global_scope_or_risk_text(self):
+        self.assertNotIn("data-direction-scope-note", self.direction_template)
 
     def test_28_no_ranking_or_efficacy_claims_in_direction_ui(self):
         for forbidden in [
-            "评分",
             "榜单",
             "疗效最好",
             "成功率预测",
@@ -390,9 +367,7 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
             "eval(",
         ]:
             self.assertNotIn(forbidden, self.all)
-        # 「排名」may only appear inside the explicit prohibition sentence
-        self.assertEqual(self.all.count("排名"), 1)
-        self.assertIn("不用于企业研发实力排名", self.all)
+        self.assertNotIn("不输出排名或评分", self.all)
 
     # ------------------------------------------------------------------ #
     # graceful degradation
@@ -479,7 +454,6 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
             "data-direction-roadmap",
             "data-direction-record-row",
             "data-direction-pager",
-            "data-direction-scope-note",
             "data-direction-tab-note",
             "疾病方向研发路线图",
             "打开原始来源",
@@ -491,7 +465,7 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
         self.assertIn("_directionRecordVm(item)", self.index)
         # the tabs container marker and the original tabs must survive the rebuild
         self.assertIn("data-evidence-center-tabs", self.index)
-        for label in ["来源检索", "证据链", "企业对比", "进入智能决策 Agent"]:
+        for label in ["来源检索", "证据链", "机构对比", "进入智能决策 Agent"]:
             self.assertIn(label, self.index)
 
     def test_35_static_index_is_built_from_source(self):

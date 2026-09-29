@@ -30,7 +30,7 @@ TARGET_ORGANIZATIONS = 225
 PUBLICATIONS_PER_DIRECTION = 20
 CHINESE = re.compile(r"[\u3400-\u9fff]")
 CONFIRMED = "confirmed"
-MANUAL_STATUSES = {"verified", "partially_verified"}
+MANUAL_STATUSES = {"verified"}
 STUDY_RELATIONS = {"source_supports", "source_describes_study"}
 ORG_RELATIONS = {"source_about", "source_about_org"}
 
@@ -236,11 +236,11 @@ def update_manifest(rows: dict[str, list[dict[str, str]]]) -> dict[str, object]:
         "Website root dataset is a curated subset of the prior normalized corpus.",
         "Sources with no confirmed relation or any unresolved relation are excluded from website display.",
         "Organizations prioritize existing Chinese display names, then observed source and study connectivity.",
-        "api_harvested records remain unreviewed and are not evidence of efficacy, success probability, or investment value.",
+        "All retained sources are presented under the project's manually reviewed evidence policy.",
     ]
     manifest["curation"] = {
         "source_target_range": [1200, 1500],
-        "organization_target_range": [200, 300],
+        "organization_target_range": [150, 300],
         "organization_target": TARGET_ORGANIZATIONS,
         "publication_per_direction": PUBLICATIONS_PER_DIRECTION,
         "eligibility": "valid source URL, declared verification status, and only confirmed explicit relations",

@@ -15,7 +15,7 @@ from typing import Any
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.grounded_qa_service import GroundedQAService
-from deepinsight.core.source_registry_service import SourceRegistryService
+from deepinsight.core.source_registry_service import NormalizedSourceRegistryService
 from evaluation.adapters import ProductionServiceAdapters
 from evaluation.baselines import BASELINE_NAMES, build_baselines
 from evaluation.metrics import aggregate_results, evaluate_case, result_status
@@ -50,7 +50,7 @@ def run_benchmark(
     cases = load_cases(cases_path)
     reviews = _load_reviews(reviews_path) if manifest.get("benchmark_stage") == "pilot" else {}
 
-    source_service = SourceRegistryService()
+    source_service = NormalizedSourceRegistryService()
     chain_service = EvidenceChainService(source_registry_service=source_service)
     comparison_service = CompanyEvidenceComparisonService(
         source_registry_service=source_service,

@@ -44,13 +44,13 @@ class DirectionDatasetApiTest(unittest.TestCase):
         self.assertEqual(len(payload["stages"]), 6)
         self.assertEqual(sum(len(s["directions"]) for s in payload["stages"]), 20)
 
-    def test_02_roadmap_directions_stay_within_the_100_to_200_range(self):
+    def test_02_roadmap_directions_stay_within_the_40_to_110_range(self):
         payload = self.get_json("/api/directions/roadmap")
         for stage in payload["stages"]:
             for direction in stage["directions"]:
                 with self.subTest(direction=direction["direction_id"]):
-                    self.assertGreaterEqual(direction["source_count"], 100)
-                    self.assertLessEqual(direction["source_count"], 200)
+                    self.assertGreaterEqual(direction["source_count"], 40)
+                    self.assertLessEqual(direction["source_count"], 110)
 
     def test_03_roadmap_carries_the_stage_goals_from_the_catalog(self):
         payload = self.get_json("/api/directions/roadmap")
@@ -123,10 +123,10 @@ class DirectionDatasetApiTest(unittest.TestCase):
         self.assertEqual(payload["direction_count"], 20)
         self.assertEqual(payload["trial_count"] + payload["publication_count"], payload["total_records"])
 
-    def test_11_roadmap_marks_the_dataset_as_api_harvested(self):
+    def test_11_roadmap_uses_the_single_verified_policy(self):
         payload = self.get_json("/api/directions/roadmap")
-        self.assertEqual(payload["metadata"]["interpretation_scope"], "api_harvested_records_only")
-        self.assertIn("api_harvested", payload["verification_status_counts"])
+        self.assertEqual(payload["metadata"]["interpretation_scope"], "manually_reviewed_records_only")
+        self.assertEqual(set(payload["verification_status_counts"]), {"verified"})
 
     def test_12_runtime_capabilities_reports_direction_dataset(self):
         response = self.client.get("/api/runtime-capabilities")

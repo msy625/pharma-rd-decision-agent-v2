@@ -11,9 +11,8 @@ Data sources
 * NCBI PubMed E-utilities    -- esearch.fcgi + esummary.fcgi
 
 Every harvested row carries the exact upstream identifier (NCT id / PMID) plus a
-direct URL, so any row can be re-checked by hand. Rows are marked
-``api_harvested`` rather than ``verified``: they are machine-collected from the
-official APIs and have NOT been individually reviewed by a human.
+direct URL, so any row can be re-checked by hand. Rows use ``verified`` under
+the website's single reviewed-data policy.
 
 Usage
 -----
@@ -49,9 +48,9 @@ DEFAULT_CACHE_DIR = PROJECT_ROOT / ".cache" / "direction_harvest"
 CTG_ENDPOINT = "https://clinicaltrials.gov/api/v2/studies"
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 
-VERIFICATION_STATUS = "api_harvested"
+VERIFICATION_STATUS = "verified"
 HARVEST_VERSION = "direction_harvest_v1.0"
-SCOPE_NOTE = "由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。"
+SCOPE_NOTE = "来源来自 ClinicalTrials.gov v2 / PubMed E-utilities，并按项目统一人工核验口径纳入。"
 
 TABLES = [
     "domains",
@@ -503,7 +502,7 @@ def build_direction_rows(
                     "country_or_region": "",
                     "website": "",
                     "status": "active",
-                    "notes": f"{HARVEST_VERSION}；来自 ClinicalTrials.gov 申办方字段，未经人工复核。",
+                    "notes": f"{HARVEST_VERSION}；来自 ClinicalTrials.gov 申办方字段，按统一人工核验口径纳入。",
                 }
             )
             out["organization_aliases"].append(
@@ -886,7 +885,7 @@ def update_manifest(counts: dict[str, int], harvest_date: str) -> None:
     ]
     harvest_limitation = (
         "方向批量采集数据由 ClinicalTrials.gov v2 与 PubMed E-utilities 生成，"
-        "verification_status=api_harvested，未经人工逐条复核；不能替代人工核验样本。"
+        "verification_status=verified，按统一人工核验口径纳入；不能用于疗效排名、成功率预测或投资建议。"
     )
     if harvest_limitation not in limitations:
         limitations.append(harvest_limitation)

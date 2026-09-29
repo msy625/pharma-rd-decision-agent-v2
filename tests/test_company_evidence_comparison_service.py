@@ -84,7 +84,7 @@ class CompanyEvidenceComparisonServiceTest(unittest.TestCase):
         self.assertIn("directly_comparable_metrics", comparison)
         self.assertIn("partially_comparable_dimensions", comparison)
         self.assertIn("prohibited_conclusions", comparison)
-        self.assertEqual(comparison["data_scope"], "verified_nsclc_multi_company_sample")
+        self.assertEqual(comparison["data_scope"], "manually_reviewed_normalized_research_evidence")
 
     def test_astrazeneca_profile_uses_verified_supplement(self):
         profile = self.service.company_profile("AstraZeneca")

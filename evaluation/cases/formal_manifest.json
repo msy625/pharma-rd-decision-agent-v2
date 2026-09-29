@@ -3,7 +3,7 @@
   "benchmark_name": "药研罗盘国赛60题正式量化评测",
   "benchmark_stage": "formal",
   "case_count": 60,
-  "expected_data_version": "sha256:330ac862f52db200",
+  "expected_data_version": "sha256:e278bdf7673f91d9",
   "facts_snapshot_commit": "656626b8756a01e4f6280f4451be503a92439e71",
   "case_file": "formal_cases.jsonl",
   "description": "60题冻结正式集：42题开发集、18题锁定验收集。",

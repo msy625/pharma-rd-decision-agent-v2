@@ -8,7 +8,7 @@
 
 ## 事实快照
 
-- `expected_data_version`: `sha256:330ac862f52db200`
+- `expected_data_version`: `sha256:3dffd337db1ee326`
 - `facts_snapshot_commit`: `656626b8756a01e4f6280f4451be503a92439e71`
 - `benchmark_stage`: `pilot`
 - `case_count`: `12`

@@ -95,7 +95,7 @@ class CompanyEvidenceProfileApiTest(unittest.TestCase):
     def test_11_response_has_expected_wrapper(self):
         response = self.client.get("/api/evidence/company-profile/%E7%99%BE%E6%B5%8E%E7%A5%9E%E5%B7%9E")
         payload = response.json()
-        self.assertEqual(payload["metadata"]["data_scope"], "eligible_normalized_research_evidence")
+        self.assertEqual(payload["metadata"]["data_scope"], "manually_reviewed_normalized_research_evidence")
         json.loads(response.text)
 
 

@@ -17,7 +17,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TEMPLATE_DIR = PROJECT_ROOT / "data" / "template"
 DEFAULT_RUNTIME_DOMAIN_ID: str | None = None
-WEBSITE_VERIFICATION_STATUSES = {"verified", "partially_verified", "api_harvested"}
+WEBSITE_VERIFICATION_STATUSES = {"verified"}
 STUDY_RELATION_TYPES = {"source_supports", "source_describes_study"}
 ORGANIZATION_RELATION_TYPES = {"source_about", "source_about_org"}
 

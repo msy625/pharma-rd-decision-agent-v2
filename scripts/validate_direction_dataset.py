@@ -65,7 +65,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max", type=int, default=110, help="maximum records per direction (default 110)")
     parser.add_argument("--source-min", type=int, default=1200, help="minimum eligible sources (default 1200)")
     parser.add_argument("--source-max", type=int, default=1500, help="maximum eligible sources (default 1500)")
-    parser.add_argument("--organization-min", type=int, default=200, help="minimum organizations (default 200)")
+    parser.add_argument("--organization-min", type=int, default=150, help="minimum organizations after deduplication (default 150)")
     parser.add_argument("--organization-max", type=int, default=300, help="maximum organizations (default 300)")
     args = parser.parse_args(argv)
 

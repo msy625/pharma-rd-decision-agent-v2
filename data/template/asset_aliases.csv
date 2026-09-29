@@ -563,8 +563,6 @@ ALIAS_ASSET_HARVEST_VEHICLE_CREAM_CANONICAL,ASSET_HARVEST_VEHICLE_CREAM,Vehicle 
 ALIAS_ASSET_HARVEST_MC2_01_CREAM_CANONICAL,ASSET_HARVEST_MC2_01_CREAM,MC2-01 cream,en,canonical_or_code,SRC_CTG_NCT07357831,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MC2_01_VEHICLE_CANONICAL,ASSET_HARVEST_MC2_01_VEHICLE,MC2-01 vehicle,en,canonical_or_code,SRC_CTG_NCT07357831,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CAL_BDP_GEL_CANONICAL,ASSET_HARVEST_CAL_BDP_GEL,CAL/BDP Gel,en,canonical_or_code,SRC_CTG_NCT07357831,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SHR0302_TABLETS_PLACEBO_CANONICAL,ASSET_HARVEST_SHR0302_TABLETS_PLACEBO,SHR0302 tablets、Placebo,en,canonical_or_code,SRC_CTG_NCT04957550,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SHR_7590_CANONICAL,ASSET_HARVEST_SHR_7590,SHR-7590,en,canonical_or_code,SRC_CTG_NCT07758101,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TAK_279_CANONICAL,ASSET_HARVEST_TAK_279,TAK-279,en,canonical_or_code,SRC_CTG_NCT06233461,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GUSELKUMAB_DOSE_1_CANONICAL,ASSET_HARVEST_GUSELKUMAB_DOSE_1,Guselkumab Dose 1,en,canonical_or_code,SRC_CTG_NCT05197049,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GUSELKUMAB_DOSE_2_CANONICAL,ASSET_HARVEST_GUSELKUMAB_DOSE_2,Guselkumab Dose 2,en,canonical_or_code,SRC_CTG_NCT05197049,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。

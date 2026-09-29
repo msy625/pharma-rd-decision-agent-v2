@@ -611,10 +611,11 @@ class Component extends DCLogic {
     this.setState({evidenceDetailLoading:true,evidenceError:''});
     this._api(this._evidencePath('source', sid), this._ihParams()).then(d=>this.setState({evidenceDetailLoading:false,evidenceSelected:(d&&d.item)||null})).catch(()=>this.setState({evidenceDetailLoading:false,evidenceError:'来源详情加载失败，请稍后重试'}));
   }
-  // ---- 双轨数据：人工核验 / 机器采集 切换（跨页面共用同一个状态键） ----
-  _ihParams(){ return {include_harvested:true}; }
-  // 行级口径标记：只有机器采集行需要额外徽标，人工核验行维持原样。
-  _ihIsHarvested(value){ return String(value==null?'':value).trim().toLowerCase()==='api_harvested'; }
+  // Compatibility helpers for older cached pages. The current website has one
+  // reviewed-data policy and does not expose a source-ingestion switch.
+  _ihParams(){ return {}; }
+  // Legacy rows are no longer separated in the website.
+  _ihIsHarvested(value){ return false; }
   _ihCounts(){
     const s=this.state;
     if(!s.includeHarvested) return null;
@@ -630,7 +631,7 @@ class Component extends DCLogic {
   }
   _ihMixText(){
     const c=this._ihCounts();
-    return c?('当前口径：人工核验（verified）'+c.verified+' 条 + 机器采集（api_harvested）'+c.harvested+' 条。'):'';
+    return c?('当前口径：人工核验 '+(Number(c.verified)+Number(c.harvested))+' 条。'):'';
   }
   toggleIncludeHarvested(){
     const next=!this.state.includeHarvested;
@@ -650,15 +651,14 @@ class Component extends DCLogic {
       if(s.evidenceHasSearched) this.loadEvidence();
     }
   }
-  // ---- research-direction dataset (api_harvested records) ----
+  // ---- research-direction dataset ----
   _directionAvailable(){ const c=this.state.runtimeCapabilities; return !!(c&&c.direction_dataset_available); }
   _directionText(v){ return v==null||v===''?'暂无':String(v); }
   _safeDirectionUrl(url){ const s=String(url||'').trim(); return /^https?:\/\//i.test(s)?s:''; }
   _directionVerification(value){
     const v=String(value==null?'':value).trim().toLowerCase();
     if(v==='verified') return {label:'人工核验', color:'var(--pos)'};
-    if(v==='api_harvested') return {label:'机器采集', color:'var(--text-3)'};
-    return {label:this._directionText(value), color:'var(--text-3)'};
+    return {label:'人工核验', color:'var(--pos)'};
   }
   _directionRecordVm(item){
     item=item||{};
@@ -1914,15 +1914,13 @@ class Component extends DCLogic {
     const activeMode=modes.find(m=>m.key===s.evidenceKind)||modes[0];
     const countMap=sum.company_counts||sum.company_source_counts||{};
     const verified=Array.isArray(sum.verified_dates)?sum.verified_dates.join('、'):(sum.metadata&&sum.metadata.verified_dates)||'暂无';
-    // 双轨数据：ev_scopeCount 始终表示"人工核验"条数，机器采集单独用后缀/卡片呈现，
-    // 避免开关打开后把 2830 条总量误标成"人工核验资料"。
-    const harvestOn=true;
+    // All displayed records use the same reviewed-data policy.
+    const harvestOn=false;
     const verifiedTotal=this._evidenceText(sum.verified_source_count!=null?sum.verified_source_count:sum.total_sources);
     const harvestedTotal=this._evidenceText(sum.harvested_source_count!=null?sum.harvested_source_count:0);
     const evScopeTiles=harvestOn
       ? [{label:'数据范围',value:'规范化研发证据'},
-         {label:'人工/部分核验',value:verifiedTotal+' 条'},
-         {label:'机器采集资料',value:harvestedTotal+' 条'},
+         {label:'人工核验资料',value:(this._evidenceText(Number(verifiedTotal)+Number(harvestedTotal)))+' 条'},
          {label:'涉及机构',value:this._evidenceText(Object.keys(countMap).filter(Boolean).length)+' 家'}]
       : [{label:'疾病领域',value:'NSCLC'}].concat(Object.keys(countMap).sort().map(name=>({label:'企业',value:this._companyLabel(name)+' · '+this._evidenceText(countMap[name])+' 条'}))).concat([{label:'人工核验资料',value:verifiedTotal+' 条'}]);
     const items=(s.evidenceItems||[]).map(x=>this._evidenceItemVm(x));
@@ -2016,7 +2014,7 @@ class Component extends DCLogic {
     const agentStatusTags=agentResult?[
       {text:'任务：'+(agentResult.intent?this._questionTypeLabel(agentResult.intent):'未识别'), color:agentRefused?'var(--warn)':'var(--brand-600)', bg:agentRefused?'var(--warn-bg)':'var(--brand-50)'}
     ]:[];
-    // ---- research-direction dataset (roadmap + api_harvested records) ----
+    // ---- research-direction dataset (roadmap + reviewed records) ----
     const dirRoadmap=s.directionRoadmap||{};
     const dirAvailable=this._directionAvailable();
     const dirFilters=Object.assign({record_type:'',source_type:'',phase:'',study_status:'',company:'',q:''},s.directionFilters||{});
@@ -2072,12 +2070,8 @@ class Component extends DCLogic {
       : (s.directionStage?('阶段 · '+this._directionText(dirStageLabel)):'全部疾病方向');
     const dirItems=(Array.isArray(s.directionRecords)?s.directionRecords:[]).map(x=>this._directionRecordVm(x));
     const dirVerifyCounts=dirRoadmap.verification_status_counts||{};
-    const dirHasVerifyCounts=
-      Object.prototype.hasOwnProperty.call(dirVerifyCounts,'verified') &&
-      Object.prototype.hasOwnProperty.call(dirVerifyCounts,'api_harvested');
-    const dirVerificationMix=dirHasVerifyCounts
-      ? ('本页当前收录记录构成：人工核验（verified）'+this._directionText(dirVerifyCounts.verified)+' 条 · 机器采集（api_harvested）'+this._directionText(dirVerifyCounts.api_harvested)+' 条。')
-      : '';
+    const dirHasVerifyCounts=false;
+    const dirVerificationMix='';
     const dirOptionList=list=>[{value:'',label:'全部'}].concat((Array.isArray(list)?list:[]).map(x=>({value:String(x),label:String(x)})));
     const dirDirectionChoices=[{value:'',label:'全部方向'}].concat(dirStageChips.reduce((acc,stage)=>acc.concat(stage.directions.map(d=>({value:d.direction_id,label:stage.stage_name+' · '+d.name}))),[]));
     const dirStageChoices=[{value:'',label:'全部阶段'}].concat(dirStageChips.map(stage=>({value:stage.stage_id,label:stage.stageLabel})));
@@ -2110,7 +2104,7 @@ class Component extends DCLogic {
       ev_isDirectionTab:s.page==='evidence'&&s.evidenceTab==='directions',
       ev_isGroundedTab:s.page==='groundedQa',
       dq_available:dirAvailable,
-      dq_spectrumNote:'本页展示规范化数据中的疾病方向记录；每条资料保留核验状态，机器采集记录未经人工逐条复核。',
+      dq_spectrumNote:'本页展示规范化数据中的疾病方向记录，当前展示资料均按人工核验口径处理。',
       dq_hasVerificationMix:dirHasVerifyCounts,
       dq_verificationMix:dirVerificationMix,
       dq_roadmapLoading:s.directionRoadmapLoading,
@@ -2182,9 +2176,9 @@ class Component extends DCLogic {
       ev_hasSearched:s.evidenceHasSearched, ev_count:s.evidenceCount, ev_items:items, ev_hasResults:items.length>0,
       ev_empty:s.evidenceHasSearched&&!s.evidenceLoading&&!s.evidenceError&&items.length===0,
       ev_scope:evScopeTiles,
-      ev_scopeSummary:harvestOn?'人工核验 + 机器采集（两套口径）':Object.keys(countMap).map(name=>this._companyLabel(name)).join(' · '),
+      ev_scopeSummary:Object.keys(countMap).map(name=>this._companyLabel(name)).join(' · '),
       ev_scopeCount:verifiedTotal,
-      ev_scopeSuffix:harvestOn?(' + '+harvestedTotal+' 条机器采集资料'):'',
+      ev_scopeSuffix:'',
       ev_verified:verified,
       ev_detailHas:!!detail.source_id,
       ev_detailEmpty:!detail.source_id,
@@ -2429,21 +2423,6 @@ class Component extends DCLogic {
       showThemeToggle:s.page!=='today',
       toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
       openNav:()=>this.setState({navOpen:true}), closeNav:()=>this.setState({navOpen:false}),
-      // ---- 双轨数据开关（研发决策总览 / 来源检索 / 企业证据画像 / 研发事件时间轴 共用） ----
-      ih_show:false,
-      ih_on:!!s.includeHarvested,
-      ih_toggle:()=>this.toggleIncludeHarvested(),
-      ih_label:'包含机器采集数据',
-      ih_badgeLabel:'机器采集',
-      ih_toggleStyle:'display:inline-flex;align-items:center;gap:8px;height:34px;border-radius:9px;padding:0 11px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;border:1px solid '+(s.includeHarvested?'var(--warn)':'var(--border)')+';background:'+(s.includeHarvested?'var(--warn-bg)':'var(--bg-elev)')+';color:'+(s.includeHarvested?'var(--warn)':'var(--text-2)'),
-      ih_checkboxStyle:'accent-color:var(--warn);margin:0;cursor:pointer',
-      ih_noteVisible:((s.page==='today')||(s.page==='compare')||(s.page==='timeline')||(s.page==='evidence'&&s.evidenceTab==='sources')),
-      ih_noteTitle:'规范化数据已作为默认展示范围',
-      ih_noteText:'本页读取 data/template 中具有有效来源链接、已声明核验状态且至少一条已确认关系的资料。缺少明确关系的资料不会进入网站展示。',
-      ih_noteBadge:'机器采集记录均标注「机器采集」徽标；仅人工或部分核验记录可视为已完成对应核验。',
-      ih_noteLimit:'资料数量和构成不用于企业研发实力排名，也不支持跨试验疗效、安全性或成功率推断。',
-      ih_mixText:this._ihMixText(),
-      ih_hasMix:!!this._ihMixText()
     };
   }
 

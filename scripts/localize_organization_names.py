@@ -118,6 +118,18 @@ def main(argv: list[str] | None = None) -> int:
                     "notes": f"中文名对照：{rule['id']}；来源 config/organization_names_zh.json。",
                 }
             )
+        else:
+            # An entity may have been merged into a normalized organization
+            # after this alias was first created.  Keep its managed display
+            # alias synchronized with the canonical-name rule.
+            for alias in aliases:
+                if alias.get("alias_id") == alias_id:
+                    alias["organization_id"] = org_id
+                    alias["alias"] = rule["zh"]
+                    alias["language"] = "zh"
+                    alias["alias_type"] = "display_name"
+                    alias["notes"] = f"中文名对照：{rule['id']}；来源 config/organization_names_zh.json。"
+                    break
 
     print(f"harvested organizations : {sum(1 for o in orgs if o.get('organization_id','').startswith(HARVEST_PREFIX))}")
     print(f"matched with a Chinese name : {len(matched)}")
@@ -175,7 +187,8 @@ def interleave_zh_aliases(
     for row in aliases:
         result.append(row)
         org_id = row.get("organization_id", "")
-        if row.get("alias_type") == "canonical_or_code" and org_id in pending and org_id not in emitted:
+        canonical_id = f"ALIAS_{org_id}_CANONICAL"
+        if row.get("alias_id") == canonical_id and org_id in pending and org_id not in emitted:
             result.append(pending[org_id])
             emitted.add(org_id)
     for org_id, row in pending.items():

@@ -295,7 +295,7 @@ config/evidence_rules.json, config/grounded_qa_rules.json
 
 `data/template/` **不参与**该哈希；而且这个值是比赛冻结标识
 （`RELEASE_METADATA.template.json`、`tests/test_competition_package.py`、
-`scripts/validate_competition_package.py` 均固定为 `sha256:330ac862f52db200`），
+`scripts/validate_competition_package.py` 均固定为 `sha256:3dffd337db1ee326`），
 不能为了反映方向数据而修改其语义。因此本功能上线前后 `data_version` 完全相同。
 
 应改用新增的能力位与接口判断：

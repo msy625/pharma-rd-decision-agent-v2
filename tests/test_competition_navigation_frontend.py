@@ -42,7 +42,7 @@ class CompetitionNavigationFrontendTest(unittest.TestCase):
             entries,
             [
                 ("today", "研发决策总览"),
-                ("compare", "企业证据画像"),
+                ("compare", "机构研发画像"),
                 ("timeline", "研发事件时间轴"),
                 ("evidence", "研发证据中心"),
                 ("groundedQa", "智能决策 Agent"),
@@ -105,7 +105,7 @@ class CompetitionNavigationFrontendTest(unittest.TestCase):
             self.assertIn(expected, self.component)
 
     def test_08_evidence_center_has_three_internal_tabs_and_top_level_qa_entry(self):
-        for expected in ["来源检索", "证据链", "企业对比", "进入智能决策 Agent"]:
+        for expected in ["来源检索", "证据链", "机构对比", "进入智能决策 Agent"]:
             self.assertIn(expected, self.evidence_header)
         self.assertNotIn("ev_tabGrounded", self.component)
         self.assertNotIn("switchEvidenceTab('groundedQa')", self.component)

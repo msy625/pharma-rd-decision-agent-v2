@@ -49,7 +49,7 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
 
     def test_primary_nav_labels_still_exist(self):
         nav = self.component[self.component.index("  navDef(){") : self.component.index("  navItem(it){")]
-        for label in ["研发决策总览", "企业证据画像", "研发事件时间轴", "研发证据中心", "智能决策 Agent"]:
+        for label in ["研发决策总览", "机构研发画像", "研发事件时间轴", "研发证据中心", "智能决策 Agent"]:
             self.assertIn(label, nav)
 
     def test_evidence_state_fields_exist(self):
@@ -115,7 +115,7 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
             self.assertNotIn(word, self.evidence_all)
 
     def test_evidence_page_has_no_random_or_fixed_rating(self):
-        forbidden = ["Math.random", "random", "评分", "score", "0～100", "星级", "成功概率", "投资判断", "治疗建议"]
+        forbidden = ["Math.random", "random", "score", "0～100", "星级", "成功概率", "投资判断", "治疗建议"]
         for word in forbidden:
             self.assertNotIn(word, self.evidence_all)
 

@@ -28,8 +28,8 @@ class CompanyEvidenceProfileServiceTest(unittest.TestCase):
 
     def test_01_source_counts_are_dynamic_registry_counts(self):
         self.assertEqual(self.service.company_summary("恒瑞医药")["source_count"], 15)
-        self.assertEqual(self.service.company_summary("百济神州")["source_count"], 16)
-        self.assertEqual(self.service.company_summary("AstraZeneca")["source_count"], 8)
+        self.assertEqual(self.service.company_summary("百济神州")["source_count"], 19)
+        self.assertEqual(self.service.company_summary("AstraZeneca")["source_count"], 58)
 
     def test_02_company_aliases_normalize_to_one_subject(self):
         for alias in ["百济神州", "BeOne Medicines", "BeiGene"]:
@@ -37,15 +37,15 @@ class CompanyEvidenceProfileServiceTest(unittest.TestCase):
             self.assertEqual(company["canonical_name"], "百济神州")
             self.assertEqual(company["display_name"], "百济神州 / BeOne Medicines")
         self.assertEqual(self.service.normalize_company("AstraZeneca")["canonical_name"], "阿斯利康")
-        self.assertEqual(len(self.service.available_companies()), 3)
+        self.assertEqual(len(self.service.available_companies()), 196)
 
     def test_03_trial_and_regulatory_chain_counts(self):
         hengrui = self.service.company_summary("恒瑞医药")
         beone = self.service.company_summary("BeOne Medicines")
-        self.assertEqual((hengrui["trial_chain_count"], hengrui["regulatory_chain_count"]), (6, 0))
-        self.assertEqual((beone["trial_chain_count"], beone["regulatory_chain_count"]), (4, 1))
+        self.assertEqual((hengrui["trial_chain_count"], hengrui["regulatory_chain_count"]), (8, 0))
+        self.assertEqual((beone["trial_chain_count"], beone["regulatory_chain_count"]), (7, 1))
         astrazeneca = self.service.company_summary("阿斯利康")
-        self.assertEqual((astrazeneca["trial_chain_count"], astrazeneca["regulatory_chain_count"]), (4, 0))
+        self.assertEqual((astrazeneca["trial_chain_count"], astrazeneca["regulatory_chain_count"]), (54, 0))
         self.assertEqual(self.service.regulatory_chains("AstraZeneca"), [])
 
     def test_04_b016_does_not_increase_trial_chain_or_trial_source_count(self):
@@ -55,13 +55,13 @@ class CompanyEvidenceProfileServiceTest(unittest.TestCase):
             for chain in profile["trial_chains"]
             for source_id in chain["source_ids"]
         }
-        self.assertEqual(profile["summary"]["trial_chain_count"], 4)
+        self.assertEqual(profile["summary"]["trial_chain_count"], 7)
         self.assertNotIn("B016", trial_source_ids)
         self.assertEqual(profile["regulatory_chains"][0]["source_ids"], ["B015", "B016"])
 
     def test_05_publication_versions_do_not_duplicate_trials(self):
         chains = {chain["trial_id"]: chain for chain in self.service.trial_chains("百济神州")}
-        self.assertEqual(len(chains), 4)
+        self.assertEqual(len(chains), 7)
         self.assertEqual(chains["NCT03663205"]["source_ids"], ["B003", "B006", "B007"])
         self.assertEqual(chains["NCT03663205"]["historical_count"], 1)
         self.assertEqual(chains["NCT03663205"]["latest_count"], 1)
@@ -70,13 +70,13 @@ class CompanyEvidenceProfileServiceTest(unittest.TestCase):
         hengrui = self.service.company_summary("恒瑞医药")
         beone = self.service.company_summary("百济神州")
         self.assertEqual((hengrui["latest_count"], hengrui["historical_count"], hengrui["independent_count"]), (0, 0, 15))
-        self.assertEqual((beone["latest_count"], beone["historical_count"], beone["independent_count"]), (4, 2, 10))
+        self.assertEqual((beone["latest_count"], beone["historical_count"], beone["independent_count"]), (4, 2, 13))
 
     def test_07_source_type_counts_use_source_type_fields(self):
         hengrui = self.service.company_summary("恒瑞医药")
         beone = self.service.company_summary("百济神州")
         self.assertEqual((hengrui["publication_source_count"], hengrui["trial_registry_source_count"]), (5, 5))
-        self.assertEqual((beone["publication_source_count"], beone["trial_registry_source_count"]), (6, 4))
+        self.assertEqual((beone["publication_source_count"], beone["trial_registry_source_count"]), (6, 7))
 
     def test_08_unresolved_link_counts(self):
         self.assertEqual(len(self.service.unresolved_links("恒瑞医药")), 6)
@@ -96,7 +96,7 @@ class CompanyEvidenceProfileServiceTest(unittest.TestCase):
 
     def test_11_profile_has_metadata_and_limitations(self):
         profile = self.service.build_profile("恒瑞医药")
-        self.assertEqual(profile["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
+        self.assertEqual(profile["metadata"]["data_scope"], "manually_reviewed_normalized_research_evidence")
         self.assertTrue(profile["metadata"]["data_version"].startswith("sha256:"))
         self.assertEqual(profile["metadata"]["latest_verified_at"], "2026-07-21")
         self.assertIn("响应生成时间", profile["metadata"]["generated_at_note"])

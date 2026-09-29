@@ -229,7 +229,7 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             self.assertIn(snippet, self.component + self.template)
 
     def test_18_old_evidence_tabs_and_grounded_qa_backend_are_not_removed(self):
-        for text in ["来源检索", "证据链", "企业对比", "ev_isSourceTab", "ev_isChainTab", "ev_isCompanyCompareTab"]:
+        for text in ["来源检索", "证据链", "机构对比", "ev_isSourceTab", "ev_isChainTab", "ev_isCompanyCompareTab"]:
             self.assertIn(text, self.evidence_all)
         self.assertIn('/api/evidence/grounded-qa', (ROOT / "webapp" / "main.py").read_text(encoding="utf-8"))
 

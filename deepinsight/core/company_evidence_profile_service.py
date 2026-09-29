@@ -16,7 +16,7 @@ from deepinsight.core.company_evidence_comparison_service import (
 )
 from deepinsight.core.evidence_chain_service import EvidenceChainService, version_status
 from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
-from deepinsight.core.source_registry_service import SourceRegistryService, norm
+from deepinsight.core.source_registry_service import NormalizedSourceRegistryService, SourceRegistryService, norm
 
 
 DATA_SCOPE_LABEL = "当前人工核验的NSCLC多企业证据样本"
@@ -45,7 +45,7 @@ class CompanyEvidenceProfileService:
         evidence_workbench_service: EvidenceWorkbenchService | None = None,
         company_comparison_service: CompanyEvidenceComparisonService | None = None,
     ) -> None:
-        self.source_registry_service = source_registry_service or SourceRegistryService()
+        self.source_registry_service = source_registry_service or NormalizedSourceRegistryService()
         self.evidence_chain_service = evidence_chain_service or EvidenceChainService(
             source_registry_service=self.source_registry_service
         )

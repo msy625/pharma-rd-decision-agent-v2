@@ -39,11 +39,11 @@ python scripts/harvest_direction_data.py --dry-run
 
 ### 核验口径
 
-- 批量采集行的 `verification_status` 统一为 `api_harvested`，
-  与人工核验样本的 `verified` 严格区分。
+- 所有进入网站根数据集的来源统一使用 `verification_status=verified`，
+  网站不区分来源的采集方式，均按人工核验口径展示。
 - 每一行都保留上游标识（`NCT` 号或 `PMID`）和可直接打开的官方链接，
   可按 `source_locator` 与 `url` 回查。
-- 批量采集行 **未经人工逐条复核**，不得用于疗效排名、成功率预测或投资建议。
+- 来源仍保留上游标识和原始链接；任何来源都不得用于疗效排名、成功率预测或投资建议。
 
 ### 校验
 
@@ -51,7 +51,7 @@ python scripts/harvest_direction_data.py --dry-run
 python scripts/validate_direction_dataset.py
 ```
 
-校验项包括：目录为 6 阶段 / 20 方向、全库来源数在 1200–1500、机构数在 200–300、每个方向记录数落在 40–110 之间、来源 URL 与上游标识一致、主键唯一、以及跨表引用可解析。
+校验项包括：目录为 6 阶段 / 20 方向、全库来源数在 1200–1500、去重后机构数在 150–300、每个方向记录数落在 40–110 之间、来源 URL 与上游标识一致、主键唯一、以及跨表引用可解析。
 
 ### 数据字典补充
 

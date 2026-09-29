@@ -8,7 +8,7 @@ from typing import Any, Iterable
 from deepinsight.core.company_evidence_comparison_service import CompanyEvidenceComparisonService
 from deepinsight.core.evidence_chain_service import EvidenceChainService
 from deepinsight.core.grounded_qa_service import GroundedQAService
-from deepinsight.core.source_registry_service import SourceRegistryService
+from deepinsight.core.source_registry_service import NormalizedSourceRegistryService
 
 
 RESULT_FIELDS = [
@@ -55,7 +55,7 @@ class ProductionServiceAdapters:
         company_comparison_service: CompanyEvidenceComparisonService | None = None,
         grounded_qa_service: GroundedQAService | None = None,
     ) -> None:
-        self.source_registry_service = source_registry_service or SourceRegistryService()
+        self.source_registry_service = source_registry_service or NormalizedSourceRegistryService()
         self.evidence_chain_service = evidence_chain_service or EvidenceChainService(
             source_registry_service=self.source_registry_service
         )

@@ -14,7 +14,7 @@ from typing import Iterable
 from deepinsight.core.company_evidence_profile_service import CompanyEvidenceProfileService
 from deepinsight.core.evidence_chain_service import EvidenceChainService, version_status
 from deepinsight.core.evidence_workbench_service import EvidenceWorkbenchService
-from deepinsight.core.source_registry_service import SourceRegistryService, norm
+from deepinsight.core.source_registry_service import NormalizedSourceRegistryService, SourceRegistryService, norm
 
 
 EVENT_TYPE_LABELS = {
@@ -70,7 +70,7 @@ class RDEventTimelineService:
         company_evidence_profile_service: CompanyEvidenceProfileService | None = None,
         evidence_workbench_service: EvidenceWorkbenchService | None = None,
     ) -> None:
-        self.source_registry_service = source_registry_service or SourceRegistryService()
+        self.source_registry_service = source_registry_service or NormalizedSourceRegistryService()
         self.evidence_chain_service = evidence_chain_service or EvidenceChainService(
             source_registry_service=self.source_registry_service
         )

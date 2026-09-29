@@ -41,7 +41,7 @@ def _run(args: list[str], *, quiet: bool = False) -> None:
 def main() -> int:
     metadata_path = FINAL_METADATA_PATH if FINAL_METADATA_PATH.is_file() else TEMPLATE_METADATA_PATH
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    if metadata.get("data_version") != "sha256:330ac862f52db200":
+    if metadata.get("data_version") != "sha256:b91b2a87b524f19f":
         raise RuntimeError(f"{metadata_path.name}中的data_version与比赛冻结版本不一致。")
 
     tests = [

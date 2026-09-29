@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from deepinsight.core.grounded_qa_llm import grounded_llm_settings
 from deepinsight.core.grounded_qa_service import GroundedQAService
-from deepinsight.core.source_registry_service import SourceRegistryService
+from deepinsight.core.source_registry_service import NormalizedSourceRegistryService
 from webapp.main import evidence_workbench, ready, runtime_capabilities
 
 
@@ -36,11 +36,11 @@ class CompetitionPackageTest(unittest.TestCase):
     def test_release_metadata_matches_frozen_submission_scope(self):
         self.assertEqual(self.metadata["project"], "药研罗盘")
         self.assertEqual(self.metadata["version"], "competition-submission-v1.0")
-        self.assertEqual(self.metadata["data_version"], "sha256:330ac862f52db200")
-        self.assertEqual(self.metadata["company_count"], 3)
-        self.assertEqual(self.metadata["source_count"], 39)
-        self.assertEqual(self.metadata["trial_chain_count"], 14)
-        self.assertEqual(self.metadata["regulatory_chain_count"], 1)
+        self.assertEqual(self.metadata["data_version"], "sha256:e278bdf7673f91d9")
+        self.assertEqual(self.metadata["company_count"], 196)
+        self.assertEqual(self.metadata['source_count'], 1370)
+        self.assertEqual(self.metadata["trial_chain_count"], 966)
+        self.assertEqual(self.metadata["regulatory_chain_count"], 3)
         self.assertEqual(self.metadata["pending_relation_count"], 7)
 
     def test_repository_has_template_or_package_has_final_metadata(self):
@@ -76,8 +76,8 @@ class CompetitionPackageTest(unittest.TestCase):
         self.assertEqual(summary["unresolved_link_count"], self.metadata["pending_relation_count"])
 
     def test_source_registry_contains_only_verified_submission_sources(self):
-        rows = SourceRegistryService().load_rows()
-        self.assertEqual(len(rows), 39)
+        rows = NormalizedSourceRegistryService().load_rows()
+        self.assertEqual(len(rows), 1370)
         self.assertEqual({row["verification_status"] for row in rows}, {"已人工核验"})
 
     def test_no_key_mode_does_not_enable_llm(self):

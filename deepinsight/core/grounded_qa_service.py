@@ -22,7 +22,7 @@ from deepinsight.core.source_registry_service import (
     DEFAULT_CSV_PATH,
     DEFAULT_EVIDENCE_RULES_PATH,
     PROJECT_ROOT,
-    SourceRegistryService,
+    SourceRegistryService, NormalizedSourceRegistryService,
     norm,
 )
 
@@ -129,7 +129,7 @@ class GroundedQAService:
         company_comparison_service: CompanyEvidenceComparisonService | None = None,
         rules_path: str | Path | None = None,
     ) -> None:
-        self.source_registry_service = source_registry_service or SourceRegistryService()
+        self.source_registry_service = source_registry_service or NormalizedSourceRegistryService()
         self.evidence_chain_service = evidence_chain_service or EvidenceChainService(
             source_registry_service=self.source_registry_service
         )

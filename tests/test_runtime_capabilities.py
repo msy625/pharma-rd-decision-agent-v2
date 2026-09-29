@@ -72,10 +72,10 @@ class RuntimeCapabilitiesTest(unittest.TestCase):
         payload = response.json()
         self.assertEqual(payload["runtime_capabilities"]["default_page"], "today")
         self.assertFalse(payload["runtime_capabilities"]["legacy_features_available"])
-        self.assertEqual(payload["evidence_workbench"]["workbench"]["summary"]["source_count"], 39)
+        self.assertEqual(payload["evidence_workbench"]["workbench"]["summary"]['source_count'], 1370)
         self.assertEqual(
             payload["evidence_workbench"]["metadata"]["data_scope"],
-            "verified_nsclc_multi_company_sample",
+            "manually_reviewed_normalized_research_evidence",
         )
 
     def test_07_initial_state_keeps_existing_endpoints_unchanged(self):

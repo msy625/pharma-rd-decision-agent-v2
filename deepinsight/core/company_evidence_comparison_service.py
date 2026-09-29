@@ -10,11 +10,11 @@ from collections import Counter
 from typing import Iterable
 
 from deepinsight.core.evidence_chain_service import EvidenceChainService
-from deepinsight.core.source_registry_service import SourceRegistryService, norm
+from deepinsight.core.source_registry_service import NormalizedSourceRegistryService, SourceRegistryService, norm
 
 
-DATA_SCOPE = "normalized_research_evidence"
-INTERPRETATION_SCOPE = "eligible_normalized_records_only"
+DATA_SCOPE = "manually_reviewed_normalized_research_evidence"
+INTERPRETATION_SCOPE = "manually_reviewed_records_only"
 SCOPE_WARNING = "以下结果仅反映规范化数据表中具有明确关系、可回查链接和核验状态的当前收录资料，不代表企业整体研发实力或完整研发管线。"
 
 COMPANY_SUBJECTS = [
@@ -93,7 +93,7 @@ class CompanyEvidenceComparisonService:
         source_registry_service: SourceRegistryService | None = None,
         evidence_chain_service: EvidenceChainService | None = None,
     ) -> None:
-        self.source_registry_service = source_registry_service or SourceRegistryService()
+        self.source_registry_service = source_registry_service or NormalizedSourceRegistryService()
         self.evidence_chain_service = evidence_chain_service or EvidenceChainService(
             source_registry_service=self.source_registry_service
         )

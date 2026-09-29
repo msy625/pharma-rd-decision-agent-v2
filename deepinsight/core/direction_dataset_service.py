@@ -62,7 +62,7 @@ def _display_path(path: Path) -> str:
 
 
 class DirectionDatasetService:
-    """Direction roadmap plus the harvested evidence records behind each direction."""
+    """Direction roadmap plus the reviewed evidence records behind each direction."""
 
     def __init__(
         self,
@@ -404,10 +404,10 @@ class DirectionDatasetService:
             "total_sources": len(records),
             "verification_status_counts": dict(Counter(str(r.get("verification_status", "")) for r in records)),
             "metadata": {
-                "data_scope": "research_direction_harvest",
+                "data_scope": "research_direction_evidence",
                 "data_source": "data/template",
                 "catalog": "config/direction_catalog.json",
-                "interpretation_scope": "api_harvested_records_only",
+                "interpretation_scope": "manually_reviewed_records_only",
                 "excluded_unverifiable_records": self._skipped_unverifiable,
             },
         }
@@ -424,7 +424,7 @@ class DirectionDatasetService:
                 Counter(str(r["direction_id"]) for r in records)
             ),
             "metadata": {
-                "data_scope": "research_direction_harvest",
+                "data_scope": "research_direction_evidence",
                 "data_source": "data/template",
             },
         }

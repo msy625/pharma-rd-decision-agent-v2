@@ -19,7 +19,7 @@ ALIAS_ORG_HARVEST_TONGJI_HOSPITAL_CANONICAL,ORG_HARVEST_TONGJI_HOSPITAL,Tongji H
 ALIAS_ORG_HARVEST_TONGJI_HOSPITAL_ZH,ORG_HARVEST_TONGJI_HOSPITAL,华中科技大学同济医学院附属同济医院,zh,display_name,,,,中文名对照：TONJI_HOSPITAL；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_PFIZER_CANONICAL,ORG_HARVEST_PFIZER,Pfizer,en,canonical_or_code,,,SRC_CTG_NCT07489066,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_PFIZER_ZH,ORG_HARVEST_PFIZER,辉瑞,zh,display_name,,,,中文名对照：PFIZER；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_NATIONAL_CANCER_INSTITUTE_NCI_CANONICAL,ORG_HARVEST_NATIONAL_CANCER_INSTITUTE_NCI,National Cancer Institute (NCI),en,canonical_or_code,,,SRC_CTG_NCT06694454,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_NATIONAL_CANCER_INSTITUTE_NCI_CANONICAL,ORG_NCI,National Cancer Institute (NCI),en,canonical_or_code,,,SRC_CTG_NCT06694454,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_M_D_ANDERSON_CANCER_CENTER_CANONICAL,ORG_HARVEST_M_D_ANDERSON_CANCER_CENTER,M.D. Anderson Cancer Center,en,canonical_or_code,,,SRC_CTG_NCT06919874,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SHANGHAI_JUNSHI_BIOSCIENCE_CO_LTD_CANONICAL,ORG_HARVEST_SHANGHAI_JUNSHI_BIOSCIENCE_CO_LTD,"Shanghai Junshi Bioscience Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT06924606,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SHANGHAI_JUNSHI_BIOSCIENCE_CO_LTD_ZH,ORG_HARVEST_SHANGHAI_JUNSHI_BIOSCIENCE_CO_LTD,君实生物,zh,display_name,,,,中文名对照：JUNSHI；来源 config/organization_names_zh.json。
@@ -29,13 +29,12 @@ ALIAS_ORG_HARVEST_REGENERON_PHARMACEUTICALS_CANONICAL,ORG_HARVEST_REGENERON_PHAR
 ALIAS_ORG_HARVEST_REGENERON_PHARMACEUTICALS_ZH,ORG_HARVEST_REGENERON_PHARMACEUTICALS,再生元,zh,display_name,,,,中文名对照：REGENERON；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_JIANGMEN_CENTRAL_HOSPITAL_CANONICAL,ORG_HARVEST_JIANGMEN_CENTRAL_HOSPITAL,Jiangmen Central Hospital,en,canonical_or_code,,,SRC_CTG_NCT07841106,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_JIANGMEN_CENTRAL_HOSPITAL_ZH,ORG_HARVEST_JIANGMEN_CENTRAL_HOSPITAL,江门市中心医院,zh,display_name,,,,中文名对照：JIANGMEN_CENTRAL；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_MERCK_SHARP_DOHME_LLC_CANONICAL,ORG_HARVEST_MERCK_SHARP_DOHME_LLC,Merck Sharp & Dohme LLC,en,canonical_or_code,,,SRC_CTG_NCT06170788,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_MERCK_SHARP_DOHME_LLC_ZH,ORG_HARVEST_MERCK_SHARP_DOHME_LLC,默沙东,zh,display_name,,,,中文名对照：MSD；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_MERCK_SHARP_DOHME_LLC_CANONICAL,ORG_MSD,Merck Sharp & Dohme LLC,en,canonical_or_code,,,SRC_CTG_NCT06170788,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_MERCK_SHARP_DOHME_LLC_ZH,ORG_MSD,默沙东,zh,display_name,,,,中文名对照：MSD；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_ICAHN_SCHOOL_OF_MEDICINE_AT_MOUNT_SINAI_CANONICAL,ORG_HARVEST_ICAHN_SCHOOL_OF_MEDICINE_AT_MOUNT_SINAI,Icahn School of Medicine at Mount Sinai,en,canonical_or_code,,,SRC_CTG_NCT04123379,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_ASTRAZENECA_CANONICAL,ORG_HARVEST_ASTRAZENECA,AstraZeneca,en,canonical_or_code,,,SRC_CTG_NCT06868277,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_ASTRAZENECA_ZH,ORG_HARVEST_ASTRAZENECA,阿斯利康,zh,display_name,,,,中文名对照：ASTRAZENECA；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_DAIICHI_SANKYO_CANONICAL,ORG_HARVEST_DAIICHI_SANKYO,Daiichi Sankyo,en,canonical_or_code,,,SRC_CTG_NCT06172478,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_DAIICHI_SANKYO_ZH,ORG_HARVEST_DAIICHI_SANKYO,第一三共,zh,display_name,,,,中文名对照：DAIICHI_SANKYO；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_ASTRAZENECA_CANONICAL,ORG_ASTRAZENECA,AstraZeneca,en,canonical_or_code,,,SRC_CTG_NCT06868277,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_DAIICHI_SANKYO_CANONICAL,ORG_DAIICHI_SANKYO,Daiichi Sankyo,en,canonical_or_code,,,SRC_CTG_NCT06172478,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_DAIICHI_SANKYO_ZH,ORG_DAIICHI_SANKYO,第一三共,zh,display_name,,,,中文名对照：DAIICHI_SANKYO；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_PEOPLE_S_HOSPITAL_OF_QUZHOU_CANONICAL,ORG_HARVEST_PEOPLE_S_HOSPITAL_OF_QUZHOU,People's Hospital of Quzhou,en,canonical_or_code,,,SRC_CTG_NCT07647094,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_PEOPLE_S_HOSPITAL_OF_QUZHOU_ZH,ORG_HARVEST_PEOPLE_S_HOSPITAL_OF_QUZHOU,衢州市人民医院,zh,display_name,,,,中文名对照：QUZHOU_PEOPLES；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_GUANGDONG_PROVINCIAL_PEOPLE_S_HOSPITAL_CANONICAL,ORG_HARVEST_GUANGDONG_PROVINCIAL_PEOPLE_S_HOSPITAL,Guangdong Provincial People's Hospital,en,canonical_or_code,,,SRC_CTG_NCT07842471,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -46,8 +45,8 @@ ALIAS_ORG_HARVEST_AMGEN_CANONICAL,ORG_HARVEST_AMGEN,Amgen,en,canonical_or_code,,
 ALIAS_ORG_HARVEST_AMGEN_ZH,ORG_HARVEST_AMGEN,安进,zh,display_name,,,,中文名对照：AMGEN；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_TAKEDA_CANONICAL,ORG_HARVEST_TAKEDA,Takeda,en,canonical_or_code,,,SRC_CTG_NCT04844073,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_TAKEDA_ZH,ORG_HARVEST_TAKEDA,武田,zh,display_name,,,,中文名对照：TAKEDA；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_ELI_LILLY_AND_COMPANY_CANONICAL,ORG_HARVEST_ELI_LILLY_AND_COMPANY,Eli Lilly and Company,en,canonical_or_code,,,SRC_CTG_NCT06890598,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_ELI_LILLY_AND_COMPANY_ZH,ORG_HARVEST_ELI_LILLY_AND_COMPANY,礼来,zh,display_name,,,,中文名对照：LILLY；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_ELI_LILLY_AND_COMPANY_CANONICAL,ORG_LILLY,Eli Lilly and Company,en,canonical_or_code,,,SRC_CTG_NCT06890598,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_ELI_LILLY_AND_COMPANY_ZH,ORG_LILLY,礼来,zh,display_name,,,,中文名对照：LILLY；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_EMORY_UNIVERSITY_CANONICAL,ORG_HARVEST_EMORY_UNIVERSITY,Emory University,en,canonical_or_code,,,SRC_CTG_NCT04340882,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_BAYER_CANONICAL,ORG_HARVEST_BAYER,Bayer,en,canonical_or_code,,,SRC_CTG_NCT06452277,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_BAYER_ZH,ORG_HARVEST_BAYER,拜耳,zh,display_name,,,,中文名对照：BAYER；来源 config/organization_names_zh.json。
@@ -74,8 +73,7 @@ ALIAS_ORG_HARVEST_HOFFMANN_LA_ROCHE_ZH,ORG_HARVEST_HOFFMANN_LA_ROCHE,罗氏,zh,d
 ALIAS_ORG_HARVEST_MEMORIAL_SLOAN_KETTERING_CANCER_CENTER_CANONICAL,ORG_HARVEST_MEMORIAL_SLOAN_KETTERING_CANCER_CENTER,Memorial Sloan Kettering Cancer Center,en,canonical_or_code,,,SRC_CTG_NCT06721065,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_DUALITYBIO_INC_CANONICAL,ORG_HARVEST_DUALITYBIO_INC,DualityBio Inc.,en,canonical_or_code,,,SRC_CTG_NCT06018337,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_DUALITYBIO_INC_ZH,ORG_HARVEST_DUALITYBIO_INC,映恩生物,zh,display_name,,,,中文名对照：DUALITYBIO；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_BEONE_MEDICINES_CANONICAL,ORG_HARVEST_BEONE_MEDICINES,BeOne Medicines,en,canonical_or_code,,,SRC_CTG_NCT07222267,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_BEONE_MEDICINES_ZH,ORG_HARVEST_BEONE_MEDICINES,百济神州,zh,display_name,,,,中文名对照：BEONE；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_BEONE_MEDICINES_CANONICAL,ORG_BEONE,BeOne Medicines,en,canonical_or_code,,,SRC_CTG_NCT07222267,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_YUHAN_CORPORATION_CANONICAL,ORG_HARVEST_YUHAN_CORPORATION,Yuhan Corporation,en,canonical_or_code,,,SRC_CTG_NCT05523947,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_YUHAN_CORPORATION_ZH,ORG_HARVEST_YUHAN_CORPORATION,柳韩洋行,zh,display_name,,,,中文名对照：YUHAN；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_CITY_OF_HOPE_MEDICAL_CENTER_CANONICAL,ORG_HARVEST_CITY_OF_HOPE_MEDICAL_CENTER,City of Hope Medical Center,en,canonical_or_code,,,SRC_CTG_NCT00295893,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -98,12 +96,11 @@ ALIAS_ORG_HARVEST_BOEHRINGER_INGELHEIM_CANONICAL,ORG_HARVEST_BOEHRINGER_INGELHEI
 ALIAS_ORG_HARVEST_BOEHRINGER_INGELHEIM_ZH,ORG_HARVEST_BOEHRINGER_INGELHEIM,勃林格殷格翰,zh,display_name,,,,中文名对照：BOEHRINGER；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_CHINESE_UNIVERSITY_OF_HONG_KONG_CANONICAL,ORG_HARVEST_CHINESE_UNIVERSITY_OF_HONG_KONG,Chinese University of Hong Kong,en,canonical_or_code,,,SRC_CTG_NCT05405673,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_CHINESE_UNIVERSITY_OF_HONG_KONG_ZH,ORG_HARVEST_CHINESE_UNIVERSITY_OF_HONG_KONG,香港中文大学,zh,display_name,,,,中文名对照：CUHK；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_BRISTOL_MYERS_SQUIBB_CANONICAL,ORG_HARVEST_BRISTOL_MYERS_SQUIBB,Bristol-Myers Squibb,en,canonical_or_code,,,SRC_CTG_NCT07221357,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_BRISTOL_MYERS_SQUIBB_ZH,ORG_HARVEST_BRISTOL_MYERS_SQUIBB,百时美施贵宝,zh,display_name,,,,中文名对照：BMS；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_BRISTOL_MYERS_SQUIBB_CANONICAL,ORG_BMS,Bristol-Myers Squibb,en,canonical_or_code,,,SRC_CTG_NCT07221357,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_BRISTOL_MYERS_SQUIBB_ZH,ORG_BMS,百时美施贵宝,zh,display_name,,,,中文名对照：BMS；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_UNION_HOSPITAL_TONGJI_MEDICAL_COLLEGE_HU_CANONICAL,ORG_HARVEST_UNION_HOSPITAL_TONGJI_MEDICAL_COLLEGE_HU,"Union Hospital, Tongji Medical College, Huazhong University of Science and Technology",en,canonical_or_code,,,SRC_CTG_NCT07728019,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_UNION_HOSPITAL_TONGJI_MEDICAL_COLLEGE_HU_ZH,ORG_HARVEST_UNION_HOSPITAL_TONGJI_MEDICAL_COLLEGE_HU,华中科技大学同济医学院附属协和医院,zh,display_name,,,,中文名对照：WUHAN_UNION；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_N_CANONICAL,ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_N,"Chia Tai Tianqing Pharmaceutical Group Nanjing Shunxin Pharmaceutical Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT07653685,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_N_ZH,ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_N,正大天晴,zh,display_name,,,,中文名对照：CTTQ；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_N_CANONICAL,ORG_HARVEST_CHIA_TAI_TIANQING_PHARMACEUTICAL_GROUP_C,"Chia Tai Tianqing Pharmaceutical Group Nanjing Shunxin Pharmaceutical Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT07653685,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_UNIVERSITY_OF_EDINBURGH_CANONICAL,ORG_HARVEST_UNIVERSITY_OF_EDINBURGH,University of Edinburgh,en,canonical_or_code,,,SRC_CTG_NCT07255066,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_FIFTH_AFFILIATED_HOSPITAL_OF_GUANGZHOU_M_CANONICAL,ORG_HARVEST_FIFTH_AFFILIATED_HOSPITAL_OF_GUANGZHOU_M,Fifth Affiliated Hospital of Guangzhou Medical University,en,canonical_or_code,,,SRC_CTG_NCT07834268,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_FIFTH_AFFILIATED_HOSPITAL_OF_GUANGZHOU_M_ZH,ORG_HARVEST_FIFTH_AFFILIATED_HOSPITAL_OF_GUANGZHOU_M,广州医科大学附属第五医院,zh,display_name,,,,中文名对照：GMU_FIFTH；来源 config/organization_names_zh.json。
@@ -125,7 +122,7 @@ ALIAS_ORG_HARVEST_GUANGXI_MEDICAL_UNIVERSITY_ZH,ORG_HARVEST_GUANGXI_MEDICAL_UNIV
 ALIAS_ORG_HARVEST_RUIJIN_HOSPITAL_CANONICAL,ORG_HARVEST_RUIJIN_HOSPITAL,Ruijin Hospital,en,canonical_or_code,,,SRC_CTG_NCT07824479,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_RUIJIN_HOSPITAL_ZH,ORG_HARVEST_RUIJIN_HOSPITAL,上海交通大学医学院附属瑞金医院,zh,display_name,,,,中文名对照：RUIJIN；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_QILU_HOSPITAL_OF_SHANDONG_UNIVERSITY_CANONICAL,ORG_HARVEST_QILU_HOSPITAL_OF_SHANDONG_UNIVERSITY,Qilu Hospital of Shandong University,en,canonical_or_code,,,SRC_CTG_NCT06730373,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_QILU_HOSPITAL_OF_SHANDONG_UNIVERSITY_ZH,ORG_HARVEST_QILU_HOSPITAL_OF_SHANDONG_UNIVERSITY,齐鲁制药,zh,display_name,,,,中文名对照：QILU；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_QILU_HOSPITAL_OF_SHANDONG_UNIVERSITY_ZH,ORG_HARVEST_QILU_HOSPITAL_OF_SHANDONG_UNIVERSITY,山东大学齐鲁医院,zh,display_name,,,,中文名对照：QILU_HOSPITAL；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_ONO_PHARMACEUTICAL_CO_LTD_CANONICAL,ORG_HARVEST_ONO_PHARMACEUTICAL_CO_LTD,"Ono Pharmaceutical Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT07818070,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_ONO_PHARMACEUTICAL_CO_LTD_ZH,ORG_HARVEST_ONO_PHARMACEUTICAL_CO_LTD,小野药品,zh,display_name,,,,中文名对照：ONO_PHARMA；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_CANCER_HOSPITAL_CHINESE_ACADEMY_OF_MEDIC_CANONICAL,ORG_HARVEST_CANCER_HOSPITAL_CHINESE_ACADEMY_OF_MEDIC,"Cancer Hospital Chinese Academy of Medical Science, Shenzhen Center",en,canonical_or_code,,,SRC_CTG_NCT07819019,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -169,8 +166,8 @@ ALIAS_ORG_HARVEST_ASCLETIS_PHARMA_CHINA_CO_LIMITED_CANONICAL,ORG_HARVEST_ASCLETI
 ALIAS_ORG_HARVEST_ASCLETIS_PHARMA_CHINA_CO_LIMITED_ZH,ORG_HARVEST_ASCLETIS_PHARMA_CHINA_CO_LIMITED,歌礼制药,zh,display_name,,,,中文名对照：ASCLETIS；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_NATIONAL_INSTITUTE_OF_ENVIRONMENTAL_HEAL_CANONICAL,ORG_HARVEST_NATIONAL_INSTITUTE_OF_ENVIRONMENTAL_HEAL,National Institute of Environmental Health Sciences (NIEHS),en,canonical_or_code,,,SRC_CTG_NCT07437976,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_PENNINGTON_BIOMEDICAL_RESEARCH_CENTER_CANONICAL,ORG_HARVEST_PENNINGTON_BIOMEDICAL_RESEARCH_CENTER,Pennington Biomedical Research Center,en,canonical_or_code,,,SRC_CTG_NCT05958368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_NOVO_NORDISK_A_S_CANONICAL,ORG_HARVEST_NOVO_NORDISK_A_S,Novo Nordisk A/S,en,canonical_or_code,,,SRC_CTG_NCT06131372,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_NOVO_NORDISK_A_S_ZH,ORG_HARVEST_NOVO_NORDISK_A_S,诺和诺德,zh,display_name,,,,中文名对照：NOVO_NORDISK；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_NOVO_NORDISK_A_S_CANONICAL,ORG_NOVO_NORDISK,Novo Nordisk A/S,en,canonical_or_code,,,SRC_CTG_NCT06131372,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_NOVO_NORDISK_A_S_ZH,ORG_NOVO_NORDISK,诺和诺德,zh,display_name,,,,中文名对照：NOVO_NORDISK；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_SHANDONG_SUNCADIA_MEDICINE_CO_LTD_CANONICAL,ORG_HARVEST_SHANDONG_SUNCADIA_MEDICINE_CO_LTD,"Shandong Suncadia Medicine Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT07528027,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SHANDONG_SUNCADIA_MEDICINE_CO_LTD_ZH,ORG_HARVEST_SHANDONG_SUNCADIA_MEDICINE_CO_LTD,山东盛迪医药,zh,display_name,,,,中文名对照：SHANDONG_SUNCADIA；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_UNIVERSITY_OF_NORTH_CAROLINA_CHAPEL_HILL_CANONICAL,ORG_HARVEST_UNIVERSITY_OF_NORTH_CAROLINA_CHAPEL_HILL,"University of North Carolina, Chapel Hill",en,canonical_or_code,,,SRC_CTG_NCT06724406,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -228,11 +225,9 @@ ALIAS_ORG_HARVEST_CHINA_ACADEMY_OF_CHINESE_MEDICAL_SCIENCE_CANONICAL,ORG_HARVEST
 ALIAS_ORG_HARVEST_CHINA_ACADEMY_OF_CHINESE_MEDICAL_SCIENCE_ZH,ORG_HARVEST_CHINA_ACADEMY_OF_CHINESE_MEDICAL_SCIENCE,中国中医科学院,zh,display_name,,,,中文名对照：CACMS；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_NATIONAL_HEART_LUNG_AND_BLOOD_INSTITUTE_CANONICAL,ORG_HARVEST_NATIONAL_HEART_LUNG_AND_BLOOD_INSTITUTE,"National Heart, Lung, and Blood Institute (NHLBI)",en,canonical_or_code,,,SRC_CTG_NCT06280820,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_ABBOTT_MEDICAL_DEVICES_CANONICAL,ORG_HARVEST_ABBOTT_MEDICAL_DEVICES,Abbott Medical Devices,en,canonical_or_code,,,SRC_CTG_NCT07217392,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_ABBOTT_MEDICAL_DEVICES_ZH,ORG_HARVEST_ABBOTT_MEDICAL_DEVICES,艾伯维,zh,display_name,,,,中文名对照：ABBVIE；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_MEDTRONIC_CARDIOVASCULAR_CANONICAL,ORG_HARVEST_MEDTRONIC_CARDIOVASCULAR,Medtronic Cardiovascular,en,canonical_or_code,,,SRC_CTG_NCT06777368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_MEDTRONIC_CARDIOVASCULAR_ZH,ORG_HARVEST_MEDTRONIC_CARDIOVASCULAR,美敦力,zh,display_name,,,,中文名对照：MEDTRONIC；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_MEDTRONIC_CARDIAC_RHYTHM_AND_HEART_FAILU_CANONICAL,ORG_HARVEST_MEDTRONIC_CARDIAC_RHYTHM_AND_HEART_FAILU,Medtronic Cardiac Rhythm and Heart Failure,en,canonical_or_code,,,SRC_CTG_NCT07526896,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_MEDTRONIC_CARDIAC_RHYTHM_AND_HEART_FAILU_ZH,ORG_HARVEST_MEDTRONIC_CARDIAC_RHYTHM_AND_HEART_FAILU,美敦力,zh,display_name,,,,中文名对照：MEDTRONIC；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_ABBOTT_MEDICAL_DEVICES_ZH,ORG_HARVEST_ABBOTT_MEDICAL_DEVICES,雅培医疗设备,zh,display_name,,,,中文名对照：ABBOTT_MEDICAL_DEVICES；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_MEDTRONIC_CARDIOVASCULAR_CANONICAL,ORG_HARVEST_MEDTRONIC_MINIMED_INC,Medtronic Cardiovascular,en,canonical_or_code,,,SRC_CTG_NCT06777368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_MEDTRONIC_CARDIAC_RHYTHM_AND_HEART_FAILU_CANONICAL,ORG_HARVEST_MEDTRONIC_MINIMED_INC,Medtronic Cardiac Rhythm and Heart Failure,en,canonical_or_code,,,SRC_CTG_NCT07526896,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_INNOVENT_BIOLOGICS_SUZHOU_CO_LTD_CANONICAL,ORG_HARVEST_INNOVENT_BIOLOGICS_SUZHOU_CO_LTD,Innovent Biologics (Suzhou) Co. Ltd.,en,canonical_or_code,,,SRC_CTG_NCT06862908,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_INNOVENT_BIOLOGICS_SUZHOU_CO_LTD_ZH,ORG_HARVEST_INNOVENT_BIOLOGICS_SUZHOU_CO_LTD,信达生物,zh,display_name,,,,中文名对照：INNOVENT；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_CSL_BEHRING_CANONICAL,ORG_HARVEST_CSL_BEHRING,CSL Behring,en,canonical_or_code,,,SRC_CTG_NCT05485961,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -295,8 +290,7 @@ ALIAS_ORG_HARVEST_ZHEJIANG_PROVINCIAL_CENTER_FOR_DISEASE_C_CANONICAL,ORG_HARVEST
 ALIAS_ORG_HARVEST_ZHEJIANG_PROVINCIAL_CENTER_FOR_DISEASE_C_ZH,ORG_HARVEST_ZHEJIANG_PROVINCIAL_CENTER_FOR_DISEASE_C,浙江省疾病预防控制中心,zh,display_name,,,,中文名对照：ZHEJIANG_CDC；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_CHIESI_ITALIA_CANONICAL,ORG_HARVEST_CHIESI_ITALIA,Chiesi Italia,en,canonical_or_code,,,SRC_CTG_NCT05168995,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_CHIESI_ITALIA_ZH,ORG_HARVEST_CHIESI_ITALIA,凯西制药,zh,display_name,,,,中文名对照：CHIESI；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_CHIESI_FARMACEUTICI_S_P_A_CANONICAL,ORG_HARVEST_CHIESI_FARMACEUTICI_S_P_A,Chiesi Farmaceutici S.p.A.,en,canonical_or_code,,,SRC_CTG_NCT06264674,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_CHIESI_FARMACEUTICI_S_P_A_ZH,ORG_HARVEST_CHIESI_FARMACEUTICI_S_P_A,凯西制药,zh,display_name,,,,中文名对照：CHIESI；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_CHIESI_FARMACEUTICI_S_P_A_CANONICAL,ORG_HARVEST_CHIESI_ITALIA,Chiesi Farmaceutici S.p.A.,en,canonical_or_code,,,SRC_CTG_NCT06264674,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SICHUAN_KELUN_BIOTECH_BIOPHARMACEUTICAL_CANONICAL,ORG_HARVEST_SICHUAN_KELUN_BIOTECH_BIOPHARMACEUTICAL,"Sichuan Kelun-Biotech Biopharmaceutical Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT07732023,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SICHUAN_KELUN_BIOTECH_BIOPHARMACEUTICAL_ZH,ORG_HARVEST_SICHUAN_KELUN_BIOTECH_BIOPHARMACEUTICAL,科伦药业,zh,display_name,,,,中文名对照：KELUN；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_UCB_BIOPHARMA_SRL_CANONICAL,ORG_HARVEST_UCB_BIOPHARMA_SRL,UCB Biopharma SRL,en,canonical_or_code,,,SRC_CTG_NCT07725939,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -304,40 +298,25 @@ ALIAS_ORG_HARVEST_UCB_BIOPHARMA_SRL_ZH,ORG_HARVEST_UCB_BIOPHARMA_SRL,优时比,z
 ALIAS_ORG_HARVEST_FRED_HUTCHINSON_CANCER_CENTER_CANONICAL,ORG_HARVEST_FRED_HUTCHINSON_CANCER_CENTER,Fred Hutchinson Cancer Center,en,canonical_or_code,,,SRC_CTG_NCT07011810,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_BEIJING_CHAO_YANG_HOSPITAL_CANONICAL,ORG_HARVEST_BEIJING_CHAO_YANG_HOSPITAL,Beijing Chao Yang Hospital,en,canonical_or_code,,,SRC_CTG_NCT07382986,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_BEIJING_CHAO_YANG_HOSPITAL_ZH,ORG_HARVEST_BEIJING_CHAO_YANG_HOSPITAL,首都医科大学附属北京朝阳医院,zh,display_name,,,,中文名对照：BEIJING_CHAOYANG；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_SCIENTIFIC_AFFAIRS_LLC_CANONICAL,ORG_HARVEST_JANSSEN_SCIENTIFIC_AFFAIRS_LLC,"Janssen Scientific Affairs, LLC",en,canonical_or_code,,,SRC_CTG_NCT00508547,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_SCIENTIFIC_AFFAIRS_LLC_ZH,ORG_HARVEST_JANSSEN_SCIENTIFIC_AFFAIRS_LLC,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_LTD_CANONICAL,ORG_HARVEST_JANSSEN_CILAG_LTD,Janssen-Cilag Ltd.,en,canonical_or_code,,,SRC_CTG_NCT07532226,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_LTD_ZH,ORG_HARVEST_JANSSEN_CILAG_LTD,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_PHARMACEUTICA_N_V_BELGIUM_CANONICAL,ORG_HARVEST_JANSSEN_PHARMACEUTICA_N_V_BELGIUM,"Janssen Pharmaceutica N.V., Belgium",en,canonical_or_code,,,SRC_CTG_NCT05049798,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_PHARMACEUTICA_N_V_BELGIUM_ZH,ORG_HARVEST_JANSSEN_PHARMACEUTICA_N_V_BELGIUM,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_INTERNATIONAL_NV_CANONICAL,ORG_HARVEST_JANSSEN_CILAG_INTERNATIONAL_NV,Janssen-Cilag International NV,en,canonical_or_code,,,SRC_CTG_NCT03218488,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_INTERNATIONAL_NV_ZH,ORG_HARVEST_JANSSEN_CILAG_INTERNATIONAL_NV,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_JANSSEN_SCIENTIFIC_AFFAIRS_LLC_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,"Janssen Scientific Affairs, LLC",en,canonical_or_code,,,SRC_CTG_NCT00508547,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_JANSSEN_CILAG_LTD_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Janssen-Cilag Ltd.,en,canonical_or_code,,,SRC_CTG_NCT07532226,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_JANSSEN_PHARMACEUTICA_N_V_BELGIUM_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,"Janssen Pharmaceutica N.V., Belgium",en,canonical_or_code,,,SRC_CTG_NCT05049798,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_JANSSEN_CILAG_INTERNATIONAL_NV_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Janssen-Cilag International NV,en,canonical_or_code,,,SRC_CTG_NCT03218488,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_LEO_PHARMA_CANONICAL,ORG_HARVEST_LEO_PHARMA,LEO Pharma,en,canonical_or_code,,,SRC_CTG_NCT06013969,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_LEO_PHARMA_ZH,ORG_HARVEST_LEO_PHARMA,利奥制药,zh,display_name,,,,中文名对照：LEO_PHARMA；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_SUN_PHARMACEUTICAL_INDUSTRIES_LIMITED_CANONICAL,ORG_HARVEST_SUN_PHARMACEUTICAL_INDUSTRIES_LIMITED,Sun Pharmaceutical Industries Limited,en,canonical_or_code,,,SRC_CTG_NCT06611163,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SUN_PHARMACEUTICAL_INDUSTRIES_LIMITED_ZH,ORG_HARVEST_SUN_PHARMACEUTICAL_INDUSTRIES_LIMITED,太阳制药,zh,display_name,,,,中文名对照：SUN_PHARMA；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_PHARMACEUTICAL_K_K_CANONICAL,ORG_HARVEST_JANSSEN_PHARMACEUTICAL_K_K,Janssen Pharmaceutical K.K.,en,canonical_or_code,,,SRC_CTG_NCT06295692,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_PHARMACEUTICAL_K_K_ZH,ORG_HARVEST_JANSSEN_PHARMACEUTICAL_K_K,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_KFT_CANONICAL,ORG_HARVEST_JANSSEN_CILAG_KFT,Janssen-Cilag Kft.,en,canonical_or_code,,,SRC_CTG_NCT07746583,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_KFT_ZH,ORG_HARVEST_JANSSEN_CILAG_KFT,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JOHNSON_JOHNSON_PRIVATE_LIMITED_CANONICAL,ORG_HARVEST_JOHNSON_JOHNSON_PRIVATE_LIMITED,Johnson & Johnson Private Limited,en,canonical_or_code,,,SRC_CTG_NCT07141004,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JOHNSON_JOHNSON_PRIVATE_LIMITED_ZH,ORG_HARVEST_JOHNSON_JOHNSON_PRIVATE_LIMITED,强生,zh,display_name,,,,中文名对照：JOHNSON_JOHNSON；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_JANSSEN_PHARMACEUTICAL_K_K_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Janssen Pharmaceutical K.K.,en,canonical_or_code,,,SRC_CTG_NCT06295692,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_JANSSEN_CILAG_KFT_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Janssen-Cilag Kft.,en,canonical_or_code,,,SRC_CTG_NCT07746583,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_JOHNSON_JOHNSON_PRIVATE_LIMITED_CANONICAL,ORG_HARVEST_JOHNSON_JOHNSON_ENTERPRISE_INNOVATION_IN,Johnson & Johnson Private Limited,en,canonical_or_code,,,SRC_CTG_NCT07141004,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_HANGZHOU_ZHONGMEI_HUADONG_PHARMACEUTICAL_CANONICAL,ORG_HARVEST_HANGZHOU_ZHONGMEI_HUADONG_PHARMACEUTICAL,"Hangzhou Zhongmei Huadong Pharmaceutical Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT07357831,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_HANGZHOU_ZHONGMEI_HUADONG_PHARMACEUTICAL_ZH,ORG_HARVEST_HANGZHOU_ZHONGMEI_HUADONG_PHARMACEUTICAL,杭州中美华东制药,zh,display_name,,,,中文名对照：ZHONGMEI_HUADONG；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JIANGSU_HENGRUI_MEDICINE_CO_LTD_CANONICAL,ORG_HARVEST_JIANGSU_HENGRUI_MEDICINE_CO_LTD,"Jiangsu HengRui Medicine Co., Ltd.",en,canonical_or_code,,,SRC_CTG_NCT04957550,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JIANGSU_HENGRUI_MEDICINE_CO_LTD_ZH,ORG_HARVEST_JIANGSU_HENGRUI_MEDICINE_CO_LTD,恒瑞医药,zh,display_name,,,,中文名对照：HENGRUI；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_GUANGDONG_HENGRUI_PHARMACEUTICAL_CO_LTD_CANONICAL,ORG_HARVEST_GUANGDONG_HENGRUI_PHARMACEUTICAL_CO_LTD,"Guangdong Hengrui Pharmaceutical Co., Ltd",en,canonical_or_code,,,SRC_CTG_NCT07758101,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_GUANGDONG_HENGRUI_PHARMACEUTICAL_CO_LTD_ZH,ORG_HARVEST_GUANGDONG_HENGRUI_PHARMACEUTICAL_CO_LTD,广东恒瑞医药,zh,display_name,,,,中文名对照：GUANGDONG_HENGRUI；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_BIOTECH_INC_CANONICAL,ORG_HARVEST_JANSSEN_BIOTECH_INC,"Janssen Biotech, Inc.",en,canonical_or_code,,,SRC_CTG_NCT02808780,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_BIOTECH_INC_ZH,ORG_HARVEST_JANSSEN_BIOTECH_INC,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_XIAN_JANSSEN_PHARMACEUTICAL_LTD_CANONICAL,ORG_HARVEST_XIAN_JANSSEN_PHARMACEUTICAL_LTD,Xian-Janssen Pharmaceutical Ltd.,en,canonical_or_code,,,SRC_CTG_NCT07302360,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_XIAN_JANSSEN_PHARMACEUTICAL_LTD_ZH,ORG_HARVEST_XIAN_JANSSEN_PHARMACEUTICAL_LTD,西安杨森制药,zh,display_name,,,,中文名对照：XIAN_JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_G_M_B_H_CANONICAL,ORG_HARVEST_JANSSEN_CILAG_G_M_B_H,Janssen-Cilag G.m.b.H,en,canonical_or_code,,,SRC_CTG_NCT07102368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_G_M_B_H_ZH,ORG_HARVEST_JANSSEN_CILAG_G_M_B_H,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_SCIENCES_IRELAND_UC_CANONICAL,ORG_HARVEST_JANSSEN_SCIENCES_IRELAND_UC,Janssen Sciences Ireland UC,en,canonical_or_code,,,SRC_CTG_NCT07746765,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_SCIENCES_IRELAND_UC_ZH,ORG_HARVEST_JANSSEN_SCIENCES_IRELAND_UC,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_PHARMA_GMBH_CANONICAL,ORG_HARVEST_JANSSEN_CILAG_PHARMA_GMBH,Janssen-Cilag Pharma GmbH,en,canonical_or_code,,,SRC_CTG_NCT07606339,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_JANSSEN_CILAG_PHARMA_GMBH_ZH,ORG_HARVEST_JANSSEN_CILAG_PHARMA_GMBH,杨森,zh,display_name,,,,中文名对照：JANSSEN；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_JANSSEN_BIOTECH_INC_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,"Janssen Biotech, Inc.",en,canonical_or_code,,,SRC_CTG_NCT02808780,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_XIAN_JANSSEN_PHARMACEUTICAL_LTD_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Xian-Janssen Pharmaceutical Ltd.,en,canonical_or_code,,,SRC_CTG_NCT07302360,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_XIAN_JANSSEN_PHARMACEUTICAL_LTD_ZH,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,西安杨森制药,zh,former_name,,,,中文名对照：XIAN_JANSSEN；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_JANSSEN_CILAG_G_M_B_H_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Janssen-Cilag G.m.b.H,en,canonical_or_code,,,SRC_CTG_NCT07102368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_JANSSEN_SCIENCES_IRELAND_UC_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Janssen Sciences Ireland UC,en,canonical_or_code,,,SRC_CTG_NCT07746765,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
+ALIAS_ORG_HARVEST_JANSSEN_CILAG_PHARMA_GMBH_CANONICAL,ORG_HARVEST_JANSSEN_RESEARCH_DEVELOPMENT_LLC,Janssen-Cilag Pharma GmbH,en,canonical_or_code,,,SRC_CTG_NCT07606339,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SIXTH_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN_CANONICAL,ORG_HARVEST_SIXTH_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN,"Sixth Affiliated Hospital, Sun Yat-sen University",en,canonical_or_code,,,SRC_CTG_NCT07833332,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SIXTH_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN_ZH,ORG_HARVEST_SIXTH_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN,中山大学附属第六医院,zh,display_name,,,,中文名对照：SYSU_SIXTH；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_FIRST_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN_CANONICAL,ORG_HARVEST_FIRST_AFFILIATED_HOSPITAL_SUN_YAT_SEN_UN,"First Affiliated Hospital, Sun Yat-Sen University",en,canonical_or_code,,,SRC_CTG_NCT07828886,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -358,8 +337,7 @@ ALIAS_ORG_HARVEST_VASTRA_GOTALAND_REGION_CANONICAL,ORG_HARVEST_VASTRA_GOTALAND_R
 ALIAS_ORG_HARVEST_VASTRA_GOTALAND_REGION_ZH,ORG_HARVEST_VASTRA_GOTALAND_REGION,西约特兰大区,zh,display_name,,,,中文名对照：VASTRA_GOTALAND；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_SHIONOGI_CANONICAL,ORG_HARVEST_SHIONOGI,Shionogi,en,canonical_or_code,,,SRC_CTG_NCT07787650,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_SHIONOGI_ZH,ORG_HARVEST_SHIONOGI,盐野义,zh,display_name,,,,中文名对照：SHIONOGI；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_NOVARTIS_GENE_THERAPIES_CANONICAL,ORG_HARVEST_NOVARTIS_GENE_THERAPIES,Novartis Gene Therapies,en,canonical_or_code,,,SRC_CTG_NCT04042025,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_NOVARTIS_GENE_THERAPIES_ZH,ORG_HARVEST_NOVARTIS_GENE_THERAPIES,诺华,zh,display_name,,,,中文名对照：NOVARTIS；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_NOVARTIS_GENE_THERAPIES_CANONICAL,ORG_HARVEST_NOVARTIS_PHARMACEUTICALS,Novartis Gene Therapies,en,canonical_or_code,,,SRC_CTG_NCT04042025,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_NATIONAL_INSTITUTE_OF_MENTAL_HEALTH_NIMH_CANONICAL,ORG_HARVEST_NATIONAL_INSTITUTE_OF_MENTAL_HEALTH_NIMH,National Institute of Mental Health (NIMH),en,canonical_or_code,,,SRC_CTG_NCT00001246,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_BIOMARIN_PHARMACEUTICAL_CANONICAL,ORG_HARVEST_BIOMARIN_PHARMACEUTICAL,BioMarin Pharmaceutical,en,canonical_or_code,,,SRC_CTG_NCT07441876,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_BIOMARIN_PHARMACEUTICAL_ZH,ORG_HARVEST_BIOMARIN_PHARMACEUTICAL,拜玛林制药,zh,display_name,,,,中文名对照：BIOMARIN；来源 config/organization_names_zh.json。
@@ -371,8 +349,7 @@ ALIAS_ORG_HARVEST_DANYANG_HUICHUANG_MEDICAL_EQUIPMENT_CO_L_CANONICAL,ORG_HARVEST
 ALIAS_ORG_HARVEST_DANYANG_HUICHUANG_MEDICAL_EQUIPMENT_CO_L_ZH,ORG_HARVEST_DANYANG_HUICHUANG_MEDICAL_EQUIPMENT_CO_L,慧创医疗,zh,display_name,,,,中文名对照：HUICHUANG_MEDICAL；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_EISAI_LIMITED_CANONICAL,ORG_HARVEST_EISAI_LIMITED,Eisai Limited,en,canonical_or_code,,,SRC_CTG_NCT07762092,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_EISAI_LIMITED_ZH,ORG_HARVEST_EISAI_LIMITED,卫材,zh,display_name,,,,中文名对照：EISAI；来源 config/organization_names_zh.json。
-ALIAS_ORG_HARVEST_EISAI_INC_CANONICAL,ORG_HARVEST_EISAI_INC,Eisai Inc.,en,canonical_or_code,,,SRC_CTG_NCT07723950,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ORG_HARVEST_EISAI_INC_ZH,ORG_HARVEST_EISAI_INC,卫材,zh,display_name,,,,中文名对照：EISAI；来源 config/organization_names_zh.json。
+ALIAS_ORG_HARVEST_EISAI_INC_CANONICAL,ORG_HARVEST_EISAI_LIMITED,Eisai Inc.,en,canonical_or_code,,,SRC_CTG_NCT07723950,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_ANHUI_MEDICAL_UNIVERSITY_CANONICAL,ORG_HARVEST_ANHUI_MEDICAL_UNIVERSITY,Anhui Medical University,en,canonical_or_code,,,SRC_CTG_NCT07827196,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ORG_HARVEST_ANHUI_MEDICAL_UNIVERSITY_ZH,ORG_HARVEST_ANHUI_MEDICAL_UNIVERSITY,安徽医科大学,zh,display_name,,,,中文名对照：ANHUI_MEDICAL_UNIV；来源 config/organization_names_zh.json。
 ALIAS_ORG_HARVEST_UNIVERSIDAD_SAN_JORGE_CANONICAL,ORG_HARVEST_UNIVERSIDAD_SAN_JORGE,Universidad San Jorge,en,canonical_or_code,,,SRC_CTG_NCT07842926,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。

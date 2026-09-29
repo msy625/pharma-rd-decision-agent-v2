@@ -304,26 +304,26 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertIn("直接结论：不代表最终批准", result["answer"])
         self.assertIn("B016是2025-07-24的CHMP积极意见，非欧盟委员会最终批准", result["answer"])
         self.assertIn("2023-09-15为Tevimbra欧盟初始许可日期", result["answer"])
-        self.assertIn("当前EPAR已将围手术期NSCLC适应症列入正式授权范围", result["answer"])
+        self.assertIn("B015是EMA/欧盟正式授权记录（当前EPAR）", result["answer"])
 
         by_id = {item["source_id"]: item["support_summary"] for item in result["citations"]}
         self.assertIn("Tevimbra欧盟初始许可", by_id["B015"])
         self.assertIn("当前EPAR页面更新时间为2026-05-27", by_id["B015"])
-        self.assertIn("当前EPAR已将围手术期NSCLC适应症列入正式授权范围", by_id["B015"])
+        self.assertIn("该当前授权记录不是B016本身的欧盟委员会最终批准文件", by_id["B015"])
         self.assertIn("CHMP积极意见，非欧盟委员会最终批准", by_id["B016"])
 
     def test_15_company_comparison_current_sample_limit(self):
         result = self.result("恒瑞与百济当前证据样本有什么差异？")
         self.assertEqual(result["question_type"], "company_comparison")
-        self.assertIn("当前收录并核验的NSCLC证据样本", result["answer"])
+        self.assertIn("规范化数据表中具有明确关系、可回查链接和核验状态的当前收录资料", result["answer"])
 
     def test_16_evidence_gap_returns_unresolved_links(self):
         result = self.result("当前数据还存在哪些缺口？")
-        self.assertGreaterEqual(set(self.citation_ids(result)), {"H008", "H009", "H010", "H011", "H012", "H014"})
+        self.assertGreaterEqual(set(self.citation_ids(result)), {"H010", "H011", "H012", "H014"})
 
     def test_17_shr_1210_alias_query(self):
         result = self.result("SHR-1210有哪些相关资料？")
-        self.assertGreaterEqual(set(self.citation_ids(result)), {"H001", "H002", "H004", "H005", "H006", "H008", "H009", "H010", "H011", "H012"})
+        self.assertGreaterEqual(set(self.citation_ids(result)), {"H001", "H002", "H004", "H005", "H006", "H010", "H011", "H012"})
 
     def test_18_missing_trial_returns_insufficient_data(self):
         result = self.result("一个不存在的试验当前是什么状态？")
@@ -407,9 +407,9 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertEqual(after - before, set())
 
     def test_24_existing_evidence_apis_still_work(self):
-        self.assertEqual(self.get_json("/api/evidence/summary")["total_sources"], 39)
-        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 15)
-        self.assertEqual(self.get_json("/api/evidence/company-comparison")["metadata"]["data_scope"], "verified_nsclc_multi_company_sample")
+        self.assertEqual(self.get_json("/api/evidence/summary")['total_sources'], 1370)
+        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 969)
+        self.assertEqual(self.get_json("/api/evidence/company-comparison")["metadata"]["data_scope"], "manually_reviewed_normalized_research_evidence")
 
     def test_25_error_response_does_not_leak_path_stack_or_key(self):
         original_factory = webapp_main._grounded_qa_service

@@ -45,8 +45,8 @@ class NormalizedEvidenceChainProjectionTest(unittest.TestCase):
     def test_organization_coverage_uses_only_explicit_relations_and_sponsorship(self):
         coverage = self.service.organization_coverage("ORG_ASTRAZENECA")
         self.assertEqual(coverage["organization"]["organization_id"], "ORG_ASTRAZENECA")
-        self.assertEqual(coverage["coverage"]["explicit_source_count"], 8)
-        self.assertEqual(coverage["coverage"]["sponsored_study_count"], 4)
+        self.assertEqual(coverage["coverage"]["explicit_source_count"], 57)
+        self.assertEqual(coverage["coverage"]["sponsored_study_count"], 53)
 
 
 class NormalizedEvidenceChainProjectionApiTest(unittest.TestCase):
@@ -64,7 +64,7 @@ class NormalizedEvidenceChainProjectionApiTest(unittest.TestCase):
     def test_organization_coverage_api_returns_the_explicit_coverage_view(self):
         response = self.client.get("/api/evidence/organization-coverage/ORG_ASTRAZENECA")
         self.assertEqual(response.status_code, 200, response.text)
-        self.assertEqual(response.json()["item"]["coverage"]["sponsored_study_count"], 4)
+        self.assertEqual(response.json()["item"]["coverage"]["sponsored_study_count"], 53)
 
 
 if __name__ == "__main__":
