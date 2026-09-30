@@ -56,24 +56,25 @@ class EvidenceWorkbenchFrontendTest(unittest.TestCase):
         for forbidden in ["48", "312", "18642", "1286", "同业营收排名", "营业收入趋势", "风险预警中心", "雷达评分", "模拟预警"]:
             self.assertNotIn(forbidden, combined)
 
-    def test_05_today_displays_nine_real_metrics(self):
-        for label in ["总来源", "已核验来源", "企业主体", "试验级证据链", "药物级监管链", "最新资料", "历史版本", "独立资料", "待确认关系"]:
+    def test_05_today_displays_data_type_metrics(self):
+        for label in ["人工核验来源", "企业主体", "证据链", "临床试验", "论文证据", "监管与公司资料", "待确认关系"]:
             self.assertIn(label, self.today_vals + self.today_template)
 
-    def test_06_today_displays_scope_metadata_and_company_cards(self):
+    def test_05b_three_primary_metrics_share_the_available_width(self):
+        self.assertIn("[data-home-metrics-new]{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))", self.template)
+        self.assertIn('hint-placeholder-count="3"', self.today_template)
+
+    def test_06_today_displays_sample_companies_only(self):
         for text in [
-            "当前结果仅反映已收录并核验的NSCLC证据样本，不代表企业整体研发实力。",
-            "数据版本",
-            "最新核验日期",
-            "响应生成时间",
-            "企业证据覆盖",
-            "today_companies:companies",
+            "示范样例总览",
+            "today_companies:sampleCompanies",
+            ".slice(0,10)",
             "this._companyLabel(c.display_name||c.company_name)",
         ]:
             self.assertIn(text, self.today_vals + self.today_template)
 
-    def test_07_today_displays_distributions_and_data_gaps(self):
-        for text in ["来源类型构成", "研究状态构成", "当前数据缺口", "today_sourceTypes", "today_studyStatuses", "today_gaps"]:
+    def test_07_today_displays_current_domains_and_study_statuses(self):
+        for text in ["研究领域与研究状态", "展示全部研究领域及研究状态", "today_domains", "today_studyStatuses", "today_toggleDomains", "today_toggleStudyStatuses"]:
             self.assertIn(text, self.today_vals + self.today_template)
 
     def test_08_quick_links_cover_evidence_timeline_and_grounded_qa(self):

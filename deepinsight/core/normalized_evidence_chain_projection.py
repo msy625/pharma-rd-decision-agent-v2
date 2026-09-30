@@ -105,7 +105,7 @@ class NormalizedEvidenceChainProjection:
                 "projection_status": "formed" if evidence_rows else "relationship_insufficient",
                 "relation_level": "asset_regulatory_event",
                 "asset_id": asset_id,
-                "chain_name": f"{asset.get('display_name') or asset.get('canonical_name') or asset_id} 监管事件链",
+                "chain_name": f"{asset.get('display_name') or asset.get('canonical_name') or asset_id} 监管链",
                 "company_name": holder.get("canonical_name", ""),
                 "company_display_name": holder.get("display_name", ""),
                 "drug_names": [name for name in names if name],

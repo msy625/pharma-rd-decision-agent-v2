@@ -27,10 +27,12 @@ class NormalizedInstitutionTimelineFrontendTest(unittest.TestCase):
         for label in ["结构化日期事件", "涉及研究", "研究日期", "论文日期", "监管事件"]:
             self.assertIn(label, self.component)
 
-    def test_timeline_cautions_against_inference_from_missing_dates(self):
-        self.assertIn("无日期资料未进入时间轴，不代表事件不存在。", self.component)
+    def test_timeline_years_are_built_from_current_events_only(self):
+        self.assertIn("timelineYearOptions:Object.keys(yearSet).sort().reverse()", self.component)
         self.assertIn("不代表机构研发活跃度或竞争力", self.component)
         self.assertIn("研究、论文与监管日期", self.component)
+        self.assertNotIn("tl_undated", self.component)
+        self.assertNotIn("无日期资料", self.template)
 
     def test_static_artifact_matches_frontend_sources(self):
         self.assertEqual(self.index, self.template.replace("/*__COMPONENT__*/", self.component))

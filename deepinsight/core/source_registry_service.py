@@ -12,6 +12,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Iterable
 
+from deepinsight.core.evidence_display import display_category, display_category_label
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CSV_PATH = PROJECT_ROOT / "data" / "source_registry.csv"
@@ -237,11 +239,12 @@ class SourceRegistryService:
         source_type: str | None = None,
         status: str | None = None,
         text: str | None = None,
+        category: str | None = None,
         latest_only: bool = False,
         normalized: bool = True,
     ) -> list[dict[str, str]]:
         study_name_query = str(study_name or "").strip()
-        if not any([source_id, company, trial_id, pmid, study_name_query, drug, source_type, status, text]):
+        if not any([source_id, company, trial_id, pmid, study_name_query, drug, source_type, status, text, category]):
             return []
 
         rows = self.load_rows()
@@ -252,6 +255,8 @@ class SourceRegistryService:
 
         for row in rows:
             if latest_only and not is_latest_row(row):
+                continue
+            if category and row.get("display_category", "") != category:
                 continue
             if source_id and not contains(row.get("source_id"), source_id):
                 continue
@@ -320,6 +325,8 @@ class SourceRegistryService:
             "pmid": row.get("pmid", ""),
             "study_name": row.get("study_name", ""),
             "source_type": row.get("source_type", ""),
+            "display_category": row.get("display_category") or display_category(row.get("template_source_type") or row.get("source_type")),
+            "display_category_label": row.get("display_category_label") or display_category_label(row.get("template_source_type") or row.get("source_type")),
             "evidence_level": row.get("evidence_level", ""),
             "study_status": row.get("study_status", ""),
             "verification_status": row.get("verification_status", ""),
@@ -333,6 +340,9 @@ class SourceRegistryService:
             "is_latest_evidence": row.get("is_latest_evidence", ""),
             "parent_trial_id": row.get("parent_trial_id", ""),
             "risk_notes": risk_notes,
+            "legacy_record_label": row.get("legacy_record_label", ""),
+            "legacy_source_locator": row.get("legacy_source_locator", ""),
+            "field_provenance": row.get("field_provenance", ""),
         }
 
     def expand_company_terms(self, term: str) -> list[str]:

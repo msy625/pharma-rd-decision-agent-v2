@@ -114,7 +114,7 @@ class MobileEvidenceCenterFrontendTest(unittest.TestCase):
             "@media(max-width:420px){\n  [data-evidence-metrics]{grid-template-columns:minmax(0,1fr) !important}",
             self.responsive_css,
         )
-        self.assertGreaterEqual(self.evidence_template.count('data-evidence-metrics=""'), 2)
+        self.assertEqual(self.evidence_template.count('data-evidence-metrics=""'), 1)
 
     def test_static_index_is_generated_from_current_sources(self):
         expected = self.template.replace("/*__COMPONENT__*/", self.component)

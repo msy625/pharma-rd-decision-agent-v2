@@ -13,6 +13,8 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
+from deepinsight.core.evidence_display import display_category, display_category_label
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_TEMPLATE_DIR = PROJECT_ROOT / "data" / "template"
@@ -95,6 +97,7 @@ class TemplateDataRepository:
         prevents rows with unresolved or detached provenance from being displayed.
         """
         sources = self.load_table("sources")
+        domains = self._by_id("domains", "domain_id")
         organizations = self._by_id("organizations", "organization_id")
         assets = self._by_id("assets", "asset_id")
         asset_aliases = self._group_by("asset_aliases", "asset_id")
@@ -147,7 +150,11 @@ class TemplateDataRepository:
                 for relation in confirmed_relations
                 if relation["relation_type"] == "source_mentions_asset" and relation["object_id"] in assets
             ]
-            source_facts = {fact["predicate"]: fact["object_value"] for fact in facts.get(source_id, [])}
+            source_fact_rows = facts.get(source_id, [])
+            source_facts = {fact["predicate"]: fact["object_value"] for fact in source_fact_rows}
+            raw_source_terms = _join(
+                [fact.get("object_value", "") for fact in source_fact_rows if fact.get("predicate") == "mentions_unmapped_term"]
+            )
             publication = publications.get(source_id, [{}])[0]
             regulatory = regulatory_events.get(source_id, [{}])[0]
             primary_identifier = self._primary_identifier(identifiers.get(study.get("study_id", ""), []))
@@ -179,8 +186,12 @@ class TemplateDataRepository:
                 organization.get("organization_id", ""),
                 organization.get("display_name") or organization.get("canonical_name", ""),
             )
+            # A small number of legacy company records had only the reviewed
+            # Chinese display title. Preserve it as the normalized title rather
+            # than presenting an existing source as "暂无".
+            legacy_display_title = source_facts.get("legacy_display_title", "")
             title_original = source.get("title_original") or publication.get("title_original", "")
-            normalized_title = publication.get("title_normalized", "")
+            normalized_title = publication.get("title_normalized", "") or legacy_display_title
             if study.get("study_name"):
                 if publication:
                     normalized_title = (
@@ -192,22 +203,10 @@ class TemplateDataRepository:
             scope_limitation = _join(
                 [source.get("source_scope", ""), source_facts.get("scope_limitation", "")]
             )
-            row = {
-                "source_id": legacy_source_id,
-                "template_source_id": source_id,
-                "domain_id": source_domain_id,
-                "company": company,
-                "company_cn": company,
-                "company_display_name": organization.get("display_name", ""),
-                "source_type": source.get("publisher") or source.get("source_type", ""),
-                "template_source_type": source.get("source_type", ""),
-                "url": source.get("url", ""),
-                "registry_id": primary_identifier,
-                "parent_trial_id": primary_identifier,
-                "pmid": publication.get("pmid", ""),
-                "study_name": study.get("study_name", ""),
-                "drug_names": _join(
-                    [
+            displayed_study_name = study.get("study_name", "") or source_facts.get("legacy_display_study_name", "")
+            displayed_drug_names = _join(
+                [
+                    *[
                         value
                         for asset in asset_rows
                         for value in [
@@ -217,8 +216,39 @@ class TemplateDataRepository:
                             asset.get("brand_name", ""),
                             *[alias.get("alias", "") for alias in asset_aliases.get(asset.get("asset_id", ""), [])],
                         ]
-                    ]
-                ),
+                    ],
+                    raw_source_terms,
+                ]
+            )
+            migrated_fields = []
+            if legacy_display_title:
+                migrated_fields.append("来源标题")
+            if source_facts.get("legacy_display_study_name"):
+                migrated_fields.append("研究名称")
+            if raw_source_terms:
+                migrated_fields.append("原始药物术语")
+            if source_facts.get("legacy_record_label"):
+                migrated_fields.append("原始资料名称")
+            if source_facts.get("legacy_source_locator"):
+                migrated_fields.append("原始资料定位")
+            row = {
+                "source_id": legacy_source_id,
+                "template_source_id": source_id,
+                "domain_id": source_domain_id,
+                "domain_name": domains.get(source_domain_id, {}).get("domain_name", ""),
+                "company": company,
+                "company_cn": company,
+                "company_display_name": organization.get("display_name", ""),
+                "source_type": source.get("publisher") or source.get("source_type", ""),
+                "template_source_type": source.get("source_type", ""),
+                "display_category": display_category(source.get("source_type", "")),
+                "display_category_label": display_category_label(source.get("source_type", "")),
+                "url": source.get("url", ""),
+                "registry_id": primary_identifier,
+                "parent_trial_id": primary_identifier,
+                "pmid": publication.get("pmid", ""),
+                "study_name": displayed_study_name,
+                "drug_names": displayed_drug_names,
                 "study_status": source_facts.get("study_status") or study.get("study_status", ""),
                 "verification_status": self._legacy_verification_status(source.get("verification_status", "")),
                 "authorisation_status": regulatory.get("authorization_status", ""),
@@ -241,6 +271,12 @@ class TemplateDataRepository:
                 "biomarker_requirements": source_facts.get("biomarker_requirements", ""),
                 "scope_limitation": scope_limitation,
                 "notes": _join(compatibility_notes),
+                "legacy_record_label": source_facts.get("legacy_record_label", ""),
+                "legacy_source_locator": source_facts.get("legacy_source_locator", ""),
+                "field_provenance": (
+                    "；".join(migrated_fields) + "来自原始 source_registry.csv 的逐条字段迁移，"
+                    "仅用于展示，不新增实体或试验关系。"
+                ) if migrated_fields else "",
                 "disease": "非小细胞肺癌（NSCLC）" if domain_id == "DOM_NSCLC" else "",
             }
             rows.append(row)

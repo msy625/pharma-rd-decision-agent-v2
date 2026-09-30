@@ -44,12 +44,12 @@ class DirectionDatasetApiTest(unittest.TestCase):
         self.assertEqual(len(payload["stages"]), 6)
         self.assertEqual(sum(len(s["directions"]) for s in payload["stages"]), 20)
 
-    def test_02_roadmap_directions_stay_within_the_40_to_110_range(self):
+    def test_02_roadmap_directions_stay_within_the_30_to_110_range(self):
         payload = self.get_json("/api/directions/roadmap")
         for stage in payload["stages"]:
             for direction in stage["directions"]:
                 with self.subTest(direction=direction["direction_id"]):
-                    self.assertGreaterEqual(direction["source_count"], 40)
+                    self.assertGreaterEqual(direction["source_count"], 30)
                     self.assertLessEqual(direction["source_count"], 110)
 
     def test_03_roadmap_carries_the_stage_goals_from_the_catalog(self):

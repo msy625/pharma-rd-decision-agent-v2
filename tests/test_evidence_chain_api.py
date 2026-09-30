@@ -114,18 +114,18 @@ class EvidenceChainApiHttpTest(unittest.TestCase):
         self.assertEqual(response.status_code, expected_status, response.text)
         return response.json()
 
-    def test_01_summary_total_chain_count_is_969(self):
+    def test_01_summary_total_chain_count_matches_curated_dataset(self):
         payload = self.get_json("/api/evidence/chain-summary")
-        self.assertEqual(payload["total_chain_count"], 969)
+        self.assertEqual(payload["total_chain_count"], 645)
 
-    def test_02_summary_trial_chain_count_is_966(self):
+    def test_02_summary_trial_chain_count_matches_curated_dataset(self):
         payload = self.get_json("/api/evidence/chain-summary")
-        self.assertEqual(payload["trial_chain_count"], 966)
+        self.assertEqual(payload["trial_chain_count"], 643)
 
-    def test_03_summary_regulatory_chain_count_is_3(self):
+    def test_03_summary_regulatory_chain_count_matches_curated_dataset(self):
         payload = self.get_json("/api/evidence/chain-summary")
-        self.assertEqual(payload["regulatory_chain_count"], 3)
-        self.assertEqual(payload["nct_registered_trial_count"], 963)
+        self.assertEqual(payload["regulatory_chain_count"], 2)
+        self.assertEqual(payload["nct_registered_trial_count"], 640)
 
     def test_04_rationale_304_contains_expected_sources(self):
         payload = self.get_json("/api/evidence/chains/trial%3ANCT03663205")
@@ -211,7 +211,7 @@ class EvidenceChainApiHttpTest(unittest.TestCase):
 
     def test_21_existing_evidence_query_api_still_works(self):
         payload = self.get_json("/api/evidence/summary")
-        self.assertEqual(payload['total_sources'], 1370)
+        self.assertEqual(payload['total_sources'], 1047)
 
     def test_22_astrazeneca_has_four_paired_trial_chains(self):
         payload = self.get_json("/api/evidence/chains?company=AstraZeneca&chain_type=trial")

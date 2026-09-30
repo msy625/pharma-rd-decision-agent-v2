@@ -39,7 +39,7 @@ class CompanyEvidenceProfileApiTest(unittest.TestCase):
         response = self.client.get("/api/evidence/company-profile-companies")
         payload = response.json()
         self.assertEqual(response.status_code, 200, response.text)
-        self.assertGreater(payload["count"], 100)
+        self.assertEqual(payload["count"], 43)
         self.assertIn("恒瑞医药", [item["canonical_name"] for item in payload["items"]])
         self.assertIn("阿斯利康", [item["canonical_name"] for item in payload["items"]])
 

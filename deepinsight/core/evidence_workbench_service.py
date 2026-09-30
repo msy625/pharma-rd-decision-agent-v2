@@ -24,7 +24,7 @@ from deepinsight.core.source_registry_service import NormalizedSourceRegistrySer
 LIMITATIONS = [
     SCOPE_WARNING,
     "工作台只统计当前来源登记表和已人工配置的证据链，不代表外部公开证据全集。",
-    "药物级监管链单独统计，不计入试验级证据链数量。",
+    "监管链单独统计，不计入证据链数量。",
     "待确认关系表示当前样本尚缺少明确一对一关联，不等同于错误数据。",
     "不输出企业定量优劣结论、疗效优劣或投资建议。",
 ]
@@ -65,6 +65,7 @@ class EvidenceWorkbenchService:
             "company_count": len(self.company_comparison_service.available_companies()),
             "trial_chain_count": int(chain_summary.get("trial_chains", 0) or 0),
             "regulatory_chain_count": int(chain_summary.get("regulatory_chains", 0) or 0),
+            "display_category_distribution": self._distribution(rows, "display_category_label"),
             "latest_count": versions["latest"],
             "historical_count": versions["historical"],
             "independent_count": versions["independent"],
@@ -104,6 +105,10 @@ class EvidenceWorkbenchService:
         rows = self.source_registry_service.load_rows()
         return self._distribution(rows, "study_status", empty_label="未填写或不适用")
 
+    def domain_distribution(self) -> list[dict[str, object]]:
+        rows = self.source_registry_service.load_rows()
+        return self._distribution(rows, "domain_name", empty_label="未标注领域")
+
     def evidence_gaps(self) -> list[dict[str, object]]:
         gaps = []
         for item in self.evidence_chain_service.get_unresolved_links():
@@ -128,6 +133,7 @@ class EvidenceWorkbenchService:
             "summary": self.summary(),
             "companies": self.company_overview(),
             "source_type_distribution": self.source_type_distribution(),
+            "domain_distribution": self.domain_distribution(),
             "study_status_distribution": self.study_status_distribution(),
             "evidence_gaps": self.evidence_gaps(),
             "metadata": self.metadata(rows),

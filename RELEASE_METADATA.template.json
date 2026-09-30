@@ -2,10 +2,10 @@
   "project": "药研罗盘",
   "version": "competition-submission-v1.0",
   "source_commit": "__GENERATED_AT_PACKAGING__",
-  "data_version": "sha256:e278bdf7673f91d9",
-  "company_count": 196,
-  "source_count": 1370,
-  "trial_chain_count": 966,
-  "regulatory_chain_count": 3,
+  "data_version": "sha256:f4246991a6ec2d09",
+  "company_count": 43,
+  "source_count": 1047,
+  "trial_chain_count": 643,
+  "regulatory_chain_count": 2,
   "pending_relation_count": 7
 }

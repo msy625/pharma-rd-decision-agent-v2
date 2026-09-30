@@ -70,7 +70,7 @@ class EvidenceDecisionBriefService:
         executive = [
             self._conclusion(
                 "verified_fact",
-                f"当前样本收录 {summary.get('verified_source_count', 0)} 条已人工核验来源，形成 {summary.get('trial_chain_count', 0)} 条试验级证据链。",
+                f"当前样本收录 {summary.get('verified_source_count', 0)} 条已人工核验来源，形成 {summary.get('trial_chain_count', 0)} 条证据链。",
                 list(source_index),
                 [item["chain_id"] for item in chain_cards],
             ),

@@ -125,6 +125,18 @@ class GroundedQALLMTest(unittest.TestCase):
         self.assertIn("当前数据库尚未收录", system_prompt)
         self.assertIn("不得推断外部世界不存在相关资料", system_prompt)
 
+    def test_07c_model_receives_fact_fields_and_returns_only_direct_answer(self):
+        packet = self.service.build_evidence_packet("请说明B016与B015的监管状态和区别")
+        client = FakeClient()
+        generate_grounded_answer("请说明B016与B015的监管状态和区别", packet, client=client)
+        system_prompt = client.calls[0]["messages"][0]["content"]
+        user_packet = json.loads(client.calls[0]["messages"][1]["content"])["evidence_packet"]
+        sources = {item["source_id"]: item for item in user_packet["sources"]}
+        self.assertIn("直接、具体地回答", system_prompt)
+        self.assertIn("不要添加“直接回答”“分析”“下一步核验”", system_prompt)
+        self.assertEqual(sources["B016"]["publication_date"], "2025-07-24")
+        self.assertEqual(sources["B015"]["authorisation_status"], "欧盟正式授权")
+
     def test_08_service_calls_llm_with_valid_json(self):
         response = self.service.answer_question("B015是什么监管状态？", llm_client=FakeClient(), model_name="deepseek-v4-flash")
         self.assertTrue(response["trace"]["used_llm"])

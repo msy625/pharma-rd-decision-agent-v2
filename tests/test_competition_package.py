@@ -36,11 +36,11 @@ class CompetitionPackageTest(unittest.TestCase):
     def test_release_metadata_matches_frozen_submission_scope(self):
         self.assertEqual(self.metadata["project"], "药研罗盘")
         self.assertEqual(self.metadata["version"], "competition-submission-v1.0")
-        self.assertEqual(self.metadata["data_version"], "sha256:e278bdf7673f91d9")
-        self.assertEqual(self.metadata["company_count"], 196)
-        self.assertEqual(self.metadata['source_count'], 1370)
-        self.assertEqual(self.metadata["trial_chain_count"], 966)
-        self.assertEqual(self.metadata["regulatory_chain_count"], 3)
+        self.assertEqual(self.metadata["data_version"], "sha256:f4246991a6ec2d09")
+        self.assertEqual(self.metadata["company_count"], 43)
+        self.assertEqual(self.metadata['source_count'], 1047)
+        self.assertEqual(self.metadata["trial_chain_count"], 643)
+        self.assertEqual(self.metadata["regulatory_chain_count"], 2)
         self.assertEqual(self.metadata["pending_relation_count"], 7)
 
     def test_repository_has_template_or_package_has_final_metadata(self):
@@ -77,7 +77,7 @@ class CompetitionPackageTest(unittest.TestCase):
 
     def test_source_registry_contains_only_verified_submission_sources(self):
         rows = NormalizedSourceRegistryService().load_rows()
-        self.assertEqual(len(rows), 1370)
+        self.assertEqual(len(rows), 1047)
         self.assertEqual({row["verification_status"] for row in rows}, {"已人工核验"})
 
     def test_no_key_mode_does_not_enable_llm(self):

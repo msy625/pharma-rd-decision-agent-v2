@@ -2501,7 +2501,6 @@ def _decision_agent_auto_result(
         return result
     if not result.get("source_ids"):
         return _decision_agent_local_fallback(result, "当前未检索到可用本地证据，未调用模型。")
-
     usage_config = grounded_qa_usage_config_from_env()
     if not usage_config.llm_enabled:
         return _decision_agent_local_fallback(result, "DeepSeek智能生成当前未启用，已使用本地结构化分析。")
@@ -2555,7 +2554,9 @@ def _decision_agent_auto_result(
             llm_attempted=bool(trace.get("llm_attempted", True)),
         )
 
-    result["answer"] = grounded.get("answer") or result.get("answer", "")
+    result["answer"] = service.direct_answer_text(grounded.get("answer") or result.get("answer", ""))
+    if isinstance(result.get("decision"), dict):
+        result["decision"]["summary"] = result["answer"]
     result["generation_mode"] = "auto"
     result["used_llm"] = True
     result["limitations"] = list(dict.fromkeys([*(result.get("limitations") or []), *(grounded.get("limitations") or [])]))
@@ -2610,7 +2611,7 @@ def evidence_decision_agent(payload: RDDecisionAgentRequest, request: Request) -
         result = service.run(question, generation_mode=generation_mode)
         if result.get("error"):
             return result
-        if generation_mode == "auto" and not getattr(service, "normalized_only", False):
+        if generation_mode == "auto":
             result = _decision_agent_auto_result(service, result, question, request)
         return result
     except Exception as exc:
@@ -2718,6 +2719,7 @@ def evidence_grounded_qa(payload: GroundedQARequest, request: Request) -> dict[s
 @app.get("/api/evidence/search")
 def evidence_search(
     q: Annotated[str | None, Query()] = None,
+    category: Annotated[str | None, Query()] = None,
     latest_only: Annotated[bool, Query()] = False,
     include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
@@ -2726,9 +2728,9 @@ def evidence_search(
         raise HTTPException(status_code=400, detail="查询参数 q 不能为空。")
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service(include_harvested).query(text=q.strip(), latest_only=latest_only)[:limit]
+        items = _evidence_service(include_harvested).query(text=q.strip(), category=category, latest_only=latest_only)[:limit]
         return _evidence_list_response(
-            {"q": q, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
+            {"q": q, "category": category, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
         )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
@@ -2737,15 +2739,16 @@ def evidence_search(
 @app.get("/api/evidence/company/{name}")
 def evidence_by_company(
     name: str,
+    category: Annotated[str | None, Query()] = None,
     latest_only: Annotated[bool, Query()] = False,
     include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service(include_harvested).query(company=name, latest_only=latest_only)[:limit]
+        items = _evidence_service(include_harvested).query(company=name, category=category, latest_only=latest_only)[:limit]
         return _evidence_list_response(
-            {"company": name, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
+            {"company": name, "category": category, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
         )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
@@ -2754,15 +2757,16 @@ def evidence_by_company(
 @app.get("/api/evidence/drug/{name}")
 def evidence_by_drug(
     name: str,
+    category: Annotated[str | None, Query()] = None,
     latest_only: Annotated[bool, Query()] = False,
     include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service(include_harvested).query(drug=name, latest_only=latest_only)[:limit]
+        items = _evidence_service(include_harvested).query(drug=name, category=category, latest_only=latest_only)[:limit]
         return _evidence_list_response(
-            {"drug": name, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
+            {"drug": name, "category": category, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit}, items
         )
     except Exception as exc:
         raise _handle_source_registry_error(exc) from exc
@@ -2771,15 +2775,16 @@ def evidence_by_drug(
 @app.get("/api/evidence/trial/{trial_id}")
 def evidence_by_trial(
     trial_id: str,
+    category: Annotated[str | None, Query()] = None,
     latest_only: Annotated[bool, Query()] = False,
     include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service(include_harvested).related_evidence(trial_id, latest_only=latest_only)[:limit]
+        items = _evidence_service(include_harvested).query(trial_id=trial_id, category=category, latest_only=latest_only)[:limit]
         return _evidence_list_response(
-            {"trial_id": trial_id, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit},
+            {"trial_id": trial_id, "category": category, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit},
             items,
         )
     except Exception as exc:
@@ -2789,15 +2794,16 @@ def evidence_by_trial(
 @app.get("/api/evidence/study/{name}")
 def evidence_by_study(
     name: str,
+    category: Annotated[str | None, Query()] = None,
     latest_only: Annotated[bool, Query()] = False,
     include_harvested: Annotated[bool, Query()] = False,
     limit: Annotated[int, Query(ge=1, le=100)] = 100,
 ) -> dict[str, Any]:
     _validate_evidence_limit(limit)
     try:
-        items = _evidence_service(include_harvested).query(study_name=name, latest_only=latest_only)[:limit]
+        items = _evidence_service(include_harvested).query(study_name=name, category=category, latest_only=latest_only)[:limit]
         return _evidence_list_response(
-            {"study_name": name, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit},
+            {"study_name": name, "category": category, "latest_only": latest_only, "include_harvested": include_harvested, "limit": limit},
             items,
         )
     except Exception as exc:
@@ -2884,10 +2890,11 @@ def normalized_catalog() -> dict[str, Any]:
 def normalized_sources(
     q: str = "",
     domain_id: str = "",
+    category: str = "",
     limit: Annotated[int, Query(ge=1, le=100)] = 50,
 ) -> dict[str, Any]:
     try:
-        return _normalized_data_service().search_sources(query=q, domain_id=domain_id, limit=limit)
+        return _normalized_data_service().search_sources(query=q, domain_id=domain_id, category=category, limit=limit)
     except Exception as exc:
         raise _handle_direction_dataset_error(exc) from exc
 

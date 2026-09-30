@@ -22,12 +22,14 @@ class NormalizedDataService:
             },
         }
 
-    def search_sources(self, *, query: str = "", domain_id: str = "", limit: int = 50) -> dict[str, Any]:
+    def search_sources(self, *, query: str = "", domain_id: str = "", category: str = "", limit: int = 50) -> dict[str, Any]:
         query_key = query.casefold().strip()
         rows = self.repository.source_rows(domain_id=None)
         items = []
         for row in rows:
             if domain_id and row.get("domain_id") != domain_id:
+                continue
+            if category and row.get("display_category") != category:
                 continue
             blob = " ".join(str(row.get(key, "")) for key in [
                 "source_id", "company", "drug_names", "registry_id", "study_name", "original_title", "normalized_title_zh", "source_type",
@@ -35,7 +37,7 @@ class NormalizedDataService:
             if query_key and query_key not in blob:
                 continue
             items.append(self._source_card(row))
-        return {"query": {"q": query, "domain_id": domain_id, "limit": limit}, "count": min(len(items), limit), "items": items[:limit]}
+        return {"query": {"q": query, "domain_id": domain_id, "category": category, "limit": limit}, "count": min(len(items), limit), "items": items[:limit]}
 
     def source_detail(self, source_id: str) -> dict[str, Any]:
         row = self._source_by_id(source_id)
@@ -99,7 +101,7 @@ class NormalizedDataService:
     def _source_card(self, row: dict[str, str]) -> dict[str, str]:
         return {key: row.get(key, "") for key in [
             "source_id", "template_source_id", "domain_id", "company", "company_display_name", "drug_names", "registry_id", "study_name",
-            "source_type", "template_source_type", "original_title", "normalized_title_zh", "url", "publication_date", "verified_at",
+            "source_type", "template_source_type", "display_category", "display_category_label", "original_title", "normalized_title_zh", "url", "publication_date", "verified_at",
             "verification_status", "study_status", "authorisation_status", "regulatory_event_type", "is_latest_evidence", "scope_limitation",
         ]}
 

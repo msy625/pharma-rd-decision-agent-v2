@@ -69,7 +69,7 @@ PARTIALLY_COMPARABLE_DIMENSIONS = [
 COMPARISON_NOTES = [
     SCOPE_WARNING,
     "来源数量、证据链数量和多来源链数量只能说明当前样本覆盖，不代表研发质量或企业实力。",
-    "药物级监管链不计入临床试验数量。",
+    "监管链不计入临床试验数量。",
     "多来源试验链可能代表证据关联更完整，也可能只是当前采集覆盖不同。",
     "当前数据不足时应显示“当前数据不足”，不得从标题或药物名称自动推断。",
 ]
@@ -193,20 +193,20 @@ class CompanyEvidenceComparisonService:
                 "prohibited_interpretation": "不能解释为外部公开证据总量或企业信息披露质量。",
             },
             {
-                "name": "试验级证据链数量",
+                "name": "证据链数量",
                 "field": "trial_chain_count",
                 "calculation": "通过 EvidenceChainService 统计 chain_type 为 trial 的证据链数量。",
                 "directly_comparable": True,
-                "correct_interpretation": "只能解释为当前样本中已人工确认的试验级证据链数量。",
+                "correct_interpretation": "只能解释为当前样本中已人工确认的证据链数量。",
                 "prohibited_interpretation": "不能解释为企业临床试验总数或研发能力强弱。",
             },
             {
-                "name": "药物级监管链数量",
+                "name": "监管链数量",
                 "field": "regulatory_chain_count",
                 "calculation": "通过 EvidenceChainService 统计 chain_type 为 regulatory 的证据链数量。",
                 "directly_comparable": True,
-                "correct_interpretation": "只能解释为当前样本中药物级监管事件链数量，且不计入临床试验数量。",
-                "prohibited_interpretation": "不能解释为具体试验数量，也不能替代试验级证据。",
+                "correct_interpretation": "只能解释为当前样本中的监管事件链数量，且不计入临床试验数量。",
+                "prohibited_interpretation": "不能解释为具体试验数量，也不能替代证据链。",
             },
             {
                 "name": "来源类型构成",

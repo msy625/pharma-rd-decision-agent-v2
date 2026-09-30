@@ -654,7 +654,7 @@ class RDDecisionAgentService:
             ),
             (
                 f"监管链数量：{left.get('display_name')} {left.get('regulatory_chain_count', 0)}条，"
-                f"{right.get('display_name')} {right.get('regulatory_chain_count', 0)}条；药物级监管链不计入临床试验数量。"
+                f"{right.get('display_name')} {right.get('regulatory_chain_count', 0)}条；监管链不计入临床试验数量。"
             ),
             (
                 f"待确认关系：{left.get('display_name')} {left.get('unresolved_link_count', 0)}条，"
@@ -664,10 +664,10 @@ class RDDecisionAgentService:
         decision["comparison_dimensions"] = [
             self._comparison_dimension("来源数量", left, right, "source_count", "当前Source Registry来源条数。"),
             self._comparison_distribution_dimension("来源多样性", left, right, "source_type_distribution", "当前样本中登记、论文、公司资料和监管资料等来源类型构成。"),
-            self._comparison_dimension("试验链数量", left, right, "trial_chain_count", "已人工确认的试验级证据链数量。"),
+            self._comparison_dimension("证据链数量", left, right, "trial_chain_count", "已人工确认的证据链数量。"),
             self._comparison_trial_chain_dimension(left, right),
             self._comparison_distribution_dimension("最新/历史/独立资料构成", left, right, "version_distribution", "仅说明当前样本中资料版本关系，不代表研究结论优劣。"),
-            self._comparison_dimension("监管链数量", left, right, "regulatory_chain_count", "药物级监管事件链，不能计入临床试验数量。"),
+            self._comparison_dimension("监管链数量", left, right, "regulatory_chain_count", "监管事件链，不能计入临床试验数量。"),
             self._comparison_dimension("待确认关系", left, right, "unresolved_link_count", "当前样本缺少明确一对一关系的资料。"),
             self._comparison_traceability_dimension(left, right),
         ]
@@ -677,7 +677,7 @@ class RDDecisionAgentService:
             "待确认关系代表当前样本缺少明确一对一核验依据，不等同于来源错误或企业没有相关进展。",
         ]
         decision["supported_conclusions"] = [
-            "可以比较两家公司在当前样本中的来源类型、试验级证据链、监管事件链、资料版本构成和待确认关系。",
+            "可以比较两家公司在当前样本中的来源类型、证据链、监管事件链、资料构成和待确认关系。",
             "可以指出哪些来源已经被当前工具步骤返回并可由最终引用追溯。",
             "可以说明当前样本内哪些结论仍需补充项目级字段、试验编号或监管原始文件核验。",
         ]
@@ -875,7 +875,7 @@ class RDDecisionAgentService:
                     f"{'，初始许可日期为' + b015_date if b015_date else ''}"
                     f"{'，页面更新时间为' + b015_updated if b015_updated else ''}。"
                 ),
-                "B015描述当前状态，B016保留2025-07-24历史意见；两者属于同一药物级监管事件链但文件性质不同。",
+                "B015描述当前状态，B016保留2025-07-24历史意见；两者属于同一监管链但文件性质不同。",
             ]
         else:
             direct = answer.splitlines()[0] if answer else "当前数据不足：未找到可核验监管状态。"

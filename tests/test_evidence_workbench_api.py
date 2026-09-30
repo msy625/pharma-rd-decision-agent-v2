@@ -30,7 +30,7 @@ class EvidenceWorkbenchApiTest(unittest.TestCase):
         self.assertIn("workbench", payload)
         workbench = payload["workbench"]
         self.assertEqual(workbench["summary"]["source_count"], WEBSITE_TOTAL)
-        self.assertGreater(workbench["summary"]["company_count"], 100)
+        self.assertEqual(workbench["summary"]["company_count"], 43)
         self.assertIn("companies", workbench)
         self.assertIn("source_type_distribution", workbench)
         self.assertIn("study_status_distribution", workbench)

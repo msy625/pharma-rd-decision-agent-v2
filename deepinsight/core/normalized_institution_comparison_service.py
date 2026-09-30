@@ -51,16 +51,30 @@ class NormalizedInstitutionComparisonService:
             "metadata": {"data_backend": "normalized_template", "ranking": False},
         }
 
-    @staticmethod
-    def _comparison_profile(profile: dict[str, Any]) -> dict[str, Any]:
+    def _comparison_profile(self, profile: dict[str, Any]) -> dict[str, Any]:
         institution = profile.get("institution") or {}
         summary = profile.get("summary") or {}
+        identifier = institution.get("canonical_name") or institution.get("display_name") or institution.get("organization_id")
+        chains = self.profile_service.chain_service.list_chains(company=identifier) if identifier else []
         return {
             "institution": institution,
             "coverage_status": profile.get("coverage_status", "relationship_insufficient"),
             "coverage": {field: summary.get(field, 0) for field in COMPARABLE_FIELDS},
             "source_type_distribution": profile.get("source_type_distribution", []),
             "study_status_distribution": profile.get("study_status_distribution", []),
+            # Use the same chain IDs as the evidence-chain endpoint.  The UI can
+            # therefore open a comparison entry directly instead of reconstructing
+            # an ID from a study or regulatory-event row.
+            "evidence_chains": [
+                {
+                    "chain_id": chain.get("chain_id", ""),
+                    "chain_name": chain.get("chain_name", ""),
+                    "chain_type": chain.get("chain_type", ""),
+                    "trial_ids": chain.get("trial_ids", []),
+                    "source_count": chain.get("source_count", 0),
+                }
+                for chain in chains
+            ],
             "limitations": profile.get("limitations", []),
         }
 

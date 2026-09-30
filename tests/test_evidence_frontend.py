@@ -54,7 +54,7 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
 
     def test_evidence_state_fields_exist(self):
         for name in [
-            "evidenceKind", "evidenceQuery", "evidenceLatestOnly", "evidenceLimit",
+            "evidenceKind", "evidenceQuery", "evidenceCategory", "evidenceLimit",
             "evidenceSummary", "evidenceItems", "evidenceCount", "evidenceSelected",
             "evidenceLoading", "evidenceSummaryLoading", "evidenceDetailLoading",
             "evidenceError", "evidenceHasSearched", "isEvidence",
@@ -84,10 +84,10 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
         for text in ["统计加载中", "查询加载中", "详情加载中"]:
             self.assertIn(text, self.evidence_template)
 
-    def test_filter_copy_describes_excluding_history_only(self):
-        self.assertIn("排除历史版本", self.evidence_template)
-        self.assertIn("保留最新版本和没有版本关系的独立资料。", self.evidence_template)
-        self.assertNotIn("仅显示最新证据", self.evidence_template)
+    def test_filter_copy_uses_the_three_display_categories(self):
+        for label in ["全部资料", "临床试验", "论文证据", "监管与公司资料"]:
+            self.assertIn(label, self.evidence_all)
+        self.assertNotIn("排除历史版本", self.evidence_template)
 
     def test_template_contains_empty_result_prompt(self):
         self.assertIn("空结果", self.evidence_template)
@@ -119,42 +119,16 @@ class EvidenceFrontendStaticTest(unittest.TestCase):
         for word in forbidden:
             self.assertNotIn(word, self.evidence_all)
 
-    def test_version_state_parser_is_explicit_three_state_logic(self):
+    def test_version_state_is_not_used_to_filter_or_label_sources(self):
         for snippet in [
-            "_evidenceVersion(value)",
-            "raw===true || raw===1",
-            "raw===false || raw===0",
-            "v==='true' || v==='1'",
-            "v==='false' || v==='0'",
-            "独立资料",
-            "_filterEvidenceItems(items)",
+            "_displayCategory(item)",
+            "display_category",
+            "category:s.evidenceCategory==='all'?'':s.evidenceCategory",
+            "categoryLabel:category.label",
         ]:
             self.assertIn(snippet, self.evidence_component)
-        self.assertNotIn("Boolean(", self.evidence_component)
-
-    def test_expected_source_version_labels_from_registry(self):
-        rows = {row["source_id"]: row for row in self.registry_rows}
-        self.assertEqual(parse_version_state(rows["B006"]["is_latest_evidence"]), "历史版本")
-        self.assertEqual(parse_version_state(rows["B007"]["is_latest_evidence"]), "最新版本")
-        self.assertEqual(parse_version_state(rows["H007"]["is_latest_evidence"]), "独立资料")
-        self.assertEqual(parse_version_state(rows["H013"]["is_latest_evidence"]), "独立资料")
-
-    def test_rationale_304_filter_excludes_only_explicit_history(self):
-        rows = [row for row in self.registry_rows if row["study_name"] == "RATIONALE-304"]
-        unfiltered_ids = {row["source_id"] for row in rows}
-        filtered_ids = {row["source_id"] for row in rows if parse_version_state(row["is_latest_evidence"]) != "历史版本"}
-        self.assertIn("B006", unfiltered_ids)
-        self.assertIn("B007", unfiltered_ids)
-        self.assertNotIn("B006", filtered_ids)
-        self.assertIn("B007", filtered_ids)
-
-    def test_nsclc_filter_keeps_independent_sources(self):
-        rows = [row for row in self.registry_rows if "NSCLC" in row["disease"] or "非小细胞肺癌" in row["disease"]]
-        filtered_ids = {row["source_id"] for row in rows if parse_version_state(row["is_latest_evidence"]) != "历史版本"}
-        self.assertIn("H007", filtered_ids)
-        self.assertIn("H013", filtered_ids)
-        self.assertEqual(parse_version_state(next(row for row in rows if row["source_id"] == "H007")["is_latest_evidence"]), "独立资料")
-        self.assertEqual(parse_version_state(next(row for row in rows if row["source_id"] == "H013")["is_latest_evidence"]), "独立资料")
+        for hidden_label in ["最新版本", "历史版本", "独立资料"]:
+            self.assertNotIn(hidden_label, self.evidence_template)
 
     def test_evidence_page_does_not_call_model_or_vector_routes(self):
         forbidden = ["_apiPost", "/api/chat", "/api/workflow", "/api/advanced", "Chroma", "vector", "向量模型", "大模型"]

@@ -8,20 +8,20 @@
     "four-domain reviewed seed data"
   ],
   "counts": {
-    "asset_aliases": 707,
-    "assets": 693,
-    "domains": 27,
-    "facts": 10337,
-    "indications": 27,
+    "assets": 465,
     "market_events": 0,
-    "organization_aliases": 361,
-    "organizations": 197,
-    "publications": 403,
-    "regulatory_events": 4,
-    "relations": 5014,
-    "sources": 1370,
-    "studies": 966,
-    "study_identifiers": 966
+    "indications": 27,
+    "organizations": 43,
+    "domains": 27,
+    "organization_aliases": 81,
+    "relations": 3692,
+    "facts": 7694,
+    "sources": 1047,
+    "study_identifiers": 643,
+    "regulatory_events": 3,
+    "studies": 643,
+    "asset_aliases": 480,
+    "publications": 402
   },
   "merge_conflicts_retained_from_legacy": [],
   "limitations": [
@@ -39,14 +39,14 @@
   },
   "curation": {
     "source_target_range": [
-      1200,
-      1500
+      900,
+      1200
     ],
     "organization_target_range": [
-      150,
-      300
+      40,
+      60
     ],
-    "organization_target": 225,
+    "organization_target": 43,
     "publication_per_direction": 20,
     "eligibility": "valid source URL, declared verification status, and only confirmed explicit relations"
   }

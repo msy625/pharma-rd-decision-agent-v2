@@ -63,8 +63,18 @@ class NormalizedInstitutionProfileService:
             ids = identifiers.get(study["study_id"], [])
             source_list = sorted(study_source_ids.get(study["study_id"], set()))
             asset = assets.get(study.get("primary_asset_id", ""), {})
+            source_title = next(
+                (
+                    source_by_id[source_id].get("normalized_title_zh")
+                    or source_by_id[source_id].get("title_original")
+                    or source_by_id[source_id].get("study_name")
+                    for source_id in source_list
+                    if source_id in source_by_id
+                ),
+                "",
+            )
             research.append({
-                "study_id": study["study_id"], "chain_id": f"trial:{ids[0] if ids else study['study_id']}", "study_name": study.get("study_name", ""),
+                "study_id": study["study_id"], "chain_id": f"trial:{ids[0] if ids else study['study_id']}", "study_name": study.get("study_name", "") or source_title,
                 "stage": stage_names.get(domains.get(study.get("domain_id", ""), {}).get("parent_domain_id", ""), domains.get(study.get("domain_id", ""), {}).get("parent_domain_id", "")),
                 "direction": domains.get(study.get("domain_id", ""), {}).get("display_name", study.get("domain_id", "")),
                 "study_status": study.get("study_status", ""), "phase": study.get("phase", ""),

@@ -43,7 +43,7 @@ class NormalizedTemplateApiIntegrationTest(unittest.TestCase):
         directions = self.client.get("/api/evidence/direction-briefs")
         for response in (catalog, directory, comparison, timeline, brief, directions):
             self.assertEqual(response.status_code, 200, response.text)
-        self.assertEqual(directory.json()["count"], 197)
+        self.assertEqual(directory.json()["count"], 43)
         self.assertEqual(len(comparison.json()["comparison"]["institutions"]), 2)
         self.assertGreater(timeline.json()["timeline"]["summary"]["event_count"], 0)
         self.assertEqual(brief.json()["brief"]["brief_type"], "institution_research")
@@ -51,8 +51,8 @@ class NormalizedTemplateApiIntegrationTest(unittest.TestCase):
 
     def test_normalized_agent_preserves_explicit_relation_states_and_refusals(self):
         cases = (
-            ("NCT06667908 有哪些来源支持？", "SRC_CTG_NCT06667908"),
-            ("NCT03529110 有多来源证据吗？", "SRC_BR_DB03_PUB"),
+            ("NCT04818333 有哪些来源支持？", "H003"),
+            ("NCT03663205 有多来源证据吗？", "B006"),
             ("阿斯利康研究是否相关？", "当前数据不足"),
             ("请给出机构排名", "当前数据不足"),
         )

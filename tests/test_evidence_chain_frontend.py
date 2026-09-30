@@ -47,28 +47,26 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
         self.assertIn("encodeURIComponent(cid)", self.evidence_component)
         self.assertIn("'/api/evidence/chains/'+encodeURIComponent(cid)", self.evidence_component)
 
-    def test_06_company_and_type_filters_exist(self):
-        for text in ["企业", "全部", "类型", "试验级", "药物级监管"]:
+    def test_06_company_filter_exists_without_chain_type_split(self):
+        for text in ["企业", "全部"]:
             self.assertIn(text, self.evidence_template)
         self.assertIn("chain_companyOptions", self.evidence_component)
         self.assertIn('<sc-for list="{{ chain_companyOptions }}" as="co">', self.evidence_template)
         self.assertIn("chain_onCompany", self.evidence_component)
-        self.assertIn("chain_onType", self.evidence_component)
+        self.assertNotIn('id="chain-type-select"', self.evidence_template)
 
-    def test_07_summary_numbers_can_be_displayed(self):
-        for key in ["chain_total", "chain_trial", "chain_regulatory", "chain_unresolvedCount"]:
-            self.assertIn(key, self.evidence_template)
-        for label in ["总证据链", "试验级证据链", "药物级监管链", "待确认关系数量"]:
-            self.assertIn(label, self.evidence_template)
+    def test_07_top_summary_cards_are_not_displayed(self):
+        for label in ["总证据链", "试验级证据链", "药物级监管链"]:
+            self.assertNotIn(label, self.evidence_template)
 
     def test_08_chain_cards_include_source_count(self):
         self.assertIn("source_count", self.evidence_component)
         self.assertIn("资料数：{{ c.source_count }}", self.evidence_template)
 
-    def test_09_detail_shows_latest_historical_independent_groups(self):
-        for text in ["最新版本", "历史版本", "独立资料", "latest_items", "historical_items", "independent_items"]:
-            self.assertIn(text, self.evidence_component)
-        for section in ["临床试验登记", "中期论文", "最终论文", "独立资料"]:
+    def test_09_detail_uses_evidence_roles_without_version_groups(self):
+        for text in ["最新版本", "历史版本", "独立资料"]:
+            self.assertNotIn(text, self.evidence_template)
+        for section in ["临床试验登记", "中期论文", "最终论文", "其他关联资料"]:
             self.assertIn(section, self.evidence_all)
 
     def test_10_regulatory_authorisation_role_label_is_clear(self):
@@ -90,14 +88,10 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
         self.assertIn("积极意见，非最终批准", self.evidence_component)
         self.assertNotIn("regulatory_opinion:'EMA正式授权信息'", self.evidence_component)
 
-    def test_14_regulatory_primary_tag_is_regulatory_not_independent(self):
-        self.assertIn("return {kind:'regulatory', label:'监管资料'", self.evidence_component)
-        self.assertIn("if(this._isRegulatoryEvidence(item))", self.evidence_component)
-        regulatory_branch = self.evidence_component[
-            self.evidence_component.index("if(this._isRegulatoryEvidence(item))"):
-            self.evidence_component.index("const s=String((item&&item.version_status)||'');")
-        ]
-        self.assertNotIn("独立资料", regulatory_branch)
+    def test_14_regulatory_primary_tag_uses_source_category(self):
+        self.assertIn("_chainVersionLabel(item){", self.evidence_component)
+        self.assertIn("return this._displayCategory(item)", self.evidence_component)
+        self.assertIn("监管资料", self.evidence_component)
 
     def test_15_not_applicable_study_status_is_hidden(self):
         self.assertIn("_hasStudyStatus(value)", self.evidence_component)
@@ -113,10 +107,9 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
         self.assertIn("role==='regulatory_opinion'", self.evidence_component)
         self.assertIn("role==='regulatory_authorisation'", self.evidence_component)
 
-    def test_17_non_regulatory_evidence_still_uses_version_labels(self):
-        self.assertIn("return this._evidenceVersion(true)", self.evidence_component)
-        self.assertIn("return this._evidenceVersion(false)", self.evidence_component)
-        self.assertIn("return this._evidenceVersion('')", self.evidence_component)
+    def test_17_non_regulatory_evidence_uses_source_categories(self):
+        self.assertIn("const category=this._chainVersionLabel(item)", self.evidence_component)
+        self.assertIn("categoryLabel:category.label", self.evidence_component)
 
     def test_18_rationale_315_trial_sources_can_be_rendered(self):
         chain = next(item for item in self.chain_config["chains"] if item["chain_id"] == "trial:NCT04379635")
@@ -151,7 +144,7 @@ class EvidenceChainFrontendStaticTest(unittest.TestCase):
         self.assertIn("label:'研发证据中心'", self.component)
         self.assertIn("label:'智能决策 Agent'", self.component)
         self.assertIn("查询类型", self.evidence_template)
-        self.assertIn("排除历史版本", self.evidence_template)
+        self.assertNotIn("排除历史版本", self.evidence_template)
         self.assertIn("结果列表", self.evidence_template)
 
     def test_25_static_index_is_synced_with_source(self):

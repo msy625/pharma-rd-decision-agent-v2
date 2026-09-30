@@ -407,8 +407,8 @@ class GroundedQAApiTest(unittest.TestCase):
         self.assertEqual(after - before, set())
 
     def test_24_existing_evidence_apis_still_work(self):
-        self.assertEqual(self.get_json("/api/evidence/summary")['total_sources'], 1370)
-        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 969)
+        self.assertEqual(self.get_json("/api/evidence/summary")['total_sources'], 1047)
+        self.assertEqual(self.get_json("/api/evidence/chain-summary")["total_chain_count"], 645)
         self.assertEqual(self.get_json("/api/evidence/company-comparison")["metadata"]["data_scope"], "manually_reviewed_normalized_research_evidence")
 
     def test_25_error_response_does_not_leak_path_stack_or_key(self):

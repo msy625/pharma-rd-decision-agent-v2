@@ -27,7 +27,7 @@ TRIAL_REGISTRY_SOURCE_TYPES = {"clinicaltrials.gov"}
 LIMITATIONS = [
     SCOPE_WARNING,
     "来源数量、证据链数量和资料构成只描述当前样本覆盖，不能解释为企业研发实力。",
-    "药物级监管链单独统计，不计入临床试验数量；监管背景也不增加关联试验的证据数量。",
+    "监管链单独统计，不计入临床试验数量；监管背景也不增加关联试验的证据数量。",
     "当前缺少统一的 project_id、target、mechanism 和 drug_type，不能展示为完整项目管线。",
     "不得从 drug_name 字符串推断项目数量，也不输出评分、排名、成功率、疗效或安全性优劣及投资建议。",
     "待确认关系表示当前样本缺少明确的一对一核验依据，不等同于来源错误或企业没有相关进展。",
@@ -129,12 +129,10 @@ class CompanyEvidenceProfileService:
         unresolved_ids = {str(item.get("source_id", "")) for item in self.unresolved_links(company_name)}
         items = []
         for row in self._company_rows(subject):
-            if version_status(row.get("is_latest_evidence", "")) != "independent":
-                continue
             item = self._source_profile(row)
             source_id = str(item.get("source_id", ""))
             item["linked_chain_ids"] = linked_chains.get(source_id, [])
-            item["link_status"] = "待确认" if source_id in unresolved_ids else ("已确认" if item["linked_chain_ids"] else "独立资料")
+            item["link_status"] = "待确认" if source_id in unresolved_ids else ("已确认" if item["linked_chain_ids"] else "未建立试验链")
             items.append(item)
         return items
 
@@ -230,7 +228,7 @@ class CompanyEvidenceProfileService:
                 {
                     "drug_names": list(chain.get("drug_names", [])),
                     "related_trial_ids": list(chain.get("related_trial_ids", [])),
-                    "counting_note": "药物级监管链，不计入临床试验数量。",
+                    "counting_note": "监管链，不计入临床试验数量。",
                 }
             )
         return profile

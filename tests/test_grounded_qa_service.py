@@ -297,8 +297,8 @@ class GroundedQAServiceTest(unittest.TestCase):
         expected = {f"A{i:03d}" for i in range(1, 9)} | {f"B{i:03d}" for i in range(1, 17)}
         self.assertEqual(response["question_type"], "company_comparison")
         self.assertTrue(expected <= set(response["trace"]["retrieved_source_ids"]))
-        self.assertIn("阿斯利康/AstraZeneca：来源 58 条", response["answer"])
-        self.assertIn("试验链 54 条，监管链 0 条", response["answer"])
+        self.assertIn("阿斯利康/AstraZeneca：来源 57 条", response["answer"])
+        self.assertIn("试验链 53 条，监管链 0 条", response["answer"])
         self.assertIn("百济神州/BeOne Medicines：来源 19 条", response["answer"])
         self.assertIn("试验链 7 条，监管链 1 条", response["answer"])
         self.assertIn("不代表企业整体研发实力", " ".join([response["answer"], *response["limitations"]]))
@@ -383,7 +383,7 @@ class GroundedQAServiceTest(unittest.TestCase):
 
     def test_data_version_stable(self):
         self.assertEqual(self.service.data_version(), self.service.data_version())
-        self.assertEqual(self.service.data_version(), "sha256:e278bdf7673f91d9")
+        self.assertEqual(self.service.data_version(), "sha256:f4246991a6ec2d09")
 
     def test_pilot_natural_language_semantic_regressions(self):
         laura = self.service.answer_question("研究名称LAURA有哪些来源？")

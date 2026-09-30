@@ -41,8 +41,8 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
 
     def test_03_post_uses_decision_agent_api_and_selected_mode(self):
         self.assertIn("fetch('/api/evidence/decision-agent'", self.evidence_component)
-        self.assertIn("agentGenerationMode:'auto'", self.component)
-        self.assertIn("generation_mode:this.state.agentGenerationMode||'auto'", self.evidence_component)
+        self.assertIn("agentGenerationMode:''", self.component)
+        self.assertIn("generation_mode:this.state.agentGenerationMode", self.evidence_component)
         self.assertNotIn("generation_mode:this.state.groundedMode", self.evidence_component)
         self.assertNotIn("/api/evidence/grounded-qa/capabilities", self.evidence_component)
         self.assertNotIn("fetch('/api/evidence/grounded-qa'", self.evidence_component)
@@ -88,20 +88,25 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
         ]:
             self.assertIn(snippet, submit + self.evidence_template)
 
-    def test_07_three_golden_demo_cards_run_immediately(self):
+    def test_07_three_golden_demo_cards_only_select_question(self):
         for text in [
             "阿斯利康与百济神州当前 NSCLC 证据样本有什么差异？",
             "RATIONALE-315 当前还存在哪些证据缺口？",
             "B016 是否代表替雷利珠单抗已经获得 EMA 正式批准？",
-            "企业决策", "比较两家企业的当前证据结构", "生成企业比较结论",
-            "证据诊断", "定位试验当前的证据缺口", "生成缺口分析",
-            "监管判断", "辨析监管文件代表的真实状态", "生成监管判断",
+            "企业决策", "比较两家企业的当前证据结构",
+            "证据诊断", "定位试验当前的证据缺口",
+            "监管判断", "辨析监管文件代表的真实状态", "选择这个问题",
         ]:
             self.assertIn(text, self.evidence_all)
         self.assertIn("data-agent-golden-cases", self.evidence_template)
         self.assertIn("runDecisionAgentExample(question)", self.evidence_component)
-        self.assertIn("this.submitDecisionAgent(q)", self.evidence_component)
-        self.assertIn("buttonText:'生成企业比较结论'", self.evidence_component)
+        example_method = self.evidence_component[
+            self.evidence_component.index("  runDecisionAgentExample(question)") :
+            self.evidence_component.index("  _agentNormalizeResult(data)")
+        ]
+        self.assertIn("agentQuestion:q", example_method)
+        self.assertIn("agentResult:null", example_method)
+        self.assertNotIn("submitDecisionAgent", example_method)
 
     def test_08_page_has_required_information_architecture(self):
         for text in [
@@ -114,13 +119,18 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             "不提供成功率预测或投资建议",
             "推荐演示",
             "提出你的研发问题",
-            "本次决策问题",
             "Agent 判断",
             "Agent 决策过程",
             "运行详情",
             "数据范围与技术详情",
+            "输入机构、研究、药物、试验编号或来源编号",
+            "机构覆盖",
         ]:
             self.assertIn(text, self.evidence_all)
+        self.assertNotIn("输入企业、研究、药物、试验编号或来源编号", self.evidence_all)
+        self.assertNotIn("企业覆盖", self.evidence_all)
+        self.assertNotIn("药研罗盘 · NSCLC 证据决策", self.evidence_template)
+        self.assertNotIn("本次决策问题", self.evidence_template)
 
     def test_09_plan_and_steps_use_real_api_fields(self):
         for field in [
@@ -132,6 +142,16 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
         for label in ["已完成", "已跳过", "执行失败", "产出来源", "耗时"]:
             self.assertIn(label, self.evidence_all)
 
+    def test_09b_first_two_workflow_phases_map_to_executed_steps(self):
+        workflow = self.evidence_component[
+            self.evidence_component.index("  _agentWorkflowVm(result, steps, traceRows)") :
+            self.evidence_component.index("  _agentIntentLabel(intent)")
+        ]
+        self.assertIn("x.step_id==='S1'", workflow)
+        self.assertIn("statusFrom(taskSteps)", workflow)
+        self.assertIn("x.step_id==='S2'", workflow)
+        self.assertIn("statusFrom(identify)", workflow)
+
     def test_10_decision_object_is_structurally_mapped(self):
         for field in [
             "decision.summary", "decision.key_findings", "decision.comparison_dimensions",
@@ -141,12 +161,13 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
         ]:
             self.assertIn(field, self.evidence_component)
         for label in [
-            "Agent 判断", "关键依据", "对比依据", "证据结构与可追溯性",
+            "Agent 判断", "对比依据", "证据结构与可追溯性",
             "决策边界", "当前证据缺口", "建议核验行动",
             "当前证据支持", "当前证据暂不支持",
             "完整分析说明",
         ]:
             self.assertIn(label, self.evidence_template)
+        self.assertNotIn(">关键依据<", self.evidence_template)
 
     def test_11_featured_citations_are_preferred_and_full_citations_toggle(self):
         for snippet in [
@@ -205,13 +226,16 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             self.evidence_component,
         )
 
-    def test_16_auto_is_default_and_local_remains_selectable(self):
+    def test_16_analysis_mode_must_be_selected_before_submit(self):
         for required in [
             "data-agent-generation-mode", "智能生成（auto）", "本地证据分析（local）",
             "agent_chooseAuto", "agent_chooseLocal", "setDecisionAgentMode(mode)",
             "DeepSeek不可用时回退本地分析", "始终不调用模型",
         ]:
             self.assertIn(required, self.evidence_all)
+        self.assertIn("agentGenerationMode:''", self.component)
+        self.assertIn("!agentModeSelected", self.evidence_component)
+        self.assertIn("请先选择分析方式，再生成结果", self.evidence_component)
 
     def test_17_cross_page_prefill_writes_agent_question_without_auto_run(self):
         open_method = self.component[
@@ -294,7 +318,7 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             ],
             self.evidence_component[
                 self.evidence_component.index("  _agentArray(value)") :
-                self.evidence_component.index("  _chainTypeLabel(t)")
+                self.evidence_component.index("  _chainTypeLabel()")
             ],
             self.evidence_component[
                 self.evidence_component.index("    const agentCap=s.agentCapabilities||{};") :
@@ -334,19 +358,20 @@ class DecisionAgentFrontendStaticTest(unittest.TestCase):
             "agentChainLinksOpen:false",
             "agentFeaturedCitationsOpen:false",
             "agentChainLinksAll.slice(0,3)",
-            "agentFeaturedAll.slice(0,3)",
+            "agentFeaturedCitations=agentFeaturedAll",
             "agent_featuredTotalCount:agentFeaturedAll.length",
         ]:
             self.assertIn(snippet, self.evidence_component)
         for binding in [
             'aria-expanded="{{ agent_processOpen }}"',
-            'aria-expanded="{{ agent_chainLinksOpen }}"',
             'aria-expanded="{{ agent_featuredCitationsOpen }}"',
             'aria-expanded="{{ agent_allCitationsOpen }}"',
             'aria-expanded="{{ agent_runDetailsOpen }}"',
             'aria-expanded="{{ agent_capabilitiesOpen }}"',
         ]:
             self.assertIn(binding, self.evidence_template)
+        self.assertIn('<sc-if value="{{ agent_featuredCitationsOpen }}">', self.evidence_template)
+        self.assertIn("展开关键证据", self.evidence_component)
 
     def test_25b_technical_details_is_the_unique_last_agent_module(self):
         agent_start = self.evidence_template.index('<div data-grounded-qa="" data-agent-page=""')

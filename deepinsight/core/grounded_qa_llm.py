@@ -129,6 +129,9 @@ def generate_grounded_answer(question: str, evidence_packet: dict[str, Any], cli
                 "涉及证据缺失时必须使用“当前收录样本中”“当前数据库尚未收录”等限定，"
                 "不得推断外部世界不存在相关资料，不得写成全球范围没有、不存在或尚未发表。"
                 "禁止个体治疗建议、疗效排名、成功率、综合评分或投资建议。"
+                "answer 必须直接、具体地回答用户当前问题，优先说明对象、事件、状态、日期及差异。"
+                "不能只复述检索数量或堆叠资料；必须把相关证据组织成针对该问题的事实结论。"
+                "不要添加“直接回答”“分析”“下一步核验”等分节标题，也不要在 answer 中提出追问。"
                 "只输出严格 JSON，对象字段只能包含 answer、citations、limitations。"
             ),
         },
@@ -185,13 +188,21 @@ def _compact_source(item: dict[str, Any]) -> dict[str, Any]:
     return {
         "source_id": item.get("source_id", ""),
         "title": item.get("title_original") or item.get("description_zh") or item.get("study_name") or "",
+        "description": item.get("description_zh", ""),
         "source_type": item.get("source_type", ""),
+        "company_name": item.get("company_name", ""),
+        "drug_name": item.get("drug_name") or item.get("drug_names") or "",
         "study_name": item.get("study_name", ""),
-        "trial_id": item.get("trial_id", ""),
+        "trial_id": item.get("trial_id") or item.get("parent_trial_id") or "",
         "study_status": item.get("study_status", ""),
+        "publication_date": item.get("publication_date", ""),
+        "source_last_updated": item.get("source_last_updated", ""),
         "verification_status": item.get("verification_status", ""),
+        "verified_at": item.get("verified_at", ""),
         "regulatory_event_type": item.get("regulatory_event_type", ""),
         "authorisation_status": item.get("authorisation_status", ""),
+        "marketing_authorisation_holder": item.get("marketing_authorisation_holder", ""),
+        "pmid": item.get("pmid", ""),
         "role": item.get("role", ""),
         "version_status": item.get("version_status", ""),
         "risk_notes": item.get("risk_notes", ""),

@@ -30,42 +30,42 @@
     "Do not compare efficacy or safety across studies unless an explicit supported comparison dataset is added."
   ],
   "expected_counts": {
-    "asset_aliases": 707,
-    "assets": 693,
-    "domains": 27,
-    "facts": 10337,
-    "indications": 27,
+    "assets": 465,
     "market_events": 0,
-    "organization_aliases": 361,
-    "organizations": 197,
-    "publications": 403,
-    "regulatory_events": 4,
-    "relations": 5014,
-    "sources": 1370,
-    "studies": 966,
-    "study_identifiers": 966
+    "indications": 27,
+    "organizations": 43,
+    "domains": 27,
+    "organization_aliases": 81,
+    "relations": 3692,
+    "facts": 7694,
+    "sources": 1047,
+    "study_identifiers": 643,
+    "regulatory_events": 3,
+    "studies": 643,
+    "asset_aliases": 480,
+    "publications": 402
   },
   "expected_source_status_counts": {
-    "verified": 1370
+    "verified": 1047
   },
   "expected_relation_status_counts": {
-    "confirmed": 5014
+    "confirmed": 3692
   },
   "table_sha256": {
-    "asset_aliases.csv": "79b727cc76ce7bae2fc35818fb11d304e441fd615814b8e3b96fc6cbd97592e3",
-    "assets.csv": "484c10d23f02a9a01f3d940d6c8e637ca94b31ac5b4e6aa3ab7158ee3722ce04",
+    "asset_aliases.csv": "8b7e97ca2cc3e3586b906d0dfff26593fcdde5fc20d7a9648fb89aa473857e33",
+    "assets.csv": "9a974b9af854dbe70ad602e3f384f72f6f463caaa3952b4edb0b2ecba2fce3d0",
     "domains.csv": "42e44a7735232e051728eaa65fdbea525850f6db320d7cd4c3a940243a3a82ac",
-    "facts.csv": "3772bab5b9ae3739b6dec4d305a199ac344f350bf04b815c7c5eb896810df91c",
+    "facts.csv": "1be7c11e95dcee19bf78302d280365d1ea147445ed1acbe2d84bf3e972de75ca",
     "indications.csv": "3e97c0f5e0b0c89d5d67ad894a5cb1849852b5a0031090933af12b9aa5d98cb5",
     "market_events.csv": "c136c315d66091d0b52d7a7ff84799147ed31fd8218004285d215a7ca2f82d0a",
-    "organization_aliases.csv": "f77800cd588123fd6ab330c3524de76d252a62673fe9427c3f286bae1024050a",
-    "organizations.csv": "f3ec343c814df68cf678b40221039303176c997985f264e07dbe02f9e7db9a1e",
-    "publications.csv": "5c6626fb6114f30b04fbe5530e425cadb60ed9bcbf5d790a2811613271501e7c",
-    "regulatory_events.csv": "f13660e6620bb0cd75bdd7a0bac88388f0e3403b071630cd66a565f96fe12998",
-    "relations.csv": "a91ecf0070559ca9143266ff1f4724f6f7831798ed02f8e6e5095c37eb648111",
-    "sources.csv": "57f0039060493abdeda6669172517b4843addf0900de547b41c3683621a11cef",
-    "studies.csv": "2121216062fa6bffd83263af11d29666bbf4a3a39439dcabf616aad5913a3a42",
-    "study_identifiers.csv": "fd0eb14bd207b9e0ae1d893701315d755de61b245b6a9896cc158687f00b9274"
+    "organization_aliases.csv": "af19da46b4d370db4140df70c1bd4ab2e6497d2754ac499116d4c4b8b4f4e9b5",
+    "organizations.csv": "7dfba2ebce90c62e7909584d66044815f201d801a76fba20274f418ceb816978",
+    "publications.csv": "8ee03841046670952685335b11121f0fd788d5b73eb4d82178dd0532f9c801c5",
+    "regulatory_events.csv": "e8e5cf22c676f201100eb1534866067ac1e38ec99d6292f8536b21c8dbbaf0cc",
+    "relations.csv": "9fb97ebde804d98fab9b9d8bb034859a8eb66b9ced378c3a7ad8ee389320e56e",
+    "sources.csv": "3efb5d87c50168b6a24c4c4d8c60eead3416133c3072711149e082b466f3f4e7",
+    "studies.csv": "22466c3b4547c92d16962298a73dd5e9b548d851311c09d13eafbe930864bd48",
+    "study_identifiers.csv": "932258d875a65f152ffbf2dea29293efce5213764f027c2e86c7579e3ef165c2"
   },
   "change_control": "Any data refresh must deliberately update data_manifest.json and this contract after passing curation, referential-integrity, and review checks."
 }

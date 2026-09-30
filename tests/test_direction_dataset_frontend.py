@@ -183,10 +183,11 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
         for label in ["目标：", "方向数 ", "收录记录 "]:
             self.assertIn(label, self.direction_template)
 
-    def test_12_roadmap_mirrors_the_six_stage_table(self):
-        self.assertIn("stage_name", self.direction_component)
-        self.assertIn("stage_title", self.evidence_vals)
-        self.assertIn("this._directionText(stage.stage_name)+'：'+this._directionText(stage.stage_title)", self.evidence_vals)
+    def test_12_roadmap_presents_six_research_direction_groups(self):
+        self.assertIn("const researchGroupName='研究方向 '", self.evidence_vals)
+        self.assertIn("stage_name:researchGroupName", self.evidence_vals)
+        self.assertIn("stage_title:''", self.evidence_vals)
+        self.assertIn("stageLabel:researchGroupName", self.evidence_vals)
         self.assertIn("goal:this._directionText(stage.goal)", self.evidence_vals)
         self.assertIn("directionCountText:this._directionText(stage.direction_count)", self.evidence_vals)
         self.assertIn("recordCountText:this._directionText(stage.source_count)", self.evidence_vals)
@@ -208,8 +209,7 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
         self.assertIn("data-direction-stage-filter=", self.direction_template)
         self.assertIn('onclick="{{ st.onSelectStage }}"', self.direction_template)
         self.assertIn("onSelectStage:()=>this.selectDirectionStage(stageId)", self.evidence_vals)
-        self.assertIn("'取消阶段筛选'", self.evidence_vals)
-        self.assertIn("'只看该阶段'", self.evidence_vals)
+        self.assertIn("actionLabel:stageActive?'取消筛选':'查看本组'", self.evidence_vals)
 
     # ------------------------------------------------------------------ #
     # filters
@@ -227,7 +227,7 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
             "direction-query-input",
         ]:
             self.assertIn('id="%s"' % element_id, self.direction_template)
-        for label in ["疾病方向", "研发阶段", "记录类型", "分期", "状态", "来源类型", "申办方", "关键词"]:
+        for label in ["疾病方向", "研究方向组", "记录类型", "分期", "状态", "来源类型", "申办方", "关键词"]:
             self.assertIn(label, self.direction_template)
 
     def test_16_record_type_choices_are_all_trial_publication(self):
@@ -308,7 +308,7 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
             "{{ r.idValue }}",
         ]:
             self.assertIn(binding, self.direction_template)
-        for label in ["研究名称：", "方向 / 阶段：", "日期：", "药物："]:
+        for label in ["研究名称：", "方向 / 方向组：", "日期：", "药物："]:
             self.assertIn(label, self.direction_template)
 
     def test_22_nct_identifier_is_a_link_and_pmid_doi_are_shown(self):
@@ -455,7 +455,7 @@ class DirectionDatasetFrontendTest(unittest.TestCase):
             "data-direction-record-row",
             "data-direction-pager",
             "data-direction-tab-note",
-            "疾病方向研发路线图",
+            "疾病研究方向",
             "打开原始来源",
         ]:
             self.assertIn(marker, self.index)

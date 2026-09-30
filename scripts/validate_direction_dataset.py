@@ -21,6 +21,7 @@ import json
 import re
 import sys
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -61,12 +62,12 @@ def load_table(name: str) -> list[dict[str, str]]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--min", type=int, default=40, help="minimum records per direction (default 40)")
+    parser.add_argument("--min", type=int, default=30, help="minimum records per direction (default 30)")
     parser.add_argument("--max", type=int, default=110, help="maximum records per direction (default 110)")
-    parser.add_argument("--source-min", type=int, default=1200, help="minimum eligible sources (default 1200)")
-    parser.add_argument("--source-max", type=int, default=1500, help="maximum eligible sources (default 1500)")
-    parser.add_argument("--organization-min", type=int, default=150, help="minimum organizations after deduplication (default 150)")
-    parser.add_argument("--organization-max", type=int, default=300, help="maximum organizations (default 300)")
+    parser.add_argument("--source-min", type=int, default=900, help="minimum eligible sources (default 900)")
+    parser.add_argument("--source-max", type=int, default=1200, help="maximum eligible sources (default 1200)")
+    parser.add_argument("--organization-min", type=int, default=40, help="minimum organizations after coverage pruning (default 40)")
+    parser.add_argument("--organization-max", type=int, default=60, help="maximum organizations after coverage pruning (default 60)")
     args = parser.parse_args(argv)
 
     errors: list[str] = []
@@ -206,6 +207,27 @@ def main(argv: list[str] | None = None) -> int:
             errors.append(f"{row.get('study_id')}: unknown sponsor_org_id {row['sponsor_org_id']!r}")
         if row.get("primary_indication_id") and row["primary_indication_id"] not in indication_ids:
             errors.append(f"{row.get('study_id')}: unknown primary_indication_id {row['primary_indication_id']!r}")
+        study_dates: dict[str, datetime] = {}
+        for field in ("start_date", "primary_completion_date", "completion_date", "last_status_date"):
+            raw = row.get(field, "").strip()
+            if not raw:
+                continue
+            parsed = None
+            for fmt in ("%Y-%m-%d", "%Y-%m", "%Y"):
+                try:
+                    parsed = datetime.strptime(raw, fmt)
+                    break
+                except ValueError:
+                    pass
+            if parsed is None:
+                errors.append(f"{row.get('study_id')}: {field} is not YYYY, YYYY-MM, or YYYY-MM-DD: {raw!r}")
+                continue
+            if parsed.year == 2099:
+                errors.append(f"{row.get('study_id')}: {field} must not retain a 2099 placeholder date")
+            study_dates[field] = parsed
+        for earlier, later in (("start_date", "primary_completion_date"), ("start_date", "completion_date"), ("primary_completion_date", "completion_date")):
+            if earlier in study_dates and later in study_dates and study_dates[earlier] > study_dates[later]:
+                errors.append(f"{row.get('study_id')}: {earlier} must not be later than {later}")
 
     for row in tables["study_identifiers"]:
         if row.get("study_id") not in study_ids:

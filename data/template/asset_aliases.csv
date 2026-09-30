@@ -35,9 +35,6 @@ ALIAS_ASSET_GEFITINIB_IRESSA,ASSET_GEFITINIB,IRESSA,en,canonical_or_code,,来自
 ALIAS_ASSET_ERLOTINIB_UNSPECIFIED,ASSET_ERLOTINIB,厄洛替尼,zh,canonical_or_code,,来自现有实体别名配置。
 ALIAS_ASSET_ERLOTINIB_ERLOTINIB,ASSET_ERLOTINIB,Erlotinib,en,canonical_or_code,,来自现有实体别名配置。
 ALIAS_ASSET_ERLOTINIB_TARCEVA,ASSET_ERLOTINIB,TARCEVA,en,canonical_or_code,,来自现有实体别名配置。
-ALIAS_ASSET_HARVEST_JNJ_90301900_CANONICAL,ASSET_HARVEST_JNJ_90301900,JNJ-90301900,en,canonical_or_code,SRC_CTG_NCT06667908,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DURVALUMAB_CANONICAL,ASSET_HARVEST_DURVALUMAB,Durvalumab,en,canonical_or_code,SRC_CTG_NCT06667908,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CONCURRENT_CHEMO_RADIATION_THERAPY_CCRT_CANONICAL,ASSET_HARVEST_CONCURRENT_CHEMO_RADIATION_THERAPY_CCRT,Concurrent Chemo/Radiation Therapy (cCRT): Carboplatin,en,canonical_or_code,SRC_CTG_NCT06667908,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_JDQ443_CANONICAL,ASSET_HARVEST_JDQ443,JDQ443,en,canonical_or_code,SRC_CTG_NCT05132075,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DOCETAXEL_CANONICAL,ASSET_HARVEST_DOCETAXEL,docetaxel,en,canonical_or_code,SRC_CTG_NCT05132075,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TELISOTUZUMAB_ADIZUTECAN_CANONICAL,ASSET_HARVEST_TELISOTUZUMAB_ADIZUTECAN,Telisotuzumab Adizutecan,en,canonical_or_code,SRC_CTG_NCT07155187,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -48,8 +45,6 @@ ALIAS_ASSET_HARVEST_LAZERTINIB_CANONICAL,ASSET_HARVEST_LAZERTINIB,Lazertinib,en,
 ALIAS_ASSET_HARVEST_CARBOPLATIN_CANONICAL,ASSET_HARVEST_CARBOPLATIN,Carboplatin,en,canonical_or_code,SRC_CTG_NCT02609776,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PEMETREXED_CANONICAL,ASSET_HARVEST_PEMETREXED,Pemetrexed,en,canonical_or_code,SRC_CTG_NCT02609776,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CAPMATINIB_CANONICAL,ASSET_HARVEST_CAPMATINIB,Capmatinib,en,canonical_or_code,SRC_CTG_NCT05488314,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SHR_A2009_AUMOLERTINIB_CANONICAL,ASSET_HARVEST_SHR_A2009_AUMOLERTINIB,SHR-A2009 ; Aumolertinib,en,canonical_or_code,SRC_CTG_NCT07183189,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_AUMOLERTINIB_CANONICAL,ASSET_HARVEST_AUMOLERTINIB,Aumolertinib,en,canonical_or_code,SRC_CTG_NCT07183189,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PF_08634404_CANONICAL,ASSET_HARVEST_PF_08634404,PF-08634404,en,canonical_or_code,SRC_CTG_NCT07489066,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CHEMOTHERAPY_REGIMEN_1_CANONICAL,ASSET_HARVEST_CHEMOTHERAPY_REGIMEN_1,Chemotherapy Regimen 1,en,canonical_or_code,SRC_CTG_NCT07489066,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CHEMOTHERAPY_REGIMEN_2_CANONICAL,ASSET_HARVEST_CHEMOTHERAPY_REGIMEN_2,Chemotherapy Regimen 2,en,canonical_or_code,SRC_CTG_NCT07489066,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -69,26 +64,17 @@ ALIAS_ASSET_HARVEST_DOXYCYCLINE_CANONICAL,ASSET_HARVEST_DOXYCYCLINE,Doxycycline,
 ALIAS_ASSET_HARVEST_MINOCYCLINE_CANONICAL,ASSET_HARVEST_MINOCYCLINE,Minocycline,en,canonical_or_code,SRC_CTG_NCT06120140,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NAVLIMETOSTAT_CANONICAL,ASSET_HARVEST_NAVLIMETOSTAT,Navlimetostat,en,canonical_or_code,SRC_CTG_NCT07579221,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PUMITAMIG_CANONICAL,ASSET_HARVEST_PUMITAMIG,Pumitamig,en,canonical_or_code,SRC_CTG_NCT07579221,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_JS207_INJECTION_DOCETAXEL_CANONICAL,ASSET_HARVEST_JS207_INJECTION_DOCETAXEL,JS207 injection +docetaxel,en,canonical_or_code,SRC_CTG_NCT06924606,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_JS207_INJECTION_CANONICAL,ASSET_HARVEST_JS207_INJECTION,JS207 injection,en,canonical_or_code,SRC_CTG_NCT06924606,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ALL_TRANS_RETINOIC_ACID_CANONICAL,ASSET_HARVEST_ALL_TRANS_RETINOIC_ACID,All-trans retinoic acid,en,canonical_or_code,SRC_CTG_NCT07842887,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TISLELIZUMAB_CANONICAL,ASSET_HARVEST_TISLELIZUMAB,Tislelizumab,en,canonical_or_code,SRC_CTG_NCT07842887,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_UBAMATAMAB_CANONICAL,ASSET_HARVEST_UBAMATAMAB,Ubamatamab,en,canonical_or_code,SRC_CTG_NCT07154290,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MARLOTAMIG_CANONICAL,ASSET_HARVEST_MARLOTAMIG,Marlotamig,en,canonical_or_code,SRC_CTG_NCT07154290,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SARILUMAB_CANONICAL,ASSET_HARVEST_SARILUMAB,Sarilumab,en,canonical_or_code,SRC_CTG_NCT07154290,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_OLAPARIB_CANONICAL,ASSET_HARVEST_OLAPARIB,Olaparib,en,canonical_or_code,SRC_CTG_NCT03568656,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ATEZOLIZUMAB_CANONICAL,ASSET_HARVEST_ATEZOLIZUMAB,Atezolizumab,en,canonical_or_code,SRC_CTG_NCT03568656,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RECOMBINANT_HUMAN_ENDOSTATIN_ENDOSTAR_CANONICAL,ASSET_HARVEST_RECOMBINANT_HUMAN_ENDOSTATIN_ENDOSTAR,Recombinant Human Endostatin (Endostar),en,canonical_or_code,SRC_CTG_NCT07841106,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CETRELIMAB_CANONICAL,ASSET_HARVEST_CETRELIMAB,Cetrelimab,en,canonical_or_code,SRC_CTG_NCT05908734,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SACITUZUMAB_TIRUMOTECAN_CANONICAL,ASSET_HARVEST_SACITUZUMAB_TIRUMOTECAN,Sacituzumab tirumotecan,en,canonical_or_code,SRC_CTG_NCT06170788,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PEMBROLIZUMAB_CANONICAL,ASSET_HARVEST_PEMBROLIZUMAB,Pembrolizumab,en,canonical_or_code,SRC_CTG_NCT06170788,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SUPPORTIVE_CARE_MEASURES_CANONICAL,ASSET_HARVEST_SUPPORTIVE_CARE_MEASURES,Supportive care measures,en,canonical_or_code,SRC_CTG_NCT06170788,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_NIVOLUMAB_CANONICAL,ASSET_HARVEST_NIVOLUMAB,Nivolumab,en,canonical_or_code,SRC_CTG_NCT04123379,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BMS_813160_CANONICAL,ASSET_HARVEST_BMS_813160,BMS-813160,en,canonical_or_code,SRC_CTG_NCT04123379,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BMS_986253_CANONICAL,ASSET_HARVEST_BMS_986253,BMS-986253,en,canonical_or_code,SRC_CTG_NCT04123379,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NAB_PACLITAXEL_CANONICAL,ASSET_HARVEST_NAB_PACLITAXEL,Nab paclitaxel,en,canonical_or_code,SRC_CTG_NCT04253964,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RILVEGOSTOMIG_CANONICAL,ASSET_HARVEST_RILVEGOSTOMIG,Rilvegostomig,en,canonical_or_code,SRC_CTG_NCT06868277,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_HER3_DXD_CANONICAL,ASSET_HARVEST_HER3_DXD,HER3-DXd,en,canonical_or_code,SRC_CTG_NCT06172478,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PONSEGROMAB_CANONICAL,ASSET_HARVEST_PONSEGROMAB,ponsegromab,en,canonical_or_code,SRC_CTG_NCT07663630,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_CANONICAL,ASSET_HARVEST_PLACEBO,placebo,en,canonical_or_code,SRC_CTG_NCT07663630,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DEXAMETHASONE_CANONICAL,ASSET_HARVEST_DEXAMETHASONE,Dexamethasone,en,canonical_or_code,SRC_CTG_NCT05663866,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -96,8 +82,6 @@ ALIAS_ASSET_HARVEST_MONTELUKAST_CANONICAL,ASSET_HARVEST_MONTELUKAST,Montelukast,
 ALIAS_ASSET_HARVEST_METHOTREXATE_CANONICAL,ASSET_HARVEST_METHOTREXATE,Methotrexate,en,canonical_or_code,SRC_CTG_NCT05663866,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SIGVOTATUG_VEDOTIN_CANONICAL,ASSET_HARVEST_SIGVOTATUG_VEDOTIN,Sigvotatug Vedotin,en,canonical_or_code,SRC_CTG_NCT07227298,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PF_08046054_SGN_PDL1V_CANONICAL,ASSET_HARVEST_PF_08046054_SGN_PDL1V,PF-08046054/SGN-PDL1V,en,canonical_or_code,SRC_CTG_NCT07227298,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SERPLULIMAB_NAB_PACLITAXEL_CARBOPLATIN_CANONICAL,ASSET_HARVEST_SERPLULIMAB_NAB_PACLITAXEL_CARBOPLATIN,"Serplulimab, Nab-Paclitaxel, Carboplatin",en,canonical_or_code,SRC_CTG_NCT07647094,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_JNJ_86974680_CANONICAL,ASSET_HARVEST_JNJ_86974680,JNJ-86974680,en,canonical_or_code,SRC_CTG_NCT06116786,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD9592_CANONICAL,ASSET_HARVEST_AZD9592,AZD9592,en,canonical_or_code,SRC_CTG_NCT05647122,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_5_FLUOROURACIL_5_FU_CANONICAL,ASSET_HARVEST_5_FLUOROURACIL_5_FU,5-Fluorouracil (5-FU),en,canonical_or_code,SRC_CTG_NCT05647122,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LEUCOVORIN_CANONICAL,ASSET_HARVEST_LEUCOVORIN,Leucovorin,en,canonical_or_code,SRC_CTG_NCT05647122,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -105,7 +89,6 @@ ALIAS_ASSET_HARVEST_BEVACIZUMAB_CANONICAL,ASSET_HARVEST_BEVACIZUMAB,Bevacizumab,
 ALIAS_ASSET_HARVEST_CHEMOTHERAPY_PEMETREXED_CANONICAL,ASSET_HARVEST_CHEMOTHERAPY_PEMETREXED,Chemotherapy: Pemetrexed,en,canonical_or_code,SRC_CTG_NCT06667076,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CHEMOTHERAPY_CARBOPLATIN_CANONICAL,ASSET_HARVEST_CHEMOTHERAPY_CARBOPLATIN,Chemotherapy: Carboplatin,en,canonical_or_code,SRC_CTG_NCT06667076,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RESCUE_MEDICATION_CANONICAL,ASSET_HARVEST_RESCUE_MEDICATION,Rescue medication,en,canonical_or_code,SRC_CTG_NCT06312137,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FURMONERTINIB_CISPLATING_PEMETREXED_CANONICAL,ASSET_HARVEST_FURMONERTINIB_CISPLATING_PEMETREXED,Furmonertinib+cisplating/pemetrexed,en,canonical_or_code,SRC_CTG_NCT05430802,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NT_112_AUTOLOGOUS_ENGINEERED_T_CELLS_TAR_CANONICAL,ASSET_HARVEST_NT_112_AUTOLOGOUS_ENGINEERED_T_CELLS_TAR,"NT-112: Autologous, engineered T Cells targeting KRAS G12D",en,canonical_or_code,SRC_CTG_NCT06218914,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD0240_AUTOLOGOUS_ENGINEERED_T_CELLS_TA_CANONICAL,ASSET_HARVEST_AZD0240_AUTOLOGOUS_ENGINEERED_T_CELLS_TA,"AZD0240: Autologous, engineered T Cells targeting KRAS G12D",en,canonical_or_code,SRC_CTG_NCT06218914,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CEMIPLIMAB_CANONICAL,ASSET_HARVEST_CEMIPLIMAB,Cemiplimab,en,canonical_or_code,SRC_CTG_NCT07360743,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -123,13 +106,9 @@ ALIAS_ASSET_HARVEST_CETUXIMAB_CANONICAL,ASSET_HARVEST_CETUXIMAB,cetuximab,en,can
 ALIAS_ASSET_HARVEST_PF_07934040_CANONICAL,ASSET_HARVEST_PF_07934040,PF-07934040,en,canonical_or_code,SRC_CTG_NCT06447662,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FLUOROURACIL_CANONICAL,ASSET_HARVEST_FLUOROURACIL,Fluorouracil,en,canonical_or_code,SRC_CTG_NCT06447662,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_OXALIPLATIN_CANONICAL,ASSET_HARVEST_OXALIPLATIN,Oxaliplatin,en,canonical_or_code,SRC_CTG_NCT06447662,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DATOPOTAMAB_DERUXTECAN_CANONICAL,ASSET_HARVEST_DATOPOTAMAB_DERUXTECAN,Datopotamab Deruxtecan,en,canonical_or_code,SRC_CTG_NCT05215340,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RAMUCIRUMAB_CANONICAL,ASSET_HARVEST_RAMUCIRUMAB,Ramucirumab,en,canonical_or_code,SRC_CTG_NCT04340882,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SC_DURVALUMAB_RHU_CANONICAL,ASSET_HARVEST_SC_DURVALUMAB_RHU,SC durvalumab + rHu,en,canonical_or_code,SRC_CTG_NCT07391670,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_IV_DURVALUMAB_CANONICAL,ASSET_HARVEST_IV_DURVALUMAB,IV durvalumab,en,canonical_or_code,SRC_CTG_NCT07391670,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TREMELIMUMAB_CANONICAL,ASSET_HARVEST_TREMELIMUMAB,Tremelimumab,en,canonical_or_code,SRC_CTG_NCT07391670,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ADJUVANT_EGFR_TKI_THERAPY_CANONICAL,ASSET_HARVEST_ADJUVANT_EGFR_TKI_THERAPY,Adjuvant EGFR-TKI Therapy,en,canonical_or_code,SRC_CTG_NCT07837739,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SEVABERTINIB_CANONICAL,ASSET_HARVEST_SEVABERTINIB,Sevabertinib,en,canonical_or_code,SRC_CTG_NCT06452277,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ENFORTUMAB_VEDOTIN_CANONICAL,ASSET_HARVEST_ENFORTUMAB_VEDOTIN,enfortumab vedotin,en,canonical_or_code,SRC_CTG_NCT04225117,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALDESLEUKIN_CANONICAL,ASSET_HARVEST_ALDESLEUKIN,Aldesleukin,en,canonical_or_code,SRC_CTG_NCT06253520,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FLUDARABINE_CANONICAL,ASSET_HARVEST_FLUDARABINE,Fludarabine,en,canonical_or_code,SRC_CTG_NCT06253520,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -138,8 +117,6 @@ ALIAS_ASSET_HARVEST_KRAS_TCR_TRANSDUCED_PBL_CANONICAL,ASSET_HARVEST_KRAS_TCR_TRA
 ALIAS_ASSET_HARVEST_GRT_C903_GRT_R904_CANONICAL,ASSET_HARVEST_GRT_C903_GRT_R904,GRT-C903/GRT-R904,en,canonical_or_code,SRC_CTG_NCT06253520,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CRIZOTINIB_CANONICAL,ASSET_HARVEST_CRIZOTINIB,Crizotinib,en,canonical_or_code,SRC_CTG_NCT02194738,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ERLOTINIB_CANONICAL,ASSET_HARVEST_ERLOTINIB,Erlotinib,en,canonical_or_code,SRC_CTG_NCT02194738,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_OLECLUMAB_CANONICAL,ASSET_HARVEST_OLECLUMAB,Oleclumab,en,canonical_or_code,SRC_CTG_NCT03381274,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_AZD4635_CANONICAL,ASSET_HARVEST_AZD4635,AZD4635,en,canonical_or_code,SRC_CTG_NCT03381274,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DABRAFENIB_CANONICAL,ASSET_HARVEST_DABRAFENIB,dabrafenib,en,canonical_or_code,SRC_CTG_NCT03340506,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GILTERITINIB_CANONICAL,ASSET_HARVEST_GILTERITINIB,gilteritinib,en,canonical_or_code,SRC_CTG_NCT07140016,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_ADMINISTRATION_CANONICAL,ASSET_HARVEST_PLACEBO_ADMINISTRATION,Placebo Administration,en,canonical_or_code,SRC_CTG_NCT06855524,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -165,30 +142,22 @@ ALIAS_ASSET_HARVEST_RIBOCICLIB_CANONICAL,ASSET_HARVEST_RIBOCICLIB,Ribociclib,en,
 ALIAS_ASSET_HARVEST_PALBOCICLIB_CANONICAL,ASSET_HARVEST_PALBOCICLIB,Palbociclib,en,canonical_or_code,SRC_CTG_NCT06377852,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_INAVOLISIB_CANONICAL,ASSET_HARVEST_INAVOLISIB,Inavolisib,en,canonical_or_code,SRC_CTG_NCT07054190,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GIREDESTRANT_CANONICAL,ASSET_HARVEST_GIREDESTRANT,Giredestrant,en,canonical_or_code,SRC_CTG_NCT07054190,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_LIDOCAINE_20MG_ML_CANONICAL,ASSET_HARVEST_LIDOCAINE_20MG_ML,Lidocaine 20mg/ml,en,canonical_or_code,SRC_CTG_NCT04874038,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CROMOLYN_TQB2102_AND_PANPULIMAB_CANONICAL,ASSET_HARVEST_CROMOLYN_TQB2102_AND_PANPULIMAB,"Cromolyn, TQB2102, and Panpulimab",en,canonical_or_code,SRC_CTG_NCT07419880,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TAMOXIFEN_CANONICAL,ASSET_HARVEST_TAMOXIFEN,Tamoxifen,en,canonical_or_code,SRC_CTG_NCT04570956,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TOPICAL_4_OHT_4_HYDROXYTAMOXIFEN_GEL_4_M_CANONICAL,ASSET_HARVEST_TOPICAL_4_OHT_4_HYDROXYTAMOXIFEN_GEL_4_M,Topical 4-OHT( 4-hydroxytamoxifen)gel 4 mg/each breast/day,en,canonical_or_code,SRC_CTG_NCT04570956,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PERTUZUMAB_CANONICAL,ASSET_HARVEST_PERTUZUMAB,Pertuzumab,en,canonical_or_code,SRC_CTG_NCT03716180,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FULVESTRANT_CANONICAL,ASSET_HARVEST_FULVESTRANT,fulvestrant,en,canonical_or_code,SRC_CTG_NCT05384119,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HORMONE_THERAPY_CANONICAL,ASSET_HARVEST_HORMONE_THERAPY,Hormone Therapy,en,canonical_or_code,SRC_CTG_NCT07407920,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DB_1303_BNT323_CANONICAL,ASSET_HARVEST_DB_1303_BNT323,DB-1303/BNT323,en,canonical_or_code,SRC_CTG_NCT06018337,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALISERTIB_CANONICAL,ASSET_HARVEST_ALISERTIB,Alisertib,en,canonical_or_code,SRC_CTG_NCT02860000,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_68GA_GALMYDAR_CANONICAL,ASSET_HARVEST_68GA_GALMYDAR,68Ga-Galmydar,en,canonical_or_code,SRC_CTG_NCT07838649,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_18F_FDG_CANONICAL,ASSET_HARVEST_18F_FDG,18F-FDG,en,canonical_or_code,SRC_CTG_NCT07838649,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BG_75202_CANONICAL,ASSET_HARVEST_BG_75202,BG-75202,en,canonical_or_code,SRC_CTG_NCT07222267,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ESTROGEN_RECEPTOR_ANTAGONIST_CANONICAL,ASSET_HARVEST_ESTROGEN_RECEPTOR_ANTAGONIST,Estrogen Receptor Antagonist,en,canonical_or_code,SRC_CTG_NCT07222267,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AROMATASE_INHIBITOR_CANONICAL,ASSET_HARVEST_AROMATASE_INHIBITOR,Aromatase Inhibitor,en,canonical_or_code,SRC_CTG_NCT07222267,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_YH32367_CANONICAL,ASSET_HARVEST_YH32367,YH32367,en,canonical_or_code,SRC_CTG_NCT05523947,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TRASTUZUMAB_EMTANSINE_CANONICAL,ASSET_HARVEST_TRASTUZUMAB_EMTANSINE,Trastuzumab emtansine,en,canonical_or_code,SRC_CTG_NCT02390427,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALPELISIB_CANONICAL,ASSET_HARVEST_ALPELISIB,Alpelisib,en,canonical_or_code,SRC_CTG_NCT05564377,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BINIMETINIB_CANONICAL,ASSET_HARVEST_BINIMETINIB,Binimetinib,en,canonical_or_code,SRC_CTG_NCT05564377,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_IPATASERTIB_CANONICAL,ASSET_HARVEST_IPATASERTIB,Ipatasertib,en,canonical_or_code,SRC_CTG_NCT05564377,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DOXORUBICIN_HYDROCHLORIDE_CANONICAL,ASSET_HARVEST_DOXORUBICIN_HYDROCHLORIDE,doxorubicin hydrochloride,en,canonical_or_code,SRC_CTG_NCT00295893,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_EMPAGLIFLOZIN_EMPA_CANONICAL,ASSET_HARVEST_EMPAGLIFLOZIN_EMPA,Empagliflozin (EMPA),en,canonical_or_code,SRC_CTG_NCT07815808,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_METFORMIN_CANONICAL,ASSET_HARVEST_METFORMIN,Metformin,en,canonical_or_code,SRC_CTG_NCT07815808,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ZW25_ZANIDATAMAB_CANONICAL,ASSET_HARVEST_ZW25_ZANIDATAMAB,ZW25 (Zanidatamab),en,canonical_or_code,SRC_CTG_NCT04224272,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CU_64_ANTI_CEA_MONOCLONAL_ANTIBODY_M5A_I_CANONICAL,ASSET_HARVEST_CU_64_ANTI_CEA_MONOCLONAL_ANTIBODY_M5A_I,Cu 64 anti-CEA monoclonal antibody M5A IV,en,canonical_or_code,SRC_CTG_NCT02293954,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ENTRECTINIB_CANONICAL,ASSET_HARVEST_ENTRECTINIB,Entrectinib,en,canonical_or_code,SRC_CTG_NCT02650401,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TDXD_CANONICAL,ASSET_HARVEST_TDXD,TDxd,en,canonical_or_code,SRC_CTG_NCT07597993,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DENDRITIC_CELL_VACCINE_DC1_CANONICAL,ASSET_HARVEST_DENDRITIC_CELL_VACCINE_DC1,Dendritic Cell Vaccine (DC1),en,canonical_or_code,SRC_CTG_NCT03387553,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -200,9 +169,6 @@ ALIAS_ASSET_HARVEST_5_FLUOROURACIL_CANONICAL,ASSET_HARVEST_5_FLUOROURACIL,5-fluo
 ALIAS_ASSET_HARVEST_LEUCOVORIN_CALCIUM_LEVOLEUCOVORIN_CANONICAL,ASSET_HARVEST_LEUCOVORIN_CALCIUM_LEVOLEUCOVORIN,Leucovorin calcium/Levoleucovorin,en,canonical_or_code,SRC_CTG_NCT06750094,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_IRINOTECAN_CANONICAL,ASSET_HARVEST_IRINOTECAN,Irinotecan,en,canonical_or_code,SRC_CTG_NCT06750094,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TRASTUZUMAB_DERUXTECAN_CANONICAL,ASSET_HARVEST_TRASTUZUMAB_DERUXTECAN,Trastuzumab deruxtecan,en,canonical_or_code,SRC_CTG_NCT07124000,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_IRINOTECAN_HYDROCHLORIDE_CANONICAL,ASSET_HARVEST_IRINOTECAN_HYDROCHLORIDE,Irinotecan Hydrochloride,en,canonical_or_code,SRC_CTG_NCT07271355,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_LEUCOVORIN_CALCIUM_CANONICAL,ASSET_HARVEST_LEUCOVORIN_CALCIUM,Leucovorin Calcium,en,canonical_or_code,SRC_CTG_NCT07271355,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MITOMYCIN_CANONICAL,ASSET_HARVEST_MITOMYCIN,Mitomycin,en,canonical_or_code,SRC_CTG_NCT07271355,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_JNJ_89402638_CANONICAL,ASSET_HARVEST_JNJ_89402638,JNJ-89402638,en,canonical_or_code,SRC_CTG_NCT06663319,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FOLFOX_CANONICAL,ASSET_HARVEST_FOLFOX,FOLFOX,en,canonical_or_code,SRC_CTG_NCT06663319,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FOLFIRI_CANONICAL,ASSET_HARVEST_FOLFIRI,FOLFIRI,en,canonical_or_code,SRC_CTG_NCT06663319,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -212,16 +178,8 @@ ALIAS_ASSET_HARVEST_PD_1_INHIBITOR_CANONICAL,ASSET_HARVEST_PD_1_INHIBITOR,PD-1 i
 ALIAS_ASSET_HARVEST_CTLA_4_INHIBITOR_CANONICAL,ASSET_HARVEST_CTLA_4_INHIBITOR,CTLA-4 inhibitor,en,canonical_or_code,SRC_CTG_NCT07841236,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DEFACTINIB_CANONICAL,ASSET_HARVEST_DEFACTINIB,Defactinib,en,canonical_or_code,SRC_CTG_NCT06369259,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AVUTOMETINIB_CANONICAL,ASSET_HARVEST_AVUTOMETINIB,Avutometinib,en,canonical_or_code,SRC_CTG_NCT06369259,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_GADOXETATE_DISODIUM_CANONICAL,ASSET_HARVEST_GADOXETATE_DISODIUM,Gadoxetate disodium,en,canonical_or_code,SRC_CTG_NCT04973007,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_GADOBENATE_DIMEGLUMINE_CANONICAL,ASSET_HARVEST_GADOBENATE_DIMEGLUMINE,Gadobenate dimeglumine,en,canonical_or_code,SRC_CTG_NCT04973007,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DRUG_XS_03_BIOLOGICAL_BEVACIZUMAB_DRUG_F_CANONICAL,ASSET_HARVEST_DRUG_XS_03_BIOLOGICAL_BEVACIZUMAB_DRUG_F,"Drug: XS-03, Biological: Bevacizumab, Drug: FOLFOX, Drug: FOLFIRI",en,canonical_or_code,SRC_CTG_NCT06936527,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DRUG_XS_03_CANONICAL,ASSET_HARVEST_DRUG_XS_03,Drug: XS-03,en,canonical_or_code,SRC_CTG_NCT06936527,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BIOLOGICAL_BEVACIZUMAB_DRUG_FOLFOX_DRUG_CANONICAL,ASSET_HARVEST_BIOLOGICAL_BEVACIZUMAB_DRUG_FOLFOX_DRUG,"Biological: Bevacizumab, Drug: FOLFOX, Drug: FOLFIRI",en,canonical_or_code,SRC_CTG_NCT06936527,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BERZOSERTIB_CANONICAL,ASSET_HARVEST_BERZOSERTIB,Berzosertib,en,canonical_or_code,SRC_CTG_NCT02595931,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FLOXURIDINE_CANONICAL,ASSET_HARVEST_FLOXURIDINE,Floxuridine,en,canonical_or_code,SRC_CTG_NCT07842965,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_LERONLIMAB_CANONICAL,ASSET_HARVEST_LERONLIMAB,Leronlimab,en,canonical_or_code,SRC_CTG_NCT07842965,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SINTILIMAB_CANONICAL,ASSET_HARVEST_SINTILIMAB,Sintilimab,en,canonical_or_code,SRC_CTG_NCT07840677,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RETIFANLIMAB_CANONICAL,ASSET_HARVEST_RETIFANLIMAB,retifanlimab,en,canonical_or_code,SRC_CTG_NCT04472429,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FLUOROURACIL_5_FU_CANONICAL,ASSET_HARVEST_FLUOROURACIL_5_FU,Fluorouracil (5-FU),en,canonical_or_code,SRC_CTG_NCT06428409,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LEUCOVORIN_LV_OR_LEVOLEUCOVORIN_CANONICAL,ASSET_HARVEST_LEUCOVORIN_LV_OR_LEVOLEUCOVORIN,Leucovorin (LV) or levoleucovorin,en,canonical_or_code,SRC_CTG_NCT06428409,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BI_765049_CANONICAL,ASSET_HARVEST_BI_765049,BI 765049,en,canonical_or_code,SRC_CTG_NCT06882746,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -231,7 +189,6 @@ ALIAS_ASSET_HARVEST_VOLRUSTOMIG_CANONICAL,ASSET_HARVEST_VOLRUSTOMIG,Volrustomig,
 ALIAS_ASSET_HARVEST_METARRESTIN_CANONICAL,ASSET_HARVEST_METARRESTIN,Metarrestin,en,canonical_or_code,SRC_CTG_NCT04222413,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BET_BROMODOMAIN_INHIBITOR_ZEN_3694_CANONICAL,ASSET_HARVEST_BET_BROMODOMAIN_INHIBITOR_ZEN_3694,BET Bromodomain Inhibitor ZEN-3694,en,canonical_or_code,SRC_CTG_NCT06102902,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ENCORAFENIB_CANONICAL,ASSET_HARVEST_ENCORAFENIB,Encorafenib,en,canonical_or_code,SRC_CTG_NCT06102902,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RETLIRAFUSP_ALFA_INJECTION_CANONICAL,ASSET_HARVEST_RETLIRAFUSP_ALFA_INJECTION,Retlirafusp alfa Injection,en,canonical_or_code,SRC_CTG_NCT07728019,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_THERAPEUTIC_CEA_BRACHYURY_AND_MUC1_TRIAD_CANONICAL,ASSET_HARVEST_THERAPEUTIC_CEA_BRACHYURY_AND_MUC1_TRIAD,"Therapeutic CEA, Brachyury and MUC1 TriAdeno Vaccine Platform",en,canonical_or_code,SRC_CTG_NCT06149481,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SX_682_CANONICAL,ASSET_HARVEST_SX_682,SX-682,en,canonical_or_code,SRC_CTG_NCT06149481,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PEMBROLIZUMAB_KEYTRUDA_CANONICAL,ASSET_HARVEST_PEMBROLIZUMAB_KEYTRUDA,Pembrolizumab (Keytruda),en,canonical_or_code,SRC_CTG_NCT01174121,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -246,35 +203,20 @@ ALIAS_ASSET_HARVEST_BINTRAFUSP_ALFA_CANONICAL,ASSET_HARVEST_BINTRAFUSP_ALFA,Bint
 ALIAS_ASSET_HARVEST_PDS01ADC_CANONICAL,ASSET_HARVEST_PDS01ADC,PDS01ADC,en,canonical_or_code,SRC_CTG_NCT04708470,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ENTINOSTAT_CANONICAL,ASSET_HARVEST_ENTINOSTAT,Entinostat,en,canonical_or_code,SRC_CTG_NCT04708470,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CEDIRANIB_CANONICAL,ASSET_HARVEST_CEDIRANIB,Cediranib,en,canonical_or_code,SRC_CTG_NCT02484404,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TQB2930_INJECTION_OXALIPLATIN_FOR_INJECT_CANONICAL,ASSET_HARVEST_TQB2930_INJECTION_OXALIPLATIN_FOR_INJECT,TQB2930 injection +(Oxaliplatin for injection + Capecitabine tablets)/( Irinotecan hydrochloride injection+ Capecitabine tablets)+Bevacizumab injection,en,canonical_or_code,SRC_CTG_NCT07653685,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_INCA33890_CANONICAL,ASSET_HARVEST_INCA33890,INCA33890,en,canonical_or_code,SRC_CTG_NCT07823322,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD5863_CANONICAL,ASSET_HARVEST_AZD5863,AZD5863,en,canonical_or_code,SRC_CTG_NCT06005493,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD2936_CANONICAL,ASSET_HARVEST_AZD2936,AZD2936,en,canonical_or_code,SRC_CTG_NCT06005493,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ZANIDATAMAB_CANONICAL,ASSET_HARVEST_ZANIDATAMAB,Zanidatamab,en,canonical_or_code,SRC_CTG_NCT05152147,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SONESITATUG_VEDOTIN_CANONICAL,ASSET_HARVEST_SONESITATUG_VEDOTIN,Sonesitatug Vedotin,en,canonical_or_code,SRC_CTG_NCT07069712,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ZOLBETUXIMAB_CANONICAL,ASSET_HARVEST_ZOLBETUXIMAB,zolbetuximab,en,canonical_or_code,SRC_CTG_NCT06901531,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FOLINIC_ACID_LEUCOVORIN_OR_LOCAL_EQUIVAL_CANONICAL,ASSET_HARVEST_FOLINIC_ACID_LEUCOVORIN_OR_LOCAL_EQUIVAL,Folinic acid (leucovorin or local equivalent),en,canonical_or_code,SRC_CTG_NCT06901531,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CADONILIMAB_CANONICAL,ASSET_HARVEST_CADONILIMAB,Cadonilimab,en,canonical_or_code,SRC_CTG_NCT07631000,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FOUR_WEEK_ALTERNATING_FOLFOX_AND_FOLFIRI_CANONICAL,ASSET_HARVEST_FOUR_WEEK_ALTERNATING_FOLFOX_AND_FOLFIRI,Four week alternating FOLFOX and FOLFIRI (sFOLFOXIRI),en,canonical_or_code,SRC_CTG_NCT05332002,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DISITAMAB_VEDOTIN_CANONICAL,ASSET_HARVEST_DISITAMAB_VEDOTIN,Disitamab Vedotin,en,canonical_or_code,SRC_CTG_NCT07315750,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CAPOX_OXALIPLATIN_CAPECITABINE_CANONICAL,ASSET_HARVEST_CAPOX_OXALIPLATIN_CAPECITABINE,CAPOX (oxaliplatin/capecitabine),en,canonical_or_code,SRC_CTG_NCT07315750,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BL_M17D1_CANONICAL,ASSET_HARVEST_BL_M17D1,BL-M17D1,en,canonical_or_code,SRC_CTG_NCT06714617,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FOLINIC_ACID_CANONICAL,ASSET_HARVEST_FOLINIC_ACID,Folinic Acid,en,canonical_or_code,SRC_CTG_NCT07829757,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD5305_CANONICAL,ASSET_HARVEST_AZD5305,AZD5305,en,canonical_or_code,SRC_CTG_NCT04644068,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_REMIMAZOLAM_CANONICAL,ASSET_HARVEST_REMIMAZOLAM,Remimazolam,en,canonical_or_code,SRC_CTG_NCT07351474,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PROPOFOL_CANONICAL,ASSET_HARVEST_PROPOFOL,Propofol,en,canonical_or_code,SRC_CTG_NCT07351474,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ZONGERTINIB_CANONICAL,ASSET_HARVEST_ZONGERTINIB,Zongertinib,en,canonical_or_code,SRC_CTG_NCT06324357,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BGB_B2033_CANONICAL,ASSET_HARVEST_BGB_B2033,BGB-B2033,en,canonical_or_code,SRC_CTG_NCT06427941,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ROPIDOXURIDINE_CANONICAL,ASSET_HARVEST_ROPIDOXURIDINE,Ropidoxuridine,en,canonical_or_code,SRC_CTG_NCT02381561,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_S_1_CANONICAL,ASSET_HARVEST_S_1,S-1,en,canonical_or_code,SRC_CTG_NCT06730373,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_INTRATUMORAL_2141_V11_CANONICAL,ASSET_HARVEST_INTRATUMORAL_2141_V11,Intratumoral 2141-V11,en,canonical_or_code,SRC_CTG_NCT07818018,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FLUOROPYRIMIDINE_CANONICAL,ASSET_HARVEST_FLUOROPYRIMIDINE,Fluoropyrimidine,en,canonical_or_code,SRC_CTG_NCT07818018,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ONO_4578_CANONICAL,ASSET_HARVEST_ONO_4578,ONO-4578,en,canonical_or_code,SRC_CTG_NCT07818070,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TEGAFUR_GIMERACIL_OTERACIL_POTASSIUM_S_1_CANONICAL,ASSET_HARVEST_TEGAFUR_GIMERACIL_OTERACIL_POTASSIUM_S_1,Tegafur-gimeracil-oteracil potassium (S-1),en,canonical_or_code,SRC_CTG_NCT07818070,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FRUQUINTINIB_CANONICAL,ASSET_HARVEST_FRUQUINTINIB,Fruquintinib,en,canonical_or_code,SRC_CTG_NCT07819019,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_IRINOTECAN_HYDROCHLORIDE_LIPOSOME_INJECT_CANONICAL,ASSET_HARVEST_IRINOTECAN_HYDROCHLORIDE_LIPOSOME_INJECT,Irinotecan Hydrochloride Liposome Injection (II),en,canonical_or_code,SRC_CTG_NCT07819019,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CURCUMIN_CANONICAL,ASSET_HARVEST_CURCUMIN,Curcumin,en,canonical_or_code,SRC_CTG_NCT02782949,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_KD_496_CANONICAL,ASSET_HARVEST_KD_496,KD-496,en,canonical_or_code,SRC_CTG_NCT06134960,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_OCTREOTIDE_LAR_CANONICAL,ASSET_HARVEST_OCTREOTIDE_LAR,Octreotide LAR,en,canonical_or_code,SRC_CTG_NCT06784752,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ASP2138_CANONICAL,ASSET_HARVEST_ASP2138,ASP2138,en,canonical_or_code,SRC_CTG_NCT07673887,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_FOR_PEMBROLIZUMAB_CANONICAL,ASSET_HARVEST_PLACEBO_FOR_PEMBROLIZUMAB,Placebo for Pembrolizumab,en,canonical_or_code,SRC_CTG_NCT07673887,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -283,38 +225,18 @@ ALIAS_ASSET_HARVEST_SORAFENIB_CANONICAL,ASSET_HARVEST_SORAFENIB,Sorafenib,en,can
 ALIAS_ASSET_HARVEST_ABBV_324_CANONICAL,ASSET_HARVEST_ABBV_324,ABBV-324,en,canonical_or_code,SRC_CTG_NCT06858813,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LIVMONIPLIMAB_CANONICAL,ASSET_HARVEST_LIVMONIPLIMAB,Livmoniplimab,en,canonical_or_code,SRC_CTG_NCT06109272,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BUDIGALIMAB_CANONICAL,ASSET_HARVEST_BUDIGALIMAB,Budigalimab,en,canonical_or_code,SRC_CTG_NCT06109272,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_GEFITINIB_CANONICAL,ASSET_HARVEST_GEFITINIB,Gefitinib,en,canonical_or_code,SRC_CTG_NCT07829926,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ORAL_ELEMENTAL_ZINC_SUPPLEMENTATION_20_M_CANONICAL,ASSET_HARVEST_ORAL_ELEMENTAL_ZINC_SUPPLEMENTATION_20_M,"Oral elemental zinc supplementation, 20 mg/day",en,canonical_or_code,SRC_CTG_NCT07793695,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ORAL_ELEMENTAL_ZINC_SUPPLEMENTATION_30_M_CANONICAL,ASSET_HARVEST_ORAL_ELEMENTAL_ZINC_SUPPLEMENTATION_30_M,"Oral elemental zinc supplementation, 30 mg/day",en,canonical_or_code,SRC_CTG_NCT07793695,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_STANDARD_OF_CARE_TARGETED_THERAPY_PLUS_I_CANONICAL,ASSET_HARVEST_STANDARD_OF_CARE_TARGETED_THERAPY_PLUS_I,Standard-of-care targeted therapy plus immunotherapy,en,canonical_or_code,SRC_CTG_NCT07793695,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LENALIDOMIDE_CANONICAL,ASSET_HARVEST_LENALIDOMIDE,Lenalidomide,en,canonical_or_code,SRC_CTG_NCT07639138,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_HEPATIC_ARTERIAL_INFUSION_CHEMOTHERAPY_H_CANONICAL,ASSET_HARVEST_HEPATIC_ARTERIAL_INFUSION_CHEMOTHERAPY_H,Hepatic Arterial Infusion Chemotherapy (HAIC) Rechallenge,en,canonical_or_code,SRC_CTG_NCT07830147,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_IPAROMLIMAB_AND_TUVONRALIMAB_QL1706_CANONICAL,ASSET_HARVEST_IPAROMLIMAB_AND_TUVONRALIMAB_QL1706,Iparomlimab and Tuvonralimab (QL1706),en,canonical_or_code,SRC_CTG_NCT06954116,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ADOPTIVE_IMMUNOTHERAPY_CANONICAL,ASSET_HARVEST_ADOPTIVE_IMMUNOTHERAPY,adoptive immunotherapy,en,canonical_or_code,SRC_CTG_NCT02851784,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_JS207_CANONICAL,ASSET_HARVEST_JS207,JS207,en,canonical_or_code,SRC_CTG_NCT07823348,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_JS007_CANONICAL,ASSET_HARVEST_JS007,JS007,en,canonical_or_code,SRC_CTG_NCT07823348,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TORIPALIMAB_CANONICAL,ASSET_HARVEST_TORIPALIMAB,Toripalimab,en,canonical_or_code,SRC_CTG_NCT07823348,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BI_765063_CANONICAL,ASSET_HARVEST_BI_765063,BI 765063,en,canonical_or_code,SRC_CTG_NCT05249426,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_EZABENLIMAB_CANONICAL,ASSET_HARVEST_EZABENLIMAB,Ezabenlimab,en,canonical_or_code,SRC_CTG_NCT05249426,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BI_836880_CANONICAL,ASSET_HARVEST_BI_836880,BI 836880,en,canonical_or_code,SRC_CTG_NCT05249426,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TIRAGOLUMAB_CANONICAL,ASSET_HARVEST_TIRAGOLUMAB,Tiragolumab,en,canonical_or_code,SRC_CTG_NCT05908786,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TOBEMSTOMIG_CANONICAL,ASSET_HARVEST_TOBEMSTOMIG,Tobemstomig,en,canonical_or_code,SRC_CTG_NCT05908786,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ETOPOSIDE_CANONICAL,ASSET_HARVEST_ETOPOSIDE,Etoposide,en,canonical_or_code,SRC_CTG_NCT03533582,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ACALABRUTINIB_CANONICAL,ASSET_HARVEST_ACALABRUTINIB,Acalabrutinib,en,canonical_or_code,SRC_CTG_NCT04115631,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BENDAMUSTINE_CANONICAL,ASSET_HARVEST_BENDAMUSTINE,Bendamustine,en,canonical_or_code,SRC_CTG_NCT04115631,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BENDAMUSTINE_HYDROCHLORIDE_CANONICAL,ASSET_HARVEST_BENDAMUSTINE_HYDROCHLORIDE,Bendamustine Hydrochloride,en,canonical_or_code,SRC_CTG_NCT04115631,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CYTARABINE_CANONICAL,ASSET_HARVEST_CYTARABINE,Cytarabine,en,canonical_or_code,SRC_CTG_NCT04115631,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RITUXIMAB_CANONICAL,ASSET_HARVEST_RITUXIMAB,Rituximab,en,canonical_or_code,SRC_CTG_NCT04115631,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RECOMBINANT_INTERFERON_ALPHA_2B_LIKE_PRO_CANONICAL,ASSET_HARVEST_RECOMBINANT_INTERFERON_ALPHA_2B_LIKE_PRO,Recombinant Interferon Alpha 2b-like Protein,en,canonical_or_code,SRC_CTG_NCT04380545,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TIRZEPATIDE_CANONICAL,ASSET_HARVEST_TIRZEPATIDE,Tirzepatide,en,canonical_or_code,SRC_CTG_NCT07817875,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TQF3510_SEMAGLUTIDE_INJECTION_CANONICAL,ASSET_HARVEST_TQF3510_SEMAGLUTIDE_INJECTION,TQF3510 (Semaglutide Injection),en,canonical_or_code,SRC_CTG_NCT06738979,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_WEGOVY_CANONICAL,ASSET_HARVEST_WEGOVY,Wegovy®,en,canonical_or_code,SRC_CTG_NCT06738979,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS_1596_CANONICAL,ASSET_HARVEST_HRS_1596,HRS-1596,en,canonical_or_code,SRC_CTG_NCT07841860,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS_1596_PLACEBO_CANONICAL,ASSET_HARVEST_HRS_1596_PLACEBO,HRS-1596 Placebo,en,canonical_or_code,SRC_CTG_NCT07841860,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BEROBENATIDE_CANONICAL,ASSET_HARVEST_BEROBENATIDE,Berobenatide,en,canonical_or_code,SRC_CTG_NCT07794774,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ARO_INHBE_CANONICAL,ASSET_HARVEST_ARO_INHBE,ARO-INHBE,en,canonical_or_code,SRC_CTG_NCT06700538,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ASC35_INJECTION_B_FOR_SUBCUTANEOUS_USE_CANONICAL,ASSET_HARVEST_ASC35_INJECTION_B_FOR_SUBCUTANEOUS_USE,"ASC35 Injection B, for subcutaneous use",en,canonical_or_code,SRC_CTG_NCT07842640,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ASC35_PLACEBO_INJECTION_B_FOR_SUBCUTANEO_CANONICAL,ASSET_HARVEST_ASC35_PLACEBO_INJECTION_B_FOR_SUBCUTANEO,"ASC35 Placebo Injection B, for subcutaneous use",en,canonical_or_code,SRC_CTG_NCT07842640,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RETATRUTIDE_CANONICAL,ASSET_HARVEST_RETATRUTIDE,Retatrutide,en,canonical_or_code,SRC_CTG_NCT07035093,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_REGN20934_CANONICAL,ASSET_HARVEST_REGN20934,REGN20934,en,canonical_or_code,SRC_CTG_NCT07594093,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ABBV_295_CANONICAL,ASSET_HARVEST_ABBV_295,ABBV-295,en,canonical_or_code,SRC_CTG_NCT07752979,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -331,7 +253,6 @@ ALIAS_ASSET_HARVEST_MIRIKIZUMAB_CANONICAL,ASSET_HARVEST_MIRIKIZUMAB,Mirikizumab,
 ALIAS_ASSET_HARVEST_NNC0487_0111_CANONICAL,ASSET_HARVEST_NNC0487_0111,NNC0487-0111,en,canonical_or_code,SRC_CTG_NCT07339423,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_MATCHED_TO_NNC0487_0111_CANONICAL,ASSET_HARVEST_PLACEBO_MATCHED_TO_NNC0487_0111,Placebo (matched to NNC0487-0111),en,canonical_or_code,SRC_CTG_NCT07339423,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MET097_CANONICAL,ASSET_HARVEST_MET097,MET097,en,canonical_or_code,SRC_CTG_NCT07311850,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_HRS_7535_CANONICAL,ASSET_HARVEST_HRS_7535,HRS-7535,en,canonical_or_code,SRC_CTG_NCT07528027,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BI_3034701_CANONICAL,ASSET_HARVEST_BI_3034701,BI 3034701,en,canonical_or_code,SRC_CTG_NCT07754474,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MK_4082_FORMULATION_1_F1_CANONICAL,ASSET_HARVEST_MK_4082_FORMULATION_1_F1,MK-4082 Formulation 1 (F1),en,canonical_or_code,SRC_CTG_NCT07748351,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MK_4082_FORMULATION_2_F2_CANONICAL,ASSET_HARVEST_MK_4082_FORMULATION_2_F2,MK-4082 Formulation 2 (F2),en,canonical_or_code,SRC_CTG_NCT07748351,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -339,110 +260,48 @@ ALIAS_ASSET_HARVEST_MK_4082_FORMULATION_4_F4_CANONICAL,ASSET_HARVEST_MK_4082_FOR
 ALIAS_ASSET_HARVEST_PF_08642534_CANONICAL,ASSET_HARVEST_PF_08642534,PF-08642534,en,canonical_or_code,SRC_CTG_NCT07731139,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ACETAMINOPHEN_CANONICAL,ASSET_HARVEST_ACETAMINOPHEN,Acetaminophen,en,canonical_or_code,SRC_CTG_NCT07803744,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MK_4082_CANONICAL,ASSET_HARVEST_MK_4082,MK-4082,en,canonical_or_code,SRC_CTG_NCT07388667,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MAZDUTIDE_CANONICAL,ASSET_HARVEST_MAZDUTIDE,Mazdutide,en,canonical_or_code,SRC_CTG_NCT07718126,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PLACEBO_NORMAL_SALINE_CANONICAL,ASSET_HARVEST_PLACEBO_NORMAL_SALINE,Placebo (Normal Saline),en,canonical_or_code,SRC_CTG_NCT07718126,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ECNOGLUTIDE_INJECTION_CANONICAL,ASSET_HARVEST_ECNOGLUTIDE_INJECTION,Ecnoglutide Injection,en,canonical_or_code,SRC_CTG_NCT07836270,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PLACEBO_WITH_MATCHING_VOLUME_CANONICAL,ASSET_HARVEST_PLACEBO_WITH_MATCHING_VOLUME,placebo with matching volume,en,canonical_or_code,SRC_CTG_NCT07836270,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PHENTERMINE_TOPIRAMATE_ER_CANONICAL,ASSET_HARVEST_PHENTERMINE_TOPIRAMATE_ER,Phentermine/Topiramate ER,en,canonical_or_code,SRC_CTG_NCT07790913,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MARIDEBART_CAFRAGLUTIDE_CANONICAL,ASSET_HARVEST_MARIDEBART_CAFRAGLUTIDE,Maridebart Cafraglutide,en,canonical_or_code,SRC_CTG_NCT07037433,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_LACTULOSE_CANONICAL,ASSET_HARVEST_LACTULOSE,lactulose,en,canonical_or_code,SRC_CTG_NCT07084350,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PEG_SOLUTION_GIVEN_4_L_CANONICAL,ASSET_HARVEST_PEG_SOLUTION_GIVEN_4_L,PEG (solution given 4 L),en,canonical_or_code,SRC_CTG_NCT07084350,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DULAGLUTIDE_CANONICAL,ASSET_HARVEST_DULAGLUTIDE,Dulaglutide,en,canonical_or_code,SRC_CTG_NCT07668336,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FINERENONE_CANONICAL,ASSET_HARVEST_FINERENONE,Finerenone,en,canonical_or_code,SRC_CTG_NCT07841015,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BMAB1700_CANONICAL,ASSET_HARVEST_BMAB1700,Bmab1700,en,canonical_or_code,SRC_CTG_NCT07476326,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_OPDIVO_CANONICAL,ASSET_HARVEST_OPDIVO,Opdivo,en,canonical_or_code,SRC_CTG_NCT07476326,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_EXENATIDE_CANONICAL,ASSET_HARVEST_EXENATIDE,Exenatide,en,canonical_or_code,SRC_CTG_NCT05663515,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NON_GLP_1_RA_BASED_GLUCOSE_LOWERING_DRUG_CANONICAL,ASSET_HARVEST_NON_GLP_1_RA_BASED_GLUCOSE_LOWERING_DRUG,Non-GLP-1 RA based glucose lowering drugs,en,canonical_or_code,SRC_CTG_NCT05663515,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FINERENONE_KERENDIA_BAY948862_CANONICAL,ASSET_HARVEST_FINERENONE_KERENDIA_BAY948862,"Finerenone (Kerendia, BAY948862)",en,canonical_or_code,SRC_CTG_NCT06608212,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_OTHERS_EXCEPT_FINERENONE_CANONICAL,ASSET_HARVEST_OTHERS_EXCEPT_FINERENONE,Others except finerenone,en,canonical_or_code,SRC_CTG_NCT06608212,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SODIUM_GLUCOSE_COTRANSPORTER_2_INHIBITOR_CANONICAL,ASSET_HARVEST_SODIUM_GLUCOSE_COTRANSPORTER_2_INHIBITOR,Sodium/glucose cotransporter-2 inhibitors (SGLT2i),en,canonical_or_code,SRC_CTG_NCT05882071,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TREATMENT_T_DOSE_1_CANONICAL,ASSET_HARVEST_TREATMENT_T_DOSE_1,treatment T (dose 1),en,canonical_or_code,SRC_CTG_NCT07412015,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TREATMENT_R_DOSE_1_CANONICAL,ASSET_HARVEST_TREATMENT_R_DOSE_1,treatment R (dose 1),en,canonical_or_code,SRC_CTG_NCT07412015,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TREATMENT_R_DOSE_2_CANONICAL,ASSET_HARVEST_TREATMENT_R_DOSE_2,treatment R (dose 2),en,canonical_or_code,SRC_CTG_NCT07412015,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CHIGLITAZAR_METFORMIN_EXTENDED_RELEASE_F_CANONICAL,ASSET_HARVEST_CHIGLITAZAR_METFORMIN_EXTENDED_RELEASE_F,"Chiglitazar/Metformin extended-release fixed-dose combination tablet, dose 1",en,canonical_or_code,SRC_CTG_NCT07519265,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_METFORMIN_EXTENDED_RELEASE_TABLET_DOSE_1_CANONICAL,ASSET_HARVEST_METFORMIN_EXTENDED_RELEASE_TABLET_DOSE_1,"Metformin extended-release tablet, dose 1",en,canonical_or_code,SRC_CTG_NCT07519265,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CHIGLITAZAR_TABLET_DOSE_2_CANONICAL,ASSET_HARVEST_CHIGLITAZAR_TABLET_DOSE_2,"Chiglitazar tablet, dose 2",en,canonical_or_code,SRC_CTG_NCT07519265,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ELORALINTIDE_CANONICAL,ASSET_HARVEST_ELORALINTIDE,Eloralintide,en,canonical_or_code,SRC_CTG_NCT07321886,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MACUPATIDE_CANONICAL,ASSET_HARVEST_MACUPATIDE,Macupatide,en,canonical_or_code,SRC_CTG_NCT07589608,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CLAZAKIZUMAB_CANONICAL,ASSET_HARVEST_CLAZAKIZUMAB,Clazakizumab,en,canonical_or_code,SRC_CTG_NCT07783802,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NNC0519_0130_CANONICAL,ASSET_HARVEST_NNC0519_0130,NNC0519-0130,en,canonical_or_code,SRC_CTG_NCT06326047,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TRIZEPATIDE_CANONICAL,ASSET_HARVEST_TRIZEPATIDE,Trizepatide,en,canonical_or_code,SRC_CTG_NCT06326047,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SACUBITRIL_VALSARTAN_200MG_BLINDED_CANONICAL,ASSET_HARVEST_SACUBITRIL_VALSARTAN_200MG_BLINDED,Sacubitril/Valsartan 200mg (blinded),en,canonical_or_code,SRC_CTG_NCT03508739,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_VALSARTAN_160MG_BLINDED_CANONICAL,ASSET_HARVEST_VALSARTAN_160MG_BLINDED,Valsartan 160mg (blinded),en,canonical_or_code,SRC_CTG_NCT03508739,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_INTRAVENOUS_GLUCOSE_CANONICAL,ASSET_HARVEST_INTRAVENOUS_GLUCOSE,Intravenous Glucose,en,canonical_or_code,SRC_CTG_NCT07830537,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ASC30_TABLETS_CANONICAL,ASSET_HARVEST_ASC30_TABLETS,ASC30 tablets,en,canonical_or_code,SRC_CTG_NCT07321678,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALN_HSD_CANONICAL,ASSET_HARVEST_ALN_HSD,ALN-HSD,en,canonical_or_code,SRC_CTG_NCT05519475,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BERBERINE_CANONICAL,ASSET_HARVEST_BERBERINE,Berberine,en,canonical_or_code,SRC_CTG_NCT03198572,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BI_3802876_CANONICAL,ASSET_HARVEST_BI_3802876,BI 3802876,en,canonical_or_code,SRC_CTG_NCT07325526,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MISOCHOLIC_TAB_CANONICAL,ASSET_HARVEST_MISOCHOLIC_TAB,Misocholic Tab,en,canonical_or_code,SRC_CTG_NCT07833514,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SILYMARIN_SILYBUM_MARIANUM_CANONICAL,ASSET_HARVEST_SILYMARIN_SILYBUM_MARIANUM,Silymarin (Silybum marianum),en,canonical_or_code,SRC_CTG_NCT07833514,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_EFIMOSFERMIN_ALFA_CANONICAL,ASSET_HARVEST_EFIMOSFERMIN_ALFA,Efimosfermin alfa,en,canonical_or_code,SRC_CTG_NCT07335198,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SAROGLITAZAR_MAGNESIUM_2_MG_CANONICAL,ASSET_HARVEST_SAROGLITAZAR_MAGNESIUM_2_MG,Saroglitazar Magnesium 2 mg,en,canonical_or_code,SRC_CTG_NCT05011305,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SAROGLITAZAR_MAGNESIUM_4_MG_CANONICAL,ASSET_HARVEST_SAROGLITAZAR_MAGNESIUM_4_MG,Saroglitazar Magnesium 4 mg,en,canonical_or_code,SRC_CTG_NCT05011305,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_EFINOPEGDUTIDE_CANONICAL,ASSET_HARVEST_EFINOPEGDUTIDE,Efinopegdutide,en,canonical_or_code,SRC_CTG_NCT06465186,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SURVODUTIDE_CANONICAL,ASSET_HARVEST_SURVODUTIDE,Survodutide,en,canonical_or_code,SRC_CTG_NCT06632457,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_MATCHING_SURVODUTIDE_CANONICAL,ASSET_HARVEST_PLACEBO_MATCHING_SURVODUTIDE,Placebo matching survodutide,en,canonical_or_code,SRC_CTG_NCT06632457,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GSK4532990_CANONICAL,ASSET_HARVEST_GSK4532990,GSK4532990,en,canonical_or_code,SRC_CTG_NCT05583344,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS_4729_CANONICAL,ASSET_HARVEST_HRS_4729,HRS-4729,en,canonical_or_code,SRC_CTG_NCT07807059,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ACT500_TABLETS_CANONICAL,ASSET_HARVEST_ACT500_TABLETS,ACT500 tablets,en,canonical_or_code,SRC_CTG_NCT07462455,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ECC4703_CANONICAL,ASSET_HARVEST_ECC4703,ECC4703,en,canonical_or_code,SRC_CTG_NCT07726368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SULFASALAZINE_CANONICAL,ASSET_HARVEST_SULFASALAZINE,Sulfasalazine,en,canonical_or_code,SRC_CTG_NCT07726368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PITAVASTATIN_CANONICAL,ASSET_HARVEST_PITAVASTATIN,Pitavastatin,en,canonical_or_code,SRC_CTG_NCT07726368,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ECC4703_F0_FORMULATION_CANONICAL,ASSET_HARVEST_ECC4703_F0_FORMULATION,ECC4703 F0 formulation,en,canonical_or_code,SRC_CTG_NCT07334080,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ECC4703_F3_FORMULATION_CANONICAL,ASSET_HARVEST_ECC4703_F3_FORMULATION,ECC4703 F3 formulation,en,canonical_or_code,SRC_CTG_NCT07334080,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ECC0509_CANONICAL,ASSET_HARVEST_ECC0509,ECC0509,en,canonical_or_code,SRC_CTG_NCT07288138,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_EMPAGLIFLOZIN_CANONICAL,ASSET_HARVEST_EMPAGLIFLOZIN,Empagliflozin,en,canonical_or_code,SRC_CTG_NCT05232071,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_QL2401_CANONICAL,ASSET_HARVEST_QL2401,QL2401,en,canonical_or_code,SRC_CTG_NCT07331545,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MAZDUTIDE_INJECTION_CANONICAL,ASSET_HARVEST_MAZDUTIDE_INJECTION,Mazdutide injection,en,canonical_or_code,SRC_CTG_NCT07797101,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALPHA_TOCOPHEROL_CANONICAL,ASSET_HARVEST_ALPHA_TOCOPHEROL,Alpha tocopherol,en,canonical_or_code,SRC_CTG_NCT00862433,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ESSENTIAL_AMINO_ACID_SUPPLEMENT_BY_AMINO_CANONICAL,ASSET_HARVEST_ESSENTIAL_AMINO_ACID_SUPPLEMENT_BY_AMINO,Essential Amino Acid Supplement by Amino Co,en,canonical_or_code,SRC_CTG_NCT05935826,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD9550_CANONICAL,ASSET_HARVEST_AZD9550,AZD9550,en,canonical_or_code,SRC_CTG_NCT06151964,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD9550_AND_AZD6234_CANONICAL,ASSET_HARVEST_AZD9550_AND_AZD6234,AZD9550 and AZD6234,en,canonical_or_code,SRC_CTG_NCT06151964,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS_4729_INJECTION_CANONICAL,ASSET_HARVEST_HRS_4729_INJECTION,HRS-4729 Injection,en,canonical_or_code,SRC_CTG_NCT07660848,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS9531_INJECTION_CANONICAL,ASSET_HARVEST_HRS9531_INJECTION,HRS9531 Injection,en,canonical_or_code,SRC_CTG_NCT07660848,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS9531_INJECTION_PLACEBO_CANONICAL,ASSET_HARVEST_HRS9531_INJECTION_PLACEBO,HRS9531 Injection Placebo,en,canonical_or_code,SRC_CTG_NCT07660848,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_HTD1801_CANONICAL,ASSET_HARVEST_HTD1801,HTD1801,en,canonical_or_code,SRC_CTG_NCT03656744,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_HM15211_CANONICAL,ASSET_HARVEST_HM15211,HM15211,en,canonical_or_code,SRC_CTG_NCT04505436,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PLACEBO_OF_HM15211_CANONICAL,ASSET_HARVEST_PLACEBO_OF_HM15211,Placebo of HM15211,en,canonical_or_code,SRC_CTG_NCT04505436,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_YIQI_FUMAI_LYOPHILIZED_INJECTION_CANONICAL,ASSET_HARVEST_YIQI_FUMAI_LYOPHILIZED_INJECTION,Yiqi Fumai Lyophilized Injection,en,canonical_or_code,SRC_CTG_NCT07841275,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SOTATERCEPT_CANONICAL,ASSET_HARVEST_SOTATERCEPT,Sotatercept,en,canonical_or_code,SRC_CTG_NCT07839585,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DAPAGLIFLOZIN_10_MILLIGRAMS_FARXIGA_CANONICAL,ASSET_HARVEST_DAPAGLIFLOZIN_10_MILLIGRAMS_FARXIGA,Dapagliflozin 10 milligrams [Farxiga],en,canonical_or_code,SRC_CTG_NCT04591639,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_LYSINE_CHLORIDE_CANONICAL,ASSET_HARVEST_LYSINE_CHLORIDE,Lysine Chloride,en,canonical_or_code,SRC_CTG_NCT03440970,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_IBI362_CANONICAL,ASSET_HARVEST_IBI362,IBI362,en,canonical_or_code,SRC_CTG_NCT06862908,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_VICADROSTAT_CANONICAL,ASSET_HARVEST_VICADROSTAT,vicadrostat,en,canonical_or_code,SRC_CTG_NCT06424288,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PREDNISONE_CANONICAL,ASSET_HARVEST_PREDNISONE,Prednisone,en,canonical_or_code,SRC_CTG_NCT04654988,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NNC6019_0001_CANONICAL,ASSET_HARVEST_NNC6019_0001,NNC6019-0001,en,canonical_or_code,SRC_CTG_NCT07207811,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_NNC6019_0001_CANONICAL,ASSET_HARVEST_PLACEBO_NNC6019_0001,Placebo (NNC6019-0001),en,canonical_or_code,SRC_CTG_NCT07207811,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LY3971297_CANONICAL,ASSET_HARVEST_LY3971297,LY3971297,en,canonical_or_code,SRC_CTG_NCT07547540,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CSL300_CANONICAL,ASSET_HARVEST_CSL300,CSL300,en,canonical_or_code,SRC_CTG_NCT05485961,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PROTOCOLIZED_DIURETIC_THERAPY_CANONICAL,ASSET_HARVEST_PROTOCOLIZED_DIURETIC_THERAPY,Protocolized diuretic therapy,en,canonical_or_code,SRC_CTG_NCT04481919,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TEZEPELUMAB_CANONICAL,ASSET_HARVEST_TEZEPELUMAB,Tezepelumab,en,canonical_or_code,SRC_CTG_NCT06951867,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS_9057_INJECTION_SET_CANONICAL,ASSET_HARVEST_HRS_9057_INJECTION_SET,HRS-9057 injection set,en,canonical_or_code,SRC_CTG_NCT07318103,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_5_GLUCOSE_INJECTION_OR_0_9_SODIUM_CHLORI_CANONICAL,ASSET_HARVEST_5_GLUCOSE_INJECTION_OR_0_9_SODIUM_CHLORI,5% Glucose Injection or 0.9% sodium chloride injection,en,canonical_or_code,SRC_CTG_NCT07318103,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CONVENTIONAL_ANTI_ATHEROSCLEROSIS_THERAP_CANONICAL,ASSET_HARVEST_CONVENTIONAL_ANTI_ATHEROSCLEROSIS_THERAP,Conventional Anti-Atherosclerosis Therapy,en,canonical_or_code,SRC_CTG_NCT07840950,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_REGN7508_CANONICAL,ASSET_HARVEST_REGN7508,REGN7508,en,canonical_or_code,SRC_CTG_NCT07318610,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_REGN9933_CANONICAL,ASSET_HARVEST_REGN9933,REGN9933,en,canonical_or_code,SRC_CTG_NCT07318610,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RIVAROXABAN_CANONICAL,ASSET_HARVEST_RIVAROXABAN,Rivaroxaban,en,canonical_or_code,SRC_CTG_NCT07318610,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_EZETIMIBE_CANONICAL,ASSET_HARVEST_EZETIMIBE,Ezetimibe,en,canonical_or_code,SRC_CTG_NCT07839741,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LEPODISIRAN_SODIUM_CANONICAL,ASSET_HARVEST_LEPODISIRAN_SODIUM,Lepodisiran Sodium,en,canonical_or_code,SRC_CTG_NCT06292013,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MUVALAPLIN_CANONICAL,ASSET_HARVEST_MUVALAPLIN,Muvalaplin,en,canonical_or_code,SRC_CTG_NCT07157774,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DOSE_1_YN001_CANONICAL,ASSET_HARVEST_DOSE_1_YN001,Dose 1 YN001,en,canonical_or_code,SRC_CTG_NCT06700720,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DOSE_2_YN001_CANONICAL,ASSET_HARVEST_DOSE_2_YN001,Dose 2 YN001,en,canonical_or_code,SRC_CTG_NCT06700720,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_EVOLOCUMAB_CANONICAL,ASSET_HARVEST_EVOLOCUMAB,Evolocumab,en,canonical_or_code,SRC_CTG_NCT06700720,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_YN001_20MG_DOSE_5_GLUCOSE_INJECTION_CANONICAL,ASSET_HARVEST_YN001_20MG_DOSE_5_GLUCOSE_INJECTION,YN001 20mg Dose + 5% glucose injection,en,canonical_or_code,SRC_CTG_NCT07311330,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_YN001_CANONICAL,ASSET_HARVEST_YN001,YN001,en,canonical_or_code,SRC_CTG_NCT06048588,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PLACEBO_FOR_YN001_CANONICAL,ASSET_HARVEST_PLACEBO_FOR_YN001,Placebo for YN001,en,canonical_or_code,SRC_CTG_NCT06048588,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ROSUVASTATIN_CALCIUM_TABLETS_CANONICAL,ASSET_HARVEST_ROSUVASTATIN_CALCIUM_TABLETS,rosuvastatin calcium tablets,en,canonical_or_code,SRC_CTG_NCT06048588,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LEPODISIRAN_CANONICAL,ASSET_HARVEST_LEPODISIRAN,Lepodisiran,en,canonical_or_code,SRC_CTG_NCT07613294,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_YN001_PLACEBO_40MG_CANONICAL,ASSET_HARVEST_YN001_PLACEBO_40MG,YN001/Placebo 40mg,en,canonical_or_code,SRC_CTG_NCT07521007,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_YN001_PLACEBO_20MG_CANONICAL,ASSET_HARVEST_YN001_PLACEBO_20MG,YN001/Placebo 20mg,en,canonical_or_code,SRC_CTG_NCT07521007,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_YN001_PLACEBO_0MG_CANONICAL,ASSET_HARVEST_YN001_PLACEBO_0MG,YN001/Placebo 0mg,en,canonical_or_code,SRC_CTG_NCT07521007,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BEMPEDOIC_ACID_CANONICAL,ASSET_HARVEST_BEMPEDOIC_ACID,Bempedoic acid,en,canonical_or_code,SRC_CTG_NCT07474649,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ROSUVASTATIN_CANONICAL,ASSET_HARVEST_ROSUVASTATIN,Rosuvastatin,en,canonical_or_code,SRC_CTG_NCT07474649,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ATORVASTATIN_CANONICAL,ASSET_HARVEST_ATORVASTATIN,Atorvastatin,en,canonical_or_code,SRC_CTG_NCT07474649,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_18F_S2P_CANONICAL,ASSET_HARVEST_18F_S2P,18F-S2P,en,canonical_or_code,SRC_CTG_NCT07815860,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_NICORANDIL_10_MG_ORAL_SCORED_TABLET_CANONICAL,ASSET_HARVEST_NICORANDIL_10_MG_ORAL_SCORED_TABLET,Nicorandil 10 MG Oral scored Tablet,en,canonical_or_code,SRC_CTG_NCT07800351,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DMARD_MAINTENANCE_CANONICAL,ASSET_HARVEST_DMARD_MAINTENANCE,DMARD maintenance,en,canonical_or_code,SRC_CTG_NCT07800351,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALIROCUMAB_CANONICAL,ASSET_HARVEST_ALIROCUMAB,Alirocumab,en,canonical_or_code,SRC_CTG_NCT07734753,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_COMPARATOR_NO_PCSK9I_THERAPY_MONOCLONAL_CANONICAL,ASSET_HARVEST_COMPARATOR_NO_PCSK9I_THERAPY_MONOCLONAL,Comparator: No PCSK9i Therapy (monoclonal antibodies or small interfering RNA agents),en,canonical_or_code,SRC_CTG_NCT07734753,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HRS9531_CANONICAL,ASSET_HARVEST_HRS9531,HRS9531,en,canonical_or_code,SRC_CTG_NCT07551492,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -452,34 +311,15 @@ ALIAS_ASSET_HARVEST_ALIROCUMAB_150_MG_CANONICAL,ASSET_HARVEST_ALIROCUMAB_150_MG,
 ALIAS_ASSET_HARVEST_INCLISIRAN_CANONICAL,ASSET_HARVEST_INCLISIRAN,Inclisiran,en,canonical_or_code,SRC_CTG_NCT07615166,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_INCLISIRAN_SODIUM_300_MG_EQUIVALENT_TO_2_CANONICAL,ASSET_HARVEST_INCLISIRAN_SODIUM_300_MG_EQUIVALENT_TO_2,Inclisiran sodium 300 mg (equivalent to 284 mg inclisiran) in 1.5 mL,en,canonical_or_code,SRC_CTG_NCT05739383,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_IN_1_5ML_CANONICAL,ASSET_HARVEST_PLACEBO_IN_1_5ML,Placebo in 1.5ml,en,canonical_or_code,SRC_CTG_NCT05739383,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SELNOFLAST_CANONICAL,ASSET_HARVEST_SELNOFLAST,Selnoflast,en,canonical_or_code,SRC_CTG_NCT07448038,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_64CU_NODAGA_CANF_CANONICAL,ASSET_HARVEST_64CU_NODAGA_CANF,64Cu-NODAGA-CANF,en,canonical_or_code,SRC_CTG_NCT07800481,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ASA_CANONICAL,ASSET_HARVEST_ASA,ASA,en,canonical_or_code,SRC_CTG_NCT07468448,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_COLCHICINE_0_5_MG_CANONICAL,ASSET_HARVEST_COLCHICINE_0_5_MG,Colchicine 0.5 MG,en,canonical_or_code,SRC_CTG_NCT06587737,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_COLCHICINE_PILL_CANONICAL,ASSET_HARVEST_COLCHICINE_PILL,Colchicine Pill,en,canonical_or_code,SRC_CTG_NCT05159219,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TICAGRELOR_ASPIRIN_CANONICAL,ASSET_HARVEST_TICAGRELOR_ASPIRIN,Ticagrelor + Aspirin,en,canonical_or_code,SRC_CTG_NCT05047172,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CLOPIDOGREL_ASPIRIN_CANONICAL,ASSET_HARVEST_CLOPIDOGREL_ASPIRIN,Clopidogrel + Aspirin,en,canonical_or_code,SRC_CTG_NCT05047172,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TIROFIBAN_INJECTION_CANONICAL,ASSET_HARVEST_TIROFIBAN_INJECTION,Tirofiban Injection,en,canonical_or_code,SRC_CTG_NCT07842185,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BEST_MEDICAL_MANAGEMENT_CANONICAL,ASSET_HARVEST_BEST_MEDICAL_MANAGEMENT,Best medical management,en,canonical_or_code,SRC_CTG_NCT06143488,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MILVEXIAN_CANONICAL,ASSET_HARVEST_MILVEXIAN,Milvexian,en,canonical_or_code,SRC_CTG_NCT05702034,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DEXMEDETOMIDINE_CANONICAL,ASSET_HARVEST_DEXMEDETOMIDINE,Dexmedetomidine,en,canonical_or_code,SRC_CTG_NCT06139692,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MIDAZOLAM_CANONICAL,ASSET_HARVEST_MIDAZOLAM,Midazolam,en,canonical_or_code,SRC_CTG_NCT06139692,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RECOMBINANT_HUMAN_PROUROKINASE_FOR_INJEC_CANONICAL,ASSET_HARVEST_RECOMBINANT_HUMAN_PROUROKINASE_FOR_INJEC,Recombinant Human Prourokinase for Injection (rhPro-UK),en,canonical_or_code,SRC_CTG_NCT07776873,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RECOMBINANT_TISSUE_PLASMINOGEN_ACTIVATOR_CANONICAL,ASSET_HARVEST_RECOMBINANT_TISSUE_PLASMINOGEN_ACTIVATOR,Recombinant Tissue Plasminogen Activator (rt-PA),en,canonical_or_code,SRC_CTG_NCT07668323,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_APIXABAN_CANONICAL,ASSET_HARVEST_APIXABAN,Apixaban,en,canonical_or_code,SRC_CTG_NCT06953726,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_UMSC01_CANONICAL,ASSET_HARVEST_UMSC01,UMSC01,en,canonical_or_code,SRC_CTG_NCT04434768,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MSC_MARROW_CANONICAL,ASSET_HARVEST_MSC_MARROW,"MSC, marrow",en,canonical_or_code,SRC_CTG_NCT07831746,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_HUMAN_URINARY_KALLIDINOGENASE_HUK_CANONICAL,ASSET_HARVEST_HUMAN_URINARY_KALLIDINOGENASE_HUK,Human urinary kallidinogenase (HUK),en,canonical_or_code,SRC_CTG_NCT06848894,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GSK5784283_CANONICAL,ASSET_HARVEST_GSK5784283,GSK5784283,en,canonical_or_code,SRC_CTG_NCT07780643,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HFA_152A_CANONICAL,ASSET_HARVEST_HFA_152A,HFA-152a,en,canonical_or_code,SRC_CTG_NCT07645248,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HFA_134A_CANONICAL,ASSET_HARVEST_HFA_134A,HFA-134a,en,canonical_or_code,SRC_CTG_NCT07645248,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_JNJ_95597528_CANONICAL,ASSET_HARVEST_JNJ_95597528,JNJ-95597528,en,canonical_or_code,SRC_CTG_NCT07746687,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TOZORAKIMAB_CANONICAL,ASSET_HARVEST_TOZORAKIMAB,Tozorakimab,en,canonical_or_code,SRC_CTG_NCT06932263,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BENRALIZUMAB_CANONICAL,ASSET_HARVEST_BENRALIZUMAB,Benralizumab,en,canonical_or_code,SRC_CTG_NCT03953300,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_WHOLE_LUNG_ANTIGEN_CHALLENGE_WLAC_CANONICAL,ASSET_HARVEST_WHOLE_LUNG_ANTIGEN_CHALLENGE_WLAC,Whole lung antigen challenge (WLAC),en,canonical_or_code,SRC_CTG_NCT04307667,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FLUTICASONE_PROPIONATE_CANONICAL,ASSET_HARVEST_FLUTICASONE_PROPIONATE,Fluticasone Propionate,en,canonical_or_code,SRC_CTG_NCT07664527,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TEV_56248_CANONICAL,ASSET_HARVEST_TEV_56248,TEV-56248,en,canonical_or_code,SRC_CTG_NCT06052267,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ALBUTEROL_SULFATE_CANONICAL,ASSET_HARVEST_ALBUTEROL_SULFATE,Albuterol sulfate,en,canonical_or_code,SRC_CTG_NCT06052267,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LUNSEKIMIG_CANONICAL,ASSET_HARVEST_LUNSEKIMIG,Lunsekimig,en,canonical_or_code,SRC_CTG_NCT06676319,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SHORT_ACTING_BETA_AGONISTS_SABA_CANONICAL,ASSET_HARVEST_SHORT_ACTING_BETA_AGONISTS_SABA,Short-Acting Beta Agonists (SABA),en,canonical_or_code,SRC_CTG_NCT06676319,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FLUTICASONE_SALMETEROL_CANONICAL,ASSET_HARVEST_FLUTICASONE_SALMETEROL,Fluticasone/Salmeterol,en,canonical_or_code,SRC_CTG_NCT06676319,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -488,20 +328,10 @@ ALIAS_ASSET_HARVEST_PF_07275315_CANONICAL,ASSET_HARVEST_PF_07275315,PF-07275315,
 ALIAS_ASSET_HARVEST_BRENIPATIDE_CANONICAL,ASSET_HARVEST_BRENIPATIDE,Brenipatide,en,canonical_or_code,SRC_CTG_NCT07219173,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BUDESONIDE_ALBUTEROL_METERED_DOSE_INHALE_CANONICAL,ASSET_HARVEST_BUDESONIDE_ALBUTEROL_METERED_DOSE_INHALE,"Budesonide/Albuterol metered dose inhaler, MDI",en,canonical_or_code,SRC_CTG_NCT06471257,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALBUTEROL_SULFATE_METERED_DOSE_INHALER_M_CANONICAL,ASSET_HARVEST_ALBUTEROL_SULFATE_METERED_DOSE_INHALER_M,"Albuterol sulfate metered dose inhaler, MDI",en,canonical_or_code,SRC_CTG_NCT06471257,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SEMAGLUTIDE_PEN_INJECTOR_2_4MG_WEEKLY_CANONICAL,ASSET_HARVEST_SEMAGLUTIDE_PEN_INJECTOR_2_4MG_WEEKLY,Semaglutide Pen Injector 2.4mg weekly,en,canonical_or_code,SRC_CTG_NCT05254314,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_RADEMIKIBART_IN_PREFILLED_SYRINGE_CANONICAL,ASSET_HARVEST_RADEMIKIBART_IN_PREFILLED_SYRINGE,Rademikibart in prefilled syringe,en,canonical_or_code,SRC_CTG_NCT06940141,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MATCHING_PLACEBO_IN_PREFILLED_SYRINGE_CANONICAL,ASSET_HARVEST_MATCHING_PLACEBO_IN_PREFILLED_SYRINGE,Matching placebo in prefilled syringe,en,canonical_or_code,SRC_CTG_NCT06940141,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BIOLOGICS_TARGETING_TYPE_2_INFLAMMATION_CANONICAL,ASSET_HARVEST_BIOLOGICS_TARGETING_TYPE_2_INFLAMMATION,Biologics targeting Type 2 inflammation,en,canonical_or_code,SRC_CTG_NCT07823842,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PATIENTS_WITH_ASTHMA_AND_COPD_WHO_RECEIV_CANONICAL,ASSET_HARVEST_PATIENTS_WITH_ASTHMA_AND_COPD_WHO_RECEIV,Patients with asthma and copd who received standard of care,en,canonical_or_code,SRC_CTG_NCT07823842,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ARO_MUC5AC_CANONICAL,ASSET_HARVEST_ARO_MUC5AC,ARO-MUC5AC,en,canonical_or_code,SRC_CTG_NCT05292950,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_QVM149_CANONICAL,ASSET_HARVEST_QVM149,QVM149,en,canonical_or_code,SRC_CTG_NCT05776927,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SALMETEROL_XINAFOATE_FLUTICASONE_PROPION_CANONICAL,ASSET_HARVEST_SALMETEROL_XINAFOATE_FLUTICASONE_PROPION,Salmeterol Xinafoate / Fluticasone Propionate,en,canonical_or_code,SRC_CTG_NCT05776927,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_TO_QVM149_CANONICAL,ASSET_HARVEST_PLACEBO_TO_QVM149,Placebo to QVM149,en,canonical_or_code,SRC_CTG_NCT05776927,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_TO_SALMETEROL_XINAFOATE_FLUTICAS_CANONICAL,ASSET_HARVEST_PLACEBO_TO_SALMETEROL_XINAFOATE_FLUTICAS,Placebo to salmeterol xinafoate / fluticasone propionate,en,canonical_or_code,SRC_CTG_NCT05776927,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BDP_FF_NEXTHALER_100_6_MICROGRAMS_CANONICAL,ASSET_HARVEST_BDP_FF_NEXTHALER_100_6_MICROGRAMS,BDP/FF NEXThaler® 100/6 micrograms,en,canonical_or_code,SRC_CTG_NCT05168995,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CHF5993_200_6_12_5_G_PMDI_HFA_152A_CANONICAL,ASSET_HARVEST_CHF5993_200_6_12_5_G_PMDI_HFA_152A,CHF5993 200/6/12.5 μg pMDI HFA-152a,en,canonical_or_code,SRC_CTG_NCT06264674,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_INHALER_CHF5993_200_6_12_5_G_PMDI_HFA_13_CANONICAL,ASSET_HARVEST_INHALER_CHF5993_200_6_12_5_G_PMDI_HFA_13,Inhaler CHF5993 200/6/12.5 μg pMDI HFA-134a,en,canonical_or_code,SRC_CTG_NCT06264674,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SKB575_CANONICAL,ASSET_HARVEST_SKB575,SKB575,en,canonical_or_code,SRC_CTG_NCT07732023,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FF_UMEC_VI_CANONICAL,ASSET_HARVEST_FF_UMEC_VI,FF/UMEC/VI,en,canonical_or_code,SRC_CTG_NCT05757102,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FF_VI_CANONICAL,ASSET_HARVEST_FF_VI,FF/VI,en,canonical_or_code,SRC_CTG_NCT05757102,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GALVOKIMIG_CANONICAL,ASSET_HARVEST_GALVOKIMIG,Galvokimig,en,canonical_or_code,SRC_CTG_NCT07725939,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -510,18 +340,12 @@ ALIAS_ASSET_HARVEST_TILREKIMIG_CANONICAL,ASSET_HARVEST_TILREKIMIG,Tilrekimig,en,
 ALIAS_ASSET_HARVEST_AXATILIMAB_CANONICAL,ASSET_HARVEST_AXATILIMAB,Axatilimab,en,canonical_or_code,SRC_CTG_NCT07011810,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DUPILUMAB_CANONICAL,ASSET_HARVEST_DUPILUMAB,Dupilumab,en,canonical_or_code,SRC_CTG_NCT07053423,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BELUMOSUDIL_CANONICAL,ASSET_HARVEST_BELUMOSUDIL,Belumosudil,en,canonical_or_code,SRC_CTG_NCT07116031,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BECLOMETHASONE_DIPROPIONATE_CANONICAL,ASSET_HARVEST_BECLOMETHASONE_DIPROPIONATE,Beclomethasone Dipropionate,en,canonical_or_code,SRC_CTG_NCT04320342,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_GLYCOPYRRONIUM_BROMIDE_CANONICAL,ASSET_HARVEST_GLYCOPYRRONIUM_BROMIDE,Glycopyrronium Bromide,en,canonical_or_code,SRC_CTG_NCT04320342,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FORMOTEROL_FUMARATE_CANONICAL,ASSET_HARVEST_FORMOTEROL_FUMARATE,Formoterol Fumarate,en,canonical_or_code,SRC_CTG_NCT04320342,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BUSULFAN_CANONICAL,ASSET_HARVEST_BUSULFAN,Busulfan,en,canonical_or_code,SRC_CTG_NCT05327023,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MYCOPHENOLATE_MOFETIL_CANONICAL,ASSET_HARVEST_MYCOPHENOLATE_MOFETIL,Mycophenolate mofetil,en,canonical_or_code,SRC_CTG_NCT05327023,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SIROLIMUS_CANONICAL,ASSET_HARVEST_SIROLIMUS,Sirolimus,en,canonical_or_code,SRC_CTG_NCT05327023,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ITEPEKIMAB_SAR440340_CANONICAL,ASSET_HARVEST_ITEPEKIMAB_SAR440340,Itepekimab (SAR440340),en,canonical_or_code,SRC_CTG_NCT06208306,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BUDESONIDE_GLYCOPYRRONIUM_FORMOTEROL_FUM_CANONICAL,ASSET_HARVEST_BUDESONIDE_GLYCOPYRRONIUM_FORMOTEROL_FUM,Budesonide/Glycopyrronium/Formoterol Fumarate,en,canonical_or_code,SRC_CTG_NCT07073950,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RO7830698_CANONICAL,ASSET_HARVEST_RO7830698,RO7830698,en,canonical_or_code,SRC_CTG_NCT07822334,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_INCA034176_CANONICAL,ASSET_HARVEST_INCA034176,INCA034176,en,canonical_or_code,SRC_CTG_NCT07124078,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BEST_AVAILABLE_TREATMENT_BAT_CANONICAL,ASSET_HARVEST_BEST_AVAILABLE_TREATMENT_BAT,Best available Treatment (BAT),en,canonical_or_code,SRC_CTG_NCT07124078,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CORTICOSTEROIDS_CANONICAL,ASSET_HARVEST_CORTICOSTEROIDS,Corticosteroids,en,canonical_or_code,SRC_CTG_NCT06585774,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LEBRIKIZUMAB_CANONICAL,ASSET_HARVEST_LEBRIKIZUMAB,Lebrikizumab,en,canonical_or_code,SRC_CTG_NCT02546700,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GUSELKUMAB_CANONICAL,ASSET_HARVEST_GUSELKUMAB,Guselkumab,en,canonical_or_code,SRC_CTG_NCT04882098,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_JNJ_88545223_CANONICAL,ASSET_HARVEST_JNJ_88545223,JNJ-88545223,en,canonical_or_code,SRC_CTG_NCT07321873,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -548,21 +372,8 @@ ALIAS_ASSET_HARVEST_APREMILAST_CANONICAL,ASSET_HARVEST_APREMILAST,Apremilast,en,
 ALIAS_ASSET_HARVEST_RISANKIZUMAB_CANONICAL,ASSET_HARVEST_RISANKIZUMAB,Risankizumab,en,canonical_or_code,SRC_CTG_NCT06641089,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_APREMILAST_CC_10004_CANONICAL,ASSET_HARVEST_APREMILAST_CC_10004,Apremilast (CC-10004),en,canonical_or_code,SRC_CTG_NCT03747939,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BMS_986165_CANONICAL,ASSET_HARVEST_BMS_986165,BMS-986165,en,canonical_or_code,SRC_CTG_NCT04036435,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TQH3906_CAPSULES_CANONICAL,ASSET_HARVEST_TQH3906_CAPSULES,TQH3906 capsules,en,canonical_or_code,SRC_CTG_NCT07724366,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DEUCRAVACITINIB_TABLETS_6_MG_CANONICAL,ASSET_HARVEST_DEUCRAVACITINIB_TABLETS_6_MG,Deucravacitinib tablets 6 mg,en,canonical_or_code,SRC_CTG_NCT07724366,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DEUCRAVACITINIB_TABLETS_PLACEBO_CANONICAL,ASSET_HARVEST_DEUCRAVACITINIB_TABLETS_PLACEBO,Deucravacitinib tablets placebo,en,canonical_or_code,SRC_CTG_NCT07724366,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SPESOLIMAB_CANONICAL,ASSET_HARVEST_SPESOLIMAB,Spesolimab,en,canonical_or_code,SRC_CTG_NCT06013969,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TQH3906_CAPSULE_CANONICAL,ASSET_HARVEST_TQH3906_CAPSULE,TQH3906 Capsule,en,canonical_or_code,SRC_CTG_NCT07406035,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TQH3906_PLACEBO_CAPSULE_CANONICAL,ASSET_HARVEST_TQH3906_PLACEBO_CAPSULE,TQH3906 Placebo Capsule,en,canonical_or_code,SRC_CTG_NCT07406035,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TOFACITINIB_CITRATE_TABLET_5_MG_CANONICAL,ASSET_HARVEST_TOFACITINIB_CITRATE_TABLET_5_MG,Tofacitinib Citrate Tablet 5 mg,en,canonical_or_code,SRC_CTG_NCT07406035,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TILDRAKIZUMAB_100_MG_CANONICAL,ASSET_HARVEST_TILDRAKIZUMAB_100_MG,Tildrakizumab 100 mg,en,canonical_or_code,SRC_CTG_NCT06611163,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_FOR_GUSELKUMAB_CANONICAL,ASSET_HARVEST_PLACEBO_FOR_GUSELKUMAB,Placebo for guselkumab,en,canonical_or_code,SRC_CTG_NCT03451851,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ETANERCEPT_CANONICAL,ASSET_HARVEST_ETANERCEPT,Etanercept,en,canonical_or_code,SRC_CTG_NCT03451851,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DELGOCITINIB_CREAM_CANONICAL,ASSET_HARVEST_DELGOCITINIB_CREAM,Delgocitinib cream,en,canonical_or_code,SRC_CTG_NCT07013201,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_VEHICLE_CREAM_CANONICAL,ASSET_HARVEST_VEHICLE_CREAM,Vehicle cream,en,canonical_or_code,SRC_CTG_NCT07013201,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MC2_01_CREAM_CANONICAL,ASSET_HARVEST_MC2_01_CREAM,MC2-01 cream,en,canonical_or_code,SRC_CTG_NCT07357831,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MC2_01_VEHICLE_CANONICAL,ASSET_HARVEST_MC2_01_VEHICLE,MC2-01 vehicle,en,canonical_or_code,SRC_CTG_NCT07357831,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CAL_BDP_GEL_CANONICAL,ASSET_HARVEST_CAL_BDP_GEL,CAL/BDP Gel,en,canonical_or_code,SRC_CTG_NCT07357831,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TAK_279_CANONICAL,ASSET_HARVEST_TAK_279,TAK-279,en,canonical_or_code,SRC_CTG_NCT06233461,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GUSELKUMAB_DOSE_1_CANONICAL,ASSET_HARVEST_GUSELKUMAB_DOSE_1,Guselkumab Dose 1,en,canonical_or_code,SRC_CTG_NCT05197049,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GUSELKUMAB_DOSE_2_CANONICAL,ASSET_HARVEST_GUSELKUMAB_DOSE_2,Guselkumab Dose 2,en,canonical_or_code,SRC_CTG_NCT05197049,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -578,10 +389,7 @@ ALIAS_ASSET_HARVEST_GUSELKUMAB_INTRAVENOUS_CANONICAL,ASSET_HARVEST_GUSELKUMAB_IN
 ALIAS_ASSET_HARVEST_ANTI_TNF_THERAPY_INCLUDING_INFLIXIMAB_CANONICAL,ASSET_HARVEST_ANTI_TNF_THERAPY_INCLUDING_INFLIXIMAB,Anti TNF therapy including infliximab,en,canonical_or_code,SRC_CTG_NCT00606346,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NO_BIOLOGICS_CANONICAL,ASSET_HARVEST_NO_BIOLOGICS,No Biologics,en,canonical_or_code,SRC_CTG_NCT00606346,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_OZANIMOD_CANONICAL,ASSET_HARVEST_OZANIMOD,Ozanimod,en,canonical_or_code,SRC_CTG_NCT05076175,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TYBOWE_ADALIMUMAB_INJECTION_CANONICAL,ASSET_HARVEST_TYBOWE_ADALIMUMAB_INJECTION,TyboWe® Adalimumab Injection,en,canonical_or_code,SRC_CTG_NCT07663526,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DUVAKITUG_CANONICAL,ASSET_HARVEST_DUVAKITUG,Duvakitug,en,canonical_or_code,SRC_CTG_NCT07184944,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TEV_48574_DOSE_REGIMEN_A_CANONICAL,ASSET_HARVEST_TEV_48574_DOSE_REGIMEN_A,TEV-48574 Dose Regimen A,en,canonical_or_code,SRC_CTG_NCT05668013,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_TEV_48574_DOSE_REGIMENT_B_CANONICAL,ASSET_HARVEST_TEV_48574_DOSE_REGIMENT_B,TEV-48574 Dose Regiment B,en,canonical_or_code,SRC_CTG_NCT05668013,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LY4268989_CANONICAL,ASSET_HARVEST_LY4268989,LY4268989,en,canonical_or_code,SRC_CTG_NCT07415044,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LY4268989_PLACEBO_CANONICAL,ASSET_HARVEST_LY4268989_PLACEBO,LY4268989 Placebo,en,canonical_or_code,SRC_CTG_NCT07186101,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BALINATUNFIB_CANONICAL,ASSET_HARVEST_BALINATUNFIB,balinatunfib,en,canonical_or_code,SRC_CTG_NCT07222189,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -596,21 +404,11 @@ ALIAS_ASSET_HARVEST_AZD7798_CANONICAL,ASSET_HARVEST_AZD7798,AZD7798,en,canonical
 ALIAS_ASSET_HARVEST_MK_8690_CANONICAL,ASSET_HARVEST_MK_8690,MK-8690,en,canonical_or_code,SRC_CTG_NCT07463183,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_IV_TULISOKIBART_CANONICAL,ASSET_HARVEST_IV_TULISOKIBART,IV Tulisokibart,en,canonical_or_code,SRC_CTG_NCT06430801,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SC_TULISOKIBART_CANONICAL,ASSET_HARVEST_SC_TULISOKIBART,SC Tulisokibart,en,canonical_or_code,SRC_CTG_NCT06430801,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FILGOTINIB_CANONICAL,ASSET_HARVEST_FILGOTINIB,Filgotinib,en,canonical_or_code,SRC_CTG_NCT02914535,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PENTOXIFYLLINE_400_MG_CANONICAL,ASSET_HARVEST_PENTOXIFYLLINE_400_MG,Pentoxifylline 400 MG,en,canonical_or_code,SRC_CTG_NCT05575505,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AFIMKIBART_CANONICAL,ASSET_HARVEST_AFIMKIBART,Afimkibart,en,canonical_or_code,SRC_CTG_NCT05910528,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_NITAZOXANIDE_NTZ_CANONICAL,ASSET_HARVEST_NITAZOXANIDE_NTZ,Nitazoxanide (NTZ),en,canonical_or_code,SRC_CTG_NCT07820046,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_FECAL_MICROBIOTA_TRANSPLANTATION_FMT_CANONICAL,ASSET_HARVEST_FECAL_MICROBIOTA_TRANSPLANTATION_FMT,Fecal Microbiota Transplantation (FMT),en,canonical_or_code,SRC_CTG_NCT07814456,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_CABOZANTINIB_S_MALATE_CANONICAL,ASSET_HARVEST_CABOZANTINIB_S_MALATE,Cabozantinib S-malate,en,canonical_or_code,SRC_CTG_NCT03866382,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_KK8123_CANONICAL,ASSET_HARVEST_KK8123,KK8123,en,canonical_or_code,SRC_CTG_NCT06525636,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_INDOCYANINE_GREEN_CANONICAL,ASSET_HARVEST_INDOCYANINE_GREEN,Indocyanine Green,en,canonical_or_code,SRC_CTG_NCT04084067,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_COBIMETINIB_CANONICAL,ASSET_HARVEST_COBIMETINIB,Cobimetinib,en,canonical_or_code,SRC_CTG_NCT04931342,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_SOTICLESTAT_CANONICAL,ASSET_HARVEST_SOTICLESTAT,Soticlestat,en,canonical_or_code,SRC_CTG_NCT03635073,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BNT326_CANONICAL,ASSET_HARVEST_BNT326,BNT326,en,canonical_or_code,SRC_CTG_NCT07070232,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PAROXETINE_CANONICAL,ASSET_HARVEST_PAROXETINE,Paroxetine,en,canonical_or_code,SRC_CTG_NCT07070232,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_S_606001_CANONICAL,ASSET_HARVEST_S_606001,S-606001,en,canonical_or_code,SRC_CTG_NCT07787650,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TALIMOGENE_LAHERPAREPVEC_CANONICAL,ASSET_HARVEST_TALIMOGENE_LAHERPAREPVEC,Talimogene Laherparepvec,en,canonical_or_code,SRC_CTG_NCT02978625,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ERT_CANONICAL,ASSET_HARVEST_ERT,ERT,en,canonical_or_code,SRC_CTG_NCT07750990,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PF_08049820_CANONICAL,ASSET_HARVEST_PF_08049820,PF-08049820,en,canonical_or_code,SRC_CTG_NCT07216027,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BELZUTIFAN_CANONICAL,ASSET_HARVEST_BELZUTIFAN,Belzutifan,en,canonical_or_code,SRC_CTG_NCT04924075,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_AZD6244_CANONICAL,ASSET_HARVEST_AZD6244,AZD6244,en,canonical_or_code,SRC_CTG_NCT01362803,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -623,22 +421,12 @@ ALIAS_ASSET_HARVEST_METYRAPONE_CANONICAL,ASSET_HARVEST_METYRAPONE,Metyrapone,en,
 ALIAS_ASSET_HARVEST_THIOTEPA_CANONICAL,ASSET_HARVEST_THIOTEPA,Thiotepa,en,canonical_or_code,SRC_CTG_NCT03779854,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TACROLIMUS_CANONICAL,ASSET_HARVEST_TACROLIMUS,Tacrolimus,en,canonical_or_code,SRC_CTG_NCT03779854,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BARICITINIB_CANONICAL,ASSET_HARVEST_BARICITINIB,baricitinib,en,canonical_or_code,SRC_CTG_NCT07262983,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ALEMTUZUMAB_CANONICAL,ASSET_HARVEST_ALEMTUZUMAB,Alemtuzumab,en,canonical_or_code,SRC_CTG_NCT04018937,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MELPHALAN_CANONICAL,ASSET_HARVEST_MELPHALAN,Melphalan,en,canonical_or_code,SRC_CTG_NCT04018937,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CYCLOSPORINE_CANONICAL,ASSET_HARVEST_CYCLOSPORINE,Cyclosporine,en,canonical_or_code,SRC_CTG_NCT04018937,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ONASEMNOGENE_ABEPARVOVEC_XIOI_CANONICAL,ASSET_HARVEST_ONASEMNOGENE_ABEPARVOVEC_XIOI,Onasemnogene Abeparvovec-xioi,en,canonical_or_code,SRC_CTG_NCT04042025,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CANNABIDIOL_ORAL_SOLUTION_CANONICAL,ASSET_HARVEST_CANNABIDIOL_ORAL_SOLUTION,Cannabidiol Oral Solution,en,canonical_or_code,SRC_CTG_NCT07728097,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DUPILUMAB_STEP_DOWN_CANONICAL,ASSET_HARVEST_DUPILUMAB_STEP_DOWN,Dupilumab step-down,en,canonical_or_code,SRC_CTG_NCT05642208,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BMN_333_CANONICAL,ASSET_HARVEST_BMN_333,BMN 333,en,canonical_or_code,SRC_CTG_NCT07441876,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_VOSORITIDE_INJECTION_VOXZOGO_CANONICAL,ASSET_HARVEST_VOSORITIDE_INJECTION_VOXZOGO,Vosoritide Injection [Voxzogo],en,canonical_or_code,SRC_CTG_NCT07441876,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NXT007_CANONICAL,ASSET_HARVEST_NXT007,NXT007,en,canonical_or_code,SRC_CTG_NCT07838194,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_MEXILETINE_GRANULES_FOR_PROLONGED_RELEAS_CANONICAL,ASSET_HARVEST_MEXILETINE_GRANULES_FOR_PROLONGED_RELEAS,Mexiletine granules for prolonged-release oral suspension,en,canonical_or_code,SRC_CTG_NCT06523400,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ENLICITIDE_DECANOATE_CANONICAL,ASSET_HARVEST_ENLICITIDE_DECANOATE,Enlicitide Decanoate,en,canonical_or_code,SRC_CTG_NCT05952856,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_TRONTINEMAB_CANONICAL,ASSET_HARVEST_TRONTINEMAB,Trontinemab,en,canonical_or_code,SRC_CTG_NCT07170150,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_JNJ_64042056_CANONICAL,ASSET_HARVEST_JNJ_64042056,JNJ-64042056,en,canonical_or_code,SRC_CTG_NCT06544616,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_18F_PF974_CANONICAL,ASSET_HARVEST_18F_PF974,18F-PF974,en,canonical_or_code,SRC_CTG_NCT07169630,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_18F_FLORBETABEN_CANONICAL,ASSET_HARVEST_18F_FLORBETABEN,18F-florbetaben,en,canonical_or_code,SRC_CTG_NCT07169630,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ONO_2020_CANONICAL,ASSET_HARVEST_ONO_2020,ONO-2020,en,canonical_or_code,SRC_CTG_NCT06803823,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_DONANEMAB_CANONICAL,ASSET_HARVEST_DONANEMAB,Donanemab,en,canonical_or_code,SRC_CTG_NCT07838155,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_BMS_986446_CANONICAL,ASSET_HARVEST_BMS_986446,BMS-986446,en,canonical_or_code,SRC_CTG_NCT07780383,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LY3439539_CANONICAL,ASSET_HARVEST_LY3439539,LY3439539,en,canonical_or_code,SRC_CTG_NCT07598370,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -646,22 +434,16 @@ ALIAS_ASSET_HARVEST_SAR448851_CANONICAL,ASSET_HARVEST_SAR448851,SAR448851,en,can
 ALIAS_ASSET_HARVEST_KARXT_CANONICAL,ASSET_HARVEST_KARXT,KarXT,en,canonical_or_code,SRC_CTG_NCT06585787,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LY4405094_CANONICAL,ASSET_HARVEST_LY4405094,LY4405094,en,canonical_or_code,SRC_CTG_NCT07787182,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ELIGARD_22_5MG_SUSPENSION_FOR_INJECTION_CANONICAL,ASSET_HARVEST_ELIGARD_22_5MG_SUSPENSION_FOR_INJECTION,Eligard 22.5Mg Suspension for Injection,en,canonical_or_code,SRC_CTG_NCT03649724,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_18F_PI_2620_CANONICAL,ASSET_HARVEST_18F_PI_2620,[18F]-PI-2620,en,canonical_or_code,SRC_CTG_NCT05456503,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RO7568282_CANONICAL,ASSET_HARVEST_RO7568282,RO7568282,en,canonical_or_code,SRC_CTG_NCT07781657,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_PROBIOTIC_CANONICAL,ASSET_HARVEST_PROBIOTIC,Probiotic,en,canonical_or_code,SRC_CTG_NCT07413744,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_NIO752_CANONICAL,ASSET_HARVEST_NIO752,NIO752,en,canonical_or_code,SRC_CTG_NCT05469360,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ABBV_1758_CANONICAL,ASSET_HARVEST_ABBV_1758,ABBV-1758,en,canonical_or_code,SRC_CTG_NCT07599670,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PLACEBO_FOR_ABBV_1758_CANONICAL,ASSET_HARVEST_PLACEBO_FOR_ABBV_1758,Placebo for ABBV-1758,en,canonical_or_code,SRC_CTG_NCT07599670,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ARO_MAPT_SC_CANONICAL,ASSET_HARVEST_ARO_MAPT_SC,ARO-MAPT-SC,en,canonical_or_code,SRC_CTG_NCT07221344,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_11C_MC1_CANONICAL,ASSET_HARVEST_11C_MC1,11C-MC1,en,canonical_or_code,SRC_CTG_NCT04396873,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_11C_PS13_CANONICAL,ASSET_HARVEST_11C_PS13,11C-PS13,en,canonical_or_code,SRC_CTG_NCT04396873,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_GSK4527226_CANONICAL,ASSET_HARVEST_GSK4527226,GSK4527226,en,canonical_or_code,SRC_CTG_NCT06079190,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_KARX_EC_CANONICAL,ASSET_HARVEST_KARX_EC,KarX-EC,en,canonical_or_code,SRC_CTG_NCT06976203,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_LOW_DOSE_BENFOTIAMINE_CANONICAL,ASSET_HARVEST_LOW_DOSE_BENFOTIAMINE,Low Dose Benfotiamine,en,canonical_or_code,SRC_CTG_NCT06223360,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HIGH_DOSE_BENFOTIAMINE_CANONICAL,ASSET_HARVEST_HIGH_DOSE_BENFOTIAMINE,High Dose Benfotiamine,en,canonical_or_code,SRC_CTG_NCT06223360,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_XANOMELINE_TROSPIUM_CHLORIDE_CAPSULE_CANONICAL,ASSET_HARVEST_XANOMELINE_TROSPIUM_CHLORIDE_CAPSULE,Xanomeline/Trospium Chloride Capsule,en,canonical_or_code,SRC_CTG_NCT07011745,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_XANOMELINE_ENTERIC_CAPSULE_CANONICAL,ASSET_HARVEST_XANOMELINE_ENTERIC_CAPSULE,Xanomeline Enteric Capsule,en,canonical_or_code,SRC_CTG_NCT07011745,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_SANACOACH_PARKINSON_SCP_CANONICAL,ASSET_HARVEST_SANACOACH_PARKINSON_SCP,Sanacoach Parkinson (SCP),en,canonical_or_code,SRC_CTG_NCT05164783,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_FAVEZELIMAB_PEMBROLIZUMAB_CANONICAL,ASSET_HARVEST_FAVEZELIMAB_PEMBROLIZUMAB,Favezelimab/Pembrolizumab,en,canonical_or_code,SRC_CTG_NCT04626479,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PEMBROLIZUMAB_QUAVONLIMAB_CANONICAL,ASSET_HARVEST_PEMBROLIZUMAB_QUAVONLIMAB,Pembrolizumab/Quavonlimab,en,canonical_or_code,SRC_CTG_NCT04626479,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MK_4830_CANONICAL,ASSET_HARVEST_MK_4830,MK-4830,en,canonical_or_code,SRC_CTG_NCT04626518,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -673,11 +455,8 @@ ALIAS_ASSET_HARVEST_13N_AMMONIA_CANONICAL,ASSET_HARVEST_13N_AMMONIA,13N-Ammonia,
 ALIAS_ASSET_HARVEST_18F_DOPA_CANONICAL,ASSET_HARVEST_18F_DOPA,18F-DOPA,en,canonical_or_code,SRC_CTG_NCT03648905,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_11C_METHYLREBOXETINE_11C_MRB_CANONICAL,ASSET_HARVEST_11C_METHYLREBOXETINE_11C_MRB,11C-Methylreboxetine (11C-MRB),en,canonical_or_code,SRC_CTG_NCT03648905,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_18F_DOPAMINE_CANONICAL,ASSET_HARVEST_18F_DOPAMINE,18F-Dopamine,en,canonical_or_code,SRC_CTG_NCT03648905,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_O_15_WATER_CANONICAL,ASSET_HARVEST_O_15_WATER,O-15 Water,en,canonical_or_code,SRC_CTG_NCT00024622,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_18F_FLUORO_L_DOPA_CANONICAL,ASSET_HARVEST_18F_FLUORO_L_DOPA,18F-Fluoro-L-dopa,en,canonical_or_code,SRC_CTG_NCT00024622,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_15_0_H20_CANONICAL,ASSET_HARVEST_15_0_H20,15-0 H20,en,canonical_or_code,SRC_CTG_NCT00302146,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ALN_SNCA_CANONICAL,ASSET_HARVEST_ALN_SNCA,ALN-SNCA,en,canonical_or_code,SRC_CTG_NCT07216066,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ONO_2808_CANONICAL,ASSET_HARVEST_ONO_2808,ONO-2808,en,canonical_or_code,SRC_CTG_NCT07825402,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_PEMBROLIZUMAB_VIBOSTOLIMAB_CANONICAL,ASSET_HARVEST_PEMBROLIZUMAB_VIBOSTOLIMAB,Pembrolizumab/Vibostolimab,en,canonical_or_code,SRC_CTG_NCT04738487,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_RDEN2DELTA30_7169_CANONICAL,ASSET_HARVEST_RDEN2DELTA30_7169,rDEN2delta30-7169,en,canonical_or_code,SRC_CTG_NCT07706686,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_A_ARKANSAS_08_2020_PH1N1_CANONICAL,ASSET_HARVEST_A_ARKANSAS_08_2020_PH1N1,A/Arkansas/08/2020 (pH1N1),en,canonical_or_code,SRC_CTG_NCT07110532,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
@@ -697,12 +476,6 @@ ALIAS_ASSET_HARVEST_TACROLIMUS_TACRO_CANONICAL,ASSET_HARVEST_TACROLIMUS_TACRO,Ta
 ALIAS_ASSET_HARVEST_RSVPREF_CANONICAL,ASSET_HARVEST_RSVPREF,RSVpreF,en,canonical_or_code,SRC_CTG_NCT06866405,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_STANDARD_DOSE_QUADRIVALENT_INACTIVATED_I_CANONICAL,ASSET_HARVEST_STANDARD_DOSE_QUADRIVALENT_INACTIVATED_I,Standard Dose Quadrivalent Inactivated Influenza Vaccine,en,canonical_or_code,SRC_CTG_NCT05947071,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_HIGH_DOSE_QUADRIVALENT_INACTIVATED_INFLU_CANONICAL,ASSET_HARVEST_HIGH_DOSE_QUADRIVALENT_INACTIVATED_INFLU,High Dose Quadrivalent Inactivated Influenza Vaccine,en,canonical_or_code,SRC_CTG_NCT05947071,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_INITIATION_OF_ANTI_RETROVIRAL_THERAPY_CANONICAL,ASSET_HARVEST_INITIATION_OF_ANTI_RETROVIRAL_THERAPY,Initiation of anti-retroviral therapy,en,canonical_or_code,SRC_CTG_NCT01490346,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_BAY2599023_DTX201_CANONICAL,ASSET_HARVEST_BAY2599023_DTX201,BAY2599023 (DTX201),en,canonical_or_code,SRC_CTG_NCT03588299,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_ALLOGENEIC_UMBILICAL_CORD_MESENCHYMAL_ST_CANONICAL,ASSET_HARVEST_ALLOGENEIC_UMBILICAL_CORD_MESENCHYMAL_ST,Allogeneic umbilical cord mesenchymal stem cells,en,canonical_or_code,SRC_CTG_NCT05501418,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_CONTROLLED_NORMAL_SALINE_CANONICAL,ASSET_HARVEST_CONTROLLED_NORMAL_SALINE,Controlled normal saline,en,canonical_or_code,SRC_CTG_NCT05501418,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DIHYDROARTEMISININ_PIPERAQUINE_CANONICAL,ASSET_HARVEST_DIHYDROARTEMISININ_PIPERAQUINE,Dihydroartemisinin piperaquine,en,canonical_or_code,SRC_CTG_NCT06870344,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
-ALIAS_ASSET_HARVEST_DIHYDROARTEMISININ_PIPERAQUINE_BACILLUS_CANONICAL,ASSET_HARVEST_DIHYDROARTEMISININ_PIPERAQUINE_BACILLUS,Dihydroartemisinin piperaquine + Bacillus thuringiensis israelensis,en,canonical_or_code,SRC_CTG_NCT06870344,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_MOZOBIL_TM_CANONICAL,ASSET_HARVEST_MOZOBIL_TM,Mozobil (TM),en,canonical_or_code,SRC_CTG_NCT00967785,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_INTERFERON_ALPHA_CANONICAL,ASSET_HARVEST_INTERFERON_ALPHA,Interferon-alpha,en,canonical_or_code,SRC_CTG_NCT00092222,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。
 ALIAS_ASSET_HARVEST_ZIDOVUDINE_CANONICAL,ASSET_HARVEST_ZIDOVUDINE,Zidovudine,en,canonical_or_code,SRC_CTG_NCT00092222,由 ClinicalTrials.gov v2 / PubMed E-utilities 官方接口批量采集，未经人工逐条复核。

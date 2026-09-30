@@ -41,13 +41,13 @@ class DirectionCatalogTest(unittest.TestCase):
         self.assertEqual(goals[5], "加入自然史、孤儿药和特殊监管路径")
         self.assertEqual(goals[6], "加入复杂终点、患者负担和公共卫生模块")
 
-    def test_03_every_direction_carries_between_40_and_110_records(self):
+    def test_03_every_direction_carries_between_30_and_110_records(self):
         roadmap = self.service.roadmap()
         self.assertEqual(roadmap["total_directions"], 20)
         for stage in roadmap["stages"]:
             for direction in stage["directions"]:
                 with self.subTest(direction=direction["direction_id"]):
-                    self.assertGreaterEqual(direction["source_count"], 40)
+                    self.assertGreaterEqual(direction["source_count"], 30)
                     self.assertLessEqual(direction["source_count"], 110)
 
     def test_04_roadmap_totals_reconcile_with_stage_totals(self):

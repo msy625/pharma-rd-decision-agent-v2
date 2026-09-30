@@ -3,7 +3,7 @@
   "benchmark_name": "药研罗盘国赛量化评测",
   "benchmark_stage": "pilot",
   "case_count": 12,
-  "expected_data_version": "sha256:e278bdf7673f91d9",
+  "expected_data_version": "sha256:f4246991a6ec2d09",
   "facts_snapshot_commit": "656626b8756a01e4f6280f4451be503a92439e71",
   "case_file": "pilot_cases.jsonl",
   "description": "12题人工编写的离线试运行集，不属于最终开发集或锁定验收集。",
